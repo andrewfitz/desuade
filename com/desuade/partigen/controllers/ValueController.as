@@ -2,6 +2,7 @@ package com.desuade.partigen.controllers {
 	
 	import com.desuade.partigen.debug.*
 	import com.desuade.partigen.proxies.*
+	import com.desuade.partigen.utils.*
 
 	public class ValueController extends Object {
 	
@@ -9,6 +10,7 @@ package com.desuade.partigen.controllers {
 		public var target:Object;
 		public var property:String;
 		public var duration:Number;
+		public var precision:Number = 2;
 		private var _active:Boolean = false;
 		public function get active():Boolean{
 			return _active;
@@ -59,7 +61,9 @@ package com.desuade.partigen.controllers {
 			//skip beginning point (i=1), it gets set and doesn't need to be tweened to initial value
 			for (var i:int = 1; i < pa.length; i++) {
 				var tmo:Object = {target:target, ease:points[pa[i]].ease, duration:calculateDuration(points[pa[i-1]].position, points[pa[i]].position), delay:0};
-				tmo[property] = points[pa[i]].value;
+				tmo[property] = (points[pa[i]].spread != 0) ? Random.fromRange(points[pa[i]].value, (points[pa[i]].value+points[pa[i]].spread), precision) : points[pa[i]].value;
+				
+				trace(tmo[property]);
 				ta.push(tmo);
 			}
 			return ta;
