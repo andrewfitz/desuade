@@ -13,6 +13,7 @@ package com.desuade.partigen.proxies {
 			TweenProxy.loadProxy(engineName, engineVersion, {func_tween: standardTween});
 		}
 		
+		//remember to make sure the custom tweening engine can recognize the ease String 'linear'
 		public static function standardTween(to:Object, prop:String):void {
 			Twease.tween(to);
 			//debug shows standard tween being called
