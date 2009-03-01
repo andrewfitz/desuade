@@ -21,6 +21,8 @@ package com.desuade.partigen.controllers {
 			points = new PointsContainer(target[property]);
 		}
 		
+		//public methods
+		
 		public function addPoint(value:Number, spread:Number, position:Number, ease:* = 'linear', label:String = 'point'):Object {
 			return points.addPoint(value, spread, position, ease, label);
 		}
@@ -38,11 +40,17 @@ package com.desuade.partigen.controllers {
 		}
 		
 		public function getPoints():Array {
-			var pa:Array = [];
-			for (var p:String in points) {
-				pa.push(p);
-			}
-			return pa;
+			return points.getSortedPoints();
+		}
+		
+		//private methods
+		
+		private function calculateDuration(previous:Number, position:Number):Number {
+			return duration*(position-previous);
+		}
+
+		private function createTweens():void {
+			
 		}
 	
 	}

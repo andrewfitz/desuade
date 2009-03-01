@@ -13,13 +13,40 @@ package com.desuade.partigen.controllers {
 		}
 		
 		public function addPoint(value:Number, spread:Number, position:Number, ease:*, label:String):Object {
-			label = (label == 'point') ? 'point' + _pointcount : label;
+			label = (label == 'point') ? 'point' + ++_pointcount : label;
 			Debug.output('develop', 1002, [label, position]);
 			return this[label] = {value:value, spread:spread, position:position, ease:ease};
 		}
 		
 		public function removePoint(label:String):void {
 			if(label != 'beginning' && label != 'end') delete this[label];
+		}
+		
+		public function getSortedPoints():Array {
+			var pa:Array = [];
+			var sa:Array = [];
+			for (var p:String in this) {
+				pa.push({label:p, position:this[p]['position']});
+			}
+			pa.sort(sortOnPosition);
+			for (var i:int = 0; i < pa.length; i++) {
+				sa.push(pa[i].label);
+			}
+			return sa;
+		}
+		
+		//private static methods
+		
+		private static function sortOnPosition(a:Object, b:Object):Number {
+		    var aPos:Number = a['position'];
+		    var bPos:Number = b['position'];
+		    if(aPos > bPos) {
+		        return 1;
+		    } else if(aPos < bPos) {
+		        return -1;
+		    } else {
+		        return 0;
+		    }
 		}
 	
 	}
