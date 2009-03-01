@@ -1,6 +1,7 @@
 package com.desuade.partigen.controllers {
 	
 	import com.desuade.partigen.debug.*
+	import com.desuade.partigen.proxies.*
 
 	public class ValueController extends Object {
 	
@@ -32,6 +33,9 @@ package com.desuade.partigen.controllers {
 		}
 		
 		public function start():void {
+			var ta:Array = createTweens();
+			//target[property] = points.beginning.value;
+			TweenProxy.sequence(ta);
 			_active = true;
 		}
 		
@@ -49,8 +53,16 @@ package com.desuade.partigen.controllers {
 			return duration*(position-previous);
 		}
 
-		private function createTweens():void {
-			
+		private function createTweens():Array {
+			var pa:Array = points.getSortedPoints();
+			var ta:Array = [];
+			//skip beginning point (i=1), it gets set and doesn't need to be tweened to initial value
+			for (var i:int = 1; i < pa.length; i++) {
+				var tmo:Object = {target:target, ease:points[pa[i]].ease, duration:calculateDuration(points[pa[i-1]].position, points[pa[i]].position), delay:0};
+				tmo[property] = points[pa[i]].value;
+				ta.push(tmo);
+			}
+			return ta;
 		}
 	
 	}

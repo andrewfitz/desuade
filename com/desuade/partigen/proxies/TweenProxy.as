@@ -7,6 +7,7 @@ package com.desuade.partigen.proxies {
 		public static var engine:String;
 		public static var engineVersion:Number;
 		public static var func_tween:Function;
+		public static var func_sequence:Function;
 
 		public static function loadProxy(name:String, version:Number, po:Object):void {
 			engine = name;
@@ -17,10 +18,12 @@ package com.desuade.partigen.proxies {
 			Debug.output('info', 1001, [engine, engineVersion]);
 		}
 		
-		public static function tween(target:Object, prop:String, value:Number, duration:Number, ease:String = 'linear', delay:Number = 0):void {
-			var to:Object = {target:target, time:duration, ease:ease, delay:delay};
-			to[prop] = value;
-			func_tween(to, prop);
+		public static function tween(tweenObject:Object):void {
+			func_tween(tweenObject);
+		}
+		
+		public static function sequence(sequenceArray:Array):void {
+			func_sequence(sequenceArray);
 		}
 		
 	}
