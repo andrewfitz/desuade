@@ -1,5 +1,7 @@
 package com.desuade.partigen.proxies {
-
+	
+	import com.desuade.partigen.debug.*
+	
 	public class TweenProxy extends Object {
 		
 		public static var engine:String;
@@ -12,6 +14,7 @@ package com.desuade.partigen.proxies {
 			for (var i:String in po) {
 				TweenProxy[i] = po[i];
 			}
+			Debug.output('info', 1001, [engine, engineVersion]);
 		}
 		
 		public static function tween(target:Object, prop:String, value:Number, duration:Number, ease:String = 'linear', delay:Number = 0):void {

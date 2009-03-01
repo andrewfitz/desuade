@@ -1,7 +1,7 @@
 package com.desuade.partigen.proxies {
 
-	import com.desuade.partigen.proxies.TweenProxy
 	import com.visualcondition.twease.*
+	import com.desuade.partigen.debug.*
 
 	public class TweenToTwease extends Object {
 		
@@ -14,10 +14,10 @@ package com.desuade.partigen.proxies {
 		}
 		
 		public static function standardTween(to:Object, prop:String):void {
-			trace("standard tween: " + to['target'] + " - " + prop);
 			Twease.tween(to);
+			//debug shows standard tween being called
+			Debug.output('develop', 1001, [to['target'], prop])
 		}
-	
 	
 	}
 
