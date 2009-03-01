@@ -1,4 +1,6 @@
 package com.desuade.partigen.controllers {
+	
+	import com.desuade.partigen.debug.*
 
 	public class ValueController extends Object {
 	
@@ -16,7 +18,7 @@ package com.desuade.partigen.controllers {
 			this.target = target;
 			this.property = property;
 			this.duration = duration;
-			points = new PointContainer(target[property]);
+			points = new PointsContainer(target[property]);
 		}
 		
 		public function addPoint(value:Number, spread:Number, position:Number, ease:* = 'linear', label:String = 'point'):Object {

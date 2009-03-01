@@ -10,7 +10,8 @@ package com.desuade.partigen.debug {
 		
 		private static var _codes:Object = {
 			1000: "Debug codes for aiding in development.",
-			1001: "Called: TweenToTwease.standardTween - target: $ prop: $"
+			1001: "Called: TweenToTwease.standardTween - target: $ prop: $",
+			1002: "Point '$' added at position $"
 		}
 	
 	}
