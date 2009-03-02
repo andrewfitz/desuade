@@ -1,9 +1,8 @@
 package com.desuade.partigen.debug {
 
-	public class DebugCodesDevelop extends Object {
+	public class DebugCodesDevelop extends CodeSet {
 		
 		public var setname:String = 'develop';
-		
 		public var codes:Object = {
 			1000: "Debug codes for aiding in development.",
 			1001: "Called: TweenToTwease.standardTween - target: $",
