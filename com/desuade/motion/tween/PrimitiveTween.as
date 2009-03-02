@@ -13,7 +13,7 @@ package com.desuade.motion.tween {
 
 	public class PrimitiveTween extends EventDispatcher {
 		
-		private static var _count:int = 1000000;
+		public static var _count:int = 1000000;
 		private static var _sprite:Sprite = new Sprite();
 		
 		public var id:int;
@@ -29,7 +29,7 @@ package com.desuade.motion.tween {
 		
 		public function PrimitiveTween($target:Object, $prop:String, $value:Number, $duration:int, $ease:Function) {
 			super();
-			id = ++_count, target = $target, prop = $prop, value = $value, duration = $duration, ease = $ease, startvalue = target[prop], starttime = getTimer();
+			id = _count++, target = $target, prop = $prop, value = $value, duration = $duration, ease = $ease, startvalue = target[prop], starttime = getTimer();
 			difvalue = (startvalue > value) ? (value-startvalue) : -(startvalue-value);
 			dispatchEvent(new TweenEvent(TweenEvent.STARTED, {primitiveTween:this}));
 			_sprite.addEventListener(Event.ENTER_FRAME, update);
