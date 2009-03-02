@@ -20,7 +20,7 @@ package com.desuade.motion.controllers {
 			this.target = target;
 			this.property = property;
 			this.duration = duration;
-			points = new PointsContainer(target[property]);
+			points = new PointsContainer();
 		}
 		
 		//public methods

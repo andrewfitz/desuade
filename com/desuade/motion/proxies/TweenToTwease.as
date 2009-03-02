@@ -9,7 +9,7 @@ package com.desuade.motion.proxies {
 		public static var engineVersion:Number = Twease.version;
 	
 		public static function init():void {
-			Twease.register(Easing);
+			Twease.register(Easing, Colors);
 			TweenProxy.loadProxy(engineName, engineVersion, {func_tween: standardTween, func_sequence: standardSequence});
 		}
 		
