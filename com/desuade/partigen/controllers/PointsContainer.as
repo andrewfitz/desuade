@@ -8,14 +8,14 @@ package com.desuade.partigen.controllers {
 	
 		public function PointsContainer(value:Number = 0){
 			super();
-			this.beginning = {value:value, spread:0, position:0};
-			this.end = {value:value, spread:0, position:1, ease:'linear'};
+			this.beginning = {value:value, position:0};
+			this.end = {value:value, position:1, ease:'linear'};
 		}
 		
-		public function addPoint(value:Number, spread:Number, position:Number, ease:*, label:String):Object {
+		public function addPoint(value:*, position:Number, ease:*, label:String):Object {
 			label = (label == 'point') ? 'point' + ++_pointcount : label;
 			Debug.output('develop', 1002, [label, position]);
-			return this[label] = {value:value, spread:spread, position:position, ease:ease};
+			return this[label] = {value:value, position:position, ease:ease};
 		}
 		
 		public function removePoint(label:String):void {

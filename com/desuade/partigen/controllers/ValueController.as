@@ -10,7 +10,6 @@ package com.desuade.partigen.controllers {
 		public var target:Object;
 		public var property:String;
 		public var duration:Number;
-		public var precision:Number = 2;
 		private var _active:Boolean = false;
 		public function get active():Boolean{
 			return _active;
@@ -26,8 +25,8 @@ package com.desuade.partigen.controllers {
 		
 		//public methods
 		
-		public function addPoint(value:Number, spread:Number, position:Number, ease:* = 'linear', label:String = 'point'):Object {
-			return points.addPoint(value, spread, position, ease, label);
+		public function addPoint(value:*, position:Number, ease:* = 'linear', label:String = 'point'):Object {
+			return points.addPoint(value, position, ease, label);
 		}
 		
 		public function removePoint(label:String):void {
@@ -36,7 +35,7 @@ package com.desuade.partigen.controllers {
 		
 		public function start():void {
 			var ta:Array = createTweens();
-			//target[property] = points.beginning.value;
+			ta[ta.length-1].func = this.tweenEnd;
 			TweenProxy.sequence(ta);
 			_active = true;
 		}
@@ -49,6 +48,10 @@ package com.desuade.partigen.controllers {
 			return points.getSortedPoints();
 		}
 		
+		public function tweenEnd(... args):void {
+			_active = false;
+			Debug.output('develop', 1003, [target.name, property]);
+		}
 		//private methods
 		
 		private function calculateDuration(previous:Number, position:Number):Number {
@@ -61,9 +64,7 @@ package com.desuade.partigen.controllers {
 			//skip beginning point (i=1), it gets set and doesn't need to be tweened to initial value
 			for (var i:int = 1; i < pa.length; i++) {
 				var tmo:Object = {target:target, ease:points[pa[i]].ease, duration:calculateDuration(points[pa[i-1]].position, points[pa[i]].position), delay:0};
-				tmo[property] = (points[pa[i]].spread != 0) ? Random.fromRange(points[pa[i]].value, (points[pa[i]].value+points[pa[i]].spread), precision) : points[pa[i]].value;
-				
-				trace(tmo[property]);
+				tmo[property] = (points[pa[i]].value is Random) ? points[pa[i]].value.randomValue : points[pa[i]].value;
 				ta.push(tmo);
 			}
 			return ta;
