@@ -35,6 +35,18 @@ package com.desuade.motion.controllers {
 			return sa;
 		}
 		
+		public function flatten(value:*):void {
+			var pa:Array = this.getSortedPoints();
+			for (var i:int = 1; i < pa.length-1; i++) {
+				var p:Object = this[pa[i]];
+				p.ease = 'linear';
+				p.value = value;
+			}
+			this.beginning.value = value;
+			this.end.value = value;
+			this.end.ease = 'linear';
+		}
+		
 		//private static methods
 		
 		private static function sortOnPosition(a:Object, b:Object):Number {

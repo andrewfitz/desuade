@@ -36,6 +36,7 @@ package com.desuade.motion.controllers {
 		public function start():void {
 			var ta:Array = createTweens();
 			ta[ta.length-1].func = this.tweenEnd;
+			target[property] = points.beginning.value;
 			TweenProxy.sequence(ta);
 			_active = true;
 		}
@@ -46,6 +47,10 @@ package com.desuade.motion.controllers {
 		
 		public function getPoints():Array {
 			return points.getSortedPoints();
+		}
+		
+		public function flattenTo(value:*):void {
+			points.flatten(value);
 		}
 		
 		public function tweenEnd(... args):void {
