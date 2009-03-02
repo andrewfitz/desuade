@@ -1,6 +1,6 @@
 package com.desuade.motion.proxies {
 	
-	import com.desuade.partigen.debugging.*
+	import com.desuade.debugging.*
 	
 	public class TweenProxy extends Object {
 		
