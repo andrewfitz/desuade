@@ -6,20 +6,20 @@ package com.desuade.motion.controllers {
 	
 		private var _pointcount:Number = 0;
 	
-		public function PointsContainer(value:Number = 0){
+		public function PointsContainer($value:Number = 0){
 			super();
-			this.beginning = {value:value, position:0};
-			this.end = {value:value, position:1, ease:'linear'};
+			this.beginning = {value:$value, position:0};
+			this.end = {value:$value, position:1, ease:'linear'};
 		}
 		
-		public function addPoint(value:*, position:Number, ease:*, label:String):Object {
-			label = (label == 'point') ? 'point' + ++_pointcount : label;
-			Debug.output('motion', 10001, [label, position]);
-			return this[label] = {value:value, position:position, ease:ease};
+		public function addPoint($value:*, $position:Number, $ease:*, $label:String):Object {
+			$label = ($label == 'point') ? 'point' + ++_pointcount : $label;
+			Debug.output('motion', 10001, [$label, $position]);
+			return this[$label] = {value:$value, position:$position, ease:$ease};
 		}
 		
-		public function removePoint(label:String):void {
-			if(label != 'beginning' && label != 'end') delete this[label];
+		public function removePoint($label:String):void {
+			if($label != 'beginning' && $label != 'end') delete this[$label];
 		}
 		
 		public function getSortedPoints():Array {
@@ -35,15 +35,15 @@ package com.desuade.motion.controllers {
 			return sa;
 		}
 		
-		public function flatten(value:*):void {
+		public function flatten($value:*):void {
 			var pa:Array = this.getSortedPoints();
 			for (var i:int = 1; i < pa.length-1; i++) {
 				var p:Object = this[pa[i]];
 				p.ease = 'linear';
-				p.value = value;
+				p.value = $value;
 			}
-			this.beginning.value = value;
-			this.end.value = value;
+			this.beginning.value = $value;
+			this.end.value = $value;
 			this.end.ease = 'linear';
 		}
 		

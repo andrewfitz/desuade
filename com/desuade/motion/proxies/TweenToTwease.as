@@ -14,18 +14,18 @@ package com.desuade.motion.proxies {
 		}
 		
 		//remember to make sure the custom tweening engine can recognize the ease String 'linear'
-		public static function standardTween(to:Object):void {
-			to.time = to.duration;
-			delete to.duration;
-			Twease.tween(to);
+		public static function standardTween($to:Object):void {
+			$to.time = $to.duration;
+			delete $to.duration;
+			Twease.tween($to);
 		}
 		
-		public static function standardSequence(ta:Array):void {
-			for (var i:int = 0; i < ta.length; i++) {
-				ta[i].time = ta[i].duration;
-				delete ta[i].duration;
+		public static function standardSequence($ta:Array):void {
+			for (var i:int = 0; i < $ta.length; i++) {
+				$ta[i].time = $ta[i].duration;
+				delete $ta[i].duration;
 			}
-			Twease.tween(ta);
+			Twease.tween($ta);
 		}
 	
 	}

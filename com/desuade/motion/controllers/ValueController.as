@@ -15,22 +15,22 @@ package com.desuade.motion.controllers {
 			return _active;
 		}
 	
-		public function ValueController(target:Object, property:String, duration:Number){
+		public function ValueController($target:Object, $property:String, $duration:Number){
 			super();
-			this.target = target;
-			this.property = property;
-			this.duration = duration;
+			target = $target;
+			property = $property;
+			duration = $duration;
 			points = new PointsContainer();
 		}
 		
 		//public methods
 		
-		public function addPoint(value:*, position:Number, ease:* = 'linear', label:String = 'point'):Object {
-			return points.addPoint(value, position, ease, label);
+		public function addPoint($value:*, $position:Number, $ease:* = 'linear', $label:String = 'point'):Object {
+			return points.addPoint($value, $position, $ease, $label);
 		}
 		
-		public function removePoint(label:String):void {
-			points.removePoint(label);
+		public function removePoint($label:String):void {
+			points.removePoint($label);
 		}
 		
 		public function start():void {
@@ -49,8 +49,8 @@ package com.desuade.motion.controllers {
 			return points.getSortedPoints();
 		}
 		
-		public function flattenTo(value:*):void {
-			points.flatten(value);
+		public function flattenTo($value:*):void {
+			points.flatten($value);
 		}
 		
 		public function tweenEnd(... args):void {
@@ -59,8 +59,8 @@ package com.desuade.motion.controllers {
 		}
 		//private methods
 		
-		private function calculateDuration(previous:Number, position:Number):Number {
-			return duration*(position-previous);
+		private function calculateDuration($previous:Number, $position:Number):Number {
+			return duration*($position-$previous);
 		}
 
 		private function createTweens():Array {
