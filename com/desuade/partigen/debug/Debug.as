@@ -19,7 +19,7 @@ package com.desuade.partigen.debug {
 						trace(r(_codes[codeSet][code], props));
 					}
 				} else {
-					trace("Debug: " + codeSet + "(n/a) #" + code);
+					trace("Debug: " + codeSet + "(missing) #" + code);
 				}
 			}
 		}
