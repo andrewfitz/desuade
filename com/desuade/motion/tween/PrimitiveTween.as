@@ -19,13 +19,12 @@ package com.desuade.motion.tween {
 		public var value:Number;
 		public var duration:Number;
 		public var ease:Function;
-		public var extras:Array = [0,0];
 		public var startvalue:Number;
 		public var starttime:Number;
 		private var difvalue:Number;
 		public var completed:Boolean = false;
 		
-		public function PrimitiveTween(target:Object, prop:String, value:Number, duration:Number, ease:Function, ... extras) {
+		public function PrimitiveTween(target:Object, prop:String, value:Number, duration:Number, ease:Function) {
 			super();
 			this.id = ++_count;
 			this.target = target;
@@ -33,7 +32,6 @@ package com.desuade.motion.tween {
 			this.value = value;
 			this.duration = duration;
 			this.ease = ease;
-			this.extras = extras;
 			this.startvalue = target[prop];
 			this.starttime = getTimer();
 			this.difvalue = (startvalue > value) ? -1*Math.abs(startvalue-value) : Math.abs(startvalue-value);
@@ -42,7 +40,7 @@ package com.desuade.motion.tween {
 		
 		private function update(u:Object):void {
 			var tmr:Number = getTimer() - starttime;
-			target[prop] = ease(tmr, startvalue, difvalue, duration, extras[0], extras[1]);
+			target[prop] = ease(tmr, startvalue, difvalue, duration);
 			if(tmr >= duration){
 				target[prop] = value;
 				completed = true;
