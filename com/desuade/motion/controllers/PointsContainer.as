@@ -1,6 +1,6 @@
-package com.desuade.partigen.controllers {
+package com.desuade.motion.controllers {
 	
-	import com.desuade.partigen.debug.*
+	import com.desuade.debugging.*
 
 	public dynamic class PointsContainer extends Object {
 	
@@ -14,7 +14,7 @@ package com.desuade.partigen.controllers {
 		
 		public function addPoint(value:*, position:Number, ease:*, label:String):Object {
 			label = (label == 'point') ? 'point' + ++_pointcount : label;
-			Debug.output('develop', 1002, [label, position]);
+			Debug.output('motion', 10001, [label, position]);
 			return this[label] = {value:value, position:position, ease:ease};
 		}
 		

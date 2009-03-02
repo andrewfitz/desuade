@@ -1,7 +1,7 @@
-package com.desuade.partigen.proxies {
+package com.desuade.motion.proxies {
 
 	import com.visualcondition.twease.*
-	import com.desuade.partigen.debug.*
+	import com.desuade.debugging.*
 
 	public class TweenToTwease extends Object {
 		
@@ -18,7 +18,6 @@ package com.desuade.partigen.proxies {
 			to.time = to.duration;
 			delete to.duration;
 			Twease.tween(to);
-			Debug.output('develop', 1001, [to['target']]);
 		}
 		
 		public static function standardSequence(ta:Array):void {

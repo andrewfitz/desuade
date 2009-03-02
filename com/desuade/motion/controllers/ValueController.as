@@ -1,8 +1,8 @@
-package com.desuade.partigen.controllers {
+package com.desuade.motion.controllers {
 	
-	import com.desuade.partigen.debug.*
-	import com.desuade.partigen.proxies.*
-	import com.desuade.partigen.utils.*
+	import com.desuade.debugging.*
+	import com.desuade.motion.proxies.*
+	import com.desuade.utils.*
 
 	public class ValueController extends Object {
 	
@@ -50,7 +50,7 @@ package com.desuade.partigen.controllers {
 		
 		public function tweenEnd(... args):void {
 			_active = false;
-			Debug.output('develop', 1003, [target.name, property]);
+			Debug.output('motion', 10002, [target.name, property]);
 		}
 		//private methods
 		

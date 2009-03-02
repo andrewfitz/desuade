@@ -1,6 +1,6 @@
-package com.desuade.partigen.proxies {
+package com.desuade.motion.proxies {
 	
-	import com.desuade.partigen.debug.*
+	import com.desuade.partigen.debugging.*
 	
 	public class TweenProxy extends Object {
 		
@@ -15,7 +15,7 @@ package com.desuade.partigen.proxies {
 			for (var i:String in po) {
 				TweenProxy[i] = po[i];
 			}
-			Debug.output('info', 1001, [engine, engineVersion]);
+			Debug.output('motion', 10003, [engine, engineVersion]);
 		}
 		
 		public static function tween(tweenObject:Object):void {

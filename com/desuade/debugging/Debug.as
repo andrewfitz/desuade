@@ -1,4 +1,4 @@
-package com.desuade.partigen.debug {
+package com.desuade.debugging {
 
 	public class Debug extends Object {
 	
