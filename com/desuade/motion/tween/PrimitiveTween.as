@@ -25,7 +25,6 @@ package com.desuade.motion.tween {
 		public var startvalue:Number;
 		public var starttime:int;
 		private var difvalue:Number;
-		public var completed:Boolean = false;
 		
 		public function PrimitiveTween($target:Object, $prop:String, $value:Number, $duration:int, $ease:Function) {
 			super();
@@ -41,13 +40,12 @@ package com.desuade.motion.tween {
 			dispatchEvent(new TweenEvent(TweenEvent.UPDATE, {primitiveTween:this}));
 			if(tmr >= duration){
 				target[prop] = value;
-				completed = true;
 				end();
 			}
 		}
 		
 		public function end():void {
-			Debug.output('motion', 20001, [id]);
+			Debug.output('motion', 40001, [id]);
 			_sprite.removeEventListener(Event.ENTER_FRAME, update);
 			dispatchEvent(new TweenEvent(TweenEvent.ENDED, {primitiveTween:this}));
 			delete this;

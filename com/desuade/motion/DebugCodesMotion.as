@@ -13,7 +13,7 @@ package com.desuade.motion {
 				10001: "Point $ added at position $",
 				10002: "Tween for $.$ ended",
 				10003: "Tween Proxy Loaded: $ v$",
-				20001: "PrimitiveTween ended: $"
+				40001: "PrimitiveTween ended: $"
 			}
 			
 		}

@@ -5,6 +5,7 @@ package com.desuade.debugging {
 		private static var _codes:Object = {};
 		public static var onlyCodes:Boolean = false;
 		public static var enabled:Boolean = true;
+		public static var level:int = 90000;
 		
 		public static function load($codeset:CodeSet):void {
 			_codes[$codeset.setname] = $codeset.codes;
@@ -12,14 +13,11 @@ package com.desuade.debugging {
 		
 		public static function output($codeSet:String, $code:Number, $props:Array = null):void {
 			if (enabled) {
-				if(_codes[$codeSet] != undefined) {
-					if(onlyCodes){
-						trace("Debug: " + $codeSet + " #" + $code);
-					} else {
-						trace(r(_codes[$codeSet][$code], $props));
-					}
-				} else {
-					trace("Debug: " + $codeSet + "(missing) #" + $code);
+				if($code < level) {
+					if(_codes[$codeSet] != undefined) {
+						if(onlyCodes) trace("Debug: " + $codeSet + " #" + $code);
+						else trace(r(_codes[$codeSet][$code], $props));
+					} else trace("Debug: " + $codeSet + "(missing) #" + $code);
 				}
 			}
 		}
@@ -32,6 +30,4 @@ package com.desuade.debugging {
 			return ns;
 		}
 	}
-
 }
-
