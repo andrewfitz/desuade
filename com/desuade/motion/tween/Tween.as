@@ -28,7 +28,7 @@ package com.desuade.motion.tween {
 			dispatchEvent(new TweenEvent(TweenEvent.STARTED, {tween:this}));
 			_completed = false;
 			if(_tweenconfig.delay > 0) delayedTween(_tweenconfig.delay);
-			else _tweenID = createTween(_tweenconfig);
+			else _tweenID = createTween(_tweenconfig).id;
 		}
 		
 		public override function stop():void {
@@ -40,12 +40,14 @@ package com.desuade.motion.tween {
 			}
 		}
 		
-		protected override function createTween($to:Object):int {
+		protected override function createTween($to:Object):PrimitiveTween {
 			if($to.round) addEventListener(TweenEvent.UPDATE, roundTweenValue);
-			delete $to.round;
-			var ctid:int = super.createTween($to);
-			_tweenholder[ctid].addEventListener(TweenEvent.UPDATE, updateListener);
-			return ctid;
+			var ct:PrimitiveTween = super.createTween($to);
+			if($to.position > 0) {
+				
+			}
+			ct.addEventListener(TweenEvent.UPDATE, updateListener);
+			return ct;
 		}
 		
 		protected override function endFunc($o:Object):void {
@@ -78,7 +80,7 @@ package com.desuade.motion.tween {
 		protected function dtFunc($i:Object):void {
 			_delayTimer.stop();
 			_delayTimer = null;
-			_tweenID = createTween(_tweenconfig);
+			_tweenID = createTween(_tweenconfig).id;
 		}
 		
 		protected function updateListener($i:Object):void {
@@ -87,8 +89,8 @@ package com.desuade.motion.tween {
 		
 		protected function roundTweenValue($i:Object):void {
 			var pt:Object = $i.info.primitiveTween;
-			Debug.output('motion', 50003, [pt.id, pt.target[pt.prop], int(pt.target[pt.prop])]);
 			pt.target[pt.prop] = int(pt.target[pt.prop]);
+			Debug.output('motion', 50003, [pt.id, pt.target[pt.prop], int(pt.target[pt.prop])]);
 		}
 	
 	}
