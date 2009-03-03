@@ -39,6 +39,11 @@ package com.desuade.motion.tween {
 		}
 		
 		protected override function createTween($to:Object):int {
+			if($to.round){
+				addEventListener(TweenEvent.UPDATE, roundTweenValue);
+			}
+			delete $to.round;
+			
 			return super.createTween($to);
 		}
 		
@@ -73,6 +78,11 @@ package com.desuade.motion.tween {
 			_delayTimer.stop();
 			_delayTimer = null;
 			_tweenID = createTween(_tweenconfig);
+		}
+		
+		protected function roundTweenValue($i:Object):void {
+			trace("ROUNDING");
+			$i.info.tween.target[$i.info.tween.prop] = int($i.info.tween.target[$i.info.tween.prop]);
 		}
 	
 	}
