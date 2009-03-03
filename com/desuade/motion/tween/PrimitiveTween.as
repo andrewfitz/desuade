@@ -26,9 +26,9 @@ package com.desuade.motion.tween {
 		public var starttime:int;
 		private var difvalue:Number;
 		
-		public function PrimitiveTween($target:Object, $prop:String, $value:Number, $duration:int, $ease:Function) {
+		public function PrimitiveTween($target:Object, $prop:String, $value:Number, $duration:int, $ease:Function = null) {
 			super();
-			id = _count++, target = $target, prop = $prop, value = $value, duration = $duration, ease = $ease, startvalue = target[prop], starttime = getTimer();
+			id = _count++, target = $target, prop = $prop, value = $value, duration = $duration, ease = $ease || linear, startvalue = target[prop], starttime = getTimer();
 			difvalue = (startvalue > value) ? (value-startvalue) : -(startvalue-value);
 			dispatchEvent(new TweenEvent(TweenEvent.STARTED, {primitiveTween:this}));
 			_sprite.addEventListener(Event.ENTER_FRAME, update);
@@ -49,6 +49,10 @@ package com.desuade.motion.tween {
 			_sprite.removeEventListener(Event.ENTER_FRAME, update);
 			if($broadcast) dispatchEvent(new TweenEvent(TweenEvent.ENDED, {primitiveTween:this}));
 			delete this;
+		}
+		
+		private static function linear(t:Number, b:Number, c:Number, d:Number):Number {
+			return c*t/d+b;
 		}
 	
 	}

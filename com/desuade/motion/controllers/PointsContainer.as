@@ -9,7 +9,7 @@ package com.desuade.motion.controllers {
 		public function PointsContainer($value:Number = 0){
 			super();
 			this.beginning = {value:$value, position:0};
-			this.end = {value:$value, position:1, ease:'linear'};
+			this.end = {value:$value, position:1, ease:linear};
 		}
 		
 		public function addPoint($value:*, $position:Number, $ease:*, $label:String):Object {
@@ -39,12 +39,12 @@ package com.desuade.motion.controllers {
 			var pa:Array = this.getSortedPoints();
 			for (var i:int = 1; i < pa.length-1; i++) {
 				var p:Object = this[pa[i]];
-				p.ease = 'linear';
+				p.ease = linear;
 				p.value = $value;
 			}
 			this.beginning.value = $value;
 			this.end.value = $value;
-			this.end.ease = 'linear';
+			this.end.ease = linear;
 		}
 		
 		//private static methods
@@ -60,7 +60,11 @@ package com.desuade.motion.controllers {
 		        return 0;
 		    }
 		}
-	
+		
+		public static function linear(t:Number, b:Number, c:Number, d:Number, ... args):Number {
+			return c*t/d+b;
+		}
+		
 	}
 
 }
