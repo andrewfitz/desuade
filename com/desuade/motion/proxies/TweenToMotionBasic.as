@@ -5,7 +5,7 @@ package com.desuade.motion.proxies {
 
 	public class TweenToMotionBasic extends Object {
 		
-		public static var engineName:String = "Desuade Motion (basic)";
+		public static var engineName:String = "Desuade Motion(basic)";
 		public static var engineVersion:Number = 1.0;
 	
 		public static function init():void {
