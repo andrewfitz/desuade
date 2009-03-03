@@ -3,65 +3,33 @@ package com.desuade.motion.tween {
 	//Easing functions can be included with import fl.motion.easing.*
 	import com.desuade.debugging.*
 	import com.desuade.motion.events.*
-	import flash.utils.Timer;
-    import flash.events.TimerEvent;
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
 
 	public class BasicTween extends EventDispatcher {
 		
-		private static var _tweenholder:Object = {};
+		protected static var _tweenholder:Object = {};
 		
-		private var _tweenconfig:Object;
-		private var _tweenID:int = 0;
-		private var _delayTimer:Timer;
-		private var _completed:Boolean = false;
+		protected var _tweenconfig:Object;
+		protected var _tweenID:int = 0;
 			
 		public function BasicTween($tweenObject:Object) {
 			super();
 			_tweenconfig = $tweenObject;
+			Debug.output('motion', 40001);
 		}
-		
-		//static
-		
-		public static function tween($tweenObject:Object):void {
-			var staticTween = new BasicTween($tweenObject);
-			staticTween.start();
-		}
-		
-		///////
 		
 		public function start():void {
-			dispatchEvent(new TweenEvent(TweenEvent.STARTED, {basicTween:this}));
-			_completed = false;
-			if(_tweenconfig.delay > 0) delayedTween(_tweenconfig.delay);
-			else _tweenID = createTween(_tweenconfig);
+			dispatchEvent(new TweenEvent(TweenEvent.STARTED, {tween:this}));
+			_tweenID = createTween(_tweenconfig);
 		}
 		
 		public function stop():void {
-			if(_tweenID != 0){
-				_tweenholder[_tweenID].end();
-			} else {
-				_delayTimer.stop();
-				dispatchEvent(new TweenEvent(TweenEvent.ENDED, {basicTween:this}));
-			}
-		}
-		
-		public function get completed():Boolean{
-			return _completed;
-		}
-		
-		public function get position():Number {
-			if(_tweenID != 0){
-				var pt:PrimitiveTween = _tweenholder[_tweenID];
-				var pos:Number = (pt.target[pt.prop]-pt.startvalue)/(pt.value-pt.startvalue);
-				return pos;
-			} else if(_completed) return 1;
-			else return 0;
+			if(_tweenID != 0) _tweenholder[_tweenID].end();
 		}
 		
 		//BasicTween converts the duration from ms to seconds
-		private function createTween($to:Object):int {
+		protected function createTween($to:Object):int {
 			var ftv = $to.target[$to.prop];
 			var newval:Number = (typeof $to.value == 'string') ? ftv + Number($to.value) : $to.value;
 			var pt:PrimitiveTween = _tweenholder[PrimitiveTween._count] = new PrimitiveTween($to.target, $to.prop, newval, $to.duration*1000, $to.ease);
@@ -69,23 +37,10 @@ package com.desuade.motion.tween {
 			return pt.id;
 		}
 		
-		private function endFunc($o:Object):void {
-			_completed = true;
-			dispatchEvent(new TweenEvent(TweenEvent.ENDED, {basicTween:this, primitiveTween:_tweenholder[_tweenID]}));
+		protected function endFunc($o:Object):void {
+			dispatchEvent(new TweenEvent(TweenEvent.ENDED, {tween:this, primitiveTween:_tweenholder[_tweenID]}));
 			delete _tweenholder[_tweenID];
 			_tweenID = 0;
-		}
-		
-		private function delayedTween($delay:int):void {
-			Debug.output('motion', 40002, [$delay]);
-			_delayTimer = new Timer($delay*1000);
-			_delayTimer.addEventListener(TimerEvent.TIMER, dtFunc);
-			_delayTimer.start();
-		}
-		private function dtFunc($i:Object):void {
-			_delayTimer.stop();
-			_delayTimer = null;
-			_tweenID = createTween(_tweenconfig);
 		}
 
 	}

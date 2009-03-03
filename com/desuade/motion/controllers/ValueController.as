@@ -10,7 +10,7 @@ package com.desuade.motion.controllers {
 		public var target:Object;
 		public var prop:String;
 		public var duration:Number;
-		private var _active:Boolean = false;
+		protected var _active:Boolean = false;
 		public function get active():Boolean{
 			return _active;
 		}
@@ -59,11 +59,11 @@ package com.desuade.motion.controllers {
 		}
 		//private methods
 		
-		private function calculateDuration($previous:Number, $position:Number):Number {
+		protected function calculateDuration($previous:Number, $position:Number):Number {
 			return duration*($position-$previous);
 		}
 
-		private function createTweens():Array {
+		protected function createTweens():Array {
 			var pa:Array = points.getSortedPoints();
 			var ta:Array = [];
 			//skip beginning point (i=1), it gets set and doesn't need to be tweened to initial value

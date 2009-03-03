@@ -6,8 +6,8 @@ package com.desuade.motion.proxies {
 		
 		public static var engine:String;
 		public static var engineVersion:Number;
-		public static var func_tween:Function;
-		public static var func_sequence:Function;
+		protected static var func_tween:Function;
+		protected static var func_sequence:Function;
 
 		public static function loadProxy($name:String, $version:Number, $po:Object):void {
 			engine = $name;

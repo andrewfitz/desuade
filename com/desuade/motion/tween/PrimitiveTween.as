@@ -11,10 +11,10 @@ package com.desuade.motion.tween {
 	import com.desuade.debugging.*
 	import com.desuade.motion.events.*
 
-	public class PrimitiveTween extends EventDispatcher {
+	final public class PrimitiveTween extends EventDispatcher {
 		
 		public static var _count:int = 1000000;
-		private static var _sprite:Sprite = new Sprite();
+		internal static var _sprite:Sprite = new Sprite();
 		
 		public var id:int;
 		public var target:Object;
@@ -22,8 +22,8 @@ package com.desuade.motion.tween {
 		public var value:Number;
 		public var duration:int;
 		public var ease:Function;
-		public var startvalue:Number;
-		public var starttime:int;
+		internal var startvalue:Number;
+		internal var starttime:int;
 		private var difvalue:Number;
 		
 		public function PrimitiveTween($target:Object, $prop:String, $value:Number, $duration:int, $ease:Function = null) {
@@ -32,6 +32,7 @@ package com.desuade.motion.tween {
 			difvalue = (startvalue > value) ? (value-startvalue) : -(startvalue-value);
 			dispatchEvent(new TweenEvent(TweenEvent.STARTED, {primitiveTween:this}));
 			_sprite.addEventListener(Event.ENTER_FRAME, update);
+			Debug.output('motion', 50001, [id]);
 		}
 		
 		private function update(u:Object):void {
@@ -45,7 +46,7 @@ package com.desuade.motion.tween {
 		}
 		
 		public function end($broadcast:Boolean = true):void {
-			Debug.output('motion', 40001, [id]);
+			Debug.output('motion', 50002, [id]);
 			_sprite.removeEventListener(Event.ENTER_FRAME, update);
 			if($broadcast) dispatchEvent(new TweenEvent(TweenEvent.ENDED, {primitiveTween:this}));
 			delete this;

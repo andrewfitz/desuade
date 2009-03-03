@@ -4,7 +4,7 @@ package com.desuade.motion.controllers {
 
 	public dynamic class PointsContainer extends Object {
 	
-		private var _pointcount:Number = 0;
+		protected var _pointcount:Number = 0;
 	
 		public function PointsContainer($value:Number = 0){
 			super();
@@ -48,8 +48,7 @@ package com.desuade.motion.controllers {
 		}
 		
 		//private static methods
-		
-		private static function sortOnPosition(a:Object, b:Object):Number {
+		protected static function sortOnPosition(a:Object, b:Object):Number {
 		    var aPos:Number = a['position'];
 		    var bPos:Number = b['position'];
 		    if(aPos > bPos) {
@@ -61,7 +60,7 @@ package com.desuade.motion.controllers {
 		    }
 		}
 		
-		public static function linear(t:Number, b:Number, c:Number, d:Number, ... args):Number {
+		internal static function linear(t:Number, b:Number, c:Number, d:Number, ... args):Number {
 			return c*t/d+b;
 		}
 		

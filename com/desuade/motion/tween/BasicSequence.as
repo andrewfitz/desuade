@@ -9,10 +9,10 @@ package com.desuade.motion.tween {
 
 	public dynamic class BasicSequence extends Array implements IEventDispatcher {
 		
-		private var _position:int = 0;
-		private var _active:Boolean = false;
-		private var _tween:BasicTween;
-		private var _dispatcher = new EventDispatcher();
+		protected var _position:int = 0;
+		protected var _active:Boolean = false;
+		protected var _tween:BasicTween;
+		protected var _dispatcher = new EventDispatcher();
 	
 		public function BasicSequence(... args) {
 			super();
@@ -48,7 +48,7 @@ package com.desuade.motion.tween {
 			end();
 		}
 		
-		private function play($position:int):void {
+		protected function play($position:int):void {
 			Debug.output('motion', 40004, [$position]);
 			_position = $position;
 			_tween = new BasicTween(this[_position]);
@@ -56,14 +56,14 @@ package com.desuade.motion.tween {
 			_tween.start();
 		}
 		
-		private function end():void {
+		protected function end():void {
 			_tween = null;
 			_active = false;
 			_dispatcher.dispatchEvent(new SequenceEvent(SequenceEvent.ENDED, {basicSequence:this}));
 			Debug.output('motion', 40005);
 		}
 		
-		private function advance($i:Object):void {
+		protected function advance($i:Object):void {
 			if(_position < length-1){
 				play(++_position);
 				_dispatcher.dispatchEvent(new SequenceEvent(SequenceEvent.ADVANCED, {position:_position, basicSequence:this}));
