@@ -15,11 +15,12 @@ package com.desuade.motion {
 				10003: "Tween Proxy Loaded: $ v$",
 				
 				//low level codes
-				40001: "PrimitiveTween ended: $",
+				40001: "PrimitiveTween: tween ended: $",
 				40002: "New tween delayed for $ seconds",
-				40003: "New BasicSequence",
-				40004: "BasicSequence now playing at position $",
-				40005: "BasicSequence ended"
+				40003: "BasicSequence: new sequence",
+				40004: "BasicSequence: sequence now playing at position $",
+				40005: "BasicSequence: sequence ended",
+				40006: "BasicSequence: simulating new position at $"
 			}
 			
 		}

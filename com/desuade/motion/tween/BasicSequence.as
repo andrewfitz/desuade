@@ -29,9 +29,16 @@ package com.desuade.motion.tween {
 			return _active;
 		}
 		
-		public function start($position:int = 0):void {
+		public function start($position:int = 0, $simulate:Boolean = false):void {
 			_active = true;
 			_dispatcher.dispatchEvent(new SequenceEvent(SequenceEvent.STARTED, {basicSequence:this}));
+			if($position > 0 && $simulate){
+				Debug.output('motion', 40006, [$position]);
+				for (var i:int = 0; i < $position; i++) {
+					var t:Object = this[i];
+					t.target[t.prop] = t.value;
+				}
+			}
 			play($position);
 		}
 		
@@ -42,7 +49,7 @@ package com.desuade.motion.tween {
 		}
 		
 		private function play($position:int):void {
-			Debug.output('motion', 40004, [this, $position]);
+			Debug.output('motion', 40004, [$position]);
 			_position = $position;
 			_tween = new BasicTween(this[_position]);
 			_tween.addEventListener(TweenEvent.ENDED, advance);
@@ -66,8 +73,7 @@ package com.desuade.motion.tween {
 			}
 		}
 		
-		//for eventDispatching
-		
+		//for event-dispatching
 		public function addEventListener(type:String, listener:Function, useCapture:Boolean = false, priority:int = 0, useWeakReference:Boolean = false):void{
 			_dispatcher.addEventListener(type, listener, useCapture, priority);
 		}
