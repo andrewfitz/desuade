@@ -41,12 +41,10 @@ package com.desuade.motion.tween {
 		}
 		
 		protected override function createTween($to:Object):PrimitiveTween {
-			if($to.round) addEventListener(TweenEvent.UPDATE, roundTweenValue);
 			var ct:PrimitiveTween = super.createTween($to);
-			if($to.position > 0) {
-				
-			}
+			if($to.position > 0) ct.starttime -= ($to.position*$to.duration)*1000;
 			ct.addEventListener(TweenEvent.UPDATE, updateListener);
+			if($to.round) addEventListener(TweenEvent.UPDATE, roundTweenValue);
 			return ct;
 		}
 		
