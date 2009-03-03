@@ -29,7 +29,7 @@ package com.desuade.motion.tween {
 		///////
 		
 		public function start():void {
-			if(_tweenconfig.delay != undefined) delayedTween(_tweenconfig.delay);
+			if(_tweenconfig.delay > 0) delayedTween(_tweenconfig.delay);
 			else _tweenID = createTween(_tweenconfig);
 		}
 		
@@ -43,7 +43,9 @@ package com.desuade.motion.tween {
 		
 		//BasicTween converts the duration from ms to seconds
 		private function createTween($to:Object):int {
-			var pt:PrimitiveTween = _tweenholder[PrimitiveTween._count] = new PrimitiveTween($to.target, $to.prop, $to.value, $to.duration*1000, $to.ease);
+			var ftv = $to.target[$to.prop];
+			var newval:Number = (typeof $to.value == 'string') ? ftv + Number($to.value) : $to.value;
+			var pt:PrimitiveTween = _tweenholder[PrimitiveTween._count] = new PrimitiveTween($to.target, $to.prop, newval, $to.duration*1000, $to.ease);
 			pt.addEventListener(TweenEvent.ENDED, endFunc);
 			return pt.id;
 		}
@@ -53,6 +55,7 @@ package com.desuade.motion.tween {
 		}
 		
 		private function delayedTween($delay:int):void {
+			Debug.output('motion', 40002, [$delay]);
 			_delayTimer = new Timer($delay*1000);
 			_delayTimer.addEventListener(TimerEvent.TIMER, dtFunc);
 			_delayTimer.start();
