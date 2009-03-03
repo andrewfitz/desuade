@@ -2,6 +2,8 @@ package com.desuade.motion.tween {
 	
 	import flash.utils.Timer;
     import flash.events.TimerEvent;
+	import flash.events.Event;
+	import flash.events.EventDispatcher;
 	
 	import com.desuade.debugging.*
 	import com.desuade.motion.events.*
@@ -39,12 +41,11 @@ package com.desuade.motion.tween {
 		}
 		
 		protected override function createTween($to:Object):int {
-			if($to.round){
-				addEventListener(TweenEvent.UPDATE, roundTweenValue);
-			}
+			if($to.round) addEventListener(TweenEvent.UPDATE, roundTweenValue);
 			delete $to.round;
-			
-			return super.createTween($to);
+			var ctid:int = super.createTween($to);
+			_tweenholder[ctid].addEventListener(TweenEvent.UPDATE, updateListener);
+			return ctid;
 		}
 		
 		protected override function endFunc($o:Object):void {
@@ -80,9 +81,14 @@ package com.desuade.motion.tween {
 			_tweenID = createTween(_tweenconfig);
 		}
 		
+		protected function updateListener($i:Object):void {
+			dispatchEvent(new TweenEvent(TweenEvent.UPDATE, {tween:this, primitiveTween:_tweenholder[_tweenID]}));
+		}
+		
 		protected function roundTweenValue($i:Object):void {
-			trace("ROUNDING");
-			$i.info.tween.target[$i.info.tween.prop] = int($i.info.tween.target[$i.info.tween.prop]);
+			var pt:Object = $i.info.primitiveTween;
+			Debug.output('motion', 50003, [pt.id, pt.target[pt.prop], int(pt.target[pt.prop])]);
+			pt.target[pt.prop] = int(pt.target[pt.prop]);
 		}
 	
 	}

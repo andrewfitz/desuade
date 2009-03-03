@@ -24,7 +24,8 @@ package com.desuade.motion {
 				
 				//primitive low level codes
 				50001: "[PrimitiveTween] tween started: $",
-				50002: "[PrimitiveTween] tween ended: $"
+				50002: "[PrimitiveTween] tween ended: $",
+				50003: "[Tween] rounding tween $: $ -> $"
 				
 			}
 			
