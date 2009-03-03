@@ -16,7 +16,10 @@ package com.desuade.motion {
 				
 				//low level codes
 				40001: "PrimitiveTween ended: $",
-				40002: "New tween delayed for $ seconds"
+				40002: "New tween delayed for $ seconds",
+				40003: "New BasicSequence",
+				40004: "BasicSequence now playing at position $",
+				40005: "BasicSequence ended"
 			}
 			
 		}

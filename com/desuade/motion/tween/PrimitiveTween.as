@@ -44,10 +44,10 @@ package com.desuade.motion.tween {
 			}
 		}
 		
-		public function end():void {
+		public function end($broadcast:Boolean = true):void {
 			Debug.output('motion', 40001, [id]);
 			_sprite.removeEventListener(Event.ENTER_FRAME, update);
-			dispatchEvent(new TweenEvent(TweenEvent.ENDED, {primitiveTween:this}));
+			if($broadcast) dispatchEvent(new TweenEvent(TweenEvent.ENDED, {primitiveTween:this}));
 			delete this;
 		}
 	

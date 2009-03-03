@@ -5,8 +5,10 @@ package com.desuade.motion.tween {
 	import com.desuade.motion.events.*
 	import flash.utils.Timer;
     import flash.events.TimerEvent;
+	import flash.events.Event;
+	import flash.events.EventDispatcher;
 
-	public class BasicTween extends Object {
+	public class BasicTween extends EventDispatcher {
 		
 		private static var _tweenholder:Object = {};
 		
@@ -30,6 +32,7 @@ package com.desuade.motion.tween {
 		///////
 		
 		public function start():void {
+			dispatchEvent(new TweenEvent(TweenEvent.STARTED, {basicTween:this}));
 			_completed = false;
 			if(_tweenconfig.delay > 0) delayedTween(_tweenconfig.delay);
 			else _tweenID = createTween(_tweenconfig);
@@ -40,6 +43,7 @@ package com.desuade.motion.tween {
 				_tweenholder[_tweenID].end();
 			} else {
 				_delayTimer.stop();
+				dispatchEvent(new TweenEvent(TweenEvent.ENDED, {basicTween:this}));
 			}
 		}
 		
@@ -66,9 +70,10 @@ package com.desuade.motion.tween {
 		}
 		
 		private function endFunc($o:Object):void {
+			_completed = true;
+			dispatchEvent(new TweenEvent(TweenEvent.ENDED, {basicTween:this, primitiveTween:_tweenholder[_tweenID]}));
 			delete _tweenholder[_tweenID];
 			_tweenID = 0;
-			_completed = true;
 		}
 		
 		private function delayedTween($delay:int):void {
@@ -82,7 +87,7 @@ package com.desuade.motion.tween {
 			_delayTimer = null;
 			_tweenID = createTween(_tweenconfig);
 		}
-	
+
 	}
 
 }

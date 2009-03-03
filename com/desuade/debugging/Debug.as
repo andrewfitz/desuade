@@ -12,11 +12,12 @@ package com.desuade.debugging {
 		}
 		
 		public static function output($codeSet:String, $code:Number, $props:Array = null):void {
+			
 			if (enabled) {
 				if($code < level) {
 					if(_codes[$codeSet] != undefined) {
 						if(onlyCodes) trace("Debug: " + $codeSet + " #" + $code);
-						else trace(r(_codes[$codeSet][$code], $props));
+						else trace(r(_codes[$codeSet][$code], $props || []));
 					} else trace("Debug: " + $codeSet + "(missing) #" + $code);
 				}
 			}
