@@ -14,7 +14,7 @@ package com.desuade.motion.proxies {
 		
 		//remember to make sure the custom tweening engine can recognize the ease String 'linear'
 		public static function standardTween($to:Object):void {
-			BasicTween.tween($to);
+			new BasicTween($to).start();
 		}
 		
 		public static function standardSequence($ta:Array):void {

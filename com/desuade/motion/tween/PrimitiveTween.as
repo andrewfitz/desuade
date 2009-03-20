@@ -11,7 +11,7 @@ package com.desuade.motion.tween {
 	import com.desuade.debugging.*
 	import com.desuade.motion.events.*
 
-	final public class PrimitiveTween extends EventDispatcher {
+	public class PrimitiveTween extends EventDispatcher {
 		
 		public static var _count:int = 1000000;
 		internal static var _sprite:Sprite = new Sprite();
@@ -24,7 +24,7 @@ package com.desuade.motion.tween {
 		public var ease:Function;
 		internal var startvalue:Number;
 		internal var starttime:int;
-		private var difvalue:Number;
+		internal var difvalue:Number;
 		
 		public function PrimitiveTween($target:Object, $prop:String, $value:Number, $duration:int, $ease:Function = null) {
 			super();
@@ -35,7 +35,7 @@ package com.desuade.motion.tween {
 			Debug.output('motion', 50001, [id]);
 		}
 		
-		private function update(u:Object):void {
+		protected function update(u:Object):void {
 			var tmr:int = getTimer() - starttime;
 			target[prop] = ease(tmr, startvalue, difvalue, duration);
 			dispatchEvent(new TweenEvent(TweenEvent.UPDATE, {primitiveTween:this}));
@@ -52,7 +52,7 @@ package com.desuade.motion.tween {
 			delete this;
 		}
 		
-		private static function linear(t:Number, b:Number, c:Number, d:Number):Number {
+		protected static function linear(t:Number, b:Number, c:Number, d:Number):Number {
 			return c*t/d+b;
 		}
 	
