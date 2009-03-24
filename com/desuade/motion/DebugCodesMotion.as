@@ -14,13 +14,13 @@ package com.desuade.motion {
 				10002: "[ValueController] controlled tween for $.$ ended",
 				10003: "[TweenProxy] loaded engine: $ v$",
 				
-				//basic low level codes
-				40001: "[BasicTween] new tween",
-				40002: "[BasicTween] new tween delayed for $ seconds",
-				40003: "[BasicSequence] new sequence",
-				40004: "[BasicSequence] sequence now playing at position $",
-				40005: "[BasicSequence] sequence ended",
-				40006: "[BasicSequence] simulating new position at $",
+				// low level codes
+				40001: "[Tween] new tween",
+				40002: "[Tween] new tween delayed for $ seconds",
+				40003: "[Sequence] new sequence",
+				40004: "[Sequence] sequence now playing at position $",
+				40005: "[Sequence] sequence ended",
+				40006: "[Sequence] simulating new position at $",
 				
 				//primitive low level codes
 				50001: "[PrimitiveTween] tween started: $",

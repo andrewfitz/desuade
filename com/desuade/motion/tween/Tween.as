@@ -10,8 +10,14 @@ package com.desuade.motion.tween {
 	
 	public class Tween extends BasicTween {
 		
+		protected static var _tweenholder = BasicTween._tweenholder;
+		
 		protected var _delayTimer:Timer;
 		protected var _completed:Boolean = false;
+		
+		public function Tween($tweenObject:Object) {
+			super($tweenObject);
+		}
 		
 		//Static tween function
 		public static function tween($tweenObject:Object):void {
@@ -20,9 +26,6 @@ package com.desuade.motion.tween {
 		}
 		
 		//overriding methods
-		public override function Tween($tweenObject:Object) {
-			super($tweenObject);
-		}
 		
 		public override function start():void {
 			dispatchEvent(new TweenEvent(TweenEvent.STARTED, {tween:this}));

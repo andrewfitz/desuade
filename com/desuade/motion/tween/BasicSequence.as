@@ -31,7 +31,7 @@ package com.desuade.motion.tween {
 		
 		public function start($position:int = 0, $simulate:Boolean = false):void {
 			_active = true;
-			_dispatcher.dispatchEvent(new SequenceEvent(SequenceEvent.STARTED, {basicSequence:this}));
+			_dispatcher.dispatchEvent(new SequenceEvent(SequenceEvent.STARTED, {sequence:this}));
 			if($position > 0 && $simulate){
 				Debug.output('motion', 40006, [$position]);
 				for (var i:int = 0; i < $position; i++) {
@@ -59,14 +59,14 @@ package com.desuade.motion.tween {
 		protected function end():void {
 			_tween = null;
 			_active = false;
-			_dispatcher.dispatchEvent(new SequenceEvent(SequenceEvent.ENDED, {basicSequence:this}));
+			_dispatcher.dispatchEvent(new SequenceEvent(SequenceEvent.ENDED, {sequence:this}));
 			Debug.output('motion', 40005);
 		}
 		
 		protected function advance($i:Object):void {
 			if(_position < length-1){
 				play(++_position);
-				_dispatcher.dispatchEvent(new SequenceEvent(SequenceEvent.ADVANCED, {position:_position, basicSequence:this}));
+				_dispatcher.dispatchEvent(new SequenceEvent(SequenceEvent.ADVANCED, {position:_position, sequence:this}));
 			} else {
 				_tween.removeEventListener(TweenEvent.ENDED, advance);
 				end();
