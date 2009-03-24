@@ -31,6 +31,7 @@ package com.desuade.motion.tween {
 		
 		public function start($position:int = 0, $simulate:Boolean = false):void {
 			_active = true;
+			Debug.output('motion', 40008);
 			_dispatcher.dispatchEvent(new SequenceEvent(SequenceEvent.STARTED, {sequence:this}));
 			if($position > 0 && $simulate){
 				Debug.output('motion', 40006, [$position]);

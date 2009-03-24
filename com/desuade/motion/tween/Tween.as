@@ -21,17 +21,18 @@ package com.desuade.motion.tween {
 		
 		//Static tween function
 		public static function tween($tweenObject:Object):void {
-			var staticTween = new Tween($tweenObject);
-			staticTween.start();
+			var st:Tween = new Tween($tweenObject);
+			st.start();
 		}
 		
 		//overriding methods
-		
-		public override function start():void {
-			dispatchEvent(new TweenEvent(TweenEvent.STARTED, {tween:this}));
+		public override function start($delay:Number = -1, $position:Number = -1):void {
+			_tweenconfig.delay = ($delay == -1) ? _tweenconfig.delay : $delay;
+			_tweenconfig.position = ($position == -1) ? _tweenconfig.position : $position;
 			_completed = false;
+			dispatchEvent(new TweenEvent(TweenEvent.STARTED, {tween:this}));
 			if(_tweenconfig.delay > 0) delayedTween(_tweenconfig.delay);
-			else _tweenID = createTween(_tweenconfig).id;
+			else _tweenID = createTween(_tweenconfig);
 		}
 		
 		public override function stop():void {
@@ -43,29 +44,39 @@ package com.desuade.motion.tween {
 			}
 		}
 		
-		protected override function createTween($to:Object):PrimitiveTween {
-			var ftv = $to.target[$to.prop];
-			var newval:Number = (typeof $to.value == 'string') ? ftv + Number($to.value) : $to.value;
+		protected override function createTween($to:Object):int {
 			var pt:PrimitiveTween;
-			if($to.bezier == undefined){
-				 pt = _tweenholder[PrimitiveTween._count] = new PrimitiveTween($to.target, $to.prop, newval, $to.duration*1000, $to.ease);
+			if($to.func != undefined){
+				$to.func.apply(null, $to.args);
+				_completed = true;
+				dispatchEvent(new TweenEvent(TweenEvent.ENDED, {tween:this}));
+				return 0;
 			} else {
-				var newbez:Array = [];
-				for (var i:int = 0; i < $to.bezier.length; i++) {
-					newbez.push((typeof $to.bezier[i] == 'string') ? ftv + Number($to.bezier[i]) : $to.bezier[i]);
+				var ftv = $to.target[$to.prop];
+				var newval:Number = (typeof $to.value == 'string') ? ftv + Number($to.value) : $to.value;
+				if($to.bezier == undefined){
+					 pt = _tweenholder[PrimitiveTween._count] = new PrimitiveTween($to.target, $to.prop, newval, $to.duration*1000, $to.ease);
+				} else {
+					var newbez:Array = [];
+					for (var i:int = 0; i < $to.bezier.length; i++) {
+						newbez.push((typeof $to.bezier[i] == 'string') ? ftv + Number($to.bezier[i]) : $to.bezier[i]);
+					}
+					pt = _tweenholder[PrimitiveTween._count] = new PrimitiveBezierTween($to.target, $to.prop, newval, $to.duration*1000, newbez, $to.ease);
 				}
-				pt = _tweenholder[PrimitiveTween._count] = new PrimitiveBezierTween($to.target, $to.prop, newval, $to.duration*1000, newbez, $to.ease);
+				pt.addEventListener(TweenEvent.ENDED, endFunc);
+				if($to.position > 0) {
+					pt.starttime -= ($to.position*$to.duration)*1000;
+					Debug.output('motion', 40007, [$to.position]);
+				}
+				pt.addEventListener(TweenEvent.UPDATE, updateListener);
+				if($to.round) addEventListener(TweenEvent.UPDATE, roundTweenValue);
+				return pt.id;
 			}
-			pt.addEventListener(TweenEvent.ENDED, endFunc);
-			if($to.position > 0) pt.starttime -= ($to.position*$to.duration)*1000;
-			pt.addEventListener(TweenEvent.UPDATE, updateListener);
-			if($to.round) addEventListener(TweenEvent.UPDATE, roundTweenValue);
-			return pt;
 		}
 		
 		protected override function endFunc($o:Object):void {
-			super.endFunc($o);
 			_completed = true;
+			super.endFunc($o);
 		}
 		
 		////new methods
@@ -93,7 +104,7 @@ package com.desuade.motion.tween {
 		protected function dtFunc($i:Object):void {
 			_delayTimer.stop();
 			_delayTimer = null;
-			_tweenID = createTween(_tweenconfig).id;
+			_tweenID = createTween(_tweenconfig);
 		}
 		
 		protected function updateListener($i:Object):void {
