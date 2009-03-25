@@ -1,21 +1,23 @@
 package com.desuade.partigen.particles {
 	
-	import com.desuade.partigen.emitters.*
-	import flash.display.Sprite
+	import flash.display.Sprite;
+	
+	import com.desuade.debugging.*;
+	import com.desuade.partigen.emitters.*;
+	import com.desuade.partigen.events.*;
 
-	public class Particle extends Sprite {
+	public dynamic class Particle extends Sprite {
 		
 		protected static var _count:int = 0;
 		
 		public var controllers:Object;
 		
-		protected var _emitter:Emitter;
+		internal var _emitter:Emitter;
 		protected var _id:int;
 	
-		public function Particle($emitter:Emitter) {
+		public function Particle() {
 			super();
 			_id = ++Particle._count;
-			_emitter = $emitter;
 			dispatchEvent(new ParticleEvent(ParticleEvent.BORN, {particle:this}));
 			Debug.output('partigen', 50001, [id]);
 		}

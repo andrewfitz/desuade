@@ -12,6 +12,11 @@ package com.desuade.partigen {
 				10000: "Partigen debug codes for aiding in development.",
 				10001: "Test code for $ and $",
 				
+				
+				//
+				40001: "[Emitter] running update on emitter: $ at: $",
+				
+				
 				//particle events
 				50001: "[Particle] a new particle was born (id:$)",
 				50002: "[Particle] a particle died (id:$)"
