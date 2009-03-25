@@ -10,7 +10,7 @@ package com.desuade.motion.proxies {
 		public static var engineVersion:Number = 1.0;
 	
 		public static function init():void {
-			TweenProxy.loadProxy(engineName, engineVersion, {func_tween: basicTween, func_sequence: basicSequence, func_sequenceEnd: listenToSequenceEnd});
+			TweenProxy.loadProxy(engineName, engineVersion, {func_tween: basicTween, func_sequence: basicSequence, func_sequenceEnd: listenToSequenceEnd, func_sequenceStop: stopSequence});
 		}
 		
 		//remember to make sure the custom tweening engine can recognize the ease String 'linear'
@@ -31,6 +31,10 @@ package com.desuade.motion.proxies {
 		
 		public static function listenToSequenceEnd($seq:BasicSequence, $fc:Function):void {
 			$seq.addEventListener(SequenceEvent.ENDED, $fc);
+		}
+		
+		public static function stopSequence($seq:Sequence, $prop:String, $func:Function):void {
+			$seq.stop();
 		}
 	
 	}

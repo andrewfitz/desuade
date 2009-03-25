@@ -10,7 +10,7 @@ package com.desuade.motion.proxies {
 	
 		public static function init():void {
 			Twease.register(Easing, Colors);
-			TweenProxy.loadProxy(engineName, engineVersion, {func_tween: standardTween, func_sequence: standardSequence, func_sequenceEnd: listenToSequenceEnd});
+			TweenProxy.loadProxy(engineName, engineVersion, {func_tween: standardTween, func_sequence: standardSequence, func_sequenceEnd: listenToSequenceEnd, func_sequenceStop: stopSequence});
 		}
 		
 		//remember to make sure the custom tweening engine can recognize the ease String 'linear'
@@ -37,6 +37,14 @@ package com.desuade.motion.proxies {
 		
 		public static function listenToSequenceEnd($seq:Number, $fc:Function):void {
 			Twease.queue[$seq].push({func:$fc});
+		}
+		
+		public static function stopSequence($seq:Number, $prop:String, $func:Function):void {
+			var s = Twease.queue[$seq];
+			delete Twease.tweens[s[s.position].target][$prop];
+			delete Twease.activetweens[s[s.position].target][$prop];
+			delete Twease.queue[$seq];
+			if($func != null) $func();
 		}
 	
 	}

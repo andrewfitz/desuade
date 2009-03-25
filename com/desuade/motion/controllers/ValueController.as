@@ -11,6 +11,8 @@ package com.desuade.motion.controllers {
 		public var prop:String;
 		public var duration:Number;
 		protected var _active:Boolean = false;
+		protected var _sequence;
+		
 		public function get active():Boolean{
 			return _active;
 		}
@@ -37,15 +39,13 @@ package com.desuade.motion.controllers {
 			var ta:Array = createTweens();
 			//watch random and spread here
 			target[prop] = (typeof points.beginning.value == 'string') ? target[prop] + Number(points.beginning.value) : points.beginning.value;
-			TweenProxy.sequenceEndFunc(TweenProxy.sequence(ta), this.tweenEnd);
 			_active = true;
+			_sequence = TweenProxy.sequence(ta);
+			TweenProxy.sequenceEndFunc(_sequence, this.tweenEnd);
 		}
 		
 		public function stop():void {
-			_active = false;
-			
-			//make this work soon!
-			
+			TweenProxy.stopSequence(_sequence, prop, this.tweenEnd);
 		}
 		
 		public function getPoints():Array {
