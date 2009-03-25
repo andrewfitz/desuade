@@ -2,7 +2,7 @@ package com.desuade.motion.controllers {
 	
 	import com.desuade.debugging.*
 
-	public dynamic class PointsContainer extends Object {
+	internal dynamic class PointsContainer extends Object {
 	
 		protected var _pointcount:Number = 0;
 	

@@ -6,6 +6,7 @@ package com.desuade.motion.tween {
 	import flash.events.EventDispatcher;
 	
 	import com.desuade.debugging.*
+	import com.desuade.utils.*
 	import com.desuade.motion.events.*
 	
 	public class Tween extends BasicTween {
@@ -53,7 +54,19 @@ package com.desuade.motion.tween {
 				return 0;
 			} else {
 				var ftv = $to.target[$to.prop];
-				var newval:Number = (typeof $to.value == 'string') ? ftv + Number($to.value) : $to.value;
+				var newval:*;
+				if($to.value is Random){
+					newval = $to.value.randomValue;
+				} else {
+					newval = $to.value;
+				}
+				if($to.relative === true){
+					newval = ftv + Number(newval);
+				} else if($to.relative === false){
+					newval = Number(newval);
+				} else {
+					newval = (typeof newval == 'string') ? ftv + Number(newval) : newval;
+				}
 				if($to.bezier == undefined){
 					 pt = _tweenholder[PrimitiveTween._count] = new PrimitiveTween($to.target, $to.prop, newval, $to.duration*1000, $to.ease);
 				} else {

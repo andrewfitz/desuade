@@ -68,7 +68,7 @@ package com.desuade.motion.controllers {
 			var ta:Array = [];
 			//skip beginning point (i=1), it gets set and doesn't need to be tweened to initial value
 			for (var i:int = 1; i < pa.length; i++) {
-				var tmo:Object = {target:target, prop:prop, value:(points[pa[i]].value is Random) ? points[pa[i]].value.randomValue : points[pa[i]].value, ease:points[pa[i]].ease, duration:calculateDuration(points[pa[i-1]].position, points[pa[i]].position), delay:0};
+				var tmo:Object = {target:target, prop:prop, value:points[pa[i]].value, ease:points[pa[i]].ease, duration:calculateDuration(points[pa[i-1]].position, points[pa[i]].position), delay:0};
 				ta.push(tmo);
 			}
 			return ta;
