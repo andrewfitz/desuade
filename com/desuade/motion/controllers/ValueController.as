@@ -35,9 +35,9 @@ package com.desuade.motion.controllers {
 		
 		public function start():void {
 			var ta:Array = createTweens();
-			ta[ta.length-1].func = this.tweenEnd;
+			//watch random and spread here
 			target[prop] = (typeof points.beginning.value == 'string') ? target[prop] + Number(points.beginning.value) : points.beginning.value;
-			TweenProxy.sequence(ta);
+			TweenProxy.sequenceEndFunc(TweenProxy.sequence(ta), this.tweenEnd);
 			_active = true;
 		}
 		

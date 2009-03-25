@@ -8,6 +8,7 @@ package com.desuade.motion.proxies {
 		public static var engineVersion:Number;
 		protected static var func_tween:Function;
 		protected static var func_sequence:Function;
+		protected static var func_sequenceEnd:Function;
 
 		public static function loadProxy($name:String, $version:Number, $po:Object):void {
 			engine = $name;
@@ -24,6 +25,10 @@ package com.desuade.motion.proxies {
 		
 		public static function sequence($sequenceArray:Array):* {
 			return func_sequence($sequenceArray);
+		}
+		
+		public static function sequenceEndFunc($seq:*, $fc:Function):void {
+			func_sequenceEnd($seq, $fc);
 		}
 		
 	}

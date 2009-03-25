@@ -2,6 +2,7 @@ package com.desuade.motion.proxies {
 	
 	import com.desuade.motion.tween.*
 	import com.desuade.debugging.*
+	import com.desuade.motion.events.*
 
 	public class TweenToMotion extends Object {
 		
@@ -9,7 +10,7 @@ package com.desuade.motion.proxies {
 		public static var engineVersion:Number = 1.0;
 	
 		public static function init():void {
-			TweenProxy.loadProxy(engineName, engineVersion, {func_tween: standardTween, func_sequence: standardSequence});
+			TweenProxy.loadProxy(engineName, engineVersion, {func_tween: standardTween, func_sequence: standardSequence, func_sequenceEnd: listenToSequenceEnd});
 		}
 		
 		//remember to make sure the custom tweening engine can recognize the ease String 'linear'
@@ -26,6 +27,10 @@ package com.desuade.motion.proxies {
 			}
 			ss.start();
 			return ss;
+		}
+		
+		public static function listenToSequenceEnd($seq:Sequence, $fc:Function):void {
+			$seq.addEventListener(SequenceEvent.ENDED, $fc);
 		}
 	
 	}

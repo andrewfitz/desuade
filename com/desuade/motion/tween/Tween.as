@@ -58,7 +58,6 @@ package com.desuade.motion.tween {
 				var newval:Number;
 				if($to.value is Random){
 					ntval = $to.value.randomValue;
-					trace("RANDOM: " + ntval);
 				} else {
 					ntval = $to.value;
 				}
