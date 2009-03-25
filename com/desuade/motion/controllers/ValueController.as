@@ -10,6 +10,7 @@ package com.desuade.motion.controllers {
 		public var target:Object;
 		public var prop:String;
 		public var duration:Number;
+		public var precision:int;
 		protected var _active:Boolean = false;
 		protected var _sequence;
 		
@@ -17,18 +18,19 @@ package com.desuade.motion.controllers {
 			return _active;
 		}
 	
-		public function ValueController($target:Object, $prop:String, $duration:Number, $setvalue:Boolean = true){
+		public function ValueController($target:Object, $prop:String, $duration:Number, $precision:int = 0, $setvalue:Boolean = true){
 			super();
 			target = $target;
 			prop = $prop;
 			duration = $duration;
+			precision = $precision;
 			points = new PointsContainer(($setvalue) ? $target[$prop] : null);
 		}
 		
 		//public methods
 		
-		public function addPoint($value:*, $position:Number, $ease:* = null, $label:String = 'point'):Object {
-			return points.addPoint($value, $position, $ease || PointsContainer.linear, $label);
+		public function addPoint($value:*, $spread:Number, $position:Number, $ease:* = null, $label:String = 'point'):Object {
+			return points.addPoint($value, $spread, $position, $ease || PointsContainer.linear, $label);
 		}
 		
 		public function removePoint($label:String):void {
@@ -37,8 +39,8 @@ package com.desuade.motion.controllers {
 		
 		public function start():void {
 			var ta:Array = createTweens();
-			//watch random and spread here
-			target[prop] = (typeof points.beginning.value == 'string') ? target[prop] + Number(points.beginning.value) : points.beginning.value;
+			var nv:Number = (typeof points.beginning.value == 'string') ? target[prop] + Number(points.beginning.value) : points.beginning.value;
+			target[prop] = (points.beginning.spread != 0) ? Random.fromRange(nv, nv + points.beginning.spread, precision) : nv;
 			_active = true;
 			_sequence = TweenProxy.sequence(ta);
 			TweenProxy.sequenceEndFunc(_sequence, this.tweenEnd);
@@ -71,7 +73,10 @@ package com.desuade.motion.controllers {
 			var ta:Array = [];
 			//skip beginning point (i=1), it gets set and doesn't need to be tweened to initial value
 			for (var i:int = 1; i < pa.length; i++) {
-				var tmo:Object = {target:target, prop:prop, value:points[pa[i]].value, ease:points[pa[i]].ease, duration:calculateDuration(points[pa[i-1]].position, points[pa[i]].position), delay:0};
+				var nuv:Number = Number(points[pa[i]].value);
+				var nv:* = (points[pa[i]].spread != 0) ? Random.fromRange(nuv, nuv + points[pa[i]].spread, precision) : nuv;
+				nv = (typeof points[pa[i]].value == 'string') ? nv.toString() : nv;
+				var tmo:Object = {target:target, prop:prop, value:nv, ease:points[pa[i]].ease, duration:calculateDuration(points[pa[i-1]].position, points[pa[i]].position), delay:0};
 				ta.push(tmo);
 			}
 			return ta;

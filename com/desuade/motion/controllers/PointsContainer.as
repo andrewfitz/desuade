@@ -8,14 +8,14 @@ package com.desuade.motion.controllers {
 	
 		public function PointsContainer($value:Number = 0){
 			super();
-			this.beginning = {value:$value, position:0};
-			this.end = {value:$value, position:1, ease:linear};
+			this.beginning = {value:$value, spread:0, position:0};
+			this.end = {value:$value, spread:0, position:1, ease:linear};
 		}
 		
-		public function addPoint($value:*, $position:Number, $ease:*, $label:String):Object {
+		public function addPoint($value:*, $spread:Number, $position:Number, $ease:*, $label:String):Object {
 			$label = ($label == 'point') ? 'point' + ++_pointcount : $label;
 			Debug.output('motion', 10001, [$label, $position]);
-			return this[$label] = {value:$value, position:$position, ease:$ease};
+			return this[$label] = {value:$value, spread:$spread, position:$position, ease:$ease};
 		}
 		
 		public function removePoint($label:String):void {
@@ -41,9 +41,10 @@ package com.desuade.motion.controllers {
 				var p:Object = this[pa[i]];
 				p.ease = linear;
 				p.value = $value;
+				p.spread = 0;
 			}
-			this.beginning.value = $value;
-			this.end.value = $value;
+			this.beginning.value = this.end.value = $value;
+			this.beginning.spread = this.end.spread = 0;
 			this.end.ease = linear;
 		}
 		
