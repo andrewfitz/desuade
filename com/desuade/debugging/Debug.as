@@ -4,7 +4,7 @@ package com.desuade.debugging {
 	
 		private static var _codes:Object = {};
 		public static var onlyCodes:Boolean = false;
-		public static var enabled:Boolean = true;
+		public static var enabled:Boolean = false;
 		public static var level:int = 90000;
 		
 		public static function load($codeset:CodeSet):void {

@@ -15,10 +15,9 @@ package com.desuade.partigen.emitters {
 		
 		protected static var _count:int = 0;
 		
-		public var renderer:Renderer;
+		public var renderer:Renderer = new NullRenderer();
 		public var burst:int = 1;
 		public var particles:Object;
-		public var target:DisplayObjectContainer;
 		public var ordering:String = 'top, bottom, random';
 		public var particle:Class;
 		public var controllers:Object;
@@ -31,6 +30,7 @@ package com.desuade.partigen.emitters {
 		public function Emitter() {
 			super();
 			_id = ++Emitter._count;
+			Debug.output('partigen', 20001, [id]);
 		}
 		
 		//getters setters
@@ -67,9 +67,9 @@ package com.desuade.partigen.emitters {
 			for (var i:int = 0; i < $burst; i++) {
 				var np:Particle = new particle();
 				np._emitter = this;
-				np.x = Random.fromRange(this.x-100, this.x+100);
-				np.y = Random.fromRange(this.y-100, this.y+100);
-				target.addChild(np);
+				np.x = Random.fromRange(this.x-1, this.x+1);
+				np.y = Random.fromRange(this.y-1, this.y+1);
+				renderer.addParticle(np);
 			}
 		}
 		
