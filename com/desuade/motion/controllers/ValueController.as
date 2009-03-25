@@ -36,13 +36,16 @@ package com.desuade.motion.controllers {
 		public function start():void {
 			var ta:Array = createTweens();
 			ta[ta.length-1].func = this.tweenEnd;
-			target[prop] = points.beginning.value;
+			target[prop] = (typeof points.beginning.value == 'string') ? target[prop] + Number(points.beginning.value) : points.beginning.value;
 			TweenProxy.sequence(ta);
 			_active = true;
 		}
 		
 		public function stop():void {
 			_active = false;
+			
+			//make this work soon!
+			
 		}
 		
 		public function getPoints():Array {

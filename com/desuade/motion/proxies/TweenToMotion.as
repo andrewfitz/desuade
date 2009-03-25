@@ -13,16 +13,19 @@ package com.desuade.motion.proxies {
 		}
 		
 		//remember to make sure the custom tweening engine can recognize the ease String 'linear'
-		public static function standardTween($to:Object):void {
-			new Tween($to).start();
+		public static function standardTween($to:Object):Tween {
+			var t:Tween = new Tween($to);
+			t.start();
+			return t;
 		}
 		
-		public static function standardSequence($ta:Array):void {
+		public static function standardSequence($ta:Array):Sequence {
 			var ss:Sequence = new Sequence();
 			for (var i:int = 0; i < $ta.length; i++) {
 				ss.push($ta[i]);
 			}
 			ss.start();
+			return ss;
 		}
 	
 	}

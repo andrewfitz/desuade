@@ -18,12 +18,12 @@ package com.desuade.motion.proxies {
 			Debug.output('motion', 10003, [engine, engineVersion]);
 		}
 		
-		public static function tween($tweenObject:Object):void {
-			func_tween($tweenObject);
+		public static function tween($tweenObject:Object):* {
+			return func_tween($tweenObject);
 		}
 		
-		public static function sequence($sequenceArray:Array):void {
-			func_sequence($sequenceArray);
+		public static function sequence($sequenceArray:Array):* {
+			return func_sequence($sequenceArray);
 		}
 		
 	}
