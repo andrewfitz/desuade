@@ -54,18 +54,19 @@ package com.desuade.motion.tween {
 				return 0;
 			} else {
 				var ftv = $to.target[$to.prop];
-				var newval:*;
+				var ntval:*;
+				var newval:Number;
 				if($to.value is Random){
-					newval = $to.value.randomValue;
+					ntval = $to.value.randomValue;
 				} else {
-					newval = $to.value;
+					ntval = $to.value;
 				}
 				if($to.relative === true){
-					newval = ftv + Number(newval);
+					newval = ftv + Number(ntval);
 				} else if($to.relative === false){
-					newval = Number(newval);
+					newval = Number(ntval);
 				} else {
-					newval = (typeof newval == 'string') ? ftv + Number(newval) : newval;
+					newval = (typeof ntval == 'string') ? ftv + Number(ntval) : ntval;
 				}
 				if($to.bezier == undefined){
 					 pt = _tweenholder[PrimitiveTween._count] = new PrimitiveTween($to.target, $to.prop, newval, $to.duration*1000, $to.ease);
