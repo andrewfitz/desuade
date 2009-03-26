@@ -8,14 +8,23 @@ package com.desuade.partigen.renderers {
 	public class StandardRenderer extends Renderer {
 		
 		public var target:DisplayObjectContainer;
+		public var order:String;
 	
-		public function StandardRenderer($target:DisplayObjectContainer) {
+		public function StandardRenderer($target:DisplayObjectContainer, $order:String = 'top') {
 			super();
+			order = $order;
 			target = $target;
 		}
 		
 		public override function addParticle($p:Particle):void {
-			target.addChild($p);
+			switch (order) {
+				case 'top' :
+					target.addChild($p);
+				break;
+				case 'bottom' :
+					target.addChildAt($p, 0);
+				break;
+			}
 			super.addParticle($p);
 		}
 		

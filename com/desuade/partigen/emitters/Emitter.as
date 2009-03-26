@@ -19,7 +19,6 @@ package com.desuade.partigen.emitters {
 		public var renderer:Renderer;
 		public var pool:Pool;
 		public var burst:int = 1;
-		public var ordering:String = 'top, bottom, random';
 		public var particle:Class;
 		public var controllers:Object;
 		
@@ -107,4 +106,3 @@ package com.desuade.partigen.emitters {
 	}
 
 }
-
