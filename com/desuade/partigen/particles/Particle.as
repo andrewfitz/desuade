@@ -48,4 +48,3 @@ package com.desuade.partigen.particles {
 	}
 
 }
-

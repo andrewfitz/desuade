@@ -20,7 +20,6 @@ package com.desuade.partigen.emitters {
 		public var pool:Pool;
 		public var burst:int = 1;
 		public var particle:Class;
-		public var controllers:Object;
 		
 		protected var _id:int;
 		protected var _eps:int;
