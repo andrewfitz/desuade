@@ -15,8 +15,8 @@ package com.desuade.partigen.pools {
 			return p;
 		}
 		
-		public override function removeParticle($particle:Particle):void {
-			delete _particles[$particle.id];
+		public override function removeParticle($particleID:int):void {
+			delete _particles[$particleID];
 			Debug.output('partigen', 40005);
 		}
 	

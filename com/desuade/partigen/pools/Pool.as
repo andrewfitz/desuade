@@ -12,11 +12,15 @@ package com.desuade.partigen.pools {
 			Debug.output('partigen', 20003);
 		}
 		
+		public function get particles():Object{
+			return _particles;
+		}
+		
 		public function addParticle($particleClass:Class):Particle {
 			return null;
 		}
 		
-		public function removeParticle($particle:Particle):void {
+		public function removeParticle($particleID:int):void {
 			//
 		}
 	

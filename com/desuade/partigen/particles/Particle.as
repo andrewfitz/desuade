@@ -5,14 +5,15 @@ package com.desuade.partigen.particles {
 	import com.desuade.debugging.*;
 	import com.desuade.partigen.emitters.*;
 	import com.desuade.partigen.events.*;
+	import com.desuade.motion.proxies.*;
 
 	public dynamic class Particle extends Sprite {
 		
 		protected static var _count:int = 0;
 		
 		public var controllers:Object;
+		public var _emitter:Emitter;
 		
-		protected var _emitter:Emitter;
 		protected var _id:int;
 	
 		public function Particle() {
@@ -20,6 +21,7 @@ package com.desuade.partigen.particles {
 			_id = Particle._count++;
 			dispatchEvent(new ParticleEvent(ParticleEvent.BORN, {particle:this}));
 			Debug.output('partigen', 50001, [id]);
+			TweenProxy.tween({delay:2, func:kill});
 		}
 		
 		//setters getters
@@ -38,9 +40,9 @@ package com.desuade.partigen.particles {
 		
 		public function kill():void {
 			dispatchEvent(new ParticleEvent(ParticleEvent.DIED, {particle:this}));
-			_emitter.renderer.removeParticle(this);
-			_emitter.pool.removeParticle(this);
 			Debug.output('partigen', 50002, [id]);
+			_emitter.renderer.removeParticle(this);
+			_emitter.pool.removeParticle(this.id);
 		}
 	
 	}
