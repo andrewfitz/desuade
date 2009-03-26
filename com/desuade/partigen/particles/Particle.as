@@ -12,17 +12,21 @@ package com.desuade.partigen.particles {
 		
 		public var controllers:Object;
 		
-		internal var _emitter:Emitter;
+		protected var _emitter:Emitter;
 		protected var _id:int;
 	
 		public function Particle() {
 			super();
-			_id = ++Particle._count;
+			_id = Particle._count++;
 			dispatchEvent(new ParticleEvent(ParticleEvent.BORN, {particle:this}));
 			Debug.output('partigen', 50001, [id]);
 		}
 		
 		//setters getters
+		
+		public static function get count():int { 
+			return _count; 
+		}
 		
 		public function get id():int{
 			return _id;
@@ -34,6 +38,8 @@ package com.desuade.partigen.particles {
 		
 		public function kill():void {
 			dispatchEvent(new ParticleEvent(ParticleEvent.DIED, {particle:this}));
+			_emitter.renderer.removeParticle(this);
+			_emitter.pool.removeParticle(this);
 			Debug.output('partigen', 50002, [id]);
 		}
 	

@@ -10,14 +10,15 @@ package com.desuade.partigen.emitters {
 	import com.desuade.partigen.renderers.*;
 	import com.desuade.partigen.particles.*;
 	import com.desuade.partigen.events.*;
+	import com.desuade.partigen.pools.*;
 
 	public class Emitter extends Sprite {
 		
 		protected static var _count:int = 0;
 		
-		public var renderer:Renderer = new NullRenderer();
+		public var renderer:Renderer;
+		public var pool:Pool;
 		public var burst:int = 1;
-		public var particles:Object;
 		public var ordering:String = 'top, bottom, random';
 		public var particle:Class;
 		public var controllers:Object;
@@ -26,10 +27,13 @@ package com.desuade.partigen.emitters {
 		protected var _eps:int;
 		protected var _active:Boolean;
 		protected var _updatetimer:Timer;
+		protected var _particles:Object = {};
 	
 		public function Emitter() {
 			super();
 			_id = ++Emitter._count;
+			renderer = new NullRenderer();
+			pool = new NullPool();
 			Debug.output('partigen', 20001, [id]);
 		}
 		
@@ -51,6 +55,10 @@ package com.desuade.partigen.emitters {
 			return _id;
 		}
 		
+		public function get particles():Object{
+			return _particles;
+		}
+		
 		//public functions
 		
 		public function start():void {
@@ -65,10 +73,10 @@ package com.desuade.partigen.emitters {
 		
 		public function emit($burst:int):void {
 			for (var i:int = 0; i < $burst; i++) {
-				var np:Particle = new particle();
+				var np:Particle = pool.addParticle(particle);
 				np._emitter = this;
-				np.x = Random.fromRange(this.x-1, this.x+1);
-				np.y = Random.fromRange(this.y-1, this.y+1);
+				np.x = this.x;
+				np.y = this.y;
 				renderer.addParticle(np);
 			}
 		}
@@ -76,6 +84,8 @@ package com.desuade.partigen.emitters {
 		public function addParticleController():void {
 			
 		}
+		
+		//protected functions
 		
 		protected function setTimer($set:Boolean):void {
 			if($set){
@@ -89,11 +99,11 @@ package com.desuade.partigen.emitters {
 			}
 		}
 		
-		protected function update($evt):void {
+		protected function update($o:Object):void {
 			emit(burst);
 			Debug.output('partigen', 40001, [id, getTimer()]);
 		}
-		
+
 	}
 
 }

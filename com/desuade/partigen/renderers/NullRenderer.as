@@ -7,11 +7,14 @@ package com.desuade.partigen.renderers {
 	
 		public function NullRenderer() {
 			super();
-			Debug.output('partigen', 20002);
 		}
 		
 		public override function addParticle($p:Particle):void {
 			super.addParticle($p);
+		}
+		
+		public override function removeParticle($p:Particle):void {
+			super.removeParticle($p);
 		}
 	
 	}

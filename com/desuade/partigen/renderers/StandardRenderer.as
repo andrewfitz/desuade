@@ -12,12 +12,16 @@ package com.desuade.partigen.renderers {
 		public function StandardRenderer($target:DisplayObjectContainer) {
 			super();
 			target = $target;
-			Debug.output('partigen', 20002);
 		}
 		
 		public override function addParticle($p:Particle):void {
 			target.addChild($p);
 			super.addParticle($p);
+		}
+		
+		public override function removeParticle($p:Particle):void {
+			target.removeChild($p);
+			super.removeParticle($p);
 		}
 	
 	}
