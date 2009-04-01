@@ -3,8 +3,12 @@ package com.desuade.motion.controllers {
 	import com.desuade.debugging.*
 	import com.desuade.motion.proxies.*
 	import com.desuade.utils.*
+	import com.desuade.motion.events.*
+	
+	import flash.events.Event;
+	import flash.events.EventDispatcher;
 
-	public class ValueController extends Object {
+	public class ValueController extends EventDispatcher {
 	
 		public var points:PointsContainer;
 		public var target:Object;
@@ -35,6 +39,7 @@ package com.desuade.motion.controllers {
 			target[prop] = (points.beginning.spread != 0) ? Random.fromRange(nv, nv + points.beginning.spread, precision) : nv;
 			_active = true;
 			_sequence = TweenProxy.sequence(ta);
+			dispatchEvent(new ControllerEvent(ControllerEvent.STARTED, {controller:this}));
 			TweenProxy.sequenceEndFunc(_sequence, this.tweenEnd);
 		}
 		
@@ -48,6 +53,7 @@ package com.desuade.motion.controllers {
 		
 		public function tweenEnd(... args):void {
 			_active = false;
+			dispatchEvent(new ControllerEvent(ControllerEvent.ENDED, {controller:this}));
 			Debug.output('motion', 10002, [target.name, prop]);
 		}
 		//private methods

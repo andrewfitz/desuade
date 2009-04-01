@@ -36,7 +36,7 @@ package com.desuade.partigen.controllers {
 		}
 		
 		public function attachAll($particle:Particle):void {
-			$particle.addLife(life);
+			if(_life > 0) $particle.addLife(life);
 			for (var p:String in this) {
 				//trace(p);
 				attachController($particle, p);

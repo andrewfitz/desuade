@@ -12,13 +12,13 @@ package com.desuade.motion.controllers {
 			this.end = {value:$value, spread:0, position:1, ease:linear};
 		}
 		
-		public function addPoint($value:*, $spread:Number, $position:Number, $ease:* = null, $label:String = null):Object {
+		public function add($value:*, $spread:Number, $position:Number, $ease:* = null, $label:String = null):Object {
 			$label = ($label == null) ? 'point' + ++_pointcount : $label;
 			Debug.output('motion', 10001, [$label, $position]);
 			return this[$label] = {value:$value, spread:$spread, position:$position, ease: $ease || PointsContainer.linear};
 		}
 		
-		public function removePoint($label:String):void {
+		public function remove($label:String):void {
 			if($label != 'beginning' && $label != 'end') delete this[$label];
 		}
 		
