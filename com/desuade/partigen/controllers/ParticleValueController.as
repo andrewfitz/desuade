@@ -19,18 +19,6 @@ package com.desuade.partigen.controllers {
 		public function getPoints():Array {
 			return points.getSortedPoints();
 		}
-		
-		public function flattenTo($value:*):void {
-			points.flatten($value);
-		}
-		
-		public function addPoint($value:*, $spread:Number, $position:Number, $ease:* = null, $label:String = 'point'):Object {
-			return points.addPoint($value, $spread, $position, $ease || PointsContainer.linear, $label);
-		}
-		
-		public function removePoint($label:String):void {
-			points.removePoint($label);
-		}
 	
 	}
 

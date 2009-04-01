@@ -29,14 +29,6 @@ package com.desuade.motion.controllers {
 		
 		//public methods
 		
-		public function addPoint($value:*, $spread:Number, $position:Number, $ease:* = null, $label:String = 'point'):Object {
-			return points.addPoint($value, $spread, $position, $ease || PointsContainer.linear, $label);
-		}
-		
-		public function removePoint($label:String):void {
-			points.removePoint($label);
-		}
-		
 		public function start():void {
 			var ta:Array = createTweens();
 			var nv:Number = (typeof points.beginning.value == 'string') ? target[prop] + Number(points.beginning.value) : points.beginning.value;
@@ -52,10 +44,6 @@ package com.desuade.motion.controllers {
 		
 		public function getPoints():Array {
 			return points.getSortedPoints();
-		}
-		
-		public function flattenTo($value:*):void {
-			points.flatten($value);
 		}
 		
 		public function tweenEnd(... args):void {
