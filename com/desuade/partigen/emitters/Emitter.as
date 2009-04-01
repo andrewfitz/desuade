@@ -11,8 +11,9 @@ package com.desuade.partigen.emitters {
 	import com.desuade.partigen.particles.*;
 	import com.desuade.partigen.events.*;
 	import com.desuade.partigen.pools.*;
+	import com.desuade.partigen.controllers.*;
 
-	public class Emitter extends Sprite {
+	public dynamic class Emitter extends Sprite {
 		
 		protected static var _count:int = 0;
 		
@@ -20,6 +21,7 @@ package com.desuade.partigen.emitters {
 		public var pool:Pool;
 		public var burst:int = 1;
 		public var particle:Class;
+		public var controllers:Object = {};
 		
 		protected var _id:int;
 		protected var _eps:int;
@@ -30,6 +32,7 @@ package com.desuade.partigen.emitters {
 		public function Emitter() {
 			super();
 			_id = ++Emitter._count;
+			controllers.particle = new ParticleController();
 			renderer = new NullRenderer();
 			pool = new NullPool();
 			Debug.output('partigen', 20001, [id]);
@@ -75,12 +78,11 @@ package com.desuade.partigen.emitters {
 				np._emitter = this;
 				np.x = this.x;
 				np.y = this.y;
+				np.z = this.z;
+				controllers.particle.attachAll(np);
+				np.startControllers();
 				renderer.addParticle(np);
 			}
-		}
-		
-		public function addParticleController():void {
-			
 		}
 		
 		//protected functions

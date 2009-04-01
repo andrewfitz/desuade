@@ -11,17 +11,18 @@ package com.desuade.partigen.particles {
 		
 		protected static var _count:int = 0;
 		
-		public var controllers:Object;
+		public var controllers:Object = {};
 		public var _emitter:Emitter;
+		public var life:Number;
 		
 		protected var _id:int;
 	
 		public function Particle() {
 			super();
 			_id = Particle._count++;
+			name = "particle_"+_id;
 			dispatchEvent(new ParticleEvent(ParticleEvent.BORN, {particle:this}));
 			Debug.output('partigen', 50001, [id]);
-			TweenProxy.tween({delay:2, func:kill});
 		}
 		
 		//setters getters
@@ -38,7 +39,25 @@ package com.desuade.partigen.particles {
 			return _emitter;
 		}
 		
-		public function kill():void {
+		public function set scale($value:Number):void {
+			scaleX = scaleY = $value;
+		}
+		public function get scale():Number{
+			return scaleX;
+		}
+		
+		public function addLife($life:Number):void {
+			life = $life;
+			TweenProxy.tween({delay:life, func:kill});
+		}
+		
+		public function startControllers():void {
+			for (var p:String in controllers) {
+				controllers[p].start();
+			}
+		}
+		
+		public function kill(... args):void {
 			dispatchEvent(new ParticleEvent(ParticleEvent.DIED, {particle:this}));
 			Debug.output('partigen', 50002, [id]);
 			_emitter.renderer.removeParticle(this);

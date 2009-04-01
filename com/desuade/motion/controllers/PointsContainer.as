@@ -2,7 +2,7 @@ package com.desuade.motion.controllers {
 	
 	import com.desuade.debugging.*
 
-	internal dynamic class PointsContainer extends Object {
+	public dynamic class PointsContainer extends Object {
 	
 		protected var _pointcount:Number = 0;
 	
@@ -61,7 +61,7 @@ package com.desuade.motion.controllers {
 		    }
 		}
 		
-		internal static function linear(t:Number, b:Number, c:Number, d:Number, ... args):Number {
+		public static function linear(t:Number, b:Number, c:Number, d:Number, ... args):Number {
 			return c*t/d+b;
 		}
 		
