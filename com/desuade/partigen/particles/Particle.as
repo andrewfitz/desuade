@@ -12,13 +12,17 @@ package com.desuade.partigen.particles {
 		protected static var _count:int = 0;
 		
 		public var controllers:Object = {};
-		public var _emitter:Emitter;
 		public var life:Number;
 		
+		protected var _emitter:Emitter;
 		protected var _id:int;
 	
 		public function Particle() {
 			super();
+		}
+		
+		public function init($emitter:Emitter):void {
+			_emitter = $emitter;
 			_id = Particle._count++;
 			name = "particle_"+_id;
 			dispatchEvent(new ParticleEvent(ParticleEvent.BORN, {particle:this}));

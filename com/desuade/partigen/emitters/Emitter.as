@@ -23,6 +23,9 @@ package com.desuade.partigen.emitters {
 		public var particle:Class;
 		public var controllers:Object = {};
 		
+		public var groupAmount:int = 1;
+		public var groupProximity:int;
+		
 		protected var _id:int;
 		protected var _eps:int;
 		protected var _active:Boolean;
@@ -74,8 +77,8 @@ package com.desuade.partigen.emitters {
 		
 		public function emit($burst:int):void {
 			for (var i:int = 0; i < $burst; i++) {
-				var np:Particle = pool.addParticle(particle);
-				np._emitter = this;
+				var np:Particle = pool.addParticle(particle, this);
+				np.init(this);
 				np.x = this.x;
 				np.y = this.y;
 				np.z = this.z;
