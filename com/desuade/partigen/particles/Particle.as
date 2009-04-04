@@ -1,6 +1,8 @@
 package com.desuade.partigen.particles {
 	
 	import flash.display.Sprite;
+	import flash.utils.Timer;
+    import flash.events.TimerEvent;
 	
 	import com.desuade.debugging.*;
 	import com.desuade.partigen.emitters.*;
@@ -16,6 +18,8 @@ package com.desuade.partigen.particles {
 		
 		protected var _emitter:Emitter;
 		protected var _id:int;
+		
+		protected var _lifeTimer:Timer;
 	
 		public function Particle() {
 			super();
@@ -52,7 +56,9 @@ package com.desuade.partigen.particles {
 		
 		public function addLife($life:Number):void {
 			life = $life;
-			Tween.tween({delay:life, func:kill});
+			_lifeTimer = new Timer($life*1000);
+			_lifeTimer.addEventListener(TimerEvent.TIMER, kill);
+			_lifeTimer.start();
 		}
 		
 		public function startControllers():void {
@@ -64,6 +70,8 @@ package com.desuade.partigen.particles {
 		public function kill(... args):void {
 			dispatchEvent(new ParticleEvent(ParticleEvent.DIED, {particle:this}));
 			Debug.output('partigen', 50002, [id]);
+			_lifeTimer.stop();
+			_lifeTimer = null;
 			_emitter.renderer.removeParticle(this);
 			_emitter.pool.removeParticle(this.id);
 		}
