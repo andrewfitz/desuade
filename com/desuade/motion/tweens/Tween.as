@@ -1,4 +1,4 @@
-package com.desuade.motion.tween {
+package com.desuade.motion.tweens {
 	
 	import flash.utils.Timer;
     import flash.events.TimerEvent;

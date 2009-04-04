@@ -5,7 +5,7 @@ package com.desuade.partigen.particles {
 	import com.desuade.debugging.*;
 	import com.desuade.partigen.emitters.*;
 	import com.desuade.partigen.events.*;
-	import com.desuade.motion.proxies.*;
+	import com.desuade.motion.tweens.*;
 
 	public dynamic class Particle extends Sprite {
 		
@@ -52,7 +52,7 @@ package com.desuade.partigen.particles {
 		
 		public function addLife($life:Number):void {
 			life = $life;
-			TweenProxy.tween({delay:life, func:kill});
+			Tween.tween({delay:life, func:kill});
 		}
 		
 		public function startControllers():void {

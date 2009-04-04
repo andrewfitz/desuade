@@ -1,4 +1,4 @@
-package com.desuade.motion.tween {
+package com.desuade.motion.tweens {
 
 	import flash.display.*; 
 	import flash.events.Event;

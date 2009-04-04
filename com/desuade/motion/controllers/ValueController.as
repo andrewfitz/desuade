@@ -1,7 +1,7 @@
 package com.desuade.motion.controllers {
 	
 	import com.desuade.debugging.*
-	import com.desuade.motion.proxies.*
+	import com.desuade.motion.tweens.*
 	import com.desuade.utils.*
 	import com.desuade.motion.events.*
 	
@@ -38,13 +38,15 @@ package com.desuade.motion.controllers {
 			var nv:Number = (typeof points.beginning.value == 'string') ? target[prop] + Number(points.beginning.value) : points.beginning.value;
 			target[prop] = (points.beginning.spread != 0) ? Random.fromRange(nv, nv + points.beginning.spread, precision) : nv;
 			_active = true;
-			_sequence = TweenProxy.sequence(ta);
+			_sequence = new BasicSequence();
+			_sequence.pushArray(ta);
+			_sequence.addEventListener(SequenceEvent.ENDED, this.tweenEnd);
+			_sequence.start();
 			dispatchEvent(new ControllerEvent(ControllerEvent.STARTED, {controller:this}));
-			TweenProxy.sequenceEndFunc(_sequence, this.tweenEnd);
 		}
 		
 		public function stop():void {
-			TweenProxy.stopSequence(_sequence, prop, this.tweenEnd);
+			_sequence.stop();
 		}
 		
 		public function getPoints():Array {

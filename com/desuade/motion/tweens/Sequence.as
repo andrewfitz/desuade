@@ -1,4 +1,4 @@
-package com.desuade.motion.tween {
+package com.desuade.motion.tweens {
 	
 	import com.desuade.debugging.*
 	import com.desuade.motion.events.*

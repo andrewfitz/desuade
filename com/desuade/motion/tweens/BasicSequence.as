@@ -1,4 +1,4 @@
-package com.desuade.motion.tween {
+package com.desuade.motion.tweens {
 
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
@@ -16,9 +16,7 @@ package com.desuade.motion.tween {
 	
 		public function BasicSequence(... args) {
 			super();
-			for (var i:int = 0; i < args.length; i++) {
-				push(args[i]);
-			}
+			pushArray(args);
 			Debug.output('motion', 40003);
 		}
 		
@@ -27,6 +25,12 @@ package com.desuade.motion.tween {
 		}
 		public function get active():Boolean{
 			return _active;
+		}
+		
+		public function pushArray($array:Array):void {
+			for (var i:int = 0; i < $array.length; i++) {
+				this.push($array[i]);
+			}
 		}
 		
 		public function start($position:int = 0, $simulate:Boolean = false):void {

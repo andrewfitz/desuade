@@ -1,4 +1,4 @@
-package com.desuade.motion.tween {
+package com.desuade.motion.tweens {
 
 	//Easing functions can be included with import fl.motion.easing.*
 	import com.desuade.debugging.*
