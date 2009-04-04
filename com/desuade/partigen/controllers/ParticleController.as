@@ -7,11 +7,14 @@ package com.desuade.partigen.controllers {
 
 	public dynamic class ParticleController extends Object {
 		
-		protected var _life:Number = 0;
-		protected var _lifeSpread:Number = 0;
+		protected var _life:Object = {value:0, spread:0};
 	
 		public function ParticleController() {
 			super();
+		}
+		
+		public function get life():Object{
+			return _life;
 		}
 		
 		public function addBasic($prop:String, $start:*, $end:*, $ease:* = null, $duration:Number = 0, $precision:int = 2):void {
@@ -21,13 +24,8 @@ package com.desuade.partigen.controllers {
 			if($ease != null) tp.points.end.ease = $ease;
 		}
 		
-		public function setLife($life:Number, $spread:Number = 0):void {
-			_life = $life;
-			_lifeSpread = $spread;
-		}
-		
-		public function get life():Number{
-			return (_lifeSpread != 0) ? Random.fromRange(_life, _lifeSpread, 2) : _life;
+		protected function randomLife():Number{
+			return (_life.spread != 0) ? Random.fromRange(_life.value, _life.spread, 2) : _life.value;
 		}
 		
 		protected function attachController($particle:Particle, $prop:String):void {
@@ -36,7 +34,7 @@ package com.desuade.partigen.controllers {
 		}
 		
 		public function attachAll($particle:Particle):void {
-			if(_life > 0) $particle.addLife(life);
+			if(_life.value > 0) $particle.addLife(randomLife());
 			for (var p:String in this) {
 				attachController($particle, p);
 			}
