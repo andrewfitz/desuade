@@ -8,7 +8,7 @@ package com.desuade.partigen.controllers {
 		public var points:PointsContainer;
 		public var duration:Number;
 		public var precision:int;
-	
+		
 		public function ParticleValueController($duration:Number, $precision:int) {
 			super();
 			duration = $duration;

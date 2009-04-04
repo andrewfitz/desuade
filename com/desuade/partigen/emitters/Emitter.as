@@ -36,6 +36,7 @@ package com.desuade.partigen.emitters {
 			super();
 			_id = ++Emitter._count;
 			controllers.particle = new ParticleController();
+			controllers.emitter = new EmitterController(this);
 			renderer = new NullRenderer();
 			pool = new NullPool();
 			Debug.output('partigen', 20001, [id]);
@@ -65,14 +66,20 @@ package com.desuade.partigen.emitters {
 		
 		//public functions
 		
-		public function start():void {
+		public function start($runcontrollers:Boolean = true):void {
 			_active = true;
 			setTimer(true);
+			if($runcontrollers){
+				controllers.emitter.startAll();
+			}
 		}
 		
-		public function stop():void {
+		public function stop($runcontrollers:Boolean = true):void {
 			_active = false;
 			setTimer(false);
+			if($runcontrollers){
+				controllers.emitter.stopAll();
+			}
 		}
 		
 		public function emit($burst:int):void {
@@ -92,6 +99,7 @@ package com.desuade.partigen.emitters {
 		
 		protected function setTimer($set:Boolean):void {
 			if($set){
+				if(_updatetimer != null) setTimer(false);
 				_updatetimer = new Timer(1000/_eps);
 				_updatetimer.addEventListener(TimerEvent.TIMER, update);
 				if(_active) _updatetimer.start();
