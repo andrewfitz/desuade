@@ -35,7 +35,7 @@ package com.desuade.motion.tweens {
 			Debug.output('motion', 50001, [id]);
 		}
 		
-		protected function update(u:Object):void {
+		protected function update($u:Object):void {
 			var tmr:int = getTimer() - starttime;
 			target[prop] = ease(tmr, startvalue, difvalue, duration);
 			dispatchEvent(new TweenEvent(TweenEvent.UPDATE, {primitiveTween:this}));

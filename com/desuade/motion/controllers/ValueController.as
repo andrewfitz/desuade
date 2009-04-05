@@ -56,7 +56,7 @@ package com.desuade.motion.controllers {
 		public function tweenEnd(... args):void {
 			_active = false;
 			dispatchEvent(new ControllerEvent(ControllerEvent.ENDED, {controller:this}));
-			Debug.output('motion', 10002, [target.name, prop]);
+			Debug.output('motion', 10002, [target, prop]);
 		}
 		//private methods
 		
