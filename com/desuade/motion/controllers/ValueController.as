@@ -35,8 +35,7 @@ package com.desuade.motion.controllers {
 		
 		public function start():void {
 			var ta:Array = createTweens();
-			var nv:Number = (typeof points.begin.value == 'string') ? target[prop] + Number(points.begin.value) : points.begin.value;
-			target[prop] = (points.begin.spread != 0) ? Random.fromRange(nv, nv + points.begin.spread, precision) : nv;
+			setStartValue();
 			_active = true;
 			_sequence = new BasicSequence();
 			_sequence.pushArray(ta);
@@ -59,6 +58,16 @@ package com.desuade.motion.controllers {
 			dispatchEvent(new ControllerEvent(ControllerEvent.ENDED, {controller:this}));
 			Debug.output('motion', 10002, [target, prop]);
 		}
+		
+		public function setStartValue():Number {
+			var nv:Number = (typeof points.begin.value == 'string') ? target[prop] + Number(points.begin.value) : points.begin.value;
+			return target[prop] = (points.begin.spread != 0) ? Random.fromRange(nv, nv + points.begin.spread, precision) : nv;
+		}
+		
+		public function isSingleTween():Boolean {
+			return (points.length > 2) ? false : true;
+		}
+		
 		//private methods
 		
 		protected function calculateDuration($previous:Number, $position:Number):Number {

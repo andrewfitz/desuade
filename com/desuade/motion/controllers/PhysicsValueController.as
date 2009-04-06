@@ -8,6 +8,7 @@ package com.desuade.motion.controllers {
 		
 		protected var _physics:BasicPhysics;
 		
+		protected var _duration:Number;
 		protected var _velocity:ValueController;
 		protected var _acceleration:ValueController;
 		protected var _friction:ValueController;
@@ -18,6 +19,7 @@ package com.desuade.motion.controllers {
 			_velocity = new ValueController(_physics, 'velocity', $duration, 2);
 			_acceleration = new ValueController(_physics, 'acceleration', $duration, 3);
 			_friction = new ValueController(_physics, 'friction', $duration, 2);
+			_duration = $duration;
 		};
 		
 		public function get physics():BasicPhysics{
@@ -34,6 +36,17 @@ package com.desuade.motion.controllers {
 		
 		public function get friction():ValueController{
 			return _friction;
+		}
+		
+		public function get duration():Number{
+			return _duration;
+		}
+		
+		public function set duration($duration:Number):void {
+			_velocity.duration = $duration;
+			_acceleration.duration = $duration;
+			_friction.duration = $duration;
+			_duration = $duration;
 		}
 		
 		public function start():void {

@@ -6,7 +6,7 @@ package com.desuade.motion.controllers {
 	
 		protected var _pointcount:Number = 0;
 	
-		public function PointsContainer($value:Number = 0){
+		public function PointsContainer($value:* = 0){
 			super();
 			this.begin = {value:$value, spread:0, position:0};
 			this.end = {value:$value, spread:0, position:1, ease:linear};
@@ -22,12 +22,17 @@ package com.desuade.motion.controllers {
 			if($label != 'begin' && $label != 'end') delete this[$label];
 		}
 		
-		public function getSortedPoints():Array {
+		public function toArray():Array {
 			var pa:Array = [];
-			var sa:Array = [];
 			for (var p:String in this) {
-				pa.push({label:p, position:this[p]['position']});
+				pa.push({value:this[p].value, spread:this[p].spread, ease:this[p].ease, position:this[p].position, label:p});
 			}
+			return pa;
+		}
+		
+		public function toSortedArray():Array {
+			var pa:Array = this.toArray();
+			var sa:Array = [];
 			pa.sort(sortOnPosition);
 			for (var i:int = 0; i < pa.length; i++) {
 				sa.push(pa[i].label);
@@ -36,22 +41,29 @@ package com.desuade.motion.controllers {
 		}
 		
 		public function flatten($value:*):void {
-			var pa:Array = this.getSortedPoints();
-			for (var i:int = 1; i < pa.length-1; i++) {
-				var p:Object = this[pa[i]];
+			var pa:Array = this.toArray();
+			for (var i:int = 0; i < pa.length; i++) {
+				var p:Object = this[pa[i].label];
 				p.ease = linear;
 				p.value = $value;
 				p.spread = 0;
 			}
-			this.begin.value = this.end.value = $value;
-			this.begin.spread = this.end.spread = 0;
-			this.end.ease = linear;
+			delete this.begin.ease;
+		}
+		
+		public function isFlat():Boolean {
+			var pa:Array = this.toArray();
+			for (var i:int = 0; i < pa.length; i++) {
+				//trace(pa[i].value + " -> " + this.begin.value);
+				if(pa[i].value != this.begin.value) return false;
+			}
+			return true;
 		}
 		
 		//private static methods
 		protected static function sortOnPosition(a:Object, b:Object):Number {
-		    var aPos:Number = a['position'];
-		    var bPos:Number = b['position'];
+		    var aPos:Number = a.position;
+		    var bPos:Number = b.position;
 		    if(aPos > bPos) {
 		        return 1;
 		    } else if(aPos < bPos) {

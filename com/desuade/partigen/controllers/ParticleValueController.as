@@ -9,11 +9,11 @@ package com.desuade.partigen.controllers {
 		public var duration:Number;
 		public var precision:int;
 		
-		public function ParticleValueController($duration:Number, $precision:int) {
+		public function ParticleValueController($duration:Number, $precision:int, $value:* = null) {
 			super();
 			duration = $duration;
 			precision = $precision;
-			points = new PointsContainer();
+			points = new PointsContainer($value);
 		}
 		
 		public function getPoints():Array {

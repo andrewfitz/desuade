@@ -23,6 +23,8 @@ package com.desuade.partigen.emitters {
 		public var particle:Class;
 		public var controllers:Object = {};
 		
+		public var angle:* = null;
+		
 		public var groupAmount:int = 1;
 		public var groupProximity:int;
 		
@@ -89,7 +91,7 @@ package com.desuade.partigen.emitters {
 				np.x = this.x;
 				np.y = this.y;
 				np.z = this.z;
-				controllers.particle.attachAll(np);
+				controllers.particle.attachAll(np, this);
 				np.startControllers();
 				renderer.addParticle(np);
 			}
