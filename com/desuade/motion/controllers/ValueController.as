@@ -35,8 +35,8 @@ package com.desuade.motion.controllers {
 		
 		public function start():void {
 			var ta:Array = createTweens();
-			var nv:Number = (typeof points.beginning.value == 'string') ? target[prop] + Number(points.beginning.value) : points.beginning.value;
-			target[prop] = (points.beginning.spread != 0) ? Random.fromRange(nv, nv + points.beginning.spread, precision) : nv;
+			var nv:Number = (typeof points.begin.value == 'string') ? target[prop] + Number(points.begin.value) : points.begin.value;
+			target[prop] = (points.begin.spread != 0) ? Random.fromRange(nv, nv + points.begin.spread, precision) : nv;
 			_active = true;
 			_sequence = new BasicSequence();
 			_sequence.pushArray(ta);
@@ -68,7 +68,7 @@ package com.desuade.motion.controllers {
 		protected function createTweens():Array {
 			var pa:Array = points.getSortedPoints();
 			var ta:Array = [];
-			//skip beginning point (i=1), it gets set and doesn't need to be tweened to initial value
+			//skip begin point (i=1), it gets set and doesn't need to be tweened to initial value
 			for (var i:int = 1; i < pa.length; i++) {
 				var nuv:Number = Number(points[pa[i]].value);
 				var nv:* = (points[pa[i]].spread != 0) ? Random.fromRange(nuv, nuv + points[pa[i]].spread, precision) : nuv;

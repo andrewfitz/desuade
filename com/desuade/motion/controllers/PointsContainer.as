@@ -8,7 +8,7 @@ package com.desuade.motion.controllers {
 	
 		public function PointsContainer($value:Number = 0){
 			super();
-			this.beginning = {value:$value, spread:0, position:0};
+			this.begin = {value:$value, spread:0, position:0};
 			this.end = {value:$value, spread:0, position:1, ease:linear};
 		}
 		
@@ -19,7 +19,7 @@ package com.desuade.motion.controllers {
 		}
 		
 		public function remove($label:String):void {
-			if($label != 'beginning' && $label != 'end') delete this[$label];
+			if($label != 'begin' && $label != 'end') delete this[$label];
 		}
 		
 		public function getSortedPoints():Array {
@@ -43,8 +43,8 @@ package com.desuade.motion.controllers {
 				p.value = $value;
 				p.spread = 0;
 			}
-			this.beginning.value = this.end.value = $value;
-			this.beginning.spread = this.end.spread = 0;
+			this.begin.value = this.end.value = $value;
+			this.begin.spread = this.end.spread = 0;
 			this.end.ease = linear;
 		}
 		

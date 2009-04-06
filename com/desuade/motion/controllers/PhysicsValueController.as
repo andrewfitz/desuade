@@ -8,20 +8,32 @@ package com.desuade.motion.controllers {
 		
 		protected var _physics:BasicPhysics;
 		
-		public var velocity:ValueController;
-		public var acceleration:ValueController;
-		public var friction:ValueController;
+		protected var _velocity:ValueController;
+		protected var _acceleration:ValueController;
+		protected var _friction:ValueController;
 	
 		public function PhysicsValueController($target:Object, $prop:String, $duration:Number, $velocity:Number = 0, $acceleration:Number = 0, $friction:Number = 0, $angle:* = null, $flip:Boolean = false) {
 			super();
 			_physics = new BasicPhysics($target, $prop, $velocity, $acceleration, $friction, $angle, $flip);
-			velocity = new ValueController(_physics, 'velocity', $duration, 2);
-			acceleration = new ValueController(_physics, 'acceleration', $duration, 3);
-			friction = new ValueController(_physics, 'friction', $duration, 2);
+			_velocity = new ValueController(_physics, 'velocity', $duration, 2);
+			_acceleration = new ValueController(_physics, 'acceleration', $duration, 3);
+			_friction = new ValueController(_physics, 'friction', $duration, 2);
 		};
 		
 		public function get physics():BasicPhysics{
 			return _physics;
+		}
+		
+		public function get velocity():ValueController{
+			return _velocity;
+		}
+		
+		public function get acceleration():ValueController{
+			return _acceleration;
+		}
+		
+		public function get friction():ValueController{
+			return _friction;
 		}
 		
 		public function start():void {
@@ -44,6 +56,18 @@ package com.desuade.motion.controllers {
 			velocity.stop();
 			acceleration.stop();
 			friction.stop();
+		}
+		
+		////shorcuts
+		
+		public function get v():ValueController{
+			return velocity;
+		}
+		public function get a():ValueController{
+			return acceleration;
+		}
+		public function get f():ValueController{
+			return friction;
 		}
 	
 	}

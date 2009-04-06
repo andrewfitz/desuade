@@ -16,7 +16,7 @@ package com.desuade.partigen.controllers {
 		
 		public function addBasic($prop:String, $start:*, $end:*, $ease:*, $duration:Number, $precision:int = 2):void {
 			var tp:ValueController = this[$prop] = new ValueController(_emitter, $prop, $duration, $precision);
-			tp.points.beginning.value = $start;
+			tp.points.begin.value = $start;
 			tp.points.end.value = $end;
 			if($ease != null) tp.points.end.ease = $ease;
 		}

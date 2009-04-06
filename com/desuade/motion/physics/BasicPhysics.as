@@ -71,6 +71,27 @@ package com.desuade.motion.physics {
 			else target[prop] += velocity;
 		}
 		
+		////shortcuts add 0.075k
+		
+		public function get v():Number{
+			return velocity;
+		}
+		public function set v($value:Number):void {
+			velocity = $value;
+		}
+		public function get a():Number{
+			return acceleration;
+		}
+		public function set a($value:Number):void {
+			acceleration = $value;
+		}
+		public function get f():Number{
+			return friction;
+		}
+		public function set f($value:Number):void {
+			friction = $value;
+		}
+		
 	}
 
 }

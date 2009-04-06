@@ -19,7 +19,7 @@ package com.desuade.partigen.controllers {
 		
 		public function addBasic($prop:String, $start:*, $end:*, $ease:* = null, $duration:Number = 0, $precision:int = 2):void {
 			var tp:ParticleValueController = this[$prop] = new ParticleValueController($duration, $precision);
-			tp.points.beginning.value = $start;
+			tp.points.begin.value = $start;
 			tp.points.end.value = $end;
 			if($ease != null) tp.points.end.ease = $ease;
 		}
