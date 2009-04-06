@@ -46,7 +46,8 @@ package com.desuade.motion.controllers {
 		}
 		
 		public function stop():void {
-			_sequence.stop();
+			if(_active) _sequence.stop();
+			else Debug.output('motion', 10003);
 		}
 		
 		public function getPoints():Array {
@@ -81,4 +82,3 @@ package com.desuade.motion.controllers {
 	}
 
 }
-

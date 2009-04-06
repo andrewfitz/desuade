@@ -12,6 +12,7 @@ package com.desuade.motion {
 				10000: "Motion debug codes for aiding in development.",
 				10001: "[PointsContainer] point $ added at position $",
 				10002: "[ValueController] controlled tween for $.$ ended",
+				10003: "[ValueController] can not stop, controller not active",
 				
 				// low level codes
 				40001: "[Tween] new tween created",
