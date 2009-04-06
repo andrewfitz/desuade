@@ -60,9 +60,21 @@ package com.desuade.motion.controllers {
 		}
 		
 		public function startControllers():void {
-			velocity.start();
-			acceleration.start();
-			friction.start();
+			if(velocity.points.isFlat()){
+				velocity.setStartValue();
+				if(acceleration.points.isFlat()){
+					acceleration.setStartValue();
+				} else {
+					acceleration.start();
+				}
+				if(friction.points.isFlat()){
+					friction.setStartValue();
+				} else {
+					friction.start();
+				}
+			} else {
+				velocity.start();
+			}
 		}
 		
 		public function stopControllers():void {

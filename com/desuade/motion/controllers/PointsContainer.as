@@ -55,7 +55,7 @@ package com.desuade.motion.controllers {
 			var pa:Array = this.toArray();
 			for (var i:int = 0; i < pa.length; i++) {
 				//trace(pa[i].value + " -> " + this.begin.value);
-				if(pa[i].value != this.begin.value) return false;
+				if(pa[i].value != this.begin.value && pa[i].value != null) return false;
 			}
 			return true;
 		}

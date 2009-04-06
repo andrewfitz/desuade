@@ -17,7 +17,7 @@ package com.desuade.partigen.controllers {
 		}
 		
 		public function getPoints():Array {
-			return points.getSortedPoints();
+			return points.toSortedArray();
 		}
 	
 	}

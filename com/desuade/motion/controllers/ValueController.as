@@ -34,8 +34,8 @@ package com.desuade.motion.controllers {
 		//public methods
 		
 		public function start():void {
-			var ta:Array = createTweens();
 			setStartValue();
+			var ta:Array = createTweens();
 			_active = true;
 			_sequence = new BasicSequence();
 			_sequence.pushArray(ta);
@@ -50,7 +50,7 @@ package com.desuade.motion.controllers {
 		}
 		
 		public function getPoints():Array {
-			return points.getSortedPoints();
+			return points.toSortedArray();
 		}
 		
 		public function tweenEnd(... args):void {
@@ -75,13 +75,15 @@ package com.desuade.motion.controllers {
 		}
 
 		protected function createTweens():Array {
-			var pa:Array = points.getSortedPoints();
+			var pa:Array = points.toSortedArray();
 			var ta:Array = [];
 			//skip begin point (i=1), it gets set and doesn't need to be tweened to initial value
 			for (var i:int = 1; i < pa.length; i++) {
-				var nuv:Number = Number(points[pa[i]].value);
+				//if null, sets it to starting value
+				var nnnv:* = (points[pa[i]].value == null) ? target[prop] : points[pa[i]].value;
+				var nuv:Number = Number(nnnv);
 				var nv:* = (points[pa[i]].spread != 0) ? Random.fromRange(nuv, nuv + points[pa[i]].spread, precision) : nuv;
-				nv = (typeof points[pa[i]].value == 'string') ? nv.toString() : nv;
+				nv = (typeof nnnv == 'string') ? nv.toString() : nv;
 				var tmo:Object = {target:target, prop:prop, value:nv, ease:points[pa[i]].ease, duration:calculateDuration(points[pa[i-1]].position, points[pa[i]].position), delay:0};
 				ta.push(tmo);
 			}
