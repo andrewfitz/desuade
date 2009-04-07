@@ -17,10 +17,6 @@ package com.desuade.motion.controllers {
 		public var precision:int;
 		protected var _active:Boolean = false;
 		protected var _sequence;
-		
-		public function get active():Boolean{
-			return _active;
-		}
 	
 		public function ValueController($target:Object, $prop:String, $duration:Number, $precision:int = 0, $setvalue:Boolean = true){
 			super();
@@ -29,6 +25,10 @@ package com.desuade.motion.controllers {
 			duration = $duration;
 			precision = $precision;
 			points = new PointsContainer(($setvalue) ? $target[$prop] : null);
+		}
+		
+		public function get active():Boolean{
+			return _active;
 		}
 		
 		//public methods

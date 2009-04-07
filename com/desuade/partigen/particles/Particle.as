@@ -72,9 +72,18 @@ package com.desuade.partigen.particles {
 			}
 		}
 		
+		public function stopControllers():void {
+			for (var p:String in controllers) {
+				if(controllers[p].active){
+					controllers[p].stop();
+				}
+			}
+		}
+		
 		public function kill(... args):void {
 			dispatchEvent(new ParticleEvent(ParticleEvent.DIED, {particle:this}));
 			Debug.output('partigen', 50002, [id]);
+			stopControllers();
 			_lifeTimer.stop();
 			_lifeTimer = null;
 			_emitter.renderer.removeParticle(this);

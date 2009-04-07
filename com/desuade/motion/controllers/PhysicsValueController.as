@@ -12,6 +12,8 @@ package com.desuade.motion.controllers {
 		protected var _velocity:ValueController;
 		protected var _acceleration:ValueController;
 		protected var _friction:ValueController;
+		
+		protected var _active:Boolean = false;
 	
 		public function PhysicsValueController($target:Object, $prop:String, $duration:Number, $velocity:Number = 0, $acceleration:Number = 0, $friction:Number = 0, $angle:* = null, $flip:Boolean = false) {
 			super();
@@ -21,6 +23,10 @@ package com.desuade.motion.controllers {
 			_friction = new ValueController(_physics, 'friction', $duration, 2);
 			_duration = $duration;
 		};
+		
+		public function get active():Boolean{
+			return _active;
+		}
 		
 		public function get physics():BasicPhysics{
 			return _physics;
@@ -52,11 +58,13 @@ package com.desuade.motion.controllers {
 		public function start():void {
 			startControllers();
 			physics.enable();
+			_active = true;
 		}
 		
 		public function stop():void {
 			stopControllers();
 			physics.disable();
+			_active = false;
 		}
 		
 		public function startControllers():void {
