@@ -40,7 +40,7 @@ package com.desuade.partigen.controllers {
 		}
 		
 		protected function randomLife():Number{
-			return (_life.spread != 0) ? Random.fromRange(_life.value, _life.spread, 2) : _life.value;
+			return (_life.spread != 0) ? Random.fromRange(_life.value, _life.value + _life.spread, 2) : _life.value;
 		}
 		
 		protected function attachController($particle:Particle, $prop:String, $emitter:Emitter = null):void {
