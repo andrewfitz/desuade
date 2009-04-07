@@ -37,11 +37,12 @@ package com.desuade.motion.tweens {
 		
 		protected function update($u:Object):void {
 			var tmr:int = getTimer() - starttime;
-			target[prop] = ease(tmr, startvalue, difvalue, duration);
-			dispatchEvent(new TweenEvent(TweenEvent.UPDATE, {primitiveTween:this}));
 			if(tmr >= duration){
 				target[prop] = value;
 				end();
+			} else {
+				target[prop] = ease(tmr, startvalue, difvalue, duration);
+				dispatchEvent(new TweenEvent(TweenEvent.UPDATE, {primitiveTween:this}));
 			}
 		}
 		
