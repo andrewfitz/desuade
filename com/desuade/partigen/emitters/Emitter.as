@@ -23,10 +23,10 @@ package com.desuade.partigen.emitters {
 		public var particle:Class;
 		public var controllers:Object = {};
 		
-		public var angle:* = null;
-		
 		public var groupAmount:int = 1;
 		public var groupProximity:int;
+		
+		protected var _angle:Random = new Random(0, 0, 1);
 		
 		protected var _id:int;
 		protected var _eps:int;
@@ -45,6 +45,30 @@ package com.desuade.partigen.emitters {
 		}
 		
 		//getters setters
+		
+		public function get angle():Number{
+			return _angle.randomValue;
+		}
+		
+		public function set angle($value:Number):void {
+			_angle.min = _angle.max = $value;
+		}
+		
+		public function get angle_min():Number{
+			return _angle.min;
+		}
+		
+		public function get angle_max():Number{
+			return _angle.max;
+		}
+		
+		public function set angle_min($value:Number):void {
+			_angle.min = $value;
+		}
+		
+		public function set angle_max($value:Number):void {
+			_angle.max = $value;
+		}
 		
 		public function get eps():int{
 			return _eps;

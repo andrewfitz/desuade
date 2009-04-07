@@ -17,9 +17,12 @@ package com.desuade.utils {
 		}
 		
 		public static function fromRange($min:Number, $max:Number, $precision:int = 0):Number {
-			var dp:int = Math.pow(10, $precision);
-			var rn:Number = ((int((($min + (Math.random() * ($max - $min))) * dp))) / dp);
-			return rn;
+			if($min == $max) return $min;
+			else {
+				var dp:int = Math.pow(10, $precision);
+				var rn:Number = ((int((($min + (Math.random() * ($max - $min))) * dp))) / dp);
+				return rn;
+			}
 		}
 	}
 }
