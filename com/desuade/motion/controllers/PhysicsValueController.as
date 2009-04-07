@@ -50,13 +50,13 @@ package com.desuade.motion.controllers {
 		}
 		
 		public function start():void {
-			physics.enable();
 			startControllers();
+			physics.enable();
 		}
 		
 		public function stop():void {
-			physics.disable();
 			stopControllers();
+			physics.disable();
 		}
 		
 		public function startControllers():void {

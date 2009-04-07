@@ -8,6 +8,7 @@ package com.desuade.partigen.particles {
 	import com.desuade.partigen.emitters.*;
 	import com.desuade.partigen.events.*;
 	import com.desuade.motion.tweens.*;
+	import com.desuade.motion.controllers.*;
 
 	public dynamic class Particle extends Sprite {
 		
@@ -63,7 +64,11 @@ package com.desuade.partigen.particles {
 		
 		public function startControllers():void {
 			for (var p:String in controllers) {
-				controllers[p].start();
+				if(controllers[p] is ValueController && controllers[p].points.isFlat()){
+					controllers[p].setStartValue();
+				} else {
+					controllers[p].start();
+				}
 			}
 		}
 		

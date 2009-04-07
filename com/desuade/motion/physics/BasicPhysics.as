@@ -11,7 +11,6 @@ package com.desuade.motion.physics {
 		protected var _active:Boolean;
 		protected var _friction:Number;
 		protected var _calcfriction:Number;
-		protected var _angle:Number;
 		protected var _calcangle:Number;
 		
 		public var target:Object;
@@ -19,6 +18,7 @@ package com.desuade.motion.physics {
 		public var velocity:Number;
 		public var acceleration:Number;
 		public var flip:Boolean;
+		public var angle:Number;
 		
 		public function BasicPhysics($target:Object, $prop:String, $velocity:Number = 0, $acceleration:Number = 0, $friction:Number = 0, $angle:* = null, $flip:Boolean = false) {
 			super();
@@ -28,7 +28,7 @@ package com.desuade.motion.physics {
 			acceleration = $acceleration;
 			friction = $friction;
 			flip = $flip;
-			if($angle != null) angle = $angle;
+			angle = $angle;
 		}
 		
 		public function set friction($value:Number):void {
@@ -44,18 +44,15 @@ package com.desuade.motion.physics {
 			return _active;
 		}
 		
-		public function set angle($value:Number):void {
-			_angle = $value;
+		public function setAngle($value:Number):void {
+			angle = $value;
 			_calcangle = (flip) ? Math.sin($value * Math.PI / 180) : Math.cos($value * Math.PI / 180);
 			velocity *= _calcangle;
 		}
 		
-		public function get angle():Number{
-			return _angle;
-		}
-		
-		public function enable():void {
+		public function enable($setangle:Boolean = true):void {
 			_active = true;
+			if($setangle) setAngle(angle);
 			_sprite.addEventListener(Event.ENTER_FRAME, update);
 		}
 		

@@ -18,10 +18,20 @@ package com.desuade.partigen.controllers {
 			return _life;
 		}
 		
-		public function addBasicTween($prop:String, $start:*, $end:*, $ease:* = null, $duration:Number = 0, $precision:int = 2):void {
+		public function addStartValue($prop:String, $value:*, $spread:Number = 0, $precision:int = 2):void {
+			var tp:ParticleValueController = this[$prop] = new ParticleValueController(0, $precision);
+			tp.points.begin.value = $value;
+			tp.points.begin.spread = $spread;
+			tp.points.end.value = null;
+			tp.points.end.spread = 0;
+		}
+		
+		public function addBasicTween($prop:String, $start:*, $startSpread:Number, $end:*, $endSpread:Number, $ease:* = null, $duration:Number = 0, $precision:int = 2):void {
 			var tp:ParticleValueController = this[$prop] = new ParticleValueController($duration, $precision);
 			tp.points.begin.value = $start;
 			tp.points.end.value = $end;
+			tp.points.begin.spread = $startSpread;
+			tp.points.end.spread = $endSpread;
 			if($ease != null) tp.points.end.ease = $ease;
 		}
 		
