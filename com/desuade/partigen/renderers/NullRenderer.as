@@ -9,11 +9,11 @@ package com.desuade.partigen.renderers {
 			super();
 		}
 		
-		public override function addParticle($p:Particle):void {
+		public override function addParticle($p:BasicParticle):void {
 			super.addParticle($p);
 		}
 		
-		public override function removeParticle($p:Particle):void {
+		public override function removeParticle($p:BasicParticle):void {
 			super.removeParticle($p);
 		}
 	

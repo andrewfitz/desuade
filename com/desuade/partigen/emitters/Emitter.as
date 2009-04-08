@@ -110,11 +110,13 @@ package com.desuade.partigen.emitters {
 		
 		public function emit($burst:int):void {
 			for (var i:int = 0; i < $burst; i++) {
-				var np:Particle = pool.addParticle(particle, this);
+				var np:BasicParticle = pool.addParticle(particle, this);
 				np.init(this);
 				np.x = this.x;
 				np.y = this.y;
 				np.z = this.z;
+				dispatchEvent(new ParticleEvent(ParticleEvent.BORN, {particle:np}));
+				np.addEventListener(ParticleEvent.DIED, dispatchDeath);
 				controllers.particle.attachAll(np, this);
 				np.startControllers();
 				renderer.addParticle(np);
@@ -122,6 +124,11 @@ package com.desuade.partigen.emitters {
 		}
 		
 		//protected functions
+		
+		protected function dispatchDeath(o:Object):void {
+			o.info.particle.removeEventListener(ParticleEvent.DIED, dispatchDeath);
+			dispatchEvent(new ParticleEvent(ParticleEvent.DIED, {particle:o.info.particle}));
+		}
 		
 		protected function setTimer($set:Boolean):void {
 			if($set){

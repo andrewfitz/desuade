@@ -10,15 +10,12 @@ package com.desuade.partigen.particles {
 	import com.desuade.motion.tweens.*;
 	import com.desuade.motion.controllers.*;
 
-	public dynamic class Particle extends Sprite {
+	public dynamic class Particle extends BasicParticle {
 		
-		protected static var _count:int = 0;
+		protected static var _count:int = BasicParticle._count;
 		
 		public var controllers:Object = {};
 		public var life:Number;
-		
-		protected var _emitter:Emitter;
-		protected var _id:int;
 		
 		protected var _lifeTimer:Timer;
 	
@@ -26,26 +23,10 @@ package com.desuade.partigen.particles {
 			super();
 		}
 		
-		public function init($emitter:Emitter):void {
-			_emitter = $emitter;
-			_id = Particle._count++;
-			name = "particle_"+_id;
-			dispatchEvent(new ParticleEvent(ParticleEvent.BORN, {particle:this}));
-			Debug.output('partigen', 50001, [id]);
-		}
-		
 		//setters getters
 		
 		public static function get count():int { 
 			return _count; 
-		}
-		
-		public function get id():int{
-			return _id;
-		}
-		
-		public function get emitter():Emitter{
-			return _emitter;
 		}
 		
 		public function set scale($value:Number):void {
@@ -80,14 +61,11 @@ package com.desuade.partigen.particles {
 			}
 		}
 		
-		public function kill(... args):void {
-			dispatchEvent(new ParticleEvent(ParticleEvent.DIED, {particle:this}));
-			Debug.output('partigen', 50002, [id]);
+		public override function kill(... args):void {
 			stopControllers();
 			_lifeTimer.stop();
 			_lifeTimer = null;
-			_emitter.renderer.removeParticle(this);
-			_emitter.pool.removeParticle(this.id);
+			super.kill(args);
 		}
 	
 	}

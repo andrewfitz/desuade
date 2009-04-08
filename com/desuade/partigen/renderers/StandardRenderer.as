@@ -16,7 +16,7 @@ package com.desuade.partigen.renderers {
 			target = $target;
 		}
 		
-		public override function addParticle($p:Particle):void {
+		public override function addParticle($p:BasicParticle):void {
 			switch (order) {
 				case 'top' :
 					target.addChild($p);
@@ -28,7 +28,7 @@ package com.desuade.partigen.renderers {
 			super.addParticle($p);
 		}
 		
-		public override function removeParticle($p:Particle):void {
+		public override function removeParticle($p:BasicParticle):void {
 			target.removeChild($p);
 			super.removeParticle($p);
 		}

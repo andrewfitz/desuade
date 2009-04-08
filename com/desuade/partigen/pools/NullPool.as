@@ -10,7 +10,7 @@ package com.desuade.partigen.pools {
 			super();
 		}
 		
-		public override function addParticle($particleClass:Class, $emitter:Emitter):Particle {
+		public override function addParticle($particleClass:Class, $emitter:Emitter):BasicParticle {
 			super.addParticle($particleClass, $emitter);
 			if($emitter.groupAmount > 1){
 				return _particles[Particle.count] = new GroupParticle($particleClass, $emitter.groupAmount, $emitter.groupProximity);

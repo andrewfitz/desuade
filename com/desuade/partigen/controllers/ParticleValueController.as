@@ -23,4 +23,3 @@ package com.desuade.partigen.controllers {
 	}
 
 }
-
