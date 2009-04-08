@@ -1,7 +1,7 @@
 package com.desuade.partigen.pools {
 	
 	import com.desuade.partigen.particles.*;
-	import com.desuade.partigen.emitters.*;
+	import com.desuade.partigen.emitters.BasicEmitter;
 	import com.desuade.debugging.*;
 
 	public class NullPool extends Pool {
@@ -10,12 +10,12 @@ package com.desuade.partigen.pools {
 			super();
 		}
 		
-		public override function addParticle($particleClass:Class, $emitter:BasicEmitter):BasicParticle {
-			super.addParticle($particleClass, $emitter);
+		public override function addParticle($particleClass:Class, $groupClass:Class, $emitter:BasicEmitter):BasicParticle {
+			super.addParticle($particleClass, $groupClass, $emitter);
 			if($emitter.groupAmount > 1){
-				return _particles[Particle.count] = new GroupParticle($particleClass, $emitter.groupAmount, $emitter.groupProximity);
+				return _particles[BasicParticle.count] = new $groupClass($particleClass, $emitter.groupAmount, $emitter.groupProximity);
 			} else {
-				return _particles[Particle.count] = new $particleClass();
+				return _particles[BasicParticle.count] = new $particleClass();
 			}
 		}
 		

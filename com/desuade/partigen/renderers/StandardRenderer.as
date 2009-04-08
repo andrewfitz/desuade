@@ -2,7 +2,7 @@ package com.desuade.partigen.renderers {
 	
 	import flash.display.*;
 	
-	import com.desuade.partigen.particles.*;
+	import com.desuade.partigen.particles.BasicParticle;
 	import com.desuade.debugging.*;
 	
 	public class StandardRenderer extends Renderer {

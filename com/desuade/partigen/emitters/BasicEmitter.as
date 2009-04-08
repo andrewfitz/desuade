@@ -1,11 +1,11 @@
 package com.desuade.partigen.emitters {
 	
-	import flash.display.*;
+	import flash.display.Sprite;
 	import flash.utils.Timer;
     import flash.events.TimerEvent;
 	import flash.utils.getTimer;
 	
-	import com.desuade.debugging.*;
+	import com.desuade.debugging.Debug;
 	import com.desuade.utils.*;
 	import com.desuade.partigen.renderers.*;
 	import com.desuade.partigen.particles.*;
@@ -20,6 +20,7 @@ package com.desuade.partigen.emitters {
 		public var pool:Pool;
 		public var burst:int = 1;
 		public var particle:Class;
+		public var group:Class = BasicGroupParticle;
 		
 		public var groupAmount:int = 1;
 		public var groupProximity:int;
@@ -70,7 +71,7 @@ package com.desuade.partigen.emitters {
 		
 		public function emit($burst:int):void {
 			for (var i:int = 0; i < $burst; i++) {
-				var np = pool.addParticle(particle, this);
+				var np = pool.addParticle(particle, group, this);
 				np.init(this);
 				np.x = this.x;
 				np.y = this.y;

@@ -1,7 +1,7 @@
 package com.desuade.partigen.pools {
 	
 	import com.desuade.partigen.particles.*;
-	import com.desuade.partigen.emitters.*;
+	import com.desuade.partigen.emitters.BasicEmitter;
 	import com.desuade.debugging.*;
 
 	public class Pool extends Object {
@@ -17,7 +17,7 @@ package com.desuade.partigen.pools {
 			return _particles;
 		}
 		
-		public function addParticle($particleClass:Class, $emitter:BasicEmitter):BasicParticle {
+		public function addParticle($particleClass:Class, $groupClass:Class, $emitter:BasicEmitter):BasicParticle {
 			Debug.output('partigen', 40003);
 			return null;
 		}

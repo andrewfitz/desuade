@@ -23,6 +23,7 @@ package com.desuade.partigen.emitters {
 	
 		public function Emitter() {
 			super();
+			group = GroupParticle;
 			controllers.particle = new ParticleController();
 			controllers.emitter = new EmitterController(this);
 		}
@@ -71,7 +72,7 @@ package com.desuade.partigen.emitters {
 		
 		public override function emit($burst:int):void {
 			for (var i:int = 0; i < $burst; i++) {
-				var np:BasicParticle = pool.addParticle(particle, this);
+				var np:BasicParticle = pool.addParticle(particle, group, this);
 				np.init(this);
 				np.x = this.x;
 				np.y = this.y;

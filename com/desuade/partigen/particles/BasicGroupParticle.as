@@ -2,11 +2,11 @@ package com.desuade.partigen.particles {
 	
 	import com.desuade.utils.*;
 
-	public dynamic class GroupParticle extends Particle {
+	public dynamic class BasicGroupParticle extends BasicParticle {
 		
 		public var particles:Object = {};
 	
-		public function GroupParticle($particle:Class, $amount:int, $proximity:int) {
+		public function BasicGroupParticle($particle:Class, $amount:int, $proximity:int) {
 			super();
 			for (var i:int = 0; i < $amount; i++) {
 				particles[i] = new $particle();

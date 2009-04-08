@@ -2,9 +2,9 @@ package com.desuade.partigen.particles {
 	
 	import flash.display.Sprite;
 	
-	import com.desuade.debugging.*;
-	import com.desuade.partigen.emitters.*;
-	import com.desuade.partigen.events.*;
+	import com.desuade.debugging.Debug;
+	import com.desuade.partigen.emitters.BasicEmitter;
+	import com.desuade.partigen.events.ParticleEvent;
 
 	public dynamic class BasicParticle extends Sprite {
 		
