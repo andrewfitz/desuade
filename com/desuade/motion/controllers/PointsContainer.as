@@ -30,7 +30,7 @@ package com.desuade.motion.controllers {
 			return pa;
 		}
 		
-		public function toSortedArray():Array {
+		public function getOrderedLabels():Array {
 			var pa:Array = this.toArray();
 			var sa:Array = [];
 			pa.sort(sortOnPosition);
@@ -54,10 +54,21 @@ package com.desuade.motion.controllers {
 		public function isFlat():Boolean {
 			var pa:Array = this.toArray();
 			for (var i:int = 0; i < pa.length; i++) {
-				//trace(pa[i].value + " -> " + this.begin.value);
 				if(pa[i].value != this.begin.value && pa[i].value != null) return false;
 			}
 			return true;
+		}
+		
+		public function clone():PointsContainer {
+			var npc:PointsContainer = new PointsContainer();
+			var sa:Array = this.getOrderedLabels();
+			for (var i:int = 1; i < sa.length-1; i++) {
+				var p:Object = this[sa[i]];
+				npc.add(p.value, p.spread, p.position, p.ease, sa[i]);
+			}
+			npc.begin = {value:this.begin.value, spread:this.begin.spread, position:0};
+			npc.end = {value:this.end.value, spread:this.end.spread, position:1, ease:this.end.ease};
+			return npc;
 		}
 		
 		//private static methods

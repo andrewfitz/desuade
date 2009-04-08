@@ -40,6 +40,7 @@ package com.desuade.motion.tweens {
 		
 		protected function endFunc($o:Object):void {
 			dispatchEvent(new TweenEvent(TweenEvent.ENDED, {tween:this, primitiveTween:_tweenholder[_tweenID]}));
+			_tweenholder[_tweenID] = null;
 			delete _tweenholder[_tweenID];
 			_tweenID = 0;
 		}
