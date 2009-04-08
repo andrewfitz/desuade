@@ -10,14 +10,14 @@ package com.desuade.partigen.particles {
 		
 		protected static var _count:int = 0;
 		
-		protected var _emitter:Emitter;
+		protected var _emitter:BasicEmitter;
 		protected var _id:int;
 	
 		public function BasicParticle() {
 			super();
 		}
 		
-		public function init($emitter:Emitter):void {
+		public function init($emitter:BasicEmitter):void {
 			_emitter = $emitter;
 			_id = BasicParticle._count++;
 			name = "particle_"+_id;
@@ -34,7 +34,7 @@ package com.desuade.partigen.particles {
 			return _id;
 		}
 		
-		public function get emitter():Emitter{
+		public function get emitter():BasicEmitter{
 			return _emitter;
 		}
 		

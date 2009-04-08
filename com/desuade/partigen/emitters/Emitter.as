@@ -13,35 +13,18 @@ package com.desuade.partigen.emitters {
 	import com.desuade.partigen.pools.*;
 	import com.desuade.partigen.controllers.*;
 
-	public dynamic class Emitter extends Sprite {
+	public dynamic class Emitter extends BasicEmitter {
 		
-		protected static var _count:int = 0;
+		protected static var _count:int = BasicEmitter._count;
 		
-		public var renderer:Renderer;
-		public var pool:Pool;
-		public var burst:int = 1;
-		public var particle:Class;
 		public var controllers:Object = {};
 		
-		public var groupAmount:int = 1;
-		public var groupProximity:int;
-		
 		protected var _angle:Random = new Random(0, 0, 1);
-		
-		protected var _id:int;
-		protected var _eps:int;
-		protected var _active:Boolean;
-		protected var _updatetimer:Timer;
-		protected var _particles:Object = {};
 	
 		public function Emitter() {
 			super();
-			_id = ++Emitter._count;
 			controllers.particle = new ParticleController();
 			controllers.emitter = new EmitterController(this);
-			renderer = new NullRenderer();
-			pool = new NullPool();
-			Debug.output('partigen', 20001, [id]);
 		}
 		
 		//getters setters
@@ -70,45 +53,23 @@ package com.desuade.partigen.emitters {
 			_angle.max = $value;
 		}
 		
-		public function get eps():int{
-			return _eps;
-		}
-		public function set eps($value:int):void {
-			_eps = $value;
-			setTimer(true);
-		}
-		
-		public function get active():Boolean{
-			return _active;
-		}
-		
-		public function get id():int{
-			return _id;
-		}
-		
-		public function get particles():Object{
-			return _particles;
-		}
-		
 		//public functions
 		
-		public function start($runcontrollers:Boolean = true):void {
-			_active = true;
-			setTimer(true);
+		public override function start($runcontrollers:Boolean = true):void {
+			super.start();
 			if($runcontrollers){
 				controllers.emitter.startAll();
 			}
 		}
 		
-		public function stop($runcontrollers:Boolean = true):void {
-			_active = false;
-			setTimer(false);
+		public override function stop($runcontrollers:Boolean = true):void {
+			super.stop();
 			if($runcontrollers){
 				controllers.emitter.stopAll();
 			}
 		}
 		
-		public function emit($burst:int):void {
+		public override function emit($burst:int):void {
 			for (var i:int = 0; i < $burst; i++) {
 				var np:BasicParticle = pool.addParticle(particle, this);
 				np.init(this);
@@ -121,31 +82,6 @@ package com.desuade.partigen.emitters {
 				np.startControllers();
 				renderer.addParticle(np);
 			}
-		}
-		
-		//protected functions
-		
-		protected function dispatchDeath(o:Object):void {
-			o.info.particle.removeEventListener(ParticleEvent.DIED, dispatchDeath);
-			dispatchEvent(new ParticleEvent(ParticleEvent.DIED, {particle:o.info.particle}));
-		}
-		
-		protected function setTimer($set:Boolean):void {
-			if($set){
-				if(_updatetimer != null) setTimer(false);
-				_updatetimer = new Timer(1000/_eps);
-				_updatetimer.addEventListener(TimerEvent.TIMER, update);
-				if(_active) _updatetimer.start();
-			} else {
-				_updatetimer.stop();
-				_updatetimer.removeEventListener(TimerEvent.TIMER, update);
-				_updatetimer = null;
-			}
-		}
-		
-		protected function update($o:Object):void {
-			emit(burst);
-			Debug.output('partigen', 40001, [id, getTimer()]);
 		}
 
 	}

@@ -17,7 +17,7 @@ package com.desuade.partigen.pools {
 			return _particles;
 		}
 		
-		public function addParticle($particleClass:Class, $emitter:Emitter):BasicParticle {
+		public function addParticle($particleClass:Class, $emitter:BasicEmitter):BasicParticle {
 			Debug.output('partigen', 40003);
 			return null;
 		}
