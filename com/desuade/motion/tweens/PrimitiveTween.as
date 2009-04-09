@@ -28,8 +28,11 @@ package com.desuade.motion.tweens {
 		
 		public function PrimitiveTween($target:Object, $prop:String, $value:Number, $duration:int, $ease:Function = null) {
 			super();
-			id = _count++, target = $target, prop = $prop, value = $value, duration = $duration, ease = $ease || linear, startvalue = target[prop], starttime = getTimer();
-			difvalue = (startvalue > value) ? (value-startvalue) : -(startvalue-value);
+			id = _count++, target = $target, duration = $duration, ease = $ease || linear, starttime = getTimer();
+			if($prop != null) {
+				prop = $prop, value = $value, startvalue = $target[$prop];
+				difvalue = (startvalue > value) ? (value-startvalue) : -(startvalue-value);
+			}
 			dispatchEvent(new TweenEvent(TweenEvent.STARTED, {primitiveTween:this}));
 			_sprite.addEventListener(Event.ENTER_FRAME, update);
 			Debug.output('motion', 50001, [id]);
