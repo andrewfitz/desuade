@@ -26,9 +26,10 @@ package com.desuade.motion.tweens {
 		}
 		
 		//Static tween function
-		public static function tween($tweenObject:Object):void {
-			var st:Tween = new Tween($tweenObject);
+		public static function tween($target:Object, $prop:String, $value:*, $duration:int, $ease:Function = null, $delay:Number = 0, $position:Number = 0, $bezier:Array = null):Tween {
+			var st:Tween = new Tween({target:$target, value:$value, prop:$prop, duration:$duration, ease:$ease, delay:$delay, position:$position, bezier:$bezier});
 			st.start();
+			return st;
 		}
 		
 		//overriding methods
@@ -91,7 +92,7 @@ package com.desuade.motion.tweens {
 						_newval = (typeof ntval == 'string') ? ftv + Number(ntval) : ntval;
 					}
 				}
-				if($to.bezier == undefined){
+				if($to.bezier == undefined || $to.bezier == null){
 					 pt = _tweenholder[PrimitiveTween._count] = new PrimitiveTween($to.target, $to.prop, _newval, $to.duration*1000, $to.ease);
 				} else {
 					var newbez:Array = [];
