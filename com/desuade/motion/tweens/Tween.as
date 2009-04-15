@@ -53,10 +53,8 @@ package com.desuade.motion.tweens {
 		public override function stop():void {
 			if(!_completed){
 				if(_tweenID != 0){
-					_pausepos = position;
 					if(!_completed){
-						_startvalue = _tweenholder[_tweenID].startvalue;
-						_difvalue = _tweenholder[_tweenID].difvalue;
+						setpauses();
 					}
 					_tweenholder[_tweenID].end();
 				} else {
@@ -117,8 +115,10 @@ package com.desuade.motion.tweens {
 		}
 		
 		protected override function endFunc($o:Object):void {
-			if($o.info.primitiveTween.target[$o.info.primitiveTween.prop] == $o.info.primitiveTween.value){
-				_completed = true;
+			if($o.info.primitiveTween.prop != undefined){
+				if($o.info.primitiveTween.target[$o.info.primitiveTween.prop] == $o.info.primitiveTween.value){
+					_completed = true;
+				}
 			}
 			super.endFunc($o);
 		}
@@ -169,6 +169,12 @@ package com.desuade.motion.tweens {
 			var pt:Object = $i.info.primitiveTween;
 			pt.target[pt.prop] = int(pt.target[pt.prop]);
 			Debug.output('motion', 50003, [pt.id, pt.target[pt.prop], int(pt.target[pt.prop])]);
+		}
+		
+		protected function setpauses():void {
+			_pausepos = position;
+			_startvalue = _tweenholder[_tweenID].startvalue;
+			_difvalue = _tweenholder[_tweenID].difvalue;
 		}
 	
 	}
