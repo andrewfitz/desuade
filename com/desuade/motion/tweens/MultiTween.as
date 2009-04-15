@@ -59,20 +59,8 @@ package com.desuade.motion.tweens {
 						_newproperties[p] = newvaly;
 					}
 				}
-				if($to.bezier == undefined || $to.bezier == null){
-					 pt = BasicTween._tweenholder[PrimitiveTween._count] = new PrimitiveMultiTween($to.target, _newproperties, $to.duration*1000, $to.ease);
-				} else {
-					
-					//make PrimitiveMultiBezierTween
-					
-					var newbez:Array = [];
-					for (var i:int = 0; i < $to.bezier.length; i++) {
-						newbez.push((typeof $to.bezier[i] == 'string') ? ftv + Number($to.bezier[i]) : $to.bezier[i]);
-					}
-					pt = BasicTween._tweenholder[PrimitiveTween._count] = new PrimitiveBezierTween($to.target, $to.prop, _newval, $to.duration*1000, newbez, $to.ease);
-
-
-				}
+				//no bezier tweens for multitweening
+				pt = BasicTween._tweenholder[PrimitiveTween._count] = new PrimitiveMultiTween($to.target, _newproperties, $to.duration*1000, $to.ease);
 				pt.addEventListener(TweenEvent.ENDED, endFunc);
 				if($to.position > 0) {
 					pt.starttime -= ($to.position*$to.duration)*1000;
