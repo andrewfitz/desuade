@@ -12,9 +12,6 @@ package com.desuade.motion.tweens {
 	import com.desuade.motion.events.*
 
 	public class PrimitiveBezierTween extends PrimitiveTween {
-	
-		public static var _count:int = PrimitiveTween._count;
-		internal static var _sprite:Sprite = PrimitiveTween._sprite;
 		
 		public var bezierArray:Array;
 	

@@ -12,8 +12,6 @@ package com.desuade.motion.tweens {
 	
 	public class MultiTween extends Tween {
 		
-		protected static var _tweenholder = BasicTween._tweenholder;
-		
 		protected var _newvals:Array = [];
 		protected var _startvalues:Array = [];
 		protected var _difvalues:Array = [];
@@ -62,7 +60,7 @@ package com.desuade.motion.tweens {
 					}
 				}
 				if($to.bezier == undefined || $to.bezier == null){
-					 pt = _tweenholder[PrimitiveTween._count] = new PrimitiveMultiTween($to.target, _newproperties, $to.duration*1000, $to.ease);
+					 pt = BasicTween._tweenholder[PrimitiveTween._count] = new PrimitiveMultiTween($to.target, _newproperties, $to.duration*1000, $to.ease);
 				} else {
 					
 					//make PrimitiveMultiBezierTween
@@ -71,7 +69,7 @@ package com.desuade.motion.tweens {
 					for (var i:int = 0; i < $to.bezier.length; i++) {
 						newbez.push((typeof $to.bezier[i] == 'string') ? ftv + Number($to.bezier[i]) : $to.bezier[i]);
 					}
-					pt = _tweenholder[PrimitiveTween._count] = new PrimitiveBezierTween($to.target, $to.prop, _newval, $to.duration*1000, newbez, $to.ease);
+					pt = BasicTween._tweenholder[PrimitiveTween._count] = new PrimitiveBezierTween($to.target, $to.prop, _newval, $to.duration*1000, newbez, $to.ease);
 
 
 				}
@@ -119,8 +117,8 @@ package com.desuade.motion.tweens {
 		
 		protected override function setpauses():void {
 			_pausepos = position;
-			_startvalues = _tweenholder[_tweenID].arrayObject.startvalues;
-			_difvalues = _tweenholder[_tweenID].arrayObject.difvalues;
+			_startvalues = BasicTween._tweenholder[_tweenID].arrayObject.startvalues;
+			_difvalues = BasicTween._tweenholder[_tweenID].arrayObject.difvalues;
 		}
 	
 	}

@@ -11,9 +11,7 @@ package com.desuade.motion.tweens {
 	import com.desuade.motion.events.*
 	
 	public class Tween extends BasicTween {
-		
-		protected static var _tweenholder = BasicTween._tweenholder;
-		
+				
 		protected var _delayTimer:Timer;
 		protected var _completed:Boolean = false;
 		protected var _pausepos:Number;
@@ -56,7 +54,7 @@ package com.desuade.motion.tweens {
 					if(!_completed){
 						setpauses();
 					}
-					_tweenholder[_tweenID].end();
+					BasicTween._tweenholder[_tweenID].end();
 				} else {
 					_delayTimer.stop();
 					dispatchEvent(new TweenEvent(TweenEvent.ENDED, {tween:this}));
@@ -91,13 +89,13 @@ package com.desuade.motion.tweens {
 					}
 				}
 				if($to.bezier == undefined || $to.bezier == null){
-					 pt = _tweenholder[PrimitiveTween._count] = new PrimitiveTween($to.target, $to.prop, _newval, $to.duration*1000, $to.ease);
+					 pt = BasicTween._tweenholder[PrimitiveTween._count] = new PrimitiveTween($to.target, $to.prop, _newval, $to.duration*1000, $to.ease);
 				} else {
 					var newbez:Array = [];
 					for (var i:int = 0; i < $to.bezier.length; i++) {
 						newbez.push((typeof $to.bezier[i] == 'string') ? ftv + Number($to.bezier[i]) : $to.bezier[i]);
 					}
-					pt = _tweenholder[PrimitiveTween._count] = new PrimitiveBezierTween($to.target, $to.prop, _newval, $to.duration*1000, newbez, $to.ease);
+					pt = BasicTween._tweenholder[PrimitiveTween._count] = new PrimitiveBezierTween($to.target, $to.prop, _newval, $to.duration*1000, newbez, $to.ease);
 				}
 				pt.addEventListener(TweenEvent.ENDED, endFunc);
 				if($to.position > 0) {
@@ -136,7 +134,7 @@ package com.desuade.motion.tweens {
 		
 		public function get position():Number {
 			if(_tweenID != 0){
-				var pt:PrimitiveTween = _tweenholder[_tweenID];
+				var pt:PrimitiveTween = BasicTween._tweenholder[_tweenID];
 				//var pos:Number = (pt.target[pt.prop]-pt.startvalue)/(pt.value-pt.startvalue); //this is for ease pos
 				var pos:Number = (getTimer()-pt.starttime)/pt.duration;
 				return pos;
@@ -162,7 +160,7 @@ package com.desuade.motion.tweens {
 		}
 		
 		protected function updateListener($i:Object):void {
-			dispatchEvent(new TweenEvent(TweenEvent.UPDATE, {tween:this, primitiveTween:_tweenholder[_tweenID]}));
+			dispatchEvent(new TweenEvent(TweenEvent.UPDATE, {tween:this, primitiveTween:BasicTween._tweenholder[_tweenID]}));
 		}
 		
 		protected function roundTweenValue($i:Object):void {
@@ -173,8 +171,8 @@ package com.desuade.motion.tweens {
 		
 		protected function setpauses():void {
 			_pausepos = position;
-			_startvalue = _tweenholder[_tweenID].startvalue;
-			_difvalue = _tweenholder[_tweenID].difvalue;
+			_startvalue = BasicTween._tweenholder[_tweenID].startvalue;
+			_difvalue = BasicTween._tweenholder[_tweenID].difvalue;
 		}
 	
 	}

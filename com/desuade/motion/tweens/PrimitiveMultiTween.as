@@ -12,10 +12,7 @@ package com.desuade.motion.tweens {
 	import com.desuade.motion.events.*
 
 	public class PrimitiveMultiTween extends PrimitiveTween {
-		
-		public static var _count:int = PrimitiveTween._count;
-		internal static var _sprite:Sprite = PrimitiveTween._sprite;
-		
+				
 		internal var arrayObject:Object;
 		
 		public static function makeMultiArrays($target:Object, $object:Object):Object {

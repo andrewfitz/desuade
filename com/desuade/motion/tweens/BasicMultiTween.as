@@ -7,9 +7,7 @@ package com.desuade.motion.tweens {
 	import flash.events.EventDispatcher;
 
 	public class BasicMultiTween extends BasicTween {
-		
-		protected static var _tweenholder:Object = BasicTween._tweenholder;
-			
+					
 		public function BasicMultiTween($tweenObject:Object) {
 			super($tweenObject);
 		}
@@ -19,7 +17,7 @@ package com.desuade.motion.tweens {
 			for (var p:String in $to.properties) {
 				$to.properties[p] = (typeof $to.properties[p] == 'string') ? $to.target[p] + Number($to.properties[p]) : $to.properties[p];
 			}
-			var pt:PrimitiveMultiTween = _tweenholder[PrimitiveTween._count] = new PrimitiveMultiTween($to.target, $to.properties, $to.duration*1000, $to.ease);
+			var pt:PrimitiveMultiTween = BasicTween._tweenholder[PrimitiveTween._count] = new PrimitiveMultiTween($to.target, $to.properties, $to.duration*1000, $to.ease);
 			pt.addEventListener(TweenEvent.ENDED, endFunc);
 			return pt.id;
 		}
