@@ -29,9 +29,9 @@ package com.desuade.motion.tweens {
 			return ob;
 		}
 		
-		public function PrimitiveMultiTween($target:Object, $props:Object, $duration:int, $ease:Function = null) {
+		public function PrimitiveMultiTween($target:Object, $properties:Object, $duration:int, $ease:Function = null) {
 			super($target, null, 0, $duration, $ease);
-			arrayObject = PrimitiveMultiTween.makeMultiArrays($target, $props);
+			arrayObject = PrimitiveMultiTween.makeMultiArrays($target, $properties);
 		}
 		
 		protected override function update($u:Object):void {

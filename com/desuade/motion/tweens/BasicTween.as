@@ -31,8 +31,7 @@ package com.desuade.motion.tweens {
 		
 		//BasicTween converts the duration from ms to seconds
 		protected function createTween($to:Object):int {
-	      var ftv = $to.target[$to.prop];
-	      var newval:Number = (typeof $to.value == 'string') ? ftv + Number($to.value) : $to.value;
+	      var newval:Number = (typeof $to.value == 'string') ? $to.target[$to.prop] + Number($to.value) : $to.value;
 	      var pt:PrimitiveTween = _tweenholder[PrimitiveTween._count] = new PrimitiveTween($to.target, $to.prop, newval, $to.duration*1000, $to.ease);
 	      pt.addEventListener(TweenEvent.ENDED, endFunc);
 	      return pt.id;

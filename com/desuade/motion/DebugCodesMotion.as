@@ -13,6 +13,8 @@ package com.desuade.motion {
 				10001: "[PointsContainer] point $ added at position $",
 				10002: "[ValueController] controlled tween for $.$ ended",
 				10003: "[ValueController] can not stop, controller not active",
+				10004: "[Tween] can not stop/start, tween has completed",
+				10005: "[Tween] can not start, tween has completed",
 				
 				// low level codes
 				40001: "[Tween] new tween created",
