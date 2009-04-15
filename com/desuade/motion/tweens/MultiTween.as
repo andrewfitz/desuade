@@ -95,6 +95,10 @@ package com.desuade.motion.tweens {
 			super.endFunc($o);
 		}
 		
+		public override function clone():* {
+			return new MultiTween(_tweenconfig);
+		}
+		
 		////new methods
 		
 		public override function reset():void {

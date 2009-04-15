@@ -21,6 +21,10 @@ package com.desuade.motion.tweens {
 			pt.addEventListener(TweenEvent.ENDED, endFunc);
 			return pt.id;
 		}
+		
+		public override function clone():* {
+			return new BasicMultiTween(_tweenconfig);
+		}
 
 	}
 

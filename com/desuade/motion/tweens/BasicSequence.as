@@ -53,6 +53,20 @@ package com.desuade.motion.tweens {
 			end();
 		}
 		
+		public function setTarget($target:Object):void {
+			for (var i:int = 0; i < this.length; i++) {
+				this[i].target = $target;
+			}
+		}
+		
+		public function clone():* {
+			var ns:BasicSequence = new BasicSequence();
+			for (var i:int = 0; i < this.length; i++){
+				ns.push(this[i]);
+			}
+			return ns;
+		}
+		
 		protected function play($position:int):void {
 			Debug.output('motion', 40004, [$position]);
 			_position = $position;

@@ -121,6 +121,10 @@ package com.desuade.motion.tweens {
 			super.endFunc($o);
 		}
 		
+		public override function clone():* {
+			return new Tween(_tweenconfig);
+		}
+		
 		////new methods
 		
 		public function reset():void {

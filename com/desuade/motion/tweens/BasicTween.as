@@ -29,6 +29,10 @@ package com.desuade.motion.tweens {
 			if(_tweenID != 0) _tweenholder[_tweenID].end();
 		}
 		
+		public function clone():* {
+			return new BasicTween(_tweenconfig);
+		}
+		
 		//BasicTween converts the duration from ms to seconds
 		protected function createTween($to:Object):int {
 	      var newval:Number = (typeof $to.value == 'string') ? $to.target[$to.prop] + Number($to.value) : $to.value;
