@@ -1,17 +1,17 @@
-package com.desuade.motion.tweens {
+package com.desuade.motion.sequencers {
 
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	import flash.events.IEventDispatcher;
 
-	import com.desuade.debugging.*
-	import com.desuade.motion.events.*
+	import com.desuade.debugging.*;
+	import com.desuade.motion.events.*;
 
 	public dynamic class Sequence extends Array implements IEventDispatcher {
 		
 		protected var _position:int = 0;
 		protected var _active:Boolean = false;
-		protected var _tween:BasicTween;
+		protected var _tween;
 		protected var _dispatcher = new EventDispatcher();
 		protected var _tweenclass:Class;
 	
@@ -68,7 +68,11 @@ package com.desuade.motion.tweens {
 		public function clone():Sequence {
 			var ns:Sequence = new Sequence(_tweenclass);
 			for (var i:int = 0; i < this.length; i++){
-				ns.push(this[i]);
+				var no:Object = {};
+				for (var p:String in this[i]) {
+					no[p] = this[i][p]
+				}
+				ns.push(no);
 			}
 			return ns;
 		}
