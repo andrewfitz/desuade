@@ -7,15 +7,17 @@ package com.desuade.motion.tweens {
 	import com.desuade.debugging.*
 	import com.desuade.motion.events.*
 
-	public dynamic class BasicSequence extends Array implements IEventDispatcher {
+	public dynamic class Sequence extends Array implements IEventDispatcher {
 		
 		protected var _position:int = 0;
 		protected var _active:Boolean = false;
 		protected var _tween:BasicTween;
 		protected var _dispatcher = new EventDispatcher();
+		protected var _tweenclass:Class;
 	
-		public function BasicSequence(... args) {
+		public function Sequence($tweenclass:Class, ... args) {
 			super();
+			_tweenclass = $tweenclass;
 			pushArray(args);
 			Debug.output('motion', 40003);
 		}
@@ -25,6 +27,10 @@ package com.desuade.motion.tweens {
 		}
 		public function get active():Boolean{
 			return _active;
+		}
+		
+		public function setTweenClass($class:Class):void {
+			_tweenclass = $class;
 		}
 		
 		public function pushArray($array:Array):void {
@@ -59,8 +65,8 @@ package com.desuade.motion.tweens {
 			}
 		}
 		
-		public function clone():* {
-			var ns:BasicSequence = new BasicSequence();
+		public function clone():Sequence {
+			var ns:Sequence = new Sequence(_tweenclass);
 			for (var i:int = 0; i < this.length; i++){
 				ns.push(this[i]);
 			}
@@ -70,7 +76,7 @@ package com.desuade.motion.tweens {
 		protected function play($position:int):void {
 			Debug.output('motion', 40004, [$position]);
 			_position = $position;
-			_tween = new BasicTween(this[_position]);
+			_tween = new _tweenclass(this[_position]);
 			_tween.addEventListener(TweenEvent.ENDED, advance, false, 0, true);
 			_tween.start();
 		}
