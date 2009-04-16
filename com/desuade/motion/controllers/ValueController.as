@@ -16,9 +16,9 @@ package com.desuade.motion.controllers {
 		public var prop:String;
 		public var duration:Number;
 		public var precision:int;
+		public var tweenclass:Class = BasicTween;
 		protected var _active:Boolean = false;
 		protected var _sequence;
-		protected var _tweenclass:Class = BasicTween;
 	
 		public function ValueController($target:Object, $prop:String, $duration:Number, $precision:int = 0, $setvalue:Boolean = true){
 			super();
@@ -39,7 +39,7 @@ package com.desuade.motion.controllers {
 			setStartValue();
 			var ta:Array = createTweens();
 			_active = true;
-			_sequence = new Sequence(_tweenclass);
+			_sequence = new Sequence(tweenclass);
 			_sequence.pushArray(ta);
 			_sequence.addEventListener(SequenceEvent.ENDED, tweenEnd, false, 0, true);
 			_sequence.addEventListener(SequenceEvent.ADVANCED, advance, false, 0, true);
@@ -71,6 +71,10 @@ package com.desuade.motion.controllers {
 		
 		public function isSingleTween():Boolean {
 			return (points.length > 2) ? false : true;
+		}
+		
+		public function set name(value:Object):void {
+			_name = value;
 		}
 		
 		//private methods

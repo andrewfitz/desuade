@@ -29,14 +29,12 @@ package com.desuade.motion.sequencers {
 			return _active;
 		}
 		
-		public function setTweenClass($class:Class):void {
-			_tweenclass = $class;
+		public function get tweenclass():Class{
+			return _tweenclass;
 		}
 		
-		public function pushArray($array:Array):void {
-			for (var i:int = 0; i < $array.length; i++) {
-				this.push($array[i]);
-			}
+		public function set tweenclass($value:Class):void {
+			_tweenclass = $value;
 		}
 		
 		public function start($position:int = 0, $simulate:Boolean = false):void {
@@ -47,7 +45,7 @@ package com.desuade.motion.sequencers {
 				Debug.output('motion', 40006, [$position]);
 				for (var i:int = 0; i < $position; i++) {
 					var t:Object = this[i];
-					t.target[t.prop] = t.value;
+					t.target[t.prop] = (typeof t.value == 'string') ? t.target[t.prop] + Number(t.value) : t.value;
 				}
 			}
 			play($position);
@@ -57,6 +55,12 @@ package com.desuade.motion.sequencers {
 			_tween.removeEventListener(TweenEvent.ENDED, advance);
 			_tween.stop();
 			end();
+		}
+		
+		public function pushArray($array:Array):void {
+			for (var i:int = 0; i < $array.length; i++) {
+				this.push($array[i]);
+			}
 		}
 		
 		public function setTarget($target:Object):void {
@@ -75,6 +79,13 @@ package com.desuade.motion.sequencers {
 				ns.push(no);
 			}
 			return ns;
+		}
+		
+		public function empty():void {
+			for (var i:int = 0; i < this.length; i++) {
+				this[i] = null;
+				delete this[i];
+			}
 		}
 		
 		protected function play($position:int):void {
