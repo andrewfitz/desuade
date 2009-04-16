@@ -53,7 +53,7 @@ package com.desuade.motion.physics {
 		public function enable($setangle:Boolean = true):void {
 			_active = true;
 			if($setangle) setAngle(angle);
-			_sprite.addEventListener(Event.ENTER_FRAME, update);
+			_sprite.addEventListener(Event.ENTER_FRAME, update, false, 0, true);
 		}
 		
 		public function disable():void {

@@ -18,7 +18,7 @@ package com.desuade.motion.tweens {
 				$to.properties[p] = (typeof $to.properties[p] == 'string') ? $to.target[p] + Number($to.properties[p]) : $to.properties[p];
 			}
 			var pt:PrimitiveMultiTween = BasicTween._tweenholder[PrimitiveTween._count] = new PrimitiveMultiTween($to.target, $to.properties, $to.duration*1000, $to.ease);
-			pt.addEventListener(TweenEvent.ENDED, endFunc);
+			pt.addEventListener(TweenEvent.ENDED, endFunc, false, 0, true);
 			return pt.id;
 		}
 		

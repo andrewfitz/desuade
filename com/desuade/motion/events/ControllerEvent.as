@@ -4,6 +4,7 @@ package com.desuade.motion.events {
 
 	public class ControllerEvent extends Event {
 		public static const STARTED:String = "started";
+		public static const ADVANCED:String = "advanced";
 		public static const ENDED:String = "ended";
 
 		public var info:Object;

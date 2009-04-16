@@ -61,7 +61,7 @@ package com.desuade.motion.tweens {
 				}
 				//no bezier tweens for multitweening
 				pt = BasicTween._tweenholder[PrimitiveTween._count] = new PrimitiveMultiTween($to.target, _newproperties, $to.duration*1000, $to.ease);
-				pt.addEventListener(TweenEvent.ENDED, endFunc);
+				pt.addEventListener(TweenEvent.ENDED, endFunc, false, 0, true);
 				if($to.position > 0) {
 					pt.starttime -= ($to.position*$to.duration)*1000;
 					if(_newvals.length > 0) {
@@ -70,8 +70,8 @@ package com.desuade.motion.tweens {
 					}
 					Debug.output('motion', 40007, [$to.position]);
 				}
-				pt.addEventListener(TweenEvent.UPDATE, updateListener);
-				if($to.round) addEventListener(TweenEvent.UPDATE, roundTweenValue);
+				pt.addEventListener(TweenEvent.UPDATE, updateListener, false, 0, true);
+				if($to.round) addEventListener(TweenEvent.UPDATE, roundTweenValue, false, 0, true);
 				return pt.id;
 			}
 		}

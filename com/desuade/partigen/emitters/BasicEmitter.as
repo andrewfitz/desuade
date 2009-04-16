@@ -77,7 +77,7 @@ package com.desuade.partigen.emitters {
 				np.y = this.y;
 				np.z = this.z;
 				dispatchEvent(new ParticleEvent(ParticleEvent.BORN, {particle:np}));
-				np.addEventListener(ParticleEvent.DIED, dispatchDeath);
+				np.addEventListener(ParticleEvent.DIED, dispatchDeath, false, 0, true);
 				renderer.addParticle(np);
 			}
 		}
@@ -93,7 +93,7 @@ package com.desuade.partigen.emitters {
 			if($set){
 				if(_updatetimer != null) setTimer(false);
 				_updatetimer = new Timer(1000/_eps);
-				_updatetimer.addEventListener(TimerEvent.TIMER, update);
+				_updatetimer.addEventListener(TimerEvent.TIMER, update, false, 0, true);
 				if(_active) _updatetimer.start();
 			} else {
 				_updatetimer.stop();

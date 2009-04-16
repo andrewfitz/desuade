@@ -71,7 +71,7 @@ package com.desuade.motion.tweens {
 			Debug.output('motion', 40004, [$position]);
 			_position = $position;
 			_tween = new BasicTween(this[_position]);
-			_tween.addEventListener(TweenEvent.ENDED, advance);
+			_tween.addEventListener(TweenEvent.ENDED, advance, false, 0, true);
 			_tween.start();
 		}
 		
@@ -94,7 +94,7 @@ package com.desuade.motion.tweens {
 		
 		//for event-dispatching
 		public function addEventListener(type:String, listener:Function, useCapture:Boolean = false, priority:int = 0, useWeakReference:Boolean = false):void{
-			_dispatcher.addEventListener(type, listener, useCapture, priority);
+			_dispatcher.addEventListener(type, listener, useCapture, priority, useWeakReference);
 		}
 
 		public function dispatchEvent(evt:Event):Boolean{

@@ -37,7 +37,7 @@ package com.desuade.motion.tweens {
 		protected function createTween($to:Object):int {
 	      var newval:Number = (typeof $to.value == 'string') ? $to.target[$to.prop] + Number($to.value) : $to.value;
 	      var pt:PrimitiveTween = _tweenholder[PrimitiveTween._count] = new PrimitiveTween($to.target, $to.prop, newval, $to.duration*1000, $to.ease);
-	      pt.addEventListener(TweenEvent.ENDED, endFunc);
+	      pt.addEventListener(TweenEvent.ENDED, endFunc, false, 0, true);
 	      return pt.id;
 		}
 		

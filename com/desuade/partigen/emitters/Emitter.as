@@ -78,7 +78,7 @@ package com.desuade.partigen.emitters {
 				np.y = this.y;
 				np.z = this.z;
 				dispatchEvent(new ParticleEvent(ParticleEvent.BORN, {particle:np}));
-				np.addEventListener(ParticleEvent.DIED, dispatchDeath);
+				np.addEventListener(ParticleEvent.DIED, dispatchDeath, false, 0, true);
 				controllers.particle.attachAll(np, this);
 				np.startControllers();
 				renderer.addParticle(np);

@@ -97,7 +97,7 @@ package com.desuade.motion.tweens {
 					}
 					pt = BasicTween._tweenholder[PrimitiveTween._count] = new PrimitiveBezierTween($to.target, $to.prop, _newval, $to.duration*1000, newbez, $to.ease);
 				}
-				pt.addEventListener(TweenEvent.ENDED, endFunc);
+				pt.addEventListener(TweenEvent.ENDED, endFunc, false, 0, true);
 				if($to.position > 0) {
 					pt.starttime -= ($to.position*$to.duration)*1000;
 					if(!isNaN(_newval)) {
@@ -106,8 +106,8 @@ package com.desuade.motion.tweens {
 					}
 					Debug.output('motion', 40007, [$to.position]);
 				}
-				pt.addEventListener(TweenEvent.UPDATE, updateListener);
-				if($to.round) addEventListener(TweenEvent.UPDATE, roundTweenValue);
+				pt.addEventListener(TweenEvent.UPDATE, updateListener, false, 0, true);
+				if($to.round) addEventListener(TweenEvent.UPDATE, roundTweenValue, false, 0, true);
 				return pt.id;
 			}
 		}
@@ -153,7 +153,7 @@ package com.desuade.motion.tweens {
 		protected function delayedTween($delay:int):void {
 			Debug.output('motion', 40002, [$delay]);
 			_delayTimer = new Timer($delay*1000);
-			_delayTimer.addEventListener(TimerEvent.TIMER, dtFunc);
+			_delayTimer.addEventListener(TimerEvent.TIMER, dtFunc, false, 0, true);
 			_delayTimer.start();
 		}
 		

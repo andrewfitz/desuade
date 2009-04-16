@@ -16,7 +16,7 @@ package com.desuade.motion.tweens {
 			Debug.output('motion', 40004, [$position]);
 			_position = $position;
 			_tween = new MultiTween(this[_position]);
-			_tween.addEventListener(TweenEvent.ENDED, advance);
+			_tween.addEventListener(TweenEvent.ENDED, advance, false, 0, true);
 			_tween.start();
 		}
 		

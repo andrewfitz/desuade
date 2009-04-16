@@ -39,7 +39,7 @@ package com.desuade.motion.controllers {
 			_active = true;
 			_sequence = new BasicSequence();
 			_sequence.pushArray(ta);
-			_sequence.addEventListener(SequenceEvent.ENDED, this.tweenEnd);
+			_sequence.addEventListener(SequenceEvent.ENDED, this.tweenEnd, false, 0, true);
 			_sequence.start();
 			dispatchEvent(new ControllerEvent(ControllerEvent.STARTED, {controller:this}));
 		}

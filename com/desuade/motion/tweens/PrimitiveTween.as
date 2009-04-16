@@ -34,7 +34,7 @@ package com.desuade.motion.tweens {
 				difvalue = (startvalue > value) ? (value-startvalue) : -(startvalue-value);
 			}
 			dispatchEvent(new TweenEvent(TweenEvent.STARTED, {primitiveTween:this}));
-			_sprite.addEventListener(Event.ENTER_FRAME, update);
+			_sprite.addEventListener(Event.ENTER_FRAME, update, false, 0, true);
 			Debug.output('motion', 50001, [id]);
 		}
 		
