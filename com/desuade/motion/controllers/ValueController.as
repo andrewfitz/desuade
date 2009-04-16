@@ -1,6 +1,7 @@
 package com.desuade.motion.controllers {
 	
 	import com.desuade.debugging.*
+	import com.desuade.motion.sequencers.*
 	import com.desuade.motion.tweens.*
 	import com.desuade.utils.*
 	import com.desuade.motion.events.*
