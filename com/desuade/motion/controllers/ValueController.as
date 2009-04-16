@@ -39,7 +39,8 @@ package com.desuade.motion.controllers {
 			_active = true;
 			_sequence = new BasicSequence();
 			_sequence.pushArray(ta);
-			_sequence.addEventListener(SequenceEvent.ENDED, this.tweenEnd, false, 0, true);
+			_sequence.addEventListener(SequenceEvent.ENDED, tweenEnd, false, 0, true);
+			_sequence.addEventListener(SequenceEvent.ADVANCED, advance, false, 0, true);
 			_sequence.start();
 			dispatchEvent(new ControllerEvent(ControllerEvent.STARTED, {controller:this}));
 		}
@@ -56,6 +57,8 @@ package com.desuade.motion.controllers {
 		public function tweenEnd(... args):void {
 			_active = false;
 			dispatchEvent(new ControllerEvent(ControllerEvent.ENDED, {controller:this}));
+			_sequence.removeEventListener(SequenceEvent.ENDED, tweenEnd);
+			_sequence.removeEventListener(SequenceEvent.ADVANCED, advance);
 			Debug.output('motion', 10002, [target, prop]);
 		}
 		
@@ -69,6 +72,11 @@ package com.desuade.motion.controllers {
 		}
 		
 		//private methods
+		
+		protected function advance($o:Object):void {
+			var pos:String = points.getOrderedLabels()[$o.info.sequence.position];
+			dispatchEvent(new ControllerEvent(ControllerEvent.ADVANCED, {position:pos, controller:this}));
+		}
 		
 		protected function calculateDuration($previous:Number, $position:Number):Number {
 			return duration*($position-$previous);
