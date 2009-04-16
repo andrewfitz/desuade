@@ -18,15 +18,15 @@ package com.desuade.partigen.controllers {
 			return _life;
 		}
 		
-		public function addStartValue($prop:String, $value:*, $spread:Number = 0, $precision:int = 2):void {
+		public function addStartValue($prop:String, $value:*, $spread:* = '0', $precision:int = 2):void {
 			var tp:ParticleValueController = this[$prop] = new ParticleValueController(0, $precision);
 			tp.points.begin.value = $value;
 			tp.points.begin.spread = $spread;
 			tp.points.end.value = null;
-			tp.points.end.spread = 0;
+			tp.points.end.spread = '0';
 		}
 		
-		public function addBasicTween($prop:String, $start:*, $startSpread:Number, $end:*, $endSpread:Number, $ease:* = null, $duration:Number = 0, $precision:int = 2):void {
+		public function addBasicTween($prop:String, $start:*, $startSpread:*, $end:*, $endSpread:*, $ease:* = null, $duration:Number = 0, $precision:int = 2):void {
 			var tp:ParticleValueController = this[$prop] = new ParticleValueController($duration, $precision);
 			tp.points.begin.value = $start;
 			tp.points.end.value = $end;
@@ -40,7 +40,7 @@ package com.desuade.partigen.controllers {
 		}
 		
 		protected function randomLife():Number{
-			return (_life.spread != 0) ? Random.fromRange(_life.value, _life.value + _life.spread, 2) : _life.value;
+			return (_life.spread !== '0') ? Random.fromRange(_life.value, _life.value + _life.spread, 2) : _life.value;
 		}
 		
 		protected function attachController($particle:Particle, $prop:String, $emitter:Emitter = null):void {

@@ -61,7 +61,7 @@ package com.desuade.motion.controllers {
 		
 		public function setStartValue():Number {
 			var nv:Number = (typeof points.begin.value == 'string') ? target[prop] + Number(points.begin.value) : points.begin.value;
-			return target[prop] = (points.begin.spread != 0) ? Random.fromRange(nv, nv + points.begin.spread, precision) : nv;
+			return target[prop] = (points.begin.spread !== '0') ? Random.fromRange(nv, ((typeof points.begin.spread == 'string') ? nv + Number(points.begin.spread) : points.begin.spread), precision) : nv;
 		}
 		
 		public function isSingleTween():Boolean {
@@ -81,10 +81,19 @@ package com.desuade.motion.controllers {
 			for (var i:int = 1; i < pa.length; i++) {
 				//if null, sets it to starting value
 				var np:Object = points[pa[i]];
-				var nnnv:* = (np.value == null) ? target[prop] : np.value;
-				var nuv:Number = Number(nnnv);
-				var nv:* = (np.spread != 0) ? Random.fromRange(nuv, nuv + np.spread, precision) : nuv;
-				nv = (typeof nnnv == 'string') ? nv.toString() : nv;
+				var nuv:Number;
+				if(np.value == null){
+					nuv = target[prop];
+				} else {
+					var nnnv:* = np.value;
+					if(typeof nnnv == 'string'){
+						var nfpv:Number = (ta.length == 0) ? target[prop] : ta[ta.length-1].value;
+						nuv = nfpv + Number(nnnv);
+					} else {
+						nuv = nnnv;
+					}
+				}
+				var nv:Number = (np.spread !== '0') ? Random.fromRange(nuv, ((typeof np.spread == 'string') ? nuv + Number(np.spread) : np.spread), precision) : nuv;
 				var tmo:Object = {target:target, prop:prop, value:nv, ease:np.ease, duration:calculateDuration(points[pa[i-1]].position, np.position), delay:0};
 				ta.push(tmo);
 			}

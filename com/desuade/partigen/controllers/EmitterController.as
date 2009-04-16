@@ -14,15 +14,15 @@ package com.desuade.partigen.controllers {
 			_emitter = $emitter;
 		}
 		
-		public function addStartValue($prop:String, $value:*, $spread:Number = 0, $precision:int = 2):void {
+		public function addStartValue($prop:String, $value:*, $spread:* = '0', $precision:int = 2):void {
 			var tp:ValueController = this[$prop] = new ValueController(_emitter, $prop, 0, $precision);
 			tp.points.begin.value = $value;
 			tp.points.begin.spread = $spread;
 			tp.points.end.value = null;
-			tp.points.end.spread = 0;
+			tp.points.end.spread = '0';
 		}
 		
-		public function addBasicTween($prop:String, $start:*, $startSpread:Number, $end:*, $endSpread:Number, $ease:* = null, $duration:Number = 0, $precision:int = 2):void {
+		public function addBasicTween($prop:String, $start:*, $startSpread:*, $end:*, $endSpread:*, $ease:* = null, $duration:Number = 0, $precision:int = 2):void {
 			var tp:ValueController = this[$prop] = new ValueController(_emitter, $prop, $duration, $precision);
 			tp.points.begin.value = $start;
 			tp.points.end.value = $end;

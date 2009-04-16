@@ -14,7 +14,7 @@ package com.desuade.motion.events {
 		}
 
 		public override function clone():Event{
-			return new SequenceEvent(this.type, this.info, this.bubbles, this.cancelable);
+			return new ControllerEvent(this.type, this.info, this.bubbles, this.cancelable);
 		}
 
 	}
