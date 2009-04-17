@@ -14,7 +14,7 @@ package com.desuade.motion.sequencers {
 		protected var _tween;
 		protected var _dispatcher = new EventDispatcher();
 		protected var _tweenclass:Class;
-		protected var _target:Object = null;
+		protected var _overrides:Object;
 	
 		public function Sequence($tweenclass:Class, ... args) {
 			super();
@@ -38,12 +38,12 @@ package com.desuade.motion.sequencers {
 			_tweenclass = $value;
 		}
 		
-		public function get target():Object{
-			return _target;
+		public function get overrides():Object{
+			return _overrides;
 		}
 		
-		public function set target($value:Object):void {
-			_target = $value;
+		public function set overrides($value:Object):void {
+			_overrides = $value;
 		}
 		
 		public function start($position:int = 0, $simulate:Boolean = false):void {
@@ -100,7 +100,11 @@ package com.desuade.motion.sequencers {
 			Debug.output('motion', 40004, [$position]);
 			_position = $position;
 			_tween = new _tweenclass(this[_position]);
-			if(_target != null) _tween.config.target = _target;
+			if(this[_position].allowOverrides != false){
+				for (var p:String in _overrides) {
+					_tween.config[p] = _overrides[p];
+				}
+			}
 			_tween.addEventListener(TweenEvent.ENDED, advance, false, 0, true);
 			_tween.start();
 		}
