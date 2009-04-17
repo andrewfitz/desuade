@@ -12,7 +12,6 @@ package com.desuade.motion.tweens {
 			super($tweenObject);
 		}
 		
-		//BasicTween converts the duration from ms to seconds
 		protected override function createTween($to:Object):int {
 			for (var p:String in $to.properties) {
 				$to.properties[p] = (typeof $to.properties[p] == 'string') ? $to.target[p] + Number($to.properties[p]) : $to.properties[p];

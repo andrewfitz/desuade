@@ -48,7 +48,7 @@ package com.desuade.motion.tweens {
 					nres = b1+ipos*(2*(1-ipos)*(bezierArray[bpos]-b1) + ipos*(b2 - b1));
 				}
 				target[prop] = nres;
-				dispatchEvent(new TweenEvent(TweenEvent.UPDATE, {primitiveTween:this}));
+				dispatchEvent(new TweenEvent(TweenEvent.UPDATED, {primitiveTween:this}));
 			}
 			
 		}

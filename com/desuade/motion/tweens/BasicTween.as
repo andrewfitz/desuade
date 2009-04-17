@@ -35,6 +35,10 @@ package com.desuade.motion.tweens {
 			return _active;
 		}
 		
+		public function get config():Object{
+			return _tweenconfig;
+		}
+		
 		public function clone():* {
 			return new BasicTween(_tweenconfig);
 		}

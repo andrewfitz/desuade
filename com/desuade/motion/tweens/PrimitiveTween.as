@@ -45,7 +45,7 @@ package com.desuade.motion.tweens {
 				end();
 			} else {
 				target[prop] = ease(tmr, startvalue, difvalue, duration);
-				dispatchEvent(new TweenEvent(TweenEvent.UPDATE, {primitiveTween:this}));
+				dispatchEvent(new TweenEvent(TweenEvent.UPDATED, {primitiveTween:this}));
 			}
 		}
 		

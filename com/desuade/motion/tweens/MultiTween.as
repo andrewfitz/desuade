@@ -70,8 +70,8 @@ package com.desuade.motion.tweens {
 					}
 					Debug.output('motion', 40007, [$to.position]);
 				}
-				pt.addEventListener(TweenEvent.UPDATE, updateListener, false, 0, true);
-				if($to.round) addEventListener(TweenEvent.UPDATE, roundTweenValue, false, 0, true);
+				pt.addEventListener(TweenEvent.UPDATED, updateListener, false, 0, true);
+				if($to.round) addEventListener(TweenEvent.UPDATED, roundTweenValue, false, 0, true);
 				return pt.id;
 			}
 		}

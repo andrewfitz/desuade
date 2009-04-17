@@ -14,6 +14,7 @@ package com.desuade.motion.sequencers {
 		protected var _tween;
 		protected var _dispatcher = new EventDispatcher();
 		protected var _tweenclass:Class;
+		protected var _target:Object = null;
 	
 		public function Sequence($tweenclass:Class, ... args) {
 			super();
@@ -35,6 +36,14 @@ package com.desuade.motion.sequencers {
 		
 		public function set tweenclass($value:Class):void {
 			_tweenclass = $value;
+		}
+		
+		public function get target():Object{
+			return _target;
+		}
+		
+		public function set target($value:Object):void {
+			_target = $value;
 		}
 		
 		public function start($position:int = 0, $simulate:Boolean = false):void {
@@ -71,12 +80,6 @@ package com.desuade.motion.sequencers {
 			}
 		}
 		
-		public function setTarget($target:Object):void {
-			for (var i:int = 0; i < this.length; i++) {
-				this[i].target = $target;
-			}
-		}
-		
 		public function clone():Sequence {
 			var ns:Sequence = new Sequence(_tweenclass);
 			for (var i:int = 0; i < this.length; i++){
@@ -97,6 +100,7 @@ package com.desuade.motion.sequencers {
 			Debug.output('motion', 40004, [$position]);
 			_position = $position;
 			_tween = new _tweenclass(this[_position]);
+			if(_target != null) _tween.config.target = _target;
 			_tween.addEventListener(TweenEvent.ENDED, advance, false, 0, true);
 			_tween.start();
 		}

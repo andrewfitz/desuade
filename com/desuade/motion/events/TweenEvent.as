@@ -4,7 +4,7 @@ package com.desuade.motion.events {
 
 	public class TweenEvent extends Event {
 		public static const STARTED:String = "started";
-		public static const UPDATE:String = "update";
+		public static const UPDATED:String = "updated";
 		public static const ENDED:String = "ended";
 
 		public var info:Object;

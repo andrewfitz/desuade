@@ -107,8 +107,8 @@ package com.desuade.motion.tweens {
 					}
 					Debug.output('motion', 40007, [$to.position]);
 				}
-				pt.addEventListener(TweenEvent.UPDATE, updateListener, false, 0, true);
-				if($to.round) addEventListener(TweenEvent.UPDATE, roundTweenValue, false, 0, true);
+				pt.addEventListener(TweenEvent.UPDATED, updateListener, false, 0, true);
+				if($to.round) addEventListener(TweenEvent.UPDATED, roundTweenValue, false, 0, true);
 				return pt.id;
 			}
 		}
@@ -165,7 +165,7 @@ package com.desuade.motion.tweens {
 		}
 		
 		protected function updateListener($i:Object):void {
-			dispatchEvent(new TweenEvent(TweenEvent.UPDATE, {tween:this, primitiveTween:BasicTween._tweenholder[_tweenID]}));
+			dispatchEvent(new TweenEvent(TweenEvent.UPDATED, {tween:this, primitiveTween:BasicTween._tweenholder[_tweenID]}));
 		}
 		
 		protected function roundTweenValue($i:Object):void {
