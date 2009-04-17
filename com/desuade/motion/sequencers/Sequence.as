@@ -46,18 +46,11 @@ package com.desuade.motion.sequencers {
 			_overrides = $value;
 		}
 		
-		public function start($position:int = 0, $simulate:Boolean = false):void {
+		public function start($position:int = 0):void {
 			if(!active && this.length != 0){
 				_active = true;
 				Debug.output('motion', 40008);
 				_dispatcher.dispatchEvent(new SequenceEvent(SequenceEvent.STARTED, {sequence:this}));
-				if($position > 0 && $simulate){
-					Debug.output('motion', 40006, [$position]);
-					for (var i:int = 0; i < $position; i++) {
-						var t:Object = this[i];
-						t.target[t.prop] = (typeof t.value == 'string') ? t.target[t.prop] + Number(t.value) : t.value;
-					}
-				}
 				play($position);	
 			} else {
 				Debug.output('motion', 10006);
@@ -99,14 +92,31 @@ package com.desuade.motion.sequencers {
 		protected function play($position:int):void {
 			Debug.output('motion', 40004, [$position]);
 			_position = $position;
-			_tween = new _tweenclass(this[_position]);
-			if(this[_position].allowOverrides != false){
-				for (var p:String in _overrides) {
-					_tween.config[p] = _overrides[p];
+			var tp = this[_position];
+			if(tp.length != undefined){
+				_tween = [];
+				var longdur:Array = [-1, _tween];
+				for (var i:int = 0; i < tp.length; i++) {
+					_tween[i] = new _tweenclass(tp[i]);
+					if(tp[i].allowOverrides != false){
+						for (var r:String in _overrides) {
+							_tween[i].config[r] = _overrides[r];
+						}
+					}
+					if(_tween[i].config.duration > longdur[0]) longdur = [_tween[i].config.duration, _tween[i]];
+					_tween[i].start();
 				}
+				longdur[1].addEventListener(TweenEvent.ENDED, advance, false, 0, true);
+			} else {
+				_tween = new _tweenclass(tp);
+				if(tp.allowOverrides != false){
+					for (var p:String in _overrides) {
+						_tween.config[p] = _overrides[p];
+					}
+				}
+				_tween.addEventListener(TweenEvent.ENDED, advance, false, 0, true);
+				_tween.start();
 			}
-			_tween.addEventListener(TweenEvent.ENDED, advance, false, 0, true);
-			_tween.start();
 		}
 		
 		protected function end():void {
@@ -121,7 +131,7 @@ package com.desuade.motion.sequencers {
 				play(++_position);
 				_dispatcher.dispatchEvent(new SequenceEvent(SequenceEvent.ADVANCED, {position:_position, sequence:this}));
 			} else {
-				_tween.removeEventListener(TweenEvent.ENDED, advance);
+				$i.info.tween.removeEventListener(TweenEvent.ENDED, advance);
 				end();
 			}
 		}

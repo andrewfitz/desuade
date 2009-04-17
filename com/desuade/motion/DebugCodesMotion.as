@@ -24,7 +24,7 @@ package com.desuade.motion {
 				40003: "[Sequence] new sequence created",
 				40004: "[Sequence] sequence now playing at position $",
 				40005: "[Sequence] sequence ended",
-				40006: "[Sequence] simulating new position at $",
+				40006: "[Sequence] simulating new position at $", //removed
 				40007: "[Tween] starting tween at position: $",
 				40008: "[Sequence] sequence started",
 				
