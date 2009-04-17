@@ -71,6 +71,18 @@ package com.desuade.motion.controllers {
 			return npc;
 		}
 		
+		public function empty():Object {
+			var no:Object = {};
+			for (var p:String in this) {
+				if(p != 'begin' && p != 'end'){
+					no[p] = this[p];
+					this[p] = null;
+					delete this[p];
+				}
+			}
+			return no;
+		}
+		
 		//private static methods
 		protected static function sortOnPosition(a:Object, b:Object):Number {
 		    var aPos:Number = a.position;

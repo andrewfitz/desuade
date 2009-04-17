@@ -32,7 +32,7 @@ package com.desuade.motion.tweens {
 		
 		//overriding methods
 		public override function start($delay:Number = -1, $position:Number = -1):void {
-			if(!_completed){
+			if(!_completed && !active){
 				_tweenconfig.delay = ($delay == -1) ? _tweenconfig.delay : $delay;
 				if($position == -1){
 					if(!isNaN(_pausepos)) _tweenconfig.position = _pausepos;
@@ -40,6 +40,7 @@ package com.desuade.motion.tweens {
 					_tweenconfig.position = $position;
 				}
 				_tweenconfig.position = ($position == -1) ? _tweenconfig.position : $position;
+				_active = true;
 				dispatchEvent(new TweenEvent(TweenEvent.STARTED, {tween:this}));
 				if(_tweenconfig.delay > 0) delayedTween(_tweenconfig.delay);
 				else _tweenID = createTween(_tweenconfig);

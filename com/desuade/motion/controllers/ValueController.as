@@ -73,10 +73,6 @@ package com.desuade.motion.controllers {
 			return (points.length > 2) ? false : true;
 		}
 		
-		public function set name(value:Object):void {
-			_name = value;
-		}
-		
 		//private methods
 		
 		protected function advance($o:Object):void {

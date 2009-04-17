@@ -12,6 +12,7 @@ package com.desuade.motion.tweens {
 		
 		protected var _tweenconfig:Object;
 		protected var _tweenID:int = 0;
+		protected var _active:Boolean = false;
 			
 		public function BasicTween($tweenObject:Object) {
 			super();
@@ -21,12 +22,17 @@ package com.desuade.motion.tweens {
 		
 		//args need to be in here for overriding - delay and position
 		public function start($delay:Number = -1, $position:Number = -1):void {
+			_active = true;
 			dispatchEvent(new TweenEvent(TweenEvent.STARTED, {tween:this}));
 			_tweenID = createTween(_tweenconfig);
 		}
 		
 		public function stop():void {
 			if(_tweenID != 0) _tweenholder[_tweenID].end();
+		}
+		
+		public function get active():Boolean{
+			return _active;
 		}
 		
 		public function clone():* {
@@ -42,6 +48,7 @@ package com.desuade.motion.tweens {
 		
 		protected function endFunc($o:Object):void {
 			dispatchEvent(new TweenEvent(TweenEvent.ENDED, {tween:this, primitiveTween:_tweenholder[_tweenID]}));
+			_active = false;
 			_tweenholder[_tweenID].removeEventListener(TweenEvent.ENDED, endFunc);
 			_tweenholder[_tweenID] = null;
 			delete _tweenholder[_tweenID];

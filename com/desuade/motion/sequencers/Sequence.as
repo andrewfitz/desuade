@@ -38,23 +38,31 @@ package com.desuade.motion.sequencers {
 		}
 		
 		public function start($position:int = 0, $simulate:Boolean = false):void {
-			_active = true;
-			Debug.output('motion', 40008);
-			_dispatcher.dispatchEvent(new SequenceEvent(SequenceEvent.STARTED, {sequence:this}));
-			if($position > 0 && $simulate){
-				Debug.output('motion', 40006, [$position]);
-				for (var i:int = 0; i < $position; i++) {
-					var t:Object = this[i];
-					t.target[t.prop] = (typeof t.value == 'string') ? t.target[t.prop] + Number(t.value) : t.value;
+			if(!active && this.length != 0){
+				_active = true;
+				Debug.output('motion', 40008);
+				_dispatcher.dispatchEvent(new SequenceEvent(SequenceEvent.STARTED, {sequence:this}));
+				if($position > 0 && $simulate){
+					Debug.output('motion', 40006, [$position]);
+					for (var i:int = 0; i < $position; i++) {
+						var t:Object = this[i];
+						t.target[t.prop] = (typeof t.value == 'string') ? t.target[t.prop] + Number(t.value) : t.value;
+					}
 				}
+				play($position);	
+			} else {
+				Debug.output('motion', 10006);
 			}
-			play($position);
 		}
 		
 		public function stop():void {
-			_tween.removeEventListener(TweenEvent.ENDED, advance);
-			_tween.stop();
-			end();
+			if(active){
+				_tween.removeEventListener(TweenEvent.ENDED, advance);
+				_tween.stop();
+				end();
+			} else {
+				Debug.output('motion', 10007);
+			}
 		}
 		
 		public function pushArray($array:Array):void {
@@ -81,11 +89,8 @@ package com.desuade.motion.sequencers {
 			return ns;
 		}
 		
-		public function empty():void {
-			for (var i:int = 0; i < this.length; i++) {
-				this[i] = null;
-				delete this[i];
-			}
+		public function empty():Array {
+			return splice(0);
 		}
 		
 		protected function play($position:int):void {
