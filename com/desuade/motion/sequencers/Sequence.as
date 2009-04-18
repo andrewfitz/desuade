@@ -103,8 +103,11 @@ package com.desuade.motion.sequencers {
 			_position = $position;
 			var tp = this[_position];
 			if(tp is Sequence){
-				trace('HEYHEY');
-				if(tp.allowOverrides != false) tp.overrides = _overrides;
+				if(tp.allowOverrides != false) {
+					for (var e:String in _overrides) {
+						tp.overrides[e] = _overrides[e];
+					}
+				}
 				tp.addEventListener(SequenceEvent.ENDED, advance, false, 0, true);
 				tp.start();
 			} else if(tp.length != undefined){
