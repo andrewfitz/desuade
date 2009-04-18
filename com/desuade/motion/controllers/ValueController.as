@@ -11,7 +11,7 @@ package com.desuade.motion.controllers {
 
 	public class ValueController extends EventDispatcher {
 	
-		public var points:PointsContainer;
+		public var points:BasePointsContainer;
 		public var target:Object;
 		public var prop:String;
 		public var duration:Number;

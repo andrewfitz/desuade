@@ -54,6 +54,9 @@ package com.desuade.utils {
 					var offset:Number = ((amt > 0) ? (255*amt) : 0);
 					return {redMultiplier:percent, redOffset:offset, greenMultiplier:percent, greenOffset:offset, blueMultiplier:percent, blueOffset:offset};
 				break;
+				case 'brightOffset':
+					return {redMultiplier:1, redOffset:(cr*amt), greenMultiplier:1, greenOffset:(cg*amt), blueMultiplier:1, blueOffset:(cb*amt)};
+				break;
 				case 'contrast':
 					return {redMultiplier:amt, redOffset:(cr2-(cr2*amt)), greenMultiplier:amt, greenOffset:(cg2-(cg2*amt)), blueMultiplier:amt, blueOffset:(cb2-(cb2*amt))};
 				break;
