@@ -40,7 +40,7 @@ package com.desuade.motion.controllers {
 		public function isFlat():Boolean {
 			var pa:Array = this.toArray();
 			for (var i:int = 0; i < pa.length; i++) {
-				if(pa[i].value != this.begin.value && pa[i].amount != this.begin.amount && pa[i].value != null) return false;
+				if((pa[i].value != this.begin.value || pa[i].amount != this.begin.amount) && pa[i].value != null) return false;
 			}
 			return true;
 		}

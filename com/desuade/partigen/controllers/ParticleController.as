@@ -9,6 +9,7 @@ package com.desuade.partigen.controllers {
 	public dynamic class ParticleController extends Object {
 		
 		protected var _life:Object = {value:0, spread:0};
+		protected var _color:ParticleColorController = null;
 	
 		public function ParticleController() {
 			super();
@@ -16,6 +17,14 @@ package com.desuade.partigen.controllers {
 		
 		public function get life():Object{
 			return _life;
+		}
+		
+		public function get color():ParticleColorController{
+			return _color;
+		}
+		
+		public function set color($value:ParticleColorController):void {
+			_color = $value;
 		}
 		
 		public function addStartValue($prop:String, $value:*, $spread:* = '0', $precision:int = 2):void {
@@ -58,11 +67,17 @@ package com.desuade.partigen.controllers {
 			}
 		}
 		
+		protected function attachColorController($particle:Particle, $emitter:Emitter = null):void {
+			$particle.controllers.color = new ColorValueController($particle, (_color.duration == 0) ? $particle.life : _color.duration);
+			$particle.controllers.color.points = _color.points;
+		}
+		
 		public function attachAll($particle:Particle, $emitter:Emitter = null):void {
 			if(_life.value > 0) $particle.addLife(randomLife());
 			for (var p:String in this) {
 				attachController($particle, p, $emitter);
 			}
+			if(_color != null) attachColorController($particle, $emitter);
 		}
 	
 	}
