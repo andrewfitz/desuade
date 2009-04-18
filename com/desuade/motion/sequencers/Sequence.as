@@ -15,7 +15,8 @@ package com.desuade.motion.sequencers {
 		protected var _dispatcher = new EventDispatcher();
 		protected var _tweenclass:Class;
 		protected var _overrides:Object;
-	
+		protected var _allowOverrides:Boolean = true;
+		
 		public function Sequence($tweenclass:Class, ... args) {
 			super();
 			_tweenclass = $tweenclass;
@@ -44,6 +45,14 @@ package com.desuade.motion.sequencers {
 		
 		public function set overrides($value:Object):void {
 			_overrides = $value;
+		}
+		
+		public function get allowOverrides():Boolean{
+			return _allowOverrides;
+		}
+		
+		public function set allowOverrides($value:Boolean):void {
+			_allowOverrides = $value;
 		}
 		
 		public function start($position:int = 0):void {
@@ -93,7 +102,12 @@ package com.desuade.motion.sequencers {
 			Debug.output('motion', 40004, [$position]);
 			_position = $position;
 			var tp = this[_position];
-			if(tp.length != undefined){
+			if(tp is Sequence){
+				trace('HEYHEY');
+				if(tp.allowOverrides != false) tp.overrides = _overrides;
+				tp.addEventListener(SequenceEvent.ENDED, advance, false, 0, true);
+				tp.start();
+			} else if(tp.length != undefined){
 				_tween = [];
 				var longdur:Array = [-1, _tween];
 				for (var i:int = 0; i < tp.length; i++) {
@@ -127,11 +141,12 @@ package com.desuade.motion.sequencers {
 		}
 		
 		protected function advance($i:Object):void {
+			if($i is SequenceEvent) $i.info.sequence.removeEventListener(SequenceEvent.ENDED, advance);
+			else $i.info.tween.removeEventListener(TweenEvent.ENDED, advance);
 			if(_position < length-1){
 				play(++_position);
 				_dispatcher.dispatchEvent(new SequenceEvent(SequenceEvent.ADVANCED, {position:_position, sequence:this}));
 			} else {
-				$i.info.tween.removeEventListener(TweenEvent.ENDED, advance);
 				end();
 			}
 		}
