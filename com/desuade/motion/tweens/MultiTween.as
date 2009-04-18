@@ -22,24 +22,24 @@ package com.desuade.motion.tweens {
 		}
 		
 		//Static tween function
-		public static function tween($target:Object, $properties:Object, $duration:int, $ease:Function = null, $delay:Number = 0, $position:Number = 0, $bezier:Array = null):MultiTween {
-			var st:MultiTween = new MultiTween({target:$target, properties:$properties, duration:$duration, ease:$ease, delay:$delay, position:$position, bezier:$bezier});
+		public static function tween($target:Object, $properties:Object, $duration:int, $ease:Function = null, $delay:Number = 0, $position:Number = 0):MultiTween {
+			var st:MultiTween = new MultiTween({target:$target, properties:$properties, duration:$duration, ease:$ease, delay:$delay, position:$position});
 			st.start();
 			return st;
 		}
 		
 		protected override function createTween($to:Object):int {
-			var pt:PrimitiveMultiTween;
 			if($to.func != undefined){
 				$to.func.apply(null, $to.args);
 				_completed = true;
 				dispatchEvent(new TweenEvent(TweenEvent.ENDED, {tween:this}));
 				return 0;
 			} else {
+				var pt:PrimitiveMultiTween;
 				if(_newvals.length == 0){
-					for (var p:String in $to.properties) {
+					var t:Object = $to.properties;
+					for (var p:String in t) {
 						var ftv = $to.target[p];
-						var t:Object = $to.properties;
 						var tp:* = t[p];
 						var ntval:*;
 						var newvaly:Number;

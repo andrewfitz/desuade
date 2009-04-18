@@ -66,13 +66,13 @@ package com.desuade.motion.tweens {
 		}
 		
 		protected override function createTween($to:Object):int {
-			var pt:PrimitiveTween;
 			if($to.func != undefined){
 				$to.func.apply(null, $to.args);
 				_completed = true;
 				dispatchEvent(new TweenEvent(TweenEvent.ENDED, {tween:this}));
 				return 0;
 			} else {
+				var pt:PrimitiveTween;
 				var ftv = $to.target[$to.prop];
 				var ntval:*;
 				if(isNaN(_newval)){
