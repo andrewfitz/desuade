@@ -6,12 +6,25 @@ package com.desuade.utils {
 			super();
 		}
 		
-		public static function hexToDec($hex:String):int {
+		public static function hexStringToDec($hex:String):int {
 			return parseInt($hex, 16);
 		}
 		
-		public static function decToHex($dec:int):String {
+		public static function decToHexString($dec:int):String {
 			return Number($dec).toString(16);
+		}
+		
+		public static function hexToRGB($color:*):Object {
+			var cc:uint = cleanColorValue($color);
+			var ob:Object = {r:0, g:0, b:0};
+			ob.r = (cc >> 16);;
+			ob.g = ((cc >> 8) & 0xFF);
+			ob.b = (cc & 0xFF);
+			return ob;
+		}
+		
+		public static function RGBToHex(r:int, g:int, b:int):uint {
+			return r << 16 | g << 8 | b;
 		}
 		
 		public static function cleanColorValue($rgb:*):uint {
