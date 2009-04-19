@@ -43,18 +43,11 @@ package com.desuade.motion.tweens {
 						var tp:* = t[p];
 						var ntval:*;
 						var newvaly:Number;
-						if(tp is Random){
-							ntval = tp.randomValue;
-						} else {
-							ntval = tp;
-						}
-						if($to.relative === true){
-							newvaly = ftv + Number(ntval);
-						} else if($to.relative === false){
-							newvaly = Number(ntval);
-						} else {
-							newvaly = (typeof ntval == 'string') ? ftv + Number(ntval) : ntval;
-						}
+						if(tp is Random) ntval = tp.randomValue;
+						else ntval = tp;
+						if($to.relative === true) newvaly = ftv + Number(ntval);
+						else if($to.relative === false) newvaly = Number(ntval);
+						else newvaly = (typeof ntval == 'string') ? ftv + Number(ntval) : ntval;
 						_newvals.push(newvaly);
 						_newproperties[p] = newvaly;
 					}

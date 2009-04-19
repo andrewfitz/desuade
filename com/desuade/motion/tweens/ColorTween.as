@@ -39,7 +39,10 @@ package com.desuade.motion.tweens {
 				var cpo:Object = ColorHelper.getColorObject($to.type || 'tint', $to.amount || 1, $to.value, _colorholder);
 				if(_newvals.length == 0){
 					for (var p:String in cpo) {
-						_newvals.push(cpo[p]);
+						var ntval:*;
+						if(cpo[p] is RandomColor) ntval = cpo[p].randomValue;
+						else ntval = cpo[p];
+						_newvals.push(ntval);
 					}	
 				}
 				pt = BasicTween._tweenholder[PrimitiveTween._count] = new PrimitiveMultiTween(_colorholder, cpo, $to.duration*1000, $to.ease);

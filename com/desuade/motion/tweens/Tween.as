@@ -76,18 +76,11 @@ package com.desuade.motion.tweens {
 				var ftv = $to.target[$to.prop];
 				var ntval:*;
 				if(isNaN(_newval)){
-					if($to.value is Random){
-						ntval = $to.value.randomValue;
-					} else {
-						ntval = $to.value;
-					}
-					if($to.relative === true){
-						_newval = ftv + Number(ntval);
-					} else if($to.relative === false){
-						_newval = Number(ntval);
-					} else {
-						_newval = (typeof ntval == 'string') ? ftv + Number(ntval) : ntval;
-					}
+					if($to.value is Random) ntval = $to.value.randomValue;
+					else ntval = $to.value;
+					if($to.relative === true) _newval = ftv + Number(ntval);
+					else if($to.relative === false) _newval = Number(ntval);
+					else _newval = (typeof ntval == 'string') ? ftv + Number(ntval) : ntval;
 				}
 				if($to.bezier == undefined || $to.bezier == null){
 					 pt = BasicTween._tweenholder[PrimitiveTween._count] = new PrimitiveTween($to.target, $to.prop, _newval, $to.duration*1000, $to.ease);
