@@ -1,7 +1,18 @@
 package com.desuade.motion {
 
 	import com.desuade.debugging.*
-
+	
+	/**
+	 *  This is the CodeSet for the Motion Package.
+	 *	
+	 *	@private
+	 *    
+	 *  @langversion ActionScript 3
+	 *  @playerversion Flash 9.0.0
+	 *
+	 *  @author Andrew Fitzgerald
+	 *  @since  18.04.2009
+	 */
 	public class DebugCodesMotion extends CodeSet {
 		
 		public function DebugCodesMotion() {
