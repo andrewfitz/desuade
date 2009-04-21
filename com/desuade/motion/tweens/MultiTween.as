@@ -39,7 +39,7 @@ package com.desuade.motion.tweens {
 				if(_newvals.length == 0){
 					var t:Object = $to.properties;
 					for (var p:String in t) {
-						var ftv = $to.target[p];
+						var ftv:Object = $to.target[p];
 						var tp:* = t[p];
 						var ntval:*;
 						var newvaly:Number;

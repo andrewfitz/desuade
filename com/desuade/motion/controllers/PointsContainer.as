@@ -2,20 +2,52 @@ package com.desuade.motion.controllers {
 	
 	import com.desuade.debugging.*
 
+	/**
+	 *  PointsContainer is a container for points, used by a ValueController.
+	 *    
+	 *  @langversion ActionScript 3
+	 *  @playerversion Flash 9.0.0
+	 *
+	 *  @author Andrew Fitzgerald
+	 *  @since  20.04.2009
+	 */
 	public dynamic class PointsContainer extends BasePointsContainer {
 	
+		/**
+		 *	This creates a new PointsContainer. For most uses, this is all internally handled by the corresponding ValueController. Multiple controllers can use the same points container, allowing for incredible flexibility.
+		 *	
+		 *	@param	value	 This sets the begin and end values to this. Pass a Number for absolute, or a String for relative.
+		 */
 		public function PointsContainer($value:* = '0'){
 			super();
 			this.begin = {value:$value, spread:'0', position:0};
 			this.end = {value:$value, spread:'0', position:1, ease:BasePointsContainer.linear};
 		}
 		
+		/**
+		 *	This adds a point to the PointsContainer.
+		 *	
+		 *	"Points" are like a keyframe on the timeline. The all have a value, ease, label, and position. The ValueCntroller starts at the 'begin' point, and creates a sequence of tweens connecting from point-to-point, all the way to the 'end' point. Think in terms of a line graph, each point is a 'point' on the line.
+		 *	
+		 *	If no points are added, the ValueCntroller will simply create 1 tween from 'begin' to 'end'.
+		 *	
+		 *	@param	value	 A value to tween to. The target will arive (the tween will end) at this value at the position of this point. Pass a Number for absolute, or a String for relative.
+		 *	@param	spread	 A value to create a random range from. If the spread doesn't equal the 'value' value or '0', a random value will be created between the 'value' and the 'spread'. Pass a Number for absolute, or a String for relative.
+		 *	@param	position	 A value between 0-1 that reprsents the position of the point, 0 being the beginning of the controller and 1 being the end point (0 and 1 are already taken by 'begin' and 'end' points)
+		 *	@param	ease	 What ease function to use. Adobe ease functions like Bounce.easeOut, etc. null will default to a linear ease.
+		 *	@param	label	 A custom label for the point. Defaults to "point1", "point2", etc.
+		 */
 		public function add($value:*, $spread:*, $position:Number, $ease:* = null, $label:String = null):Object {
 			$label = ($label == null) ? 'point' + ++_pointcount : $label;
 			Debug.output('motion', 10001, [$label, $position]);
 			return this[$label] = {value:$value, spread:$spread, position:$position, ease: $ease || BasePointsContainer.linear};
 		}
 		
+		/**
+		 *	Creates an unsorted Array of all the objects in the PointsContainer
+		 *	
+		 *	@return		An unsorted Array of all the point Objects
+		 */
 		public function toArray():Array {
 			var pa:Array = [];
 			for (var p:String in this) {
@@ -24,6 +56,14 @@ package com.desuade.motion.controllers {
 			return pa;
 		}
 		
+		/**
+		 *	This "flattens" the container to the given value, setting all the 'value' properties in each point to the same value, essentially removing any tweens. The type and amount are also available to set.
+		 *	
+		 *	These always happend: the ease property becomes 'linear' and the spread becomes null.
+		 *	
+		 *	@param	value	 A value to set all the 'value' properties to. Pass a Number for absolute, or a String for relative.
+		 *	@see #isFlat()
+		 */
 		public function flatten($value:*):void {
 			var pa:Array = this.toArray();
 			for (var i:int = 0; i < pa.length; i++) {
@@ -35,6 +75,12 @@ package com.desuade.motion.controllers {
 			delete this.begin.ease;
 		}
 		
+		/**
+		 *	Determines if the PointsContainer is flat.
+		 *	
+		 *	@return		True if all the values are the same.
+		 *	@see	#flatten()
+		 */
 		public function isFlat():Boolean {
 			var pa:Array = this.toArray();
 			for (var i:int = 0; i < pa.length; i++) {
@@ -43,6 +89,11 @@ package com.desuade.motion.controllers {
 			return true;
 		}
 		
+		/**
+		 *	Creates a new copy of the PointsContainer, identical to the current one.
+		 *	
+		 *	@return		A new PointsContainer that has the same points as the current one.
+		 */
 		public function clone():PointsContainer {
 			var npc:PointsContainer = new PointsContainer();
 			var sa:Array = this.getOrderedLabels();

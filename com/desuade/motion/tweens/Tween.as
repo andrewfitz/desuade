@@ -73,7 +73,7 @@ package com.desuade.motion.tweens {
 				return 0;
 			} else {
 				var pt:PrimitiveTween;
-				var ftv = $to.target[$to.prop];
+				var ftv:Object = $to.target[$to.prop];
 				var ntval:*;
 				if(isNaN(_newval)){
 					if($to.value is Random) ntval = $to.value.randomValue;

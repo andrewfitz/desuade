@@ -15,7 +15,7 @@ package com.desuade.utils {
 		 *	Converts a String-based hex value into a decimal
 		 *	@param	hex	 A string-hex value - ie: "FF00AA"
 		 *	@return		A decimal equivalent as an int - ie: 104901
-		 *	@see	#decToHexString
+		 *	@see	#decToHexString()
 		 */
 		public static function hexStringToDec($hex:String):int {
 			return parseInt($hex, 16);
@@ -25,7 +25,7 @@ package com.desuade.utils {
 		 *	Converts a decimal to a String-based hex
 		 *	@param	dec	 A decimal to convert - ie: 104901
 		 *	@return		A string version of the hex value - ie: "FF00AA"
-		 *	@see	#hexStringToDec
+		 *	@see	#hexStringToDec()
 		 */
 		public static function decToHexString($dec:int):String {
 			return Number($dec).toString(16);
@@ -35,7 +35,7 @@ package com.desuade.utils {
 		 *	Creates an rgb object from a hex value
 		 *	@param	color	 A color such as 0xff0044 or "#FF00FF"
 		 *	@return		An object containg r,g,b - ie: {r:0, g:0, b:0}
-		 *	@see	#RGBToHex
+		 *	@see	#RGBToHex()
 		 */
 		public static function hexToRGB($color:*):Object {
 			var cc:uint = cleanColorValue($color);
@@ -52,7 +52,7 @@ package com.desuade.utils {
 		 *	@param	g	 Green value 0-255
 		 *	@param	b	 Blue value 0-255
 		 *	@return		A uint hex value
-		 *	@see	#hexToRGB
+		 *	@see	#hexToRGB()
 		 */
 		public static function RGBToHex(r:int, g:int, b:int):uint {
 			return r << 16 | g << 8 | b;

@@ -19,7 +19,7 @@ package com.desuade.partigen.emitters {
 		public var renderer:Renderer;
 		public var pool:Pool;
 		public var burst:int = 1;
-		public var particle:Class;
+		public var particle:Class = BasicParticle;
 		public var group:Class = BasicGroupParticle;
 		
 		public var groupAmount:int = 1;
@@ -71,7 +71,7 @@ package com.desuade.partigen.emitters {
 		
 		public function emit($burst:int):void {
 			for (var i:int = 0; i < $burst; i++) {
-				var np = pool.addParticle(particle, group, this);
+				var np:BasicParticle = pool.addParticle(particle, group, this);
 				np.init(this);
 				np.x = this.x;
 				np.y = this.y;

@@ -11,8 +11,8 @@ package com.desuade.motion.sequencers {
 		
 		protected var _position:int = 0;
 		protected var _active:Boolean = false;
-		protected var _tween;
-		protected var _dispatcher = new EventDispatcher();
+		protected var _tween:*;
+		protected var _dispatcher:EventDispatcher = new EventDispatcher();
 		protected var _tweenclass:Class;
 		protected var _overrides:Object;
 		protected var _allowOverrides:Boolean = true;
@@ -101,7 +101,7 @@ package com.desuade.motion.sequencers {
 		protected function play($position:int):void {
 			Debug.output('motion', 40004, [$position]);
 			_position = $position;
-			var tp = this[_position];
+			var tp:Object = this[_position];
 			if(tp is Sequence){
 				if(tp.allowOverrides != false) {
 					for (var e:String in _overrides) {

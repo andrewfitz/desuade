@@ -15,7 +15,7 @@ package com.desuade.motion.controllers {
 		}
 		
 		public override function setStartValue():Number {
-			var nv;
+			var nv:*;
 			var nt:String = points.begin.type;
 			if(points.begin.value != null && points.begin.value != 'none'){
 				nv = (points.begin.spread != null) ? RandomColor.fromRange(points.begin.value, points.begin.spread) : points.begin.value;	
@@ -32,11 +32,11 @@ package com.desuade.motion.controllers {
 			for (var i:int = 1; i < pa.length; i++) {
 				//if null, sets it to starting value
 				var np:Object = points[pa[i]];
-				var nv;
+				var nv:*;
 				if(np.value == 'none' && np.type == 'tint'){
 					np.type = 'reset';
 				} else {
-					var nuv;
+					var nuv:*;
 					if(np.value == null){
 						nuv = target.transform.colorTransform.color;
 					} else {

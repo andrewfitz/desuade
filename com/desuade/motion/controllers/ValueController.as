@@ -18,7 +18,7 @@ package com.desuade.motion.controllers {
 		public var precision:int;
 		public var tweenclass:Class = BasicTween;
 		protected var _active:Boolean = false;
-		protected var _sequence;
+		protected var _sequence:*;
 	
 		public function ValueController($target:Object, $prop:String, $duration:Number, $precision:int = 0, $setvalue:Boolean = true){
 			super();
