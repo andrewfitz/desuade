@@ -13,10 +13,6 @@ package com.desuade.partigen.controllers {
 			duration = $duration;
 			points = new ColorPointsContainer();
 		}
-		
-		public function getPoints():Array {
-			return points.getOrderedLabels();
-		}
 	
 	}
 

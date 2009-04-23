@@ -15,10 +15,6 @@ package com.desuade.partigen.controllers {
 			precision = $precision;
 			points = new PointsContainer($value);
 		}
-		
-		public function getPoints():Array {
-			return points.getOrderedLabels();
-		}
 	
 	}
 

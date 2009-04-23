@@ -3,7 +3,9 @@ package com.desuade.motion.controllers {
 	import com.desuade.debugging.*
 
 	/**
-	 *  PointsContainer is a container for points, used by a ValueController.
+	 *  This is a container for working with points, used by a ValueController.
+	 *	
+	 *	When working with ValueControllers, this object is interfaced through myValueController.points, and provides all the methods used to add, remove, and manipulate points.
 	 *    
 	 *  @langversion ActionScript 3
 	 *  @playerversion Flash 9.0.0
@@ -14,7 +16,8 @@ package com.desuade.motion.controllers {
 	public dynamic class PointsContainer extends BasePointsContainer {
 	
 		/**
-		 *	This creates a new PointsContainer. For most uses, this is all internally handled by the corresponding ValueController. Multiple controllers can use the same points container, allowing for incredible flexibility.
+		 *	This creates a new PointsContainer. For most uses, you do not need to create this for each ValueController, as this is all internally handled by the corresponding ValueController when that is created.
+		 *	Multiple controllers can use the same points container, by either directly assigning a ValueController.points to another's, or creating a standalone PointsContainer that many can reference. This allows for incredible flexibility.
 		 *	
 		 *	@param	value	 This sets the begin and end values to this. Pass a Number for absolute, or a String for relative.
 		 */

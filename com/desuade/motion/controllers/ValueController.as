@@ -9,17 +9,79 @@ package com.desuade.motion.controllers {
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
 
+	/**
+	 *  <p>Controls the value of a property over time using points to create a sequence of tweens.</p>
+	 *	
+	 *	<p>It allows for incredible control over the value of a property, in a very powerful and dynamic way. Controllers are the shining stars of the Desuade Motion Package.</p>
+	 *	
+	 *	<p>
+	 *	When created, a ValueController is an object that literally controls the value of a property of a given target. It uses a "PointsContainer" to hold and manage 'points' - similar to the concept of keyframes.
+	 *	These points hold information such as the property's value, the position, and easing. When the controller is started, a sequence of tweens is generated to change the property's actual value. It resembles a pragmatic version of Flash CS4's motion editor.
+	 *	</p>
+	 *    
+	 *  @langversion ActionScript 3
+	 *  @playerversion Flash 9.0.0
+	 *
+	 *  @author Andrew Fitzgerald
+	 *  @since  21.04.2009
+	 */
 	public class ValueController extends EventDispatcher {
 	
+		/**
+		 *	This is what's used to store and manage points. To add, remove, and work with points, see the documentation on PointsContainers.
+		 *	@see PointsContainer
+		 */
 		public var points:BasePointsContainer;
+		
+		/**
+		 *	The target object that will have it's property controlled.
+		 */
 		public var target:Object;
+		
+		/**
+		 *	The property that's being controlled and tweened.
+		 */
 		public var prop:String;
+		
+		/**
+		 *	The duration of the entire sequence to last for in seconds. This affects length of the tweens, since the position is dependent on the the duration.
+		 */
 		public var duration:Number;
+		
+		/**
+		 *	How many decimal points the random spread values have.
+		 */
 		public var precision:int;
+		
+		/**
+		 *	Which tween class to use for creating the tweens. - ie: BasicTween, Tween, etc.
+		 */
 		public var tweenclass:Class = BasicTween;
+		
+		/**
+		 *	@private
+		 */
 		protected var _active:Boolean = false;
+		
+		/**
+		 *	@private
+		 */
 		protected var _sequence:*;
-	
+		
+		/**
+		 *	Creates a new ValueController.
+		 *	
+		 *	@param	target	 The target object that will have it's property controlled.
+		 *	@param	prop	 The property that's being controlled and tweened.
+		 *	@param	duration	 The duration of the entire sequence to last for in seconds. This affects length of the tweens, since the position is dependent on the the duration.
+		 *	@param	precision	 How many decimal points the random spread values have.
+		 *	@param	setvalue	 If true, the begin and end values will be set to the property's current value.
+		 *	
+		 *	@see #target
+		 *	@see #prop
+		 *	@see #duration
+		 *	@see #precision
+		 */
 		public function ValueController($target:Object, $prop:String, $duration:Number, $precision:int = 0, $setvalue:Boolean = true){
 			super();
 			target = $target;
@@ -29,12 +91,16 @@ package com.desuade.motion.controllers {
 			points = new PointsContainer(($setvalue) ? $target[$prop] : null);
 		}
 		
+		/**
+		 *	If the controller is currently running.
+		 */
 		public function get active():Boolean{
 			return _active;
 		}
 		
-		//public methods
-		
+		/**
+		 *	Starts the controller. This will internally create a sequence of tweens that will be ran to match the points in the controller's PointsContainer, running from 'begin' to 'end' points.
+		 */
 		public function start():void {
 			setStartValue();
 			var ta:Array = createTweens();
@@ -47,15 +113,29 @@ package com.desuade.motion.controllers {
 			dispatchEvent(new ControllerEvent(ControllerEvent.STARTED, {controller:this}));
 		}
 		
+		/**
+		 *	This stops the controller, and all internal tweens associated to it.
+		 */
 		public function stop():void {
 			if(_active) _sequence.stop();
 			else Debug.output('motion', 10003);
 		}
 		
-		public function getPoints():Array {
-			return points.getOrderedLabels();
+		/**
+		 *	This sets the property to the generated start value, based on the 'value' and 'spread' properties of the 'begin' point. This normally shouldn't be called, as it is internally called everytime start() is.
+		 *	
+		 *	@see #start()
+		 */
+		public function setStartValue():Number {
+			var nv:Number = (typeof points.begin.value == 'string') ? target[prop] + Number(points.begin.value) : points.begin.value;
+			return target[prop] = (points.begin.spread !== '0') ? Random.fromRange(nv, ((typeof points.begin.spread == 'string') ? nv + Number(points.begin.spread) : points.begin.spread), precision) : nv;
 		}
 		
+		//private methods
+		
+		/**
+		 *	@private
+		 */
 		public function tweenEnd(... args):void {
 			_active = false;
 			dispatchEvent(new ControllerEvent(ControllerEvent.ENDED, {controller:this}));
@@ -64,26 +144,24 @@ package com.desuade.motion.controllers {
 			Debug.output('motion', 10002, [target, prop]);
 		}
 		
-		public function setStartValue():Number {
-			var nv:Number = (typeof points.begin.value == 'string') ? target[prop] + Number(points.begin.value) : points.begin.value;
-			return target[prop] = (points.begin.spread !== '0') ? Random.fromRange(nv, ((typeof points.begin.spread == 'string') ? nv + Number(points.begin.spread) : points.begin.spread), precision) : nv;
-		}
-		
-		public function isSingleTween():Boolean {
-			return (points.length > 2) ? false : true;
-		}
-		
-		//private methods
-		
+		/**
+		 *	@private
+		 */
 		protected function advance($o:Object):void {
 			var pos:String = points.getOrderedLabels()[$o.info.sequence.position];
 			dispatchEvent(new ControllerEvent(ControllerEvent.ADVANCED, {position:pos, controller:this}));
 		}
 		
+		/**
+		 *	@private
+		 */
 		protected function calculateDuration($previous:Number, $position:Number):Number {
 			return duration*($position-$previous);
 		}
 
+		/**
+		 *	@private
+		 */
 		protected function createTweens():Array {
 			var pa:Array = points.getOrderedLabels();
 			var ta:Array = [];

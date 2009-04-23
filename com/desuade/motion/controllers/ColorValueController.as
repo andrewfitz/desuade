@@ -4,9 +4,26 @@ package com.desuade.motion.controllers {
 	import com.desuade.motion.tweens.*
 	
 	import flash.geom.ColorTransform;
-
+	
+	/**
+	 *  This is a special version of a ValueController that is used to work with colors. See the ValueController documentation for more information on working with controllers.
+	 *	
+	 *	Note: 'prop' and 'precision' properties are irrelevant and do nothing. Also be aware of differences in color-based points.
+	 *    
+	 *  @langversion ActionScript 3
+	 *  @playerversion Flash 9.0.0
+	 *
+	 *  @author Andrew Fitzgerald
+	 *  @since  22.04.2009
+	 */
 	public class ColorValueController extends ValueController {
 		
+		/**
+		 *	Creates a new ColorValueController. Note the difference in parameters compared to a standard ValueController.
+		 *	
+		 *	@param	target	 The target object that will have it's color controlled.
+		 *	@param	duration	 The duration of the entire sequence to last for in seconds. This affects length of the tweens, since the position is dependent on the the duration.
+		 */
 		public function ColorValueController($target:Object, $duration:Number){
 			super($target, null, $duration, 0, false);
 			tweenclass = BasicColorTween;
@@ -14,6 +31,9 @@ package com.desuade.motion.controllers {
 			points = new ColorPointsContainer();
 		}
 		
+		/**
+		 *	@inheritDoc
+		 */
 		public override function setStartValue():Number {
 			var nv:*;
 			var nt:String = points.begin.type;
@@ -25,6 +45,9 @@ package com.desuade.motion.controllers {
 			return target.transform.colorTransform.color;
 		}
 		
+		/**
+		 *	@private
+		 */
 		protected override function createTweens():Array {
 			var pa:Array = points.getOrderedLabels();
 			var ta:Array = [];

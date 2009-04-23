@@ -3,7 +3,7 @@ package com.desuade.motion.controllers {
 	import com.desuade.debugging.*
 	
 	/**
-	 *  The ColorPointsContainer is the points container used with the ColorValueController. It holds all the points used by the controller, and methods to deal with them. It's identical to the regular PointsContainer, except those changes made to work with colors.
+	 *  This is the PointsContainer used with the ColorValueController. It holds all the points used by the controller, and methods to deal with them. It's identical to the regular PointsContainer, except those changes made to work specifically with colors.
 	 *	
 	 *	For more information, read the documentation on PointsContainers.
 	 *    
