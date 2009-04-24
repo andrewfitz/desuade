@@ -4,7 +4,7 @@ package com.desuade.motion.physics {
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
 
-	public class BasicPhysics extends Object {
+	public class BasicPhysics extends EventDispatcher {
 		
 		internal static var _sprite:Sprite = new Sprite();
 		
@@ -66,6 +66,7 @@ package com.desuade.motion.physics {
 			velocity *= _calcfriction;
 			if(flip) target[prop] -= velocity;
 			else target[prop] += velocity;
+			dispatchEvent(new PhysicsEvent(PhysicsEvent.UPDATED, {basicPhysics:this}));
 		}
 		
 		////shortcuts add 0.075k
