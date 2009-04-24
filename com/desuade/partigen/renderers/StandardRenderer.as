@@ -29,8 +29,8 @@ package com.desuade.partigen.renderers {
 		}
 		
 		public override function removeParticle($p:BasicParticle):void {
-			target.removeChild($p);
 			super.removeParticle($p);
+			target.removeChild($p);
 		}
 	
 	}

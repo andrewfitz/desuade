@@ -148,8 +148,8 @@ package com.desuade.motion.controllers {
 		 *	@private
 		 */
 		protected function advance($o:Object):void {
-			var pos:String = points.getOrderedLabels()[$o.info.sequence.position];
-			dispatchEvent(new ControllerEvent(ControllerEvent.ADVANCED, {position:pos, controller:this}));
+			//var pos:String = points.getOrderedLabels()[$o.info.sequence.position]; //possible bottleneck here, performance over small convenience
+			dispatchEvent(new ControllerEvent(ControllerEvent.ADVANCED, {position:$o.info.sequence.position, controller:this}));
 		}
 		
 		/**

@@ -56,16 +56,16 @@ package com.desuade.partigen.emitters {
 		
 		//public functions
 		
-		public override function start($runcontrollers:Boolean = true):void {
+		public override function start($startcontrollers:Boolean = true):void {
 			super.start();
-			if($runcontrollers){
+			if($startcontrollers){
 				controllers.emitter.startAll();
 			}
 		}
 		
-		public override function stop($runcontrollers:Boolean = true):void {
+		public override function stop($stopcontrollers:Boolean = true):void {
 			super.stop();
-			if($runcontrollers){
+			if($stopcontrollers){
 				controllers.emitter.stopAll();
 			}
 		}
