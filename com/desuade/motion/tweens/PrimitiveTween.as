@@ -18,7 +18,7 @@ package com.desuade.motion.tweens {
 		
 		public var id:int;
 		public var target:Object;
-		public var prop:String;
+		public var property:String;
 		public var value:Number;
 		public var duration:int;
 		public var ease:Function;
@@ -26,11 +26,11 @@ package com.desuade.motion.tweens {
 		internal var starttime:int;
 		internal var difvalue:Number;
 		
-		public function PrimitiveTween($target:Object, $prop:String, $value:Number, $duration:int, $ease:Function = null) {
+		public function PrimitiveTween($target:Object, $property:String, $value:Number, $duration:int, $ease:Function = null) {
 			super();
 			id = _count++, target = $target, duration = $duration, ease = $ease || linear, starttime = getTimer();
-			if($prop != null) {
-				prop = $prop, value = $value, startvalue = $target[$prop];
+			if($property != null) {
+				property = $property, value = $value, startvalue = $target[$property];
 				difvalue = (startvalue > value) ? (value-startvalue) : -(startvalue-value);
 			}
 			dispatchEvent(new TweenEvent(TweenEvent.STARTED, {primitiveTween:this}));
@@ -41,10 +41,10 @@ package com.desuade.motion.tweens {
 		protected function update($u:Object):void {
 			var tmr:int = getTimer() - starttime;
 			if(tmr >= duration){
-				target[prop] = value;
+				target[property] = value;
 				end();
 			} else {
-				target[prop] = ease(tmr, startvalue, difvalue, duration);
+				target[property] = ease(tmr, startvalue, difvalue, duration);
 				dispatchEvent(new TweenEvent(TweenEvent.UPDATED, {primitiveTween:this}));
 			}
 		}

@@ -15,15 +15,15 @@ package com.desuade.motion.tweens {
 		
 		public var bezierArray:Array;
 	
-		public function PrimitiveBezierTween($target:Object, $prop:String, $value:Number, $duration:int, $bezier:Array, $ease:Function = null) {
+		public function PrimitiveBezierTween($target:Object, $property:String, $value:Number, $duration:int, $bezier:Array, $ease:Function = null) {
 			bezierArray = $bezier;
-			super($target, $prop, $value, $duration, $ease);
+			super($target, $property, $value, $duration, $ease);
 		}
 		
 		protected override function update(u:Object):void {
 			var tmr:int = getTimer() - starttime;
 			if(tmr >= duration){
-				target[prop] = value;
+				target[property] = value;
 				end();
 			} else {
 				var nres:Number;
@@ -47,7 +47,7 @@ package com.desuade.motion.tweens {
 					}
 					nres = b1+ipos*(2*(1-ipos)*(bezierArray[bpos]-b1) + ipos*(b2 - b1));
 				}
-				target[prop] = nres;
+				target[property] = nres;
 				dispatchEvent(new TweenEvent(TweenEvent.UPDATED, {primitiveTween:this}));
 			}
 			

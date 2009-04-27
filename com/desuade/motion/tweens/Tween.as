@@ -24,8 +24,8 @@ package com.desuade.motion.tweens {
 		}
 		
 		//Static tween function
-		public static function tween($target:Object, $prop:String, $value:*, $duration:int, $ease:Function = null, $delay:Number = 0, $position:Number = 0, $bezier:Array = null):Tween {
-			var st:Tween = new Tween({target:$target, value:$value, prop:$prop, duration:$duration, ease:$ease, delay:$delay, position:$position, bezier:$bezier});
+		public static function tween($target:Object, $property:String, $value:*, $duration:int, $ease:Function = null, $delay:Number = 0, $position:Number = 0, $bezier:Array = null):Tween {
+			var st:Tween = new Tween({target:$target, value:$value, property:$property, duration:$duration, ease:$ease, delay:$delay, position:$position, bezier:$bezier});
 			st.start();
 			return st;
 		}
@@ -73,7 +73,7 @@ package com.desuade.motion.tweens {
 				return 0;
 			} else {
 				var pt:PrimitiveTween;
-				var ftv:Object = $to.target[$to.prop];
+				var ftv:Object = $to.target[$to.property];
 				var ntval:*;
 				if(isNaN(_newval)){
 					if($to.value is Random) ntval = $to.value.randomValue;
@@ -83,13 +83,13 @@ package com.desuade.motion.tweens {
 					else _newval = (typeof ntval == 'string') ? ftv + Number(ntval) : ntval;
 				}
 				if($to.bezier == undefined || $to.bezier == null){
-					 pt = BasicTween._tweenholder[PrimitiveTween._count] = new PrimitiveTween($to.target, $to.prop, _newval, $to.duration*1000, $to.ease);
+					 pt = BasicTween._tweenholder[PrimitiveTween._count] = new PrimitiveTween($to.target, $to.property, _newval, $to.duration*1000, $to.ease);
 				} else {
 					var newbez:Array = [];
 					for (var i:int = 0; i < $to.bezier.length; i++) {
 						newbez.push((typeof $to.bezier[i] == 'string') ? ftv + Number($to.bezier[i]) : $to.bezier[i]);
 					}
-					pt = BasicTween._tweenholder[PrimitiveTween._count] = new PrimitiveBezierTween($to.target, $to.prop, _newval, $to.duration*1000, newbez, $to.ease);
+					pt = BasicTween._tweenholder[PrimitiveTween._count] = new PrimitiveBezierTween($to.target, $to.property, _newval, $to.duration*1000, newbez, $to.ease);
 				}
 				pt.addEventListener(TweenEvent.ENDED, endFunc, false, 0, true);
 				if($to.position > 0) {
@@ -107,8 +107,8 @@ package com.desuade.motion.tweens {
 		}
 		
 		protected override function endFunc($o:Object):void {
-			if($o.info.primitiveTween.prop != undefined){
-				if($o.info.primitiveTween.target[$o.info.primitiveTween.prop] == $o.info.primitiveTween.value){
+			if($o.info.primitiveTween.property != undefined){
+				if($o.info.primitiveTween.target[$o.info.primitiveTween.property] == $o.info.primitiveTween.value){
 					_completed = true;
 				}
 			}
@@ -133,7 +133,7 @@ package com.desuade.motion.tweens {
 		public function get position():Number {
 			if(_tweenID != 0){
 				var pt:PrimitiveTween = BasicTween._tweenholder[_tweenID];
-				//var pos:Number = (pt.target[pt.prop]-pt.startvalue)/(pt.value-pt.startvalue); //this is for ease pos
+				//var pos:Number = (pt.target[pt.property]-pt.startvalue)/(pt.value-pt.startvalue); //this is for ease pos
 				var pos:Number = (getTimer()-pt.starttime)/pt.duration;
 				return pos;
 			} else if(_completed) return 1;
@@ -163,8 +163,8 @@ package com.desuade.motion.tweens {
 		
 		protected function roundTweenValue($i:Object):void {
 			var pt:Object = $i.info.primitiveTween;
-			pt.target[pt.prop] = int(pt.target[pt.prop]);
-			Debug.output('motion', 50003, [pt.id, pt.target[pt.prop], int(pt.target[pt.prop])]);
+			pt.target[pt.property] = int(pt.target[pt.property]);
+			Debug.output('motion', 50003, [pt.id, pt.target[pt.property], int(pt.target[pt.property])]);
 		}
 		
 		protected function setpauses():void {

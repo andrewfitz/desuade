@@ -27,16 +27,16 @@ package com.desuade.partigen.controllers {
 			_color = $value;
 		}
 		
-		public function addStartValue($prop:String, $value:*, $spread:* = '0', $precision:int = 2):void {
-			var tp:ParticleValueController = this[$prop] = new ParticleValueController(0, $precision);
+		public function addStartValue($property:String, $value:*, $spread:* = '0', $precision:int = 2):void {
+			var tp:ParticleValueController = this[$property] = new ParticleValueController(0, $precision);
 			tp.points.begin.value = $value;
 			tp.points.begin.spread = $spread;
 			tp.points.end.value = null;
 			tp.points.end.spread = '0';
 		}
 		
-		public function addBasicTween($prop:String, $start:*, $startSpread:*, $end:*, $endSpread:*, $ease:* = null, $duration:Number = 0, $precision:int = 2):void {
-			var tp:ParticleValueController = this[$prop] = new ParticleValueController($duration, $precision);
+		public function addBasicTween($property:String, $start:*, $startSpread:*, $end:*, $endSpread:*, $ease:* = null, $duration:Number = 0, $precision:int = 2):void {
+			var tp:ParticleValueController = this[$property] = new ParticleValueController($duration, $precision);
 			tp.points.begin.value = $start;
 			tp.points.end.value = $end;
 			tp.points.begin.spread = $startSpread;
@@ -44,26 +44,26 @@ package com.desuade.partigen.controllers {
 			if($ease != null) tp.points.end.ease = $ease;
 		}
 		
-		public function addBasicPhysics($prop:String, $velocity:Number = 0, $acceleration:Number = 0, $friction:Number = 0, $angle:* = null, $flip:Boolean = false, $duration:Number = 0):void {
-			this[$prop] = new ParticlePhysicsController($duration, $velocity, $acceleration, $friction, $angle, $flip);
+		public function addBasicPhysics($property:String, $velocity:Number = 0, $acceleration:Number = 0, $friction:Number = 0, $angle:* = null, $flip:Boolean = false, $duration:Number = 0):void {
+			this[$property] = new ParticlePhysicsController($duration, $velocity, $acceleration, $friction, $angle, $flip);
 		}
 		
 		protected function randomLife():Number{
 			return (_life.spread !== '0') ? Random.fromRange(_life.value, _life.value + _life.spread, 2) : _life.value;
 		}
 		
-		protected function attachController($particle:Particle, $prop:String, $emitter:Emitter = null):void {
-			if(this[$prop] is ParticlePhysicsController){
-				$particle.controllers[$prop] = new PhysicsValueController($particle, $prop, this[$prop].duration, this[$prop].velocity.points.begin.value, this[$prop].acceleration.points.begin.value, this[$prop].friction.points.begin.value, (this[$prop].angle == null) ? $emitter.angle : this[$prop].angle, this[$prop].flip);
-				$particle.controllers[$prop].velocity.points = this[$prop].velocity.points;
-				$particle.controllers[$prop].acceleration.points = this[$prop].acceleration.points;
-				$particle.controllers[$prop].friction.points = this[$prop].friction.points;
-				$particle.controllers[$prop].velocity.duration = (this[$prop].velocity.duration == 0) ? $particle.life : this[$prop].velocity.duration;
-				$particle.controllers[$prop].acceleration.duration = (this[$prop].acceleration.duration == 0) ? $particle.life : this[$prop].acceleration.duration;
-				$particle.controllers[$prop].friction.duration = (this[$prop].friction.duration == 0) ? $particle.life : this[$prop].friction.duration;
+		protected function attachController($particle:Particle, $property:String, $emitter:Emitter = null):void {
+			if(this[$property] is ParticlePhysicsController){
+				$particle.controllers[$property] = new PhysicsValueController($particle, $property, this[$property].duration, this[$property].velocity.points.begin.value, this[$property].acceleration.points.begin.value, this[$property].friction.points.begin.value, (this[$property].angle == null) ? $emitter.angle : this[$property].angle, this[$property].flip);
+				$particle.controllers[$property].velocity.points = this[$property].velocity.points;
+				$particle.controllers[$property].acceleration.points = this[$property].acceleration.points;
+				$particle.controllers[$property].friction.points = this[$property].friction.points;
+				$particle.controllers[$property].velocity.duration = (this[$property].velocity.duration == 0) ? $particle.life : this[$property].velocity.duration;
+				$particle.controllers[$property].acceleration.duration = (this[$property].acceleration.duration == 0) ? $particle.life : this[$property].acceleration.duration;
+				$particle.controllers[$property].friction.duration = (this[$property].friction.duration == 0) ? $particle.life : this[$property].friction.duration;
 			} else {
-				$particle.controllers[$prop] = new ValueController($particle, $prop, (this[$prop].duration == 0) ? $particle.life : this[$prop].duration, this[$prop].precision);
-				$particle.controllers[$prop].points = this[$prop].points;
+				$particle.controllers[$property] = new ValueController($particle, $property, (this[$property].duration == 0) ? $particle.life : this[$property].duration, this[$property].precision);
+				$particle.controllers[$property].points = this[$property].points;
 			}
 		}
 		

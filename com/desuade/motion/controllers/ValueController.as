@@ -41,7 +41,7 @@ package com.desuade.motion.controllers {
 		/**
 		 *	The property that's being controlled and tweened.
 		 */
-		public var prop:String;
+		public var property:String;
 		
 		/**
 		 *	The duration of the entire sequence to last for in seconds. This affects length of the tweens, since the position is dependent on the the duration.
@@ -72,23 +72,23 @@ package com.desuade.motion.controllers {
 		 *	Creates a new ValueController.
 		 *	
 		 *	@param	target	 The target object that will have it's property controlled.
-		 *	@param	prop	 The property that's being controlled and tweened.
+		 *	@param	property	 The property that's being controlled and tweened.
 		 *	@param	duration	 The duration of the entire sequence to last for in seconds. This affects length of the tweens, since the position is dependent on the the duration.
 		 *	@param	precision	 How many decimal points the random spread values have.
 		 *	@param	setvalue	 If true, the begin and end values will be set to the property's current value.
 		 *	
 		 *	@see #target
-		 *	@see #prop
+		 *	@see #property
 		 *	@see #duration
 		 *	@see #precision
 		 */
-		public function ValueController($target:Object, $prop:String, $duration:Number, $precision:int = 0, $setvalue:Boolean = true){
+		public function ValueController($target:Object, $property:String, $duration:Number, $precision:int = 0, $setvalue:Boolean = true){
 			super();
 			target = $target;
-			prop = $prop;
+			property = $property;
 			duration = $duration;
 			precision = $precision;
-			points = new PointsContainer(($setvalue) ? $target[$prop] : null);
+			points = new PointsContainer(($setvalue) ? $target[$property] : null);
 		}
 		
 		/**
@@ -127,8 +127,8 @@ package com.desuade.motion.controllers {
 		 *	@see #start()
 		 */
 		public function setStartValue():Number {
-			var nv:Number = (typeof points.begin.value == 'string') ? target[prop] + Number(points.begin.value) : points.begin.value;
-			return target[prop] = (points.begin.spread !== '0') ? Random.fromRange(nv, ((typeof points.begin.spread == 'string') ? nv + Number(points.begin.spread) : points.begin.spread), precision) : nv;
+			var nv:Number = (typeof points.begin.value == 'string') ? target[property] + Number(points.begin.value) : points.begin.value;
+			return target[property] = (points.begin.spread !== '0') ? Random.fromRange(nv, ((typeof points.begin.spread == 'string') ? nv + Number(points.begin.spread) : points.begin.spread), precision) : nv;
 		}
 		
 		//private methods
@@ -141,7 +141,7 @@ package com.desuade.motion.controllers {
 			dispatchEvent(new ControllerEvent(ControllerEvent.ENDED, {controller:this}));
 			_sequence.removeEventListener(SequenceEvent.ENDED, tweenEnd);
 			_sequence.removeEventListener(SequenceEvent.ADVANCED, advance);
-			Debug.output('motion', 10002, [target, prop]);
+			Debug.output('motion', 10002, [target, property]);
 		}
 		
 		/**
@@ -171,18 +171,18 @@ package com.desuade.motion.controllers {
 				var np:Object = points[pa[i]];
 				var nuv:Number;
 				if(np.value == null){
-					nuv = target[prop];
+					nuv = target[property];
 				} else {
 					var nnnv:* = np.value;
 					if(typeof nnnv == 'string'){
-						var nfpv:Number = (ta.length == 0) ? target[prop] : ta[ta.length-1].value;
+						var nfpv:Number = (ta.length == 0) ? target[property] : ta[ta.length-1].value;
 						nuv = nfpv + Number(nnnv);
 					} else {
 						nuv = nnnv;
 					}
 				}
 				var nv:Number = (np.spread !== '0') ? Random.fromRange(nuv, ((typeof np.spread == 'string') ? nuv + Number(np.spread) : np.spread), precision) : nuv;
-				var tmo:Object = {target:target, prop:prop, value:nv, ease:np.ease, duration:calculateDuration(points[pa[i-1]].position, np.position), delay:0};
+				var tmo:Object = {target:target, property:property, value:nv, ease:np.ease, duration:calculateDuration(points[pa[i-1]].position, np.position), delay:0};
 				ta.push(tmo);
 			}
 			return ta;

@@ -61,7 +61,7 @@ package com.desuade.motion.controllers {
 		 *	Creates a new PhysicsValueController. See the BasicPhysics documentation for more information on what each property does.
 		 *	
 		 *	@param	target	 The target object that will have it's property controlled with physics.
-		 *	@param	prop	 The property to have it's value controlled by BasicPhysics.
+		 *	@param	property	 The property to have it's value controlled by BasicPhysics.
 		 *	@param	duration	 The duration of the entire sequence to last for in seconds. This affects length of the tweens of the internal ValueControllers, since the position is dependent on the the duration.
 		 *	@param	velocity	 The start velocity to be passed to the internal 'physics' object (BasicPhysics).
 		 *	@param	acceleration	 The start acceleration to be passed to the internal 'physics' object.
@@ -74,9 +74,9 @@ package com.desuade.motion.controllers {
 		 *	@see com.desuade.motion.physics.BasicPhysics#angle
 		 *	@see com.desuade.motion.physics.BasicPhysics#flip
 		 */
-		public function PhysicsValueController($target:Object, $prop:String, $duration:Number, $velocity:Number = 0, $acceleration:Number = 0, $friction:Number = 0, $angle:* = null, $flip:Boolean = false) {
+		public function PhysicsValueController($target:Object, $property:String, $duration:Number, $velocity:Number = 0, $acceleration:Number = 0, $friction:Number = 0, $angle:* = null, $flip:Boolean = false) {
 			super();
-			_physics = new BasicPhysics($target, $prop, $velocity, $acceleration, $friction, $angle, $flip);
+			_physics = new BasicPhysics($target, $property, $velocity, $acceleration, $friction, $angle, $flip);
 			_velocity = new ValueController(_physics, 'velocity', $duration, 2);
 			_acceleration = new ValueController(_physics, 'acceleration', $duration, 3);
 			_friction = new ValueController(_physics, 'friction', $duration, 2);

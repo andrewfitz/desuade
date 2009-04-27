@@ -99,7 +99,7 @@ package com.desuade.motion.tweens {
 			for (var p:String in pt.arrayObject.props) {
 				pt.target[p] = int(pt.target[p]);
 			}
-			Debug.output('motion', 50003, [pt.id, pt.target[pt.prop], int(pt.target[pt.prop])]);
+			Debug.output('motion', 50003, [pt.id, pt.target[pt.property], int(pt.target[pt.property])]);
 		}
 		
 		protected override function setpauses():void {

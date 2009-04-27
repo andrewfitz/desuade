@@ -3,27 +3,60 @@ package com.desuade.motion.physics {
 	import flash.display.*; 
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
-
+	
+	/**
+	 *  This class simulates very basic physics, using motion equations to change the value of a property. This can be used like a 'tween' to change any property's value, not just positional properties like x and y.
+	 *    
+	 *  @langversion ActionScript 3
+	 *  @playerversion Flash 9.0.0
+	 *
+	 *  @author Andrew Fitzgerald
+	 *  @since  27.04.2009
+	 */
 	public class BasicPhysics extends EventDispatcher {
 		
+		/**
+		 *	@private
+		 */
 		internal static var _sprite:Sprite = new Sprite();
 		
+		/**
+		 *	@private
+		 */
 		protected var _active:Boolean;
+		
+		/**
+		 *	@private
+		 */
 		protected var _friction:Number;
+		
+		/**
+		 *	@private
+		 */
 		protected var _calcfriction:Number;
+		
+		/**
+		 *	@private
+		 */
 		protected var _calcangle:Number;
 		
+		/**
+		 *	The target object. Any Object, not just a DisplayObject.
+		 */
 		public var target:Object;
-		public var prop:String;
+		/**
+		 *	@private
+		 */
+		public var property:String;
 		public var velocity:Number;
 		public var acceleration:Number;
 		public var flip:Boolean;
 		public var angle:Number;
 		
-		public function BasicPhysics($target:Object, $prop:String, $velocity:Number = 0, $acceleration:Number = 0, $friction:Number = 0, $angle:* = null, $flip:Boolean = false) {
+		public function BasicPhysics($target:Object, $property:String, $velocity:Number = 0, $acceleration:Number = 0, $friction:Number = 0, $angle:* = null, $flip:Boolean = false) {
 			super();
 			target = $target;
-			prop = $prop;
+			property = $property;
 			velocity = $velocity;
 			acceleration = $acceleration;
 			friction = $friction;
@@ -64,12 +97,10 @@ package com.desuade.motion.physics {
 		protected function update(u:Object):void {
 			velocity += acceleration;
 			velocity *= _calcfriction;
-			if(flip) target[prop] -= velocity;
-			else target[prop] += velocity;
+			if(flip) target[property] -= velocity;
+			else target[property] += velocity;
 			dispatchEvent(new PhysicsEvent(PhysicsEvent.UPDATED, {basicPhysics:this}));
 		}
-		
-		////shortcuts add 0.075k
 		
 		public function get v():Number{
 			return velocity;
