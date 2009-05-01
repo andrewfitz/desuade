@@ -1,6 +1,7 @@
 package com.desuade.motion.controllers {
 	
 	import com.desuade.debugging.*
+	import com.desuade.motion.tweens.*
 
 	/**
 	 *  This is a container for working with points, used by a ValueController.
@@ -24,7 +25,7 @@ package com.desuade.motion.controllers {
 		public function PointsContainer($value:* = '0'){
 			super();
 			this.begin = {value:$value, spread:'0', position:0};
-			this.end = {value:$value, spread:'0', position:1, ease:BasePointsContainer.linear};
+			this.end = {value:$value, spread:'0', position:1, ease:PrimitiveTween.linear};
 		}
 		
 		/**
@@ -43,7 +44,7 @@ package com.desuade.motion.controllers {
 		public function add($value:*, $spread:*, $position:Number, $ease:* = null, $label:String = null):Object {
 			$label = ($label == null) ? 'point' + ++_pointcount : $label;
 			Debug.output('motion', 10001, [$label, $position]);
-			return this[$label] = {value:$value, spread:$spread, position:$position, ease: $ease || BasePointsContainer.linear};
+			return this[$label] = {value:$value, spread:$spread, position:$position, ease: $ease || PrimitiveTween.linear};
 		}
 		
 		/**
@@ -71,7 +72,7 @@ package com.desuade.motion.controllers {
 			var pa:Array = this.toArray();
 			for (var i:int = 0; i < pa.length; i++) {
 				var p:Object = this[pa[i].label];
-				p.ease = BasePointsContainer.linear;
+				p.ease = PrimitiveTween.linear;
 				p.value = $value;
 				p.spread = '0';
 			}

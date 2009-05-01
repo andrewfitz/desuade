@@ -13,7 +13,14 @@ package com.desuade.motion.tweens {
 
 	public class PrimitiveTween extends EventDispatcher {
 		
+		/**
+		 *	@private
+		 */
 		public static var _count:int = 0;
+		
+		/**
+		 *	@private
+		 */
 		internal static var _sprite:Sprite = new Sprite();
 		
 		public var id:int;
@@ -22,8 +29,20 @@ package com.desuade.motion.tweens {
 		public var value:Number;
 		public var duration:int;
 		public var ease:Function;
+		
+		/**
+		 *	@private
+		 */
 		internal var startvalue:Number;
+		
+		/**
+		 *	@private
+		 */
 		internal var starttime:int;
+		
+		/**
+		 *	@private
+		 */
 		internal var difvalue:Number;
 		
 		public function PrimitiveTween($target:Object, $property:String, $value:Number, $duration:int, $ease:Function = null) {
@@ -38,6 +57,9 @@ package com.desuade.motion.tweens {
 			Debug.output('motion', 50001, [id]);
 		}
 		
+		/**
+		 *	@private
+		 */
 		protected function update($u:Object):void {
 			var tmr:int = getTimer() - starttime;
 			if(tmr >= duration){
@@ -56,7 +78,7 @@ package com.desuade.motion.tweens {
 			delete this;
 		}
 		
-		protected static function linear(t:Number, b:Number, c:Number, d:Number):Number {
+		public static function linear(t:Number, b:Number, c:Number, d:Number):Number {
 			return c*t/d+b;
 		}
 	

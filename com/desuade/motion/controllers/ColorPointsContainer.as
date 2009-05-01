@@ -1,6 +1,7 @@
 package com.desuade.motion.controllers {
 	
 	import com.desuade.debugging.*
+	import com.desuade.motion.tweens.*
 	
 	/**
 	 *  This is the PointsContainer used with the ColorValueController. It holds all the points used by the controller, and methods to deal with them. It's identical to the regular PointsContainer, except those changes made to work specifically with colors.
@@ -26,7 +27,7 @@ package com.desuade.motion.controllers {
 		public function ColorPointsContainer($value:* = 'none', $type:String = 'tint', $amount:Number = 1) {
 			super();
 			this.begin = {value:$value, spread:null, type:$type, amount:$amount, position:0};
-			this.end = {value:$value, spread:null, type:$type, amount:$amount, position:1, ease:BasePointsContainer.linear};
+			this.end = {value:$value, spread:null, type:$type, amount:$amount, position:1, ease:PrimitiveTween.linear};
 		}
 		
 		/**
@@ -47,7 +48,7 @@ package com.desuade.motion.controllers {
 		public function add($value:*, $spread:*, $position:Number, $type:String = 'tint', $amount:Number = 1, $ease:* = null, $label:String = null):Object {
 			$label = ($label == null) ? 'point' + ++_pointcount : $label;
 			Debug.output('motion', 10001, [$label, $position]);
-			return this[$label] = {value:$value, spread:$spread, position:$position, type:$type, amount:$amount, ease: $ease || BasePointsContainer.linear};
+			return this[$label] = {value:$value, spread:$spread, position:$position, type:$type, amount:$amount, ease: $ease || PrimitiveTween.linear};
 		}
 		
 		/**
@@ -77,7 +78,7 @@ package com.desuade.motion.controllers {
 			var pa:Array = this.toArray();
 			for (var i:int = 0; i < pa.length; i++) {
 				var p:Object = this[pa[i].label];
-				p.ease = BasePointsContainer.linear;
+				p.ease = PrimitiveTween.linear;
 				p.value = $value;
 				p.type = $type;
 				p.amount = $amount;

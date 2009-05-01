@@ -1,6 +1,7 @@
 package com.desuade.motion.controllers {
 	
 	import com.desuade.debugging.*
+	import com.desuade.motion.tweens.*
 
 	/**
 	 *  This is the base points container class that the PointsContainer and ColorPointsContainer inherit from. It's used to hold 'points' for ValueControllers and offers methods to work with the points.
@@ -81,13 +82,6 @@ package com.desuade.motion.controllers {
 		    } else {
 		        return 0;
 		    }
-		}
-		
-		/**
-		 *	@private
-		 */
-		public static function linear(t:Number, b:Number, c:Number, d:Number, ... args):Number {
-			return c*t/d+b;
 		}
 		
 	}
