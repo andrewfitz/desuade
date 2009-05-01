@@ -13,7 +13,7 @@ package com.desuade.motion.tweens {
 
 	public class PrimitiveTween extends EventDispatcher {
 		
-		public static var _count:int = 1000000;
+		public static var _count:int = 0;
 		internal static var _sprite:Sprite = new Sprite();
 		
 		public var id:int;
