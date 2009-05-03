@@ -11,10 +11,25 @@ package com.desuade.motion.tweens {
 	import com.desuade.debugging.*
 	import com.desuade.motion.events.*
 
+	/**
+	 *  This is a PrimitiveTween that's used to tween multiple properties on an object in a single tween.
+	 *    
+	 *  @langversion ActionScript 3
+	 *  @playerversion Flash 9.0.0
+	 *
+	 *  @author Andrew Fitzgerald
+	 *  @since  01.05.2009
+	 */
 	public class PrimitiveMultiTween extends PrimitiveTween {
-				
+		
+		/**
+		 *	@private
+		 */
 		internal var arrayObject:Object;
 		
+		/**
+		 *	@private
+		 */
 		public static function makeMultiArrays($target:Object, $object:Object):Object {
 			var ob:Object = {props:[], values:[], startvalues:[], difvalues:[]};
 			for (var p:String in $object) {
@@ -26,11 +41,28 @@ package com.desuade.motion.tweens {
 			return ob;
 		}
 		
+		/**
+		 *	This creates a new, raw PrimitiveTween. Users should use the Tween class instead of creating this directly.
+		 *	
+		 *	@param	target	 The target object to perform the tween on.
+		 *	@param	properties	 An object of properties and values to tween on the target.
+		 *	@param	value	 The new (end) value the property will be tweened to.
+		 *	@param	duration	 How long the tween will last in ms.
+		 *	@param	ease	 What easing equation to use to tween.
+		 *	
+		 *	@see	PrimitiveTween#target
+		 *	@see	PrimitiveTween#duration
+		 *	@see	PrimitiveTween#ease
+		 *	
+		 */
 		public function PrimitiveMultiTween($target:Object, $properties:Object, $duration:int, $ease:Function = null) {
 			super($target, null, 0, $duration, $ease);
 			arrayObject = PrimitiveMultiTween.makeMultiArrays($target, $properties);
 		}
 		
+		/**
+		 *	@private
+		 */
 		protected override function update($u:Object):void {
 			var tmr:int = getTimer() - starttime;
 			if(tmr >= duration){
