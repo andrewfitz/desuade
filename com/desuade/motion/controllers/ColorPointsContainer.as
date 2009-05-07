@@ -44,6 +44,8 @@ package com.desuade.motion.controllers {
 		 *	@param	amount	 The amount of color transformation to apply. This varies with the type property.
 		 *	@param	ease	 What ease function to use. Adobe ease functions like Bounce.easeOut, etc. null will default to a linear ease.
 		 *	@param	label	 A custom label for the point. Defaults to "point1", "point2", etc.
+		 *	
+		 *	@see	com.desuade.utils.ColorHelper#getColorObject()
 		 */
 		public function add($value:*, $spread:*, $position:Number, $type:String = 'tint', $amount:Number = 1, $ease:* = null, $label:String = null):Object {
 			$label = ($label == null) ? 'point' + ++_pointcount : $label;

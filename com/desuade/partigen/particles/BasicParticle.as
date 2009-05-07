@@ -39,7 +39,7 @@ package com.desuade.partigen.particles {
 		}
 		
 		public function kill(... args):void {
-			dispatchEvent(new ParticleEvent(ParticleEvent.DIED, {particle:this}));
+			_emitter.dispatchDeath(this);
 			Debug.output('partigen', 50002, [id]);
 			_emitter.renderer.removeParticle(this);
 			_emitter.pool.removeParticle(this.id);

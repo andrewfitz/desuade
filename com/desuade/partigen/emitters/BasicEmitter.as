@@ -77,16 +77,17 @@ package com.desuade.partigen.emitters {
 				np.y = this.y;
 				np.z = this.z;
 				dispatchEvent(new ParticleEvent(ParticleEvent.BORN, {particle:np}));
-				np.addEventListener(ParticleEvent.DIED, dispatchDeath, false, 0, true);
 				renderer.addParticle(np);
 			}
 		}
 		
 		//protected functions
 		
-		protected function dispatchDeath(o:Object):void {
-			o.info.particle.removeEventListener(ParticleEvent.DIED, dispatchDeath);
-			dispatchEvent(new ParticleEvent(ParticleEvent.DIED, {particle:o.info.particle}));
+		/**
+		 *	@private
+		 */
+		internal function dispatchDeath(p:BasicParticle):void {
+			dispatchEvent(new ParticleEvent(ParticleEvent.DIED, {particle:p}));
 		}
 		
 		protected function setTimer($set:Boolean):void {
