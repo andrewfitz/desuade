@@ -121,7 +121,7 @@ package com.desuade.partigen.emitters {
 		/**
 		 *	@inheritDoc
 		 */
-		public override function emit($burst:int):void {
+		public override function emit($burst:int = 1):void {
 			for (var i:int = 0; i < $burst; i++) {
 				var np:BasicParticle = pool.addParticle(particle, group, this);
 				np.init(this);
