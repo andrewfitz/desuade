@@ -9,33 +9,59 @@ package com.desuade.partigen.particles {
 	import com.desuade.partigen.events.*;
 	import com.desuade.motion.tweens.*;
 	import com.desuade.motion.controllers.*;
-
+	
+	/**
+	 *  This is the standard particle class used with the Emitter class that includes ValueControllers.
+	 *    
+	 *  @langversion ActionScript 3
+	 *  @playerversion Flash 9.0.0
+	 *
+	 *  @author Andrew Fitzgerald
+	 *  @since  08.05.2009
+	 */
 	public dynamic class Particle extends BasicParticle {
 		
-		protected static var _count:int = BasicParticle._count;
-		
+		/**
+		 *	This holds all of the ValueControllers that are currently being ran on the particle.
+		 */
 		public var controllers:Object = {};
+		
+		/**
+		 *	The life of the particle: how long the particle will live for. This effects the duration of controller tweens.
+		 */
 		public var life:Number;
 		
+		/**
+		 *	@private
+		 */
 		protected var _lifeTimer:Timer;
 	
+		/**
+		 *	Creates a new particle. This should normally not be called; use <code>emitter.emit()</code> instead of this.
+		 *	
+		 *	@see	com.desuade.partigen.emitters.Emitter#emit()
+		 */
 		public function Particle() {
 			super();
 		}
 		
-		//setters getters
-		
-		public static function get count():int { 
-			return _count; 
-		}
-		
-		public function set scale($value:Number):void {
-			scaleX = scaleY = $value;
-		}
+		/**
+		 *	This sets/gets both X and Y scales at once.
+		 */
 		public function get scale():Number{
 			return scaleX;
 		}
 		
+		/**
+		 *	@private
+		 */
+		public function set scale($value:Number):void {
+			scaleX = scaleY = $value;
+		}
+		
+		/**
+		 *	@private
+		 */
 		public function addLife($life:Number):void {
 			life = $life;
 			_lifeTimer = new Timer($life*1000);
@@ -43,6 +69,9 @@ package com.desuade.partigen.particles {
 			_lifeTimer.start();
 		}
 		
+		/**
+		 *	@private
+		 */
 		public function startControllers():void {
 			for (var p:String in controllers) {
 				if(controllers[p] is ValueController && controllers[p].points.isFlat()){
@@ -53,6 +82,9 @@ package com.desuade.partigen.particles {
 			}
 		}
 		
+		/**
+		 *	@private
+		 */
 		public function stopControllers():void {
 			for (var p:String in controllers) {
 				if(controllers[p].active){
@@ -61,6 +93,9 @@ package com.desuade.partigen.particles {
 			}
 		}
 		
+		/**
+		 *	@inheritDoc
+		 */
 		public override function kill(... args):void {
 			stopControllers();
 			_lifeTimer.stop();
