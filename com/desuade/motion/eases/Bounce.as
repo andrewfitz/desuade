@@ -66,9 +66,9 @@ package com.desuade.motion.eases {
 		*/
 		public static function easeOutIn(t:Number, b:Number, c:Number, d:Number):Number {
 			if (t<d/2) {
-				return easeOutBounce(t*2, 0, c, d)*.5+b;
+				return easeOut(t*2, 0, c, d)*.5+b;
 			}
-			return easeInBounce(t*2-d, 0, c, d)*.5+c*.5+b;
+			return easeIn(t*2-d, 0, c, d)*.5+c*.5+b;
 		}
 	}
 }
