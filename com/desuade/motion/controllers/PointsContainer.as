@@ -2,6 +2,7 @@ package com.desuade.motion.controllers {
 	
 	import com.desuade.debugging.*
 	import com.desuade.motion.tweens.*
+	import com.desuade.motion.eases.*
 
 	/**
 	 *  This is a container for working with points, used by a ValueController.
@@ -25,7 +26,7 @@ package com.desuade.motion.controllers {
 		public function PointsContainer($value:* = '0'){
 			super();
 			this.begin = {value:$value, spread:'0', position:0};
-			this.end = {value:$value, spread:'0', position:1, ease:PrimitiveTween.linear};
+			this.end = {value:$value, spread:'0', position:1, ease:Linear.none};
 		}
 		
 		/**
@@ -38,13 +39,13 @@ package com.desuade.motion.controllers {
 		 *	@param	value	 A value to tween to. The target will arive (the tween will end) at this value at the position of this point. Pass a Number for absolute, or a String for relative.
 		 *	@param	spread	 A value to create a random range from. If the spread doesn't equal the 'value' value or '0', a random value will be created between the 'value' and the 'spread'. Pass a Number for absolute, or a String for relative.
 		 *	@param	position	 A value between 0-1 that reprsents the position of the point, 0 being the beginning of the controller and 1 being the end point (0 and 1 are already taken by 'begin' and 'end' points)
-		 *	@param	ease	 What ease function to use. Adobe ease functions like Bounce.easeOut, etc. null will default to a linear ease.
+		 *	@param	ease	 What ease function to use. Adobe ease functions like Bounce.easeOut, etc. null will default to Linear.none.
 		 *	@param	label	 A custom label for the point. Defaults to "point1", "point2", etc.
 		 */
 		public function add($value:*, $spread:*, $position:Number, $ease:* = null, $label:String = null):Object {
 			$label = ($label == null) ? 'point' + ++_pointcount : $label;
 			Debug.output('motion', 10001, [$label, $position]);
-			return this[$label] = {value:$value, spread:$spread, position:$position, ease: $ease || PrimitiveTween.linear};
+			return this[$label] = {value:$value, spread:$spread, position:$position, ease: $ease || Linear.none};
 		}
 		
 		/**
@@ -72,7 +73,7 @@ package com.desuade.motion.controllers {
 			var pa:Array = this.toArray();
 			for (var i:int = 0; i < pa.length; i++) {
 				var p:Object = this[pa[i].label];
-				p.ease = PrimitiveTween.linear;
+				p.ease = Linear.none;
 				p.value = $value;
 				p.spread = '0';
 			}

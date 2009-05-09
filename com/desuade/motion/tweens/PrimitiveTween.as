@@ -7,7 +7,7 @@ package com.desuade.motion.tweens {
 	import flash.events.TimerEvent;
 	import flash.utils.getTimer;
 	
-	//Easing functions can be included with import fl.motion.easing.*
+	import com.desuade.motion.eases.Linear;
 	import com.desuade.debugging.*
 	import com.desuade.motion.events.*
 
@@ -95,7 +95,7 @@ package com.desuade.motion.tweens {
 		 */
 		public function PrimitiveTween($target:Object, $property:String, $value:Number, $duration:int, $ease:Function = null) {
 			super();
-			id = _count++, target = $target, duration = $duration, ease = $ease || linear, starttime = getTimer();
+			id = _count++, target = $target, duration = $duration, ease = $ease || Linear.none, starttime = getTimer();
 			if($property != null) {
 				property = $property, value = $value, startvalue = $target[$property];
 				difvalue = (startvalue > value) ? (value-startvalue) : -(startvalue-value);
@@ -129,13 +129,6 @@ package com.desuade.motion.tweens {
 				target[property] = ease(tmr, startvalue, difvalue, duration);
 				dispatchEvent(new TweenEvent(TweenEvent.UPDATED, {primitiveTween:this}));
 			}
-		}
-		
-		/**
-		 *	@private
-		 */
-		public static function linear(t:Number, b:Number, c:Number, d:Number):Number {
-			return c*t/d+b;
 		}
 	
 	}

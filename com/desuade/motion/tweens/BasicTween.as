@@ -44,7 +44,7 @@ package com.desuade.motion.tweens {
 		 *	<li>target:Object – an object to have it's property tweened</li>
 		 *	<li>property:String – the property to tween</li>
 		 *	<li>value:* – the new (end) value. Passing a Number will tween it to that absolute value, passing a String will use a relative value (target.property + value) - ie: <code>{value: 100}</code> or <code>{value:"200"}</code></li>
-		 *	<li>ease:Function – the easing function to use. Default is a linear ease.</li>
+		 *	<li>ease:Function – the easing function to use. Default is Linear.none.</li>
 		 *	<li>duration:Number – how long in seconds for the tween to last</li>
 		 *	</ul>
 		 *	

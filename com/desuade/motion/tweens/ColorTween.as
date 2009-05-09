@@ -32,7 +32,7 @@ package com.desuade.motion.tweens {
 		 *	<li>type:String – the type of color transformation to apply. Defaults to 'tint', see ColorHelper for more types.</li>
 		 *	<li>amount:int – The amount of transform to apply. Depends on 'type'</li>
 		 *	<li>value:* – the new (end) color. A string or hex is accepted - ie: <code>{value: '#ff0038}</code> or <code>{value:0xff883a}</code></li>
-		 *	<li>ease:Function – the easing function to use. Default is a linear ease.</li>
+		 *	<li>ease:Function – the easing function to use. Default is Linear.none.</li>
 		 *	<li>duration:Number – how long in seconds for the tween to last</li>
 		 *	<li>delay:Number – how long in seconds to delay starting the tween</li>
 		 *	<li>position:Number – what position to start the tween at 0-1</li>
@@ -57,7 +57,7 @@ package com.desuade.motion.tweens {
 		 *	@param	target	an object to have it's property tweened
 		 *	@param	value	 the new (end) color. A string or hex is accepted - ie: <code>{value: '#ff0038}</code> or <code>{value:0xff883a}</code>
 		 *	@param	duration	how long in seconds for the tween to last
-		 *	@param	ease	the easing function to use. Default is a linear ease.
+		 *	@param	ease	the easing function to use. Default is Linear.none.
 		 *	@param	delay	how long in seconds to delay starting the tween
 		 *	@param	type	 the type of color transformation to apply. Defaults to 'tint', see ColorHelper for more types.
 		 *	@param	amount	 The amount of transform to apply. Depends on 'type'.

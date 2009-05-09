@@ -47,7 +47,7 @@ package com.desuade.motion.tweens {
 		 *	<ul>
 		 *	<li>target:Object – an object to have it's property tweened</li>
 		 *	<li>properties:Object – an object of properties and values to tween. Passing a Number will tween it to that absolute value, passing a String will use a relative value (target.property + value) - ie: <code>{x:100}</code> or <code>{y:"200"}</code></li>
-		 *	<li>ease:Function – the easing function to use. Default is a linear ease.</li>
+		 *	<li>ease:Function – the easing function to use. Default is Linear.none.</li>
 		 *	<li>duration:Number – how long in seconds for the tween to last</li>
 		 *	<li>delay:Number – how long in seconds to delay starting the tween</li>
 		 *	<li>position:Number – what position to start the tween at 0-1</li>
@@ -73,7 +73,7 @@ package com.desuade.motion.tweens {
 		 *	@param	target	an object to have it's property tweened
 		 *	@param	properties	an object of properties and values to tween. Passing a Number will tween it to that absolute value, passing a String will use a relative value (target.property + value) - ie: <code>{x:100}</code> or <code>{y:"200"}</code>
 		 *	@param	duration	how long in seconds for the tween to last
-		 *	@param	ease	the easing function to use. Default is a linear ease.
+		 *	@param	ease	the easing function to use. Default is Linear.none.
 		 *	@param	delay	how long in seconds to delay starting the tween
 		 *	@param	round	round the values on update (to an int)
 		 *	@param	position	what position to start the tween at 0-1

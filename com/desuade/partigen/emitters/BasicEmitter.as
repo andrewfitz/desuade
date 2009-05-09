@@ -173,7 +173,7 @@ package com.desuade.partigen.emitters {
 		/**
 		 *	@private
 		 */
-		internal function dispatchDeath(p:BasicParticle):void {
+		public function dispatchDeath(p:BasicParticle):void {
 			dispatchEvent(new ParticleEvent(ParticleEvent.DIED, {particle:p}));
 		}
 		

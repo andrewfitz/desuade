@@ -104,7 +104,7 @@ package com.desuade.motion.sequencers {
 		/**
 		 *	<p>An Object that represents a normal Sequence object, that contains properties to be applied to every object in the Sequence.</p>
 		 *	
-		 *	<p>For example: <code>seq.overrides = {target:my_obj, ease:linear}</code> will assign all the tweens in the sequence their 'target' and 'ease' values to the given values in the overrides object, unless the object has <code>{allowOverrides:false}</code></p>
+		 *	<p>For example: <code>seq.overrides = {target:my_obj, ease:Linear.none}</code> will assign all the tweens in the sequence their 'target' and 'ease' values to the given values in the overrides object, unless the object has <code>{allowOverrides:false}</code></p>
 		 *	
 		 */
 		public function get overrides():Object{

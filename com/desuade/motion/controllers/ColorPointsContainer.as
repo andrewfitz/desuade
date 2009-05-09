@@ -2,6 +2,7 @@ package com.desuade.motion.controllers {
 	
 	import com.desuade.debugging.*
 	import com.desuade.motion.tweens.*
+	import com.desuade.motion.eases.*
 	
 	/**
 	 *  This is the PointsContainer used with the ColorValueController. It holds all the points used by the controller, and methods to deal with them. It's identical to the regular PointsContainer, except those changes made to work specifically with colors.
@@ -27,7 +28,7 @@ package com.desuade.motion.controllers {
 		public function ColorPointsContainer($value:* = 'none', $type:String = 'tint', $amount:Number = 1) {
 			super();
 			this.begin = {value:$value, spread:null, type:$type, amount:$amount, position:0};
-			this.end = {value:$value, spread:null, type:$type, amount:$amount, position:1, ease:PrimitiveTween.linear};
+			this.end = {value:$value, spread:null, type:$type, amount:$amount, position:1, ease:Linear.none};
 		}
 		
 		/**
@@ -42,7 +43,7 @@ package com.desuade.motion.controllers {
 		 *	@param	position	 A value between 0-1 that reprsents the position of the point, 0 being the beginning of the controller and 1 being the end point (0 and 1 are already taken by 'begin' and 'end' points)
 		 *	@param	type	 What kind of color transformation to perform. See com.desuade.utils.ColorHelper#getColorObject() for the various types
 		 *	@param	amount	 The amount of color transformation to apply. This varies with the type property.
-		 *	@param	ease	 What ease function to use. Adobe ease functions like Bounce.easeOut, etc. null will default to a linear ease.
+		 *	@param	ease	 What ease function to use. Adobe ease functions like Bounce.easeOut, etc. null will default to Linear.none.
 		 *	@param	label	 A custom label for the point. Defaults to "point1", "point2", etc.
 		 *	
 		 *	@see	com.desuade.utils.ColorHelper#getColorObject()
@@ -50,7 +51,7 @@ package com.desuade.motion.controllers {
 		public function add($value:*, $spread:*, $position:Number, $type:String = 'tint', $amount:Number = 1, $ease:* = null, $label:String = null):Object {
 			$label = ($label == null) ? 'point' + ++_pointcount : $label;
 			Debug.output('motion', 10001, [$label, $position]);
-			return this[$label] = {value:$value, spread:$spread, position:$position, type:$type, amount:$amount, ease: $ease || PrimitiveTween.linear};
+			return this[$label] = {value:$value, spread:$spread, position:$position, type:$type, amount:$amount, ease: $ease || Linear.none};
 		}
 		
 		/**
@@ -80,7 +81,7 @@ package com.desuade.motion.controllers {
 			var pa:Array = this.toArray();
 			for (var i:int = 0; i < pa.length; i++) {
 				var p:Object = this[pa[i].label];
-				p.ease = PrimitiveTween.linear;
+				p.ease = Linear.none;
 				p.value = $value;
 				p.type = $type;
 				p.amount = $amount;
