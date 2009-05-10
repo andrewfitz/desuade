@@ -11,7 +11,7 @@ package com.desuade.motion.controllers {
 	 *	
 	 *	<p>It creates it's own BasicPhysics object and the 3 ValueControllers upon creation, and provides methods to work with all controllers simultaneously.</p>
 	 *	
-	 *	<p>Note: if acceleration and/or friction controllers are used, they override the velocity controller as those directly effect the velocity.</p>
+	 *	<p>Note: if acceleration and/or friction controllers are used, they override the velocity controller as those directly affect the velocity.</p>
 	 *	
 	 *	<p>Note: while the controller must have a duration to use ValueControllers, once the controller is stopped, the velocity, acceleration, and friction values will stop being tweened, and the physics will be disabled. To keep the property being updated under the control of the 'physics' object (BasicPhysics), pass <code>false</code> to the stop() method.</p>
 	 *	

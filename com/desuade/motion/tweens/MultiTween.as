@@ -85,7 +85,7 @@ package com.desuade.motion.tweens {
 		 *	@see	PrimitiveTween#ease
 		 *	
 		 */
-		public static function tween($target:Object, $properties:Object, $duration:int, $ease:Function = null, $delay:Number = 0, $round:Boolean = false, $position:Number = 0):MultiTween {
+		public static function tween($target:Object, $properties:Object, $duration:Number, $ease:Function = null, $delay:Number = 0, $round:Boolean = false, $position:Number = 0):MultiTween {
 			var st:MultiTween = new MultiTween({target:$target, properties:$properties, duration:$duration, ease:$ease, delay:$delay, round:$round, position:$position});
 			st.start();
 			return st;

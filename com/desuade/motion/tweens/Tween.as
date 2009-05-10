@@ -93,7 +93,7 @@ package com.desuade.motion.tweens {
 		 *	@param	position	what position to start the tween at 0-1
 		 *	@param	bezier	an array of bezier curve points
 		 *	
-		 *	<p>example: Tween.tween(myobj, 'x', 300, 2.5, null, 0, false, false, 0, [100])</p>
+		 *	<p>example: Tween.tween(myobj, 'x', 300, 2.5, null, 0, false, 0, [100])</p>
 		 *	
 		 *	@see	PrimitiveTween#target
 		 *	@see	PrimitiveTween#property
@@ -102,7 +102,7 @@ package com.desuade.motion.tweens {
 		 *	@see	PrimitiveTween#ease
 		 *	
 		 */
-		public static function tween($target:Object, $property:String, $value:*, $duration:int, $ease:Function = null, $delay:Number = 0, $round:Boolean = false, $position:Number = 0, $bezier:Array = null):Tween {
+		public static function tween($target:Object, $property:String, $value:*, $duration:Number, $ease:Function = null, $delay:Number = 0, $round:Boolean = false, $position:Number = 0, $bezier:Array = null):Tween {
 			var st:Tween = new Tween({target:$target, value:$value, property:$property, duration:$duration, ease:$ease, delay:$delay, round:$round, position:$position, bezier:$bezier});
 			st.start();
 			return st;

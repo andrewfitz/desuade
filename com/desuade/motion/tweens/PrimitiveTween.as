@@ -25,7 +25,7 @@ package com.desuade.motion.tweens {
 		/**
 		 *	@private
 		 */
-		public static var _count:int = 0;
+		public static var _count:int = 1;
 		
 		/**
 		 *	@private

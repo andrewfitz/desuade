@@ -72,7 +72,7 @@ package com.desuade.motion.tweens {
 		 *	@see	com.desuade.utils.ColorHelper#getColorObject()
 		 *	
 		 */
-		public static function tween($target:Object, $value:*, $duration:int, $ease:Function = null, $delay:Number = 0, $type:String = 'tint', $amount:Number = 1, $position:Number = 0):ColorTween {
+		public static function tween($target:Object, $value:*, $duration:Number, $ease:Function = null, $delay:Number = 0, $type:String = 'tint', $amount:Number = 1, $position:Number = 0):ColorTween {
 			var st:ColorTween = new ColorTween({target:$target, value:$value, duration:$duration, ease:$ease, delay:$delay, type:$type, amount:$amount, position:$position});
 			st.start();
 			return st;

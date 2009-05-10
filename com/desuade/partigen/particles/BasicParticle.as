@@ -46,7 +46,7 @@ package com.desuade.partigen.particles {
 		 */
 		public function init($emitter:BasicEmitter):void {
 			_emitter = $emitter;
-			_id = BasicParticle._count++;
+			_id = _count++;
 			name = "particle_"+_id;
 			Debug.output('partigen', 50001, [id]);
 		}

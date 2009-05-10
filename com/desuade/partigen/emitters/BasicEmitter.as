@@ -92,7 +92,7 @@ package com.desuade.partigen.emitters {
 		 */
 		public function BasicEmitter() {
 			super();
-			_id = ++BasicEmitter._count;
+			_id = ++_count;
 			renderer = new NullRenderer();
 			pool = new NullPool();
 			Debug.output('partigen', 20001, [id]);
