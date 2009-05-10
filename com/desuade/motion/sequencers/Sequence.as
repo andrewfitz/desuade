@@ -249,8 +249,8 @@ package com.desuade.motion.sequencers {
 		 *	@private
 		 */
 		protected function advance($i:Object):void {
-			if($i is SequenceEvent) $i.info.sequence.removeEventListener(SequenceEvent.ENDED, advance);
-			else $i.info.tween.removeEventListener(TweenEvent.ENDED, advance);
+			if($i is SequenceEvent) $i.data.sequence.removeEventListener(SequenceEvent.ENDED, advance);
+			else $i.data.tween.removeEventListener(TweenEvent.ENDED, advance);
 			if(_position < length-1){
 				play(++_position);
 				_dispatcher.dispatchEvent(new SequenceEvent(SequenceEvent.ADVANCED, {position:_position, sequence:this}));

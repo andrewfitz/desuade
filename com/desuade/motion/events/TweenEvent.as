@@ -35,21 +35,21 @@ package com.desuade.motion.events {
 		 *	<p>Note: The ENDED event does not pass a PrimitiveTween when it's a func-only tween, or when a delayed tween is stopped before it begins to tween.</p>
 		 *	
 		 */
-		public var info:Object;
+		public var data:Object;
 		
 		/**
 		 *	Creates a new TweenEvent. Events get dispatched internally, manual creation isn't necessary.
 		 */
-		public function TweenEvent($type:String, $info:Object = null, $bubbles:Boolean = false, $cancelable:Boolean = false){
+		public function TweenEvent($type:String, $data:Object = null, $bubbles:Boolean = false, $cancelable:Boolean = false){
 			super($type, $bubbles, $cancelable);
-			this.info = $info;
+			this.data = $data;
 		}
 
 		/**
 		 *	@inheritDoc
 		 */
 		public override function clone():Event{
-			return new TweenEvent(this.type, this.info, this.bubbles, this.cancelable);
+			return new TweenEvent(this.type, this.data, this.bubbles, this.cancelable);
 		}
 
 	}

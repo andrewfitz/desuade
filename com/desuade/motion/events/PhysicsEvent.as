@@ -20,21 +20,21 @@ package com.desuade.motion.events {
 		/**
 		 *	<p>This this object that gets passed when an event is fired. It contains the BasicPhysics object: <code>basicPhysics</code></p>
 		 */
-		public var info:Object;
+		public var data:Object;
 		
 		/**
 		 *	Creates a new PhysicsEvent. Events get dispatched internally, manual creation isn't necessary.
 		 */
-		public function PhysicsEvent($type:String, $info:Object = null, $bubbles:Boolean = false, $cancelable:Boolean = false){
+		public function PhysicsEvent($type:String, $data:Object = null, $bubbles:Boolean = false, $cancelable:Boolean = false){
 			super($type, $bubbles, $cancelable);
-			this.info = $info;
+			this.data = $data;
 		}
 
 		/**
 		 *	@inheritDoc
 		 */
 		public override function clone():Event{
-			return new TweenEvent(this.type, this.info, this.bubbles, this.cancelable);
+			return new TweenEvent(this.type, this.data, this.bubbles, this.cancelable);
 		}
 
 	}

@@ -34,21 +34,21 @@ package com.desuade.motion.events {
 		 *	<p>STARTED and ENDED: <code>sequence</code></p>
 		 *	<p>ADVANCED: <code>sequence</code> and <code>position</code></p>
 		 */
-		public var info:Object;
+		public var data:Object;
 		
 		/**
 		 *	Creates a new SequenceEvent. Events get dispatched internally, manual creation isn't necessary.
 		 */
-		public function SequenceEvent($type:String, $info:Object = null, $bubbles:Boolean = false, $cancelable:Boolean = false){
+		public function SequenceEvent($type:String, $data:Object = null, $bubbles:Boolean = false, $cancelable:Boolean = false){
 			super($type, $bubbles, $cancelable);
-			this.info = $info;
+			this.data = $data;
 		}
 
 		/**
 		 *	@inheritDoc
 		 */
 		public override function clone():Event{
-			return new SequenceEvent(this.type, this.info, this.bubbles, this.cancelable);
+			return new SequenceEvent(this.type, this.data, this.bubbles, this.cancelable);
 		}
 
 	}

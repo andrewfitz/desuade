@@ -34,21 +34,21 @@ package com.desuade.motion.events {
 		 *	<p>STARTED and ENDED: <code>controller</code></p>
 		 *	<p>ADVANCED: <code>controller</code> and <code>position</code></p>
 		 */
-		public var info:Object;
+		public var data:Object;
 
 		/**
 		 *	Creates a new ControllerEvent. Events get dispatched internally, manual creation isn't necessary.
 		 */
-		public function ControllerEvent($type:String, $info:Object = null, $bubbles:Boolean = false, $cancelable:Boolean = false){
+		public function ControllerEvent($type:String, $data:Object = null, $bubbles:Boolean = false, $cancelable:Boolean = false){
 			super($type, $bubbles, $cancelable);
-			this.info = $info;
+			this.data = $data;
 		}
 
 		/**
 		 *	@inheritDoc
 		 */
 		public override function clone():Event{
-			return new ControllerEvent(this.type, this.info, this.bubbles, this.cancelable);
+			return new ControllerEvent(this.type, this.data, this.bubbles, this.cancelable);
 		}
 
 	}

@@ -200,8 +200,8 @@ package com.desuade.motion.tweens {
 		 *	@private
 		 */
 		protected override function endFunc($o:Object):void {
-			if($o.info.primitiveTween.property != undefined){
-				if($o.info.primitiveTween.target[$o.info.primitiveTween.property] == $o.info.primitiveTween.value){
+			if($o.data.primitiveTween.property != undefined){
+				if($o.data.primitiveTween.target[$o.data.primitiveTween.property] == $o.data.primitiveTween.value){
 					_completed = true;
 				}
 			}
@@ -277,7 +277,7 @@ package com.desuade.motion.tweens {
 		 *	@private
 		 */
 		protected function roundTweenValue($i:Object):void {
-			var pt:Object = $i.info.primitiveTween;
+			var pt:Object = $i.data.primitiveTween;
 			pt.target[pt.property] = int(pt.target[pt.property]);
 			Debug.output('motion', 50003, [pt.id, pt.target[pt.property], int(pt.target[pt.property])]);
 		}

@@ -139,8 +139,8 @@ package com.desuade.motion.tweens {
 		 *	@private
 		 */
 		protected override function endFunc($o:Object):void {
-			if($o.info.primitiveTween.arrayObject.props[0] != undefined){
-				if($o.info.primitiveTween.target[$o.info.primitiveTween.arrayObject.props[0]] == $o.info.primitiveTween.arrayObject.values[0]){
+			if($o.data.primitiveTween.arrayObject.props[0] != undefined){
+				if($o.data.primitiveTween.target[$o.data.primitiveTween.arrayObject.props[0]] == $o.data.primitiveTween.arrayObject.values[0]){
 					_completed = true;
 				}
 			}
@@ -173,7 +173,7 @@ package com.desuade.motion.tweens {
 		 *	@private
 		 */
 		protected override function roundTweenValue($i:Object):void {
-			var pt:Object = $i.info.primitiveTween;
+			var pt:Object = $i.data.primitiveTween;
 			for (var p:String in pt.arrayObject.props) {
 				pt.target[p] = int(pt.target[p]);
 			}

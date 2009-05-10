@@ -26,21 +26,21 @@ package com.desuade.partigen.events {
 		/**
 		 *	This is the info object that's gets passed to the function. It contains the <code>particle</code> property, that is the particle that the event is associated with.
 		 */
-		public var info:Object;
+		public var data:Object;
 
 		/**
 		 *	Creates a new ParticleEvent. Events get dispatched internally, manual creation isn't necessary.
 		 */
-		public function ParticleEvent($type:String, $info:Object = null, $bubbles:Boolean = false, $cancelable:Boolean = false){
+		public function ParticleEvent($type:String, $data:Object = null, $bubbles:Boolean = false, $cancelable:Boolean = false){
 			super($type, $bubbles, $cancelable);
-			this.info = $info;
+			this.data = $data;
 		}
 		
 		/**
 		 *	@inheritDoc
 		 */
 		public override function clone():Event{
-			return new ParticleEvent(this.type, this.info, this.bubbles, this.cancelable);
+			return new ParticleEvent(this.type, this.data, this.bubbles, this.cancelable);
 		}
 		
 	}
