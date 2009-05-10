@@ -67,18 +67,28 @@ package com.desuade.motion.tweens {
 		
 		/**
 		 *	This starts the tween. Delay and position are used for Tween and passing them here will do nothing.
+		 *	
+		 *	@return		True all the time since the tween can always start.
 		 */
-		public function start($delay:Number = -1, $position:Number = -1):void {
-			_active = true;
-			dispatchEvent(new TweenEvent(TweenEvent.STARTED, {tween:this}));
-			_tweenID = createTween(_tweenconfig);
+		public function start($delay:Number = -1, $position:Number = -1):Boolean {
+			if(!_active){
+				_active = true;
+				dispatchEvent(new TweenEvent(TweenEvent.STARTED, {tween:this}));
+				_tweenID = createTween(_tweenconfig);
+			}
+			return true;
 		}
 		
 		/**
 		 *	This stops the tween.
+		 *	
+		 *	@return		True if the tween could be stopped.
 		 */
-		public function stop():void {
-			if(_tweenID != 0) _tweenholder[_tweenID].end();
+		public function stop():Boolean {
+			if(_tweenID != 0) {
+				_tweenholder[_tweenID].end();
+				return true;
+			} else return false;
 		}
 		
 		/**

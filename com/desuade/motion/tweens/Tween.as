@@ -114,8 +114,10 @@ package com.desuade.motion.tweens {
 		 *	@param	delay	 Overrides the tween's delay and uses the passed one.
 		 *	@param	position	 Starts the tween at a given position 0-1.
 		 *	
+		 *	@return		True if the tween could be started, false if already active or has ended. Use reset() to start again.
+		 *	
 		 */
-		public override function start($delay:Number = -1, $position:Number = -1):void {
+		public override function start($delay:Number = -1, $position:Number = -1):Boolean {
 			if(!_completed && !active){
 				_tweenconfig.delay = ($delay == -1) ? _tweenconfig.delay : $delay;
 				if($position == -1){
@@ -128,15 +130,19 @@ package com.desuade.motion.tweens {
 				dispatchEvent(new TweenEvent(TweenEvent.STARTED, {tween:this}));
 				if(_tweenconfig.delay > 0) delayedTween(_tweenconfig.delay);
 				else _tweenID = createTween(_tweenconfig);
+				return true;
 			} else {
 				Debug.output('motion', 10005);
+				return false;
 			}
 		}
 		
 		/**
 		 *	This stops the currently playing tween at it's current position. Starting the tween will resume it.
+		 *	
+		 *	@return		True if could be stopped, false if the tween is not active or has ended.
 		 */
-		public override function stop():void {
+		public override function stop():Boolean {
 			if(!_completed){
 				if(_tweenID != 0){
 					if(!_completed){
@@ -147,8 +153,10 @@ package com.desuade.motion.tweens {
 					_delayTimer.stop();
 					dispatchEvent(new TweenEvent(TweenEvent.ENDED, {tween:this}));
 				}
+				return true;
 			} else {
 				Debug.output('motion', 10004);
+				return false;
 			}
 		}
 		
