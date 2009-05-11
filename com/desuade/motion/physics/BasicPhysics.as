@@ -75,7 +75,7 @@ package com.desuade.motion.physics {
 		 *	
 		 *	0 = right, 90 = up, 180 = left, 270 = down, 360 = right.
 		 */
-		public var angle:Number;
+		public var angle:* = null;
 		
 		/**
 		 *	<p>This creates a BasicPhysics object.</p>
@@ -140,7 +140,7 @@ package com.desuade.motion.physics {
 		 */
 		public function start($setangle:Boolean = true):void {
 			_active = true;
-			if($setangle) setAngle(angle);
+			if($setangle && angle != null) setAngle(angle);
 			_sprite.addEventListener(Event.ENTER_FRAME, update, false, 0, true);
 		}
 		

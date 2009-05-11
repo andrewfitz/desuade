@@ -12,10 +12,21 @@ package com.desuade.motion.events {
 	 *  @since  23.04.2009
 	 */
 	public class PhysicsEvent extends Event {
+		
+		/**
+		 *	This event is fired when a BasicPhysics object starts.
+		 */
+		public static const STARTED:String = "started";
+		
 		/**
 		 *	This event is fired when a BasicPhysics object is updating the target's property.
 		 */
 		public static const UPDATED:String = "updated";
+		
+		/**
+		 *	This event is fired when a BasicPhysics object stops.
+		 */
+		public static const STOPPED:String = "stopped";
 		
 		/**
 		 *	<p>This this object that gets passed when an event is fired. It contains the BasicPhysics object: <code>basicPhysics</code></p>
