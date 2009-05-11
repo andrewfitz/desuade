@@ -82,7 +82,7 @@ package com.desuade.motion.physics {
 		 *	
 		 *	<p>Each BasicPhysics object controls a single property on a given target object, and applies basic physics equations to calculate a change in value.</p>
 		 *	
-		 *	<p>Unlike tweens, there is no end value, and the BasicPhysics' update will continue to run until it is disabled.</p>
+		 *	<p>Unlike tweens, there is no end value, and the BasicPhysics' update will continue to run until it is stopd.</p>
 		 *	
 		 *	@param	target	 The target object.
 		 *	@param	property	 The property to apply the physics to.
@@ -138,7 +138,7 @@ package com.desuade.motion.physics {
 		 *	@param	setangle	 Apply the angle to the velocity when starting.
 		 *	@see	#angle
 		 */
-		public function enable($setangle:Boolean = true):void {
+		public function start($setangle:Boolean = true):void {
 			_active = true;
 			if($setangle) setAngle(angle);
 			_sprite.addEventListener(Event.ENTER_FRAME, update, false, 0, true);
@@ -147,7 +147,7 @@ package com.desuade.motion.physics {
 		/**
 		 *	Disables the physics simulation.
 		 */
-		public function disable():void {
+		public function stop():void {
 			_active = false;
 			_sprite.removeEventListener(Event.ENTER_FRAME, update);
 		}

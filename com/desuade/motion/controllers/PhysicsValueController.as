@@ -13,7 +13,7 @@ package com.desuade.motion.controllers {
 	 *	
 	 *	<p>Note: if acceleration and/or friction controllers are used, they override the velocity controller as those directly affect the velocity.</p>
 	 *	
-	 *	<p>Note: while the controller must have a duration to use ValueControllers, once the controller is stopped, the velocity, acceleration, and friction values will stop being tweened, and the physics will be disabled. To keep the property being updated under the control of the 'physics' object (BasicPhysics), pass <code>false</code> to the stop() method.</p>
+	 *	<p>Note: while the controller must have a duration to use ValueControllers, once the controller is stopped, the velocity, acceleration, and friction values will stop being tweened, and the physics will be stopd. To keep the property being updated under the control of the 'physics' object (BasicPhysics), pass <code>false</code> to the stop() method.</p>
 	 *	
 	 *	<p>Note: physics used with the Desuade Motion Package is a variation of "tweening" used to change a value using physics formulas instead of standard motion tweening.</p>
 	 *	
@@ -153,27 +153,27 @@ package com.desuade.motion.controllers {
 		/**
 		 *	Starts up the PhysicsValueController.
 		 *	
-		 *	Starts all 3 controllers, and by default, enables the physics.
+		 *	Starts all 3 controllers, and by default, starts the physics.
 		 *	
-		 *	@param	enable	 Enable the physics.
-		 *	@see com.desuade.motion.physics.BasicPhysics#enable()
+		 *	@param	start	 Start the physics.
+		 *	@see com.desuade.motion.physics.BasicPhysics#start()
 		 */
-		public function start($enable:Boolean = true):void {
+		public function start($start:Boolean = true):void {
 			startControllers();
-			if($enable) physics.enable();
+			if($start) physics.start();
 		}
 		
 		/**
 		 *	Stops the PhysicsValueController.
 		 *	
-		 *	Stops all 3 controllers, and by default, disables the physics.
+		 *	Stops all 3 controllers, and by default, stops the physics.
 		 *	
-		 *	@param	disable	 Disable the physics.
-		 *	@see com.desuade.motion.physics.BasicPhysics#disable()
+		 *	@param	stop	 Disable the physics.
+		 *	@see com.desuade.motion.physics.BasicPhysics#stop()
 		 */
-		public function stop($disable:Boolean = true):void {
+		public function stop($stop:Boolean = true):void {
 			stopControllers();
-			if($disable) physics.disable();
+			if($stop) physics.stop();
 		}
 		
 		/**
