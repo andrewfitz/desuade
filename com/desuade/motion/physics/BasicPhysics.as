@@ -140,6 +140,7 @@ package com.desuade.motion.physics {
 		 */
 		public function start($setangle:Boolean = true):void {
 			_active = true;
+			dispatchEvent(new PhysicsEvent(PhysicsEvent.STARTED, {basicPhysics:this}));
 			if($setangle && angle != null) setAngle(angle);
 			_sprite.addEventListener(Event.ENTER_FRAME, update, false, 0, true);
 		}
@@ -150,6 +151,7 @@ package com.desuade.motion.physics {
 		public function stop():void {
 			_active = false;
 			_sprite.removeEventListener(Event.ENTER_FRAME, update);
+			dispatchEvent(new PhysicsEvent(PhysicsEvent.STOPPED, {basicPhysics:this}));
 		}
 		
 		/**
