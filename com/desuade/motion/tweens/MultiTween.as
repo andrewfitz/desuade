@@ -151,7 +151,7 @@ package com.desuade.motion.tweens {
 		 *	@inheritDoc
 		 */
 		public override function clone():* {
-			return new MultiTween(_tweenconfig);
+			return new MultiTween(duplicateConfig());
 		}
 		
 		////new methods

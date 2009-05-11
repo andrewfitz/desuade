@@ -52,7 +52,7 @@ package com.desuade.motion.tweens {
 		 *	@inheritDoc
 		 */
 		public override function clone():* {
-			return new BasicColorTween(_tweenconfig);
+			return new BasicColorTween(duplicateConfig());
 		}
 		
 		/**

@@ -111,7 +111,18 @@ package com.desuade.motion.tweens {
 		 *	@return		A new copy of the current tween.
 		 */
 		public function clone():* {
-			return new BasicTween(_tweenconfig);
+			return new BasicTween(duplicateConfig());
+		}
+		
+		/**
+		 *	@private
+		 */
+		protected function duplicateConfig():Object {
+			var ntc:Object = new Object();
+			for (var p:String in _tweenconfig) {
+				ntc[p] = _tweenconfig[p];
+			}
+			return ntc;
 		}
 		
 		/**

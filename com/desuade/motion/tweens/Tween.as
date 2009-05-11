@@ -220,7 +220,7 @@ package com.desuade.motion.tweens {
 		 *	@inheritDoc
 		 */
 		public override function clone():* {
-			return new Tween(_tweenconfig);
+			return new Tween(duplicateConfig());
 		}
 		
 		/**

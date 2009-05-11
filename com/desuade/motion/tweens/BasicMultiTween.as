@@ -54,7 +54,7 @@ package com.desuade.motion.tweens {
 		 *	@inheritDoc
 		 */
 		public override function clone():* {
-			return new BasicMultiTween(_tweenconfig);
+			return new BasicMultiTween(duplicateConfig());
 		}
 
 	}

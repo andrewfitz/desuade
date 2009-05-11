@@ -6,6 +6,7 @@ package com.desuade.motion.sequencers {
 
 	import com.desuade.debugging.*;
 	import com.desuade.motion.events.*;
+	import com.desuade.motion.tweens.BasicTween;
 
 	/**
 	 *  <p>A Sequence is an object that contains an ordered group of tweens that get called right after another, in the order given.</p>
@@ -56,9 +57,10 @@ package com.desuade.motion.sequencers {
 		/**
 		 *	<p>Creates a new Sequence.</p>
 		 *	<p>A sequence is a subclass of Array, so you can manipulate items in a sequence just like an array.</p>
+		 *	<p>You can pass actual tweens into the Sequence that bypass the tweenclass and overrides, or regular objects that will be created into new tweens based on the tweenclass provided.</p>
 		 *	<p>Each sequence creates tweens from objects passed, based on the given tweenclass, so the objects that are pushed into the sequence vary depending on the required parameters of the specified tweening class.</p>
 		 *	<p>By passing an Array into the sequence, all tween objects inside will be grouped together and played at the same time. The sequence will only advance once the tween with the longest duration is finished.</p>
-		 *	<p>Sequences can also be nested, and another sequence is a valid object to push into a sequence.</p>
+		 *	<p>Sequences can also be nested, and another sequence is a valid object to push into a sequence. Sequences can NOT be nested inside Arrays.</p>
 		 *	
 		 *	@param	tweenclass	 This is the class of tweens to use in the sequence.
 		 *	@param	args	 After passing the tweenclass, all following items passed into the contructor will be pushed into the sequence like an array.
@@ -209,14 +211,18 @@ package com.desuade.motion.sequencers {
 				}
 				tp.addEventListener(SequenceEvent.ENDED, advance, false, 0, true);
 				tp.start();
-			} else if(tp.length != undefined){
+			} else if(tp is Array){
 				_tween = [];
 				var longdur:Array = [-1, _tween];
 				for (var i:int = 0; i < tp.length; i++) {
-					_tween[i] = new _tweenclass(tp[i]);
-					if(tp[i].allowOverrides != false){
-						for (var r:String in _overrides) {
-							_tween[i].config[r] = _overrides[r];
+					if(tp[i] is BasicTween){
+						_tween[i] = tp[i];
+					} else {
+						_tween[i] = new _tweenclass(tp[i]);
+						if(tp[i].allowOverrides != false){
+							for (var r:String in _overrides) {
+								_tween[i].config[r] = _overrides[r];
+							}
 						}
 					}
 					if(_tween[i].config.duration > longdur[0]) longdur = [_tween[i].config.duration, _tween[i]];
@@ -224,10 +230,14 @@ package com.desuade.motion.sequencers {
 				}
 				longdur[1].addEventListener(TweenEvent.ENDED, advance, false, 0, true);
 			} else {
-				_tween = new _tweenclass(tp);
-				if(tp.allowOverrides != false){
-					for (var p:String in _overrides) {
-						_tween.config[p] = _overrides[p];
+				if(tp is BasicTween){
+					_tween = tp;
+				} else {
+					_tween = new _tweenclass(tp);
+					if(tp.allowOverrides != false){
+						for (var p:String in _overrides) {
+							_tween.config[p] = _overrides[p];
+						}
 					}
 				}
 				_tween.addEventListener(TweenEvent.ENDED, advance, false, 0, true);
