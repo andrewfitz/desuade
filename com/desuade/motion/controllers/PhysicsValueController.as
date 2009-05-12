@@ -182,17 +182,13 @@ package com.desuade.motion.controllers {
 		protected function startControllers():void {
 			if(velocity.points.isFlat()){
 				velocity.setStartValue();
-				if(acceleration.points.isFlat()){
-					acceleration.setStartValue();
-				} else {
-					acceleration.start();
-				}
-				if(friction.points.isFlat()){
-					friction.setStartValue();
-				} else {
-					friction.start();
-				}
+				if(acceleration.points.isFlat()) acceleration.setStartValue();
+				else acceleration.start();
+				if(friction.points.isFlat()) friction.setStartValue();
+				else friction.start();
 			} else {
+				acceleration.setStartValue();
+				friction.setStartValue();
 				velocity.start();
 			}
 		}
