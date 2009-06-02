@@ -117,13 +117,17 @@ package com.desuade.motion.controllers {
 		/**
 		 *	Determines if the ColorPointsContainer is flat.
 		 *	
-		 *	@return		True if all the values are the same.
+		 *	This doesn't mean that all properties that are checked are necessarily equal, but rather, if the total of points end up having any change in value.
+		 *	
+		 *	@return		True if all the values result in the same end value.
 		 *	@see #flatten()
 		 */
 		public function isFlat():Boolean {
 			var pa:Array = this.toArray();
-			for (var i:int = 0; i < pa.length; i++) {
+			for (var i:int = 1; i < pa.length; i++) {
+				if(pa[i].spread != null) return false;
 				if((pa[i].value != this.begin.value || pa[i].amount != this.begin.amount) && pa[i].value != null) return false;
+				if(this.begin.spread != null && pa[i].value != null) return false;
 			}
 			return true;
 		}
