@@ -62,6 +62,9 @@ package com.desuade.motion {
 				40006: "[Sequence] simulating new position at $", //removed
 				40007: "[Tween] starting tween at position: $",
 				40008: "[Sequence] sequence started",
+				40009: "[Physics] new physics object created",
+				40010: "[Physics] physics engine started",
+				40011: "[Physics] physics engine stopped",
 				
 				//primitive low level codes
 				50001: "[PrimitiveTween] tween started: $",

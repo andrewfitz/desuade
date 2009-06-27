@@ -117,7 +117,7 @@ package com.desuade.motion.tweens {
 		 *	@param	position	what position to start the tween at 0-1
 		 *	@param	bezier	an array of bezier curve points
 		 *	
-		 *	<p>example: Tween.tween(myobj, 'x', 300, 2.5, null, 0, false, 0, [100])</p>
+		 *	<p>Example: <code>Tween.tween(myobj, 'x', 300, 2.5, null, 0, false, 0, [100])</code></p>
 		 *	
 		 *	@see	PrimitiveTween#target
 		 *	@see	PrimitiveTween#property

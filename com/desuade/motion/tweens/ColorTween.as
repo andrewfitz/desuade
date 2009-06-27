@@ -60,6 +60,7 @@ package com.desuade.motion.tweens {
 		 *	<li>duration:Number – how long in seconds for the tween to last</li>
 		 *	<li>delay:Number – how long in seconds to delay starting the tween</li>
 		 *	<li>position:Number – what position to start the tween at 0-1</li>
+		 *	<li>hexProperty:String – To tween a hex value instead of a DisplayObject, set this to the property</li>
 		 *	</ul>
 		 *	
 		 *	<p>Example: <code>var mt:ColorTween = new ColorTween({target:myobj, value:0xff77d5, amount:0.8, duration:2, ease:Bounce.easeIn, delay:2, position:0})</code></p>
@@ -86,6 +87,7 @@ package com.desuade.motion.tweens {
 		 *	@param	type	 the type of color transformation to apply. Defaults to 'tint', see ColorHelper for more types.
 		 *	@param	amount	 The amount of transform to apply. Depends on 'type'.
 		 *	@param	position	what position to start the tween at 0-1
+		 *	@param	hexProperty	To tween a hex value instead of a DisplayObject, set this to the property
 		 *	
 		 *	<p>example: ColorTween.tween(myobj, '#ff0055', 2.5, null, 0, 'tint', 1, 0)</p>
 		 *	
@@ -96,8 +98,8 @@ package com.desuade.motion.tweens {
 		 *	@see	com.desuade.utils.ColorHelper#getColorObject()
 		 *	
 		 */
-		public static function tween($target:Object, $value:*, $duration:Number, $ease:Function = null, $delay:Number = 0, $type:String = 'tint', $amount:Number = 1, $position:Number = 0):ColorTween {
-			var st:ColorTween = new ColorTween({target:$target, value:$value, duration:$duration, ease:$ease, delay:$delay, type:$type, amount:$amount, position:$position});
+		public static function tween($target:Object, $value:*, $duration:Number, $ease:Function = null, $delay:Number = 0, $type:String = 'tint', $amount:Number = 1, $position:Number = 0, $hexProperty:String = null):ColorTween {
+			var st:ColorTween = new ColorTween({target:$target, value:$value, duration:$duration, ease:$ease, delay:$delay, type:$type, amount:$amount, position:$position, hexProperty:$hexProperty});
 			st.start();
 			return st;
 		}
@@ -105,8 +107,15 @@ package com.desuade.motion.tweens {
 		/**
 		 *	@private
 		 */
-		protected function colorupdater($o:Object):void {
+		protected function docolorupdater($o:Object):void {
 			_tweenconfig.target.transform.colorTransform = new ColorTransform(_colorholder.redMultiplier, _colorholder.greenMultiplier, _colorholder.blueMultiplier, _tweenconfig.target.alpha, _colorholder.redOffset, _colorholder.greenOffset, _colorholder.blueOffset);
+		};
+		
+		/**
+		 *	@private
+		 */
+		protected function hexcolorupdater($o:Object):void {
+			_tweenconfig.target[_tweenconfig.hexProperty] = ColorHelper.RGBToHex(_colorholder.redOffset, _colorholder.greenOffset, _colorholder.blueOffset);
 		};
 		
 		/**
@@ -120,7 +129,7 @@ package com.desuade.motion.tweens {
 				return 0;
 			} else {
 				var pt:PrimitiveMultiTween;
-				_colorholder = $to.target.transform.colorTransform;
+				_colorholder = ($to.hexProperty != undefined && $to.hexProperty != null) ? ColorHelper.getColorObject('tint', 1, $to.target[$to.hexProperty]) : $to.target.transform.colorTransform;
 				var cpo:Object = ColorHelper.getColorObject($to.type || 'tint', $to.amount || 1, $to.value, _colorholder);
 				if(_newvals.length == 0){
 					for (var p:String in cpo) {
@@ -132,7 +141,8 @@ package com.desuade.motion.tweens {
 				}
 				pt = BasicTween._tweenholder[PrimitiveTween._count] = new PrimitiveMultiTween(_colorholder, cpo, $to.duration*1000, $to.ease);
 				pt.addEventListener(TweenEvent.ENDED, endFunc, false, 0, true);
-				pt.addEventListener(TweenEvent.UPDATED, colorupdater, false, 0, true);
+				if($to.hexProperty != undefined && $to.hexProperty != null) pt.addEventListener(TweenEvent.UPDATED, hexcolorupdater, false, 0, true);
+				else pt.addEventListener(TweenEvent.UPDATED, docolorupdater, false, 0, true);
 				if($to.position > 0) {
 					pt.starttime -= ($to.position*$to.duration)*1000;
 					if(_newvals.length > 0) {

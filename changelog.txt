@@ -1,0 +1,16 @@
+Desuade Library Changelog
+-------------------------
+
+Beta 2:
+
+	Motion:
+		-added hexProperty to BasicColorTween/ColorTween to allow for non-DisplayObject color tweening
+		-added debug codes for BasicPhysics
+
+	Partigen: none
+
+	Debugging: none
+
+	Utils: none
+	
+Beta 1 (2009/6/22): initial release

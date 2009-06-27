@@ -24,7 +24,8 @@ THE SOFTWARE.
 
 package com.desuade.motion.physics {
 	
-	import flash.display.*; 
+	import flash.display.*;
+	import com.desuade.debugging.*;
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	
@@ -106,7 +107,7 @@ package com.desuade.motion.physics {
 		 *	
 		 *	<p>Each BasicPhysics object controls a single property on a given target object, and applies basic physics equations to calculate a change in value.</p>
 		 *	
-		 *	<p>Unlike tweens, there is no end value, and the BasicPhysics' update will continue to run until it is stopd.</p>
+		 *	<p>Unlike tweens, there is no end value, and the BasicPhysics' update will continue to run until it is stopped.</p>
 		 *	
 		 *	@param	target	 The target object.
 		 *	@param	property	 The property to apply the physics to.
@@ -131,6 +132,7 @@ package com.desuade.motion.physics {
 			friction = $friction;
 			flip = $flip;
 			angle = $angle;
+			Debug.output('motion', 40009);
 		}
 		
 		/**
@@ -167,6 +169,7 @@ package com.desuade.motion.physics {
 			dispatchEvent(new PhysicsEvent(PhysicsEvent.STARTED, {basicPhysics:this}));
 			if($setangle && angle != null) setAngle(angle);
 			_sprite.addEventListener(Event.ENTER_FRAME, update, false, 0, true);
+			Debug.output('motion', 40010);
 		}
 		
 		/**
@@ -176,6 +179,7 @@ package com.desuade.motion.physics {
 			_active = false;
 			_sprite.removeEventListener(Event.ENTER_FRAME, update);
 			dispatchEvent(new PhysicsEvent(PhysicsEvent.STOPPED, {basicPhysics:this}));
+			Debug.output('motion', 40011);
 		}
 		
 		/**
@@ -190,7 +194,7 @@ package com.desuade.motion.physics {
 		/**
 		 *	@private
 		 */
-		protected function update(u:Object):void {
+		public function update(u:Object):void {
 			velocity += acceleration;
 			velocity *= _calcfriction;
 			if(flip) target[property] -= velocity;
