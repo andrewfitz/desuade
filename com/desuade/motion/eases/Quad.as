@@ -33,7 +33,7 @@ package com.desuade.motion.eases {
 	 *  @author Andrew Fitzgerald
 	 *  @since  08.05.2009
 	 */
-	public class Quad {
+	public class Quad extends Ease {
 		
 		/**
 		* Generates quadratic, or "normal" easing in tween where equation for motion is based on a squared variable.

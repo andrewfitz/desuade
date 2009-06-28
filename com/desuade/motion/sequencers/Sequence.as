@@ -167,7 +167,7 @@ package com.desuade.motion.sequencers {
 				_active = true;
 				Debug.output('motion', 40008);
 				_dispatcher.dispatchEvent(new SequenceEvent(SequenceEvent.STARTED, {sequence:this}));
-				play($position);	
+				play($position);
 			} else {
 				Debug.output('motion', 10006);
 			}

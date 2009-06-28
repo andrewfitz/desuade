@@ -33,7 +33,7 @@ package com.desuade.motion.eases {
 	 *  @author Andrew Fitzgerald
 	 *  @since  08.05.2009
 	 */
-	public class Quart {
+	public class Quart extends Ease {
 		
 		/**
 		* Generates quartic easing in tween where equation for motion is based on the power of four and feels a bit "other-worldly" as the acceleration becomes more exaggerated.

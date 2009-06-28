@@ -33,7 +33,7 @@ package com.desuade.motion.eases {
 	 *  @author Andrew Fitzgerald
 	 *  @since  08.05.2009
 	 */
-	public class Cubic {
+	public class Cubic extends Ease {
 		
 		/**
 		* Generates cubic easing in tween where equation for motion is based on the power of three and is a bit more curved than a quadratic ease.

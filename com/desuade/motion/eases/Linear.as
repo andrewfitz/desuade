@@ -33,7 +33,7 @@ package com.desuade.motion.eases {
 	 *  @author Andrew Fitzgerald
 	 *  @since  08.05.2009
 	 */
-	public class Linear {
+	public class Linear extends Ease {
 		
 		/**
 		* Generates linear tween with constant velocity and no acceleration.

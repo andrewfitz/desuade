@@ -33,7 +33,7 @@ package com.desuade.motion.eases {
 	 *  @author Andrew Fitzgerald
 	 *  @since  08.05.2009
 	 */
-	public class Back {
+	public class Back extends Ease {
 		
 		/**
 		* Generates tween where target backtracks slightly, then reverses direction and moves to position.

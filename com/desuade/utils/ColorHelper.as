@@ -104,7 +104,7 @@ package com.desuade.utils {
 		 *	<code>contrast</code>: amt:0=gray, 1=normal, 2=high-contrast, higher=posterized<br />
 		 *	<code>invert</code>: amt:0=normal, .5=gray, 1=photo-negative<br />
 		 *	<code>tint</code>: amt:0=none, 1=solid color (&gt;1=posterized to tint, &lt;0=inverted posterize to tint)<br />
-		 *	<code>reset</code>: clears and resets the object<br /><br />
+		 *	<code>clear</code>: clears and clears the object<br /><br />
 		 *	
 		 *	@param	type	 What type of color transformation to perform. See above for a list of available types.
 		 *	@param	amount	 How much of the transformation to perform. This varies for each type.
@@ -144,7 +144,7 @@ package com.desuade.utils {
 					var rgbnum:int = cleanColorValue(rgb);
 					return {redMultiplier:(1-amount), redOffset:(rgbnum >> 16)*amount, greenMultiplier:(1-amount), greenOffset:((rgbnum >> 8) & 0xFF)*amount, blueMultiplier:(1-amount), blueOffset:(rgbnum & 0xFF)*amount};
 				break;
-				case 'reset':
+				case 'clear':
 					return {redOffset:0, redMultiplier:1, greenOffset:0, greenMultiplier:1, blueOffset:0, blueMultiplier:1};
 				break;
 			}

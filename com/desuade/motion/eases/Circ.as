@@ -33,7 +33,7 @@ package com.desuade.motion.eases {
 	 *  @author Andrew Fitzgerald
 	 *  @since  08.05.2009
 	 */
-	public class Circ {
+	public class Circ extends Ease {
 		
 		/**
 		* Generates circular easing in tween where equation for motion is based on the equation for half of a circle, which uses a square root.

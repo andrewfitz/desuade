@@ -33,7 +33,7 @@ package com.desuade.motion.eases {
 	 *  @author Andrew Fitzgerald
 	 *  @since  08.05.2009
 	 */
-	public class Bounce {
+	public class Bounce extends Ease {
 		
 		/**
 		* Generates easing out tween where target bounces before reaching final position.

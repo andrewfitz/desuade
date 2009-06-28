@@ -33,7 +33,7 @@ package com.desuade.motion.eases {
 	 *  @author Andrew Fitzgerald
 	 *  @since  08.05.2009
 	 */
-	public class Sine {
+	public class Sine extends Ease {
 		
 		/**
 		 *	@private

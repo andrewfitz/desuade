@@ -33,7 +33,7 @@ package com.desuade.motion.eases {
 	 *  @author Andrew Fitzgerald
 	 *  @since  08.05.2009
 	 */
-	public class Quint {
+	public class Quint extends Ease {
 		
 		/**
 		* Generates quartic easing in tween where equation for motion is based on the power of five and motion starts slow and becomes quite fast in what appears to be a fairly pronounced curve.
