@@ -109,29 +109,31 @@ package com.desuade.motion.physics {
 		 *	
 		 *	<p>Unlike tweens, there is no end value, and the BasicPhysics' update will continue to run until it is stopped.</p>
 		 *	
-		 *	@param	target	 The target object.
-		 *	@param	property	 The property to apply the physics to.
-		 *	@param	velocity	 The velocity of the property.
-		 *	@param	acceleration	 The acceleration of the property.
-		 *	@param	friction	 The friction of the property.
-		 *	@param	angle	 The angle at which to start at.
-		 *	@param	flip	 To flip the cartesian coordinates or not.
+		 *	target:Object – The target object.
+		 *	property:String – The property to apply the physics to.
+		 *	velocity:Number – The velocity of the property. Defaults 0.
+		 *	acceleration:Number – The acceleration of the property. Defaults 0.
+		 *	friction:Number – The friction of the property. Defaults 0.
+		 *	angle:* – The angle at which to start at. Defaults null (disabled).
+		 *	flip:Boolean – To flip the cartesian coordinates or not. Deafults false.
+		 *	
+		 *	@see #target
+		 *	@see #property
 		 *	@see #velocity
 		 *	@see #acceleration
 		 *	@see #friction
 		 *	@see #angle
 		 *	@see #flip
-		 *	@see	com.desuade.motion.controllers.PhysicsValueController
 		 */
-		public function BasicPhysics($target:Object, $property:String, $velocity:Number = 0, $acceleration:Number = 0, $friction:Number = 0, $angle:* = null, $flip:Boolean = false) {
+		public function BasicPhysics($physicsObject:Object) {
 			super();
-			target = $target;
-			property = $property;
-			velocity = $velocity;
-			acceleration = $acceleration;
-			friction = $friction;
-			flip = $flip;
-			angle = $angle;
+			target = $physicsObject.target;
+			property = $physicsObject.property;
+			velocity = $physicsObject.velocity || 0;
+			acceleration = $physicsObject.acceleration || 0;
+			friction = $physicsObject.friction || 0;
+			flip = $physicsObject.flip || false;
+			angle = $physicsObject.angle || null;
 			Debug.output('motion', 40009);
 		}
 		
