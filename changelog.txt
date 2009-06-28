@@ -4,7 +4,14 @@ Desuade Library Changelog
 Beta 2:
 
 	Motion:
-		-added hexProperty to BasicColorTween/ColorTween to allow for non-DisplayObject color tweening
+		-rewrote controllers
+			-major syntax change
+			-ValueController now MotionController
+			-PointsContainer now KeyframeContainer
+			-Points are now Keyframes
+			-PhysicsValueController now MetaController
+			-uses Keyframes instead of points (same concept, just more intuitive)
+		-added property to BasicColorTween/ColorTween to allow for non-DisplayObject color tweening
 		-added debug codes for BasicPhysics
 
 	Partigen: none
