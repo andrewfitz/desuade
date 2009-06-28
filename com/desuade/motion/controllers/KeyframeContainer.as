@@ -172,7 +172,6 @@ package com.desuade.motion.controllers {
 		public function toLabeledArray():Array {
 			var pa:Array = [];
 			for (var p:String in this) {
-				trace(p);
 				pa.push({value:this[p].value, spread:this[p].spread, ease:this[p].ease, position:this[p].position, extras:this[p].extras, label:p});
 			}
 			return pa;

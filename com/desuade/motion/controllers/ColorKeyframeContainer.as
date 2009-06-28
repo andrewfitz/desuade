@@ -59,7 +59,6 @@ package com.desuade.motion.controllers {
 			var nvo:Object = generateStartValue($target, $property);
 			if($property == null){
 				$target.transform.colorTransform = new ColorTransform(nvo.redMultiplier, nvo.greenMultiplier, nvo.blueMultiplier, $target.alpha, nvo.redOffset, nvo.greenOffset, nvo.blueOffset);
-				trace($target.transform.colorTransform.color);
 			} else {
 				$target[$property] = ColorHelper.RGBToHex(nvo.redOffset, nvo.greenOffset, nvo.blueOffset);
 			}

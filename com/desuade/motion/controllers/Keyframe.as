@@ -53,12 +53,12 @@ package com.desuade.motion.controllers {
 		 *	@param	spread	 A value to create a random range from. If the spread doesn't equal the 'value' value or '0', a random value will be created between the 'value' and the 'spread'. Pass a Number for absolute, or a String for relative.
 		 *	@param	extras	An object that contains extra paramaters for the tween (depends on the tweenclass used in the KeyframeContainer)
 		 */
-		public function Keyframe($position:Number, $value:*, $ease:Function = null, $spread:* = '0', $extras:Object = null) {
+		public function Keyframe($position:Number, $value:*, $ease:Function = null, $spread:* = null, $extras:Object = null) {
 			super();
 			position = $position;
 			value = $value;
-			ease = ($ease == null) ? Linear.none : $ease;
-			spread = $spread;
+			ease = $ease || Linear.none;
+			spread = $spread || "0";
 			extras = $extras || {};
 		}
 	

@@ -109,13 +109,15 @@ package com.desuade.motion.physics {
 		 *	
 		 *	<p>Unlike tweens, there is no end value, and the BasicPhysics' update will continue to run until it is stopped.</p>
 		 *	
-		 *	target:Object – The target object.
-		 *	property:String – The property to apply the physics to.
-		 *	velocity:Number – The velocity of the property. Defaults 0.
-		 *	acceleration:Number – The acceleration of the property. Defaults 0.
-		 *	friction:Number – The friction of the property. Defaults 0.
-		 *	angle:* – The angle at which to start at. Defaults null (disabled).
-		 *	flip:Boolean – To flip the cartesian coordinates or not. Deafults false.
+		 *	<ul>
+		 *	<li>target:Object – The target object.</li>
+		 *	<li>property:String – The property to apply the physics to.</li>
+		 *	<li>velocity:Number – The velocity of the property. Defaults 0.</li>
+		 *	<li>acceleration:Number – The acceleration of the property. Defaults 0.</li>
+		 *	<li>friction:Number – The friction of the property. Defaults 0.</li>
+		 *	<li>angle:* – The angle at which to start at. Defaults null (disabled).</li>
+		 *	<li>flip:Boolean – To flip the cartesian coordinates or not. Defaults false.</li>
+		 *	</ul>
 		 *	
 		 *	@see #target
 		 *	@see #property

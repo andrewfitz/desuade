@@ -28,7 +28,7 @@ package com.desuade.motion.controllers {
 		
 		protected var _target:Object;
 		protected var _properties:Array;
-		protected var _duration:Object;
+		protected var _duration:Number;
 	
 		public function MetaController($target:Object, $properties:Array, $duration:Number, $containerclass:Class = null) {
 			super();
@@ -70,27 +70,35 @@ package com.desuade.motion.controllers {
 			this[$property] = new MotionController(_target, $property, _duration, $containerclass);
 		}
 		
-		public function addKeyframes($position:Number, $keyframes:Object):void {
+		public function addKeyframes($position:Number, $keyframes:Object, $label:String = null):void {
 			for (var i:int = 0; i < _properties.length; i++) {
 				var found:Boolean = false;
 				for (var p:String in $keyframes) {
 					var kp:Object = $keyframes[p];
 					if(p == _properties[i]){
-						this[p].keyframes.add(new Keyframe($position, kp.value, kp.ease, kp.spread, kp.extras));
+						this[p].keyframes.add(new Keyframe($position, kp.value, kp.ease, kp.spread, kp.extras), $label);
 						delete $keyframes[p];
 						found = true;
 						continue;
 					}
 				}
 				if(!found){
-					_properties[i].keyframes.add(new Keyframe($position, null));
+					this[_properties[i]].keyframes.add(new Keyframe($position, null), $label);
 				}
 			}
 		}
 		
-		public function start():void {
+		public function setKeyframes($keyframe:String, $properties:Object):void {
+			for (var p:String in $properties) {
+				for (var k:String in $properties[p]) {
+					this[p].keyframes[$keyframe][k] = $properties[p][k];
+				}
+			}
+		}
+		
+		public function start($keyframe:String = null):void {
 			for (var p:String in this){
-				this[p].start();
+				this[p].start($keyframe);
 			}
 		}
 		
