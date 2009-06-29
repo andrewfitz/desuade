@@ -46,8 +46,9 @@ package com.desuade.motion.controllers {
 		 */
 		protected var _precision:int = 0;
 	
-		public function KeyframeContainer() {
+		public function KeyframeContainer($tweenclass:Class = null) {
 			super();
+			if($tweenclass != null) _tweenclass = $tweenclass;
 			this['begin'] = new Keyframe(0, null, null);
 			this['end'] = new Keyframe(1, null);
 		}

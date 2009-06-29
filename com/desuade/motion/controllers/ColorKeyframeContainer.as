@@ -33,11 +33,10 @@ package com.desuade.motion.controllers {
 	
 	public dynamic class ColorKeyframeContainer extends KeyframeContainer {
 	
-		public function ColorKeyframeContainer() {
-			super();
+		public function ColorKeyframeContainer($tweenclass:Class = null) {
+			super(($tweenclass != null) ? $tweenclass : BasicColorTween);
 			this['begin'].extras = {type:null, amount:null};
 			this['end'].extras = {type:null, amount:null};
-			_tweenclass = BasicColorTween;
 		}
 		
 		/**

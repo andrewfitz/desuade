@@ -24,13 +24,13 @@ THE SOFTWARE.
 
 package com.desuade.motion.controllers {
 
-	public dynamic class MetaController extends Object {
+	public dynamic class MultiController extends Object {
 		
 		protected var _target:Object;
 		protected var _properties:Array;
 		protected var _duration:Number;
 	
-		public function MetaController($target:Object, $properties:Array, $duration:Number, $containerclass:Class = null) {
+		public function MultiController($target:Object, $properties:Array, $duration:Number, $containerclass:Class = null) {
 			super();
 			_target = $target;
 			_properties = $properties;

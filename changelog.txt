@@ -9,7 +9,7 @@ Beta 2:
 			-ValueController now MotionController
 			-PointsContainer now KeyframeContainer
 			-Points are now Keyframes
-			-PhysicsValueController now MetaController
+			-PhysicsValueController now PhysicsMultiController
 			-uses Keyframes instead of points (same concept, just more intuitive)
 		-BasicPhysics now takes object like Tweens (unifying syntax)
 		-added 'property' to BasicColorTween/ColorTween to allow for non-DisplayObject color tweening
