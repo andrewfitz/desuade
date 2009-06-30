@@ -50,7 +50,7 @@ package com.desuade.motion.events {
 		/**
 		 *	This event is fired when a BasicPhysics object stops.
 		 */
-		public static const STOPPED:String = "stopped";
+		public static const ENDED:String = "ended";
 		
 		/**
 		 *	<p>This this object that gets passed when an event is fired. It contains the BasicPhysics object: <code>basicPhysics</code></p>

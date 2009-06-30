@@ -68,6 +68,11 @@ package com.desuade.motion.physics {
 		protected var _calcangle:Number;
 		
 		/**
+		 *	@private
+		 */
+		protected var _physicsconfig:Object;
+		
+		/**
 		 *	The target object. Any Object, not just a DisplayObject.
 		 */
 		public var target:Object;
@@ -129,6 +134,7 @@ package com.desuade.motion.physics {
 		 */
 		public function BasicPhysics($physicsObject:Object) {
 			super();
+			_physicsconfig = $physicsObject;
 			target = $physicsObject.target;
 			property = $physicsObject.property;
 			velocity = $physicsObject.velocity || 0;
@@ -141,7 +147,6 @@ package com.desuade.motion.physics {
 		
 		/**
 		 *	The friction of the property. This will slow down the velocity to 0 if there is no acceleration. Should be a positive number.
-		 *	Shortcut: "a" - (BasicPhysics.acceleration == BasicPhysics.a)
 		 */
 		public function set friction($value:Number):void {
 			_calcfriction = (1 - ($value / 100));
@@ -163,7 +168,14 @@ package com.desuade.motion.physics {
 		}
 		
 		/**
-		 *	Enables the physics simulation.
+		 *	Gets the original physics config object that was passed in the constructor (target, velocity, etc). The properties in this object can be modified, but unlike tween classes, it doesn't directly effect the physics.
+		 */
+		public function get config():Object{
+			return _physicsconfig;
+		}
+		
+		/**
+		 *	Starts the physics simulation.
 		 *	
 		 *	@param	setangle	 Apply the angle to the velocity when starting.
 		 *	@see	#angle
@@ -177,12 +189,12 @@ package com.desuade.motion.physics {
 		}
 		
 		/**
-		 *	Disables the physics simulation.
+		 *	Stops the physics simulation.
 		 */
 		public function stop():void {
 			_active = false;
 			_sprite.removeEventListener(Event.ENTER_FRAME, update);
-			dispatchEvent(new PhysicsEvent(PhysicsEvent.STOPPED, {basicPhysics:this}));
+			dispatchEvent(new PhysicsEvent(PhysicsEvent.ENDED, {basicPhysics:this}));
 			Debug.output('motion', 40011);
 		}
 		
@@ -204,48 +216,6 @@ package com.desuade.motion.physics {
 			if(flip) target[property] -= velocity;
 			else target[property] += velocity;
 			dispatchEvent(new PhysicsEvent(PhysicsEvent.UPDATED, {basicPhysics:this}));
-		}
-		
-		/**
-		 *	@private
-		 */
-		public function get v():Number{
-			return velocity;
-		}
-		
-		/**
-		 *	@private
-		 */
-		public function set v($value:Number):void {
-			velocity = $value;
-		}
-		
-		/**
-		 *	@private
-		 */
-		public function get a():Number{
-			return acceleration;
-		}
-		
-		/**
-		 *	@private
-		 */
-		public function set a($value:Number):void {
-			acceleration = $value;
-		}
-		
-		/**
-		 *	@private
-		 */
-		public function get f():Number{
-			return friction;
-		}
-		
-		/**
-		 *	@private
-		 */
-		public function set f($value:Number):void {
-			friction = $value;
 		}
 		
 	}

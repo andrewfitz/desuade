@@ -78,6 +78,7 @@ package com.desuade.motion.controllers {
 		 *	@param	property	 The property that's being controlled and tweened.
 		 *	@param	duration	 The duration of the entire sequence to last for in seconds. This affects length of the tweens, since the position is dependent on the the duration.
 		 *	@param	containerclass	 The class of keyframe container to use
+		 *	@param	tweenclass	 The class of tweens to pass to the keyframe container
 		 *	
 		 *	@see #target
 		 *	@see #property
@@ -85,13 +86,13 @@ package com.desuade.motion.controllers {
 		 *	@see #containerclass
 		 */
 	
-		public function MotionController($target:Object, $property:String, $duration:Number, $containerclass:Class = null) {
+		public function MotionController($target:Object, $property:String, $duration:Number, $containerclass:Class = null, $tweenclass:Class = null) {
 			super();
 			target = $target;
 			property = $property;
 			duration = $duration;
 			containerclass = ($containerclass == null) ? KeyframeContainer : $containerclass;
-			keyframes = new containerclass();
+			keyframes = new containerclass($tweenclass);
 		}
 		
 		/**
@@ -102,7 +103,7 @@ package com.desuade.motion.controllers {
 		}
 		
 		/**
-		 *	Starts the controller. This will internally create a sequence of tweens that will be ran to match the points in the controller's PointsContainer, running from 'begin' to 'end' points.
+		 *	Starts the controller. This will internally create a Sequence (of tweens) that will be ran to match the points in the controller's PointsContainer, running from 'begin' to 'end' points.
 		 *	
 		 *	@param	keyframe	 The label of the keyframe to start at.
 		 */

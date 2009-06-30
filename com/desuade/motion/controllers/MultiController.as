@@ -27,16 +27,14 @@ package com.desuade.motion.controllers {
 	public dynamic class MultiController extends Object {
 		
 		protected var _target:Object;
-		protected var _properties:Array;
 		protected var _duration:Number;
 	
-		public function MultiController($target:Object, $properties:Array, $duration:Number, $containerclass:Class = null) {
+		public function MultiController($target:Object, $properties:Array, $duration:Number, $containerclass:Class = null, $tweenclass:Class = null) {
 			super();
 			_target = $target;
-			_properties = $properties;
 			_duration = $duration;
 			for (var i:int = 0; i < $properties.length; i++) {
-				this[$properties[i]] = new MotionController($target, $properties[i], $duration, $containerclass);
+				this[$properties[i]] = new MotionController($target, $properties[i], $duration, $containerclass, $tweenclass);
 			}
 		}
 		
@@ -45,10 +43,9 @@ package com.desuade.motion.controllers {
 		}
 		public function set target($value:Object):void {
 			_target = $value;
-		}
-		
-		public function get properties():Array{
-			return _properties;
+			for (var p:String in this) {
+				this[p].target = $value;
+			}
 		}
 		
 		public function get duration():Number{
@@ -56,6 +53,9 @@ package com.desuade.motion.controllers {
 		}
 		public function set duration($value:Number):void {
 			_duration = $value;
+			for (var p:String in this) {
+				this[p].duration = $value;
+			}
 		}
 		
 		public function get active():Boolean{
@@ -66,16 +66,15 @@ package com.desuade.motion.controllers {
 		}
 		
 		public function addController($property:String, $containerclass:Class = null):void {
-			_properties.push($property);
 			this[$property] = new MotionController(_target, $property, _duration, $containerclass);
 		}
 		
 		public function addKeyframes($position:Number, $keyframes:Object, $label:String = null):void {
-			for (var i:int = 0; i < _properties.length; i++) {
+			for (var g:String in this) {
 				var found:Boolean = false;
 				for (var p:String in $keyframes) {
-					var kp:Object = $keyframes[p];
-					if(p == _properties[i]){
+					if(p == g){
+						var kp:Object = $keyframes[p];
 						this[p].keyframes.add(new Keyframe($position, kp.value, kp.ease, kp.spread, kp.extras), $label);
 						delete $keyframes[p];
 						found = true;
@@ -83,7 +82,7 @@ package com.desuade.motion.controllers {
 					}
 				}
 				if(!found){
-					this[_properties[i]].keyframes.add(new Keyframe($position, null), $label);
+					this[g].keyframes.add(new Keyframe($position, null), $label);
 				}
 			}
 		}

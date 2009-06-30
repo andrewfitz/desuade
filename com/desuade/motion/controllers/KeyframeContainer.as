@@ -145,7 +145,7 @@ package com.desuade.motion.controllers {
 		}
 		
 		/**
-		 *	This generates the start value of the target based on the 'value' and 'spread' properties of the 'begin' keyframe. This normally shouldn't be called, as it is internally called everytime start() is.
+		 *	This generates the start value of the target based on the 'value' and 'spread' properties of the 'begin' keyframe.
 		 *	
 		 *	@see #start()
 		 */
@@ -157,7 +157,7 @@ package com.desuade.motion.controllers {
 		}
 		
 		/**
-		 *	This uses the method generateStartValue() to set the initial start value of the target.
+		 *	This uses the method generateStartValue() to set the initial start value of the target. This normally doesn't need to be called, as it is internally called everytime start() is.
 		 *	
 		 *	@see	#generateStartValue()
 		 */

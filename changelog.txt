@@ -12,6 +12,7 @@ Beta 2:
 			-PhysicsValueController now PhysicsMultiController
 			-uses Keyframes instead of points (same concept, just more intuitive)
 		-BasicPhysics now takes object like Tweens (unifying syntax)
+		-Changed PhysicsEvent 'stopped' to 'ended'
 		-added 'property' to BasicColorTween/ColorTween to allow for non-DisplayObject color tweening
 		-added debug codes for BasicPhysics
 
