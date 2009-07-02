@@ -81,9 +81,7 @@ package com.desuade.motion.controllers {
 						continue;
 					}
 				}
-				if(!found){
-					this[g].keyframes.add(new Keyframe($position, null), $label);
-				}
+				if(!found) this[g].keyframes.add(new Keyframe($position, null), $label);
 			}
 		}
 		

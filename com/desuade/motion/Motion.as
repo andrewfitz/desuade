@@ -69,6 +69,16 @@ package com.desuade.motion {
 		 *	Official name of the package
 		 */
 		public static const NAME:String = 'Desuade Motion Package';
+		
+		/**
+		 *	The default tween class to use for emitter controllers
+		 */
+		public static var tweenClass:Class = BasicTween;
+		
+		/**
+		 *	The default colortween class to use for emitter controllers
+		 */
+		public static var colorTweenClass:Class = BasicColorTween;
 	
 	}
 

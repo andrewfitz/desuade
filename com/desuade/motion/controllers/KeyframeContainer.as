@@ -39,7 +39,7 @@ package com.desuade.motion.controllers {
 		/**
 		 *	@private
 		 */
-		protected var _tweenclass:Class = BasicTween;
+		protected var _tweenclass:Class;
 	
 		/**
 		 *	@private
@@ -48,7 +48,7 @@ package com.desuade.motion.controllers {
 	
 		public function KeyframeContainer($tweenclass:Class = null) {
 			super();
-			if($tweenclass != null) _tweenclass = $tweenclass;
+			_tweenclass = ($tweenclass != null) ? $tweenclass : Motion.tweenClass;
 			this['begin'] = new Keyframe(0, null, null);
 			this['end'] = new Keyframe(1, null);
 		}

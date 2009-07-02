@@ -128,6 +128,14 @@ package com.desuade.motion.controllers {
 			else Debug.output('motion', 10003);
 		}
 		
+		public function setSingleTween($start:*, $startSpread:*, $end:*, $endSpread:*, $ease:* = null):void {
+			keyframes.begin.value = $start;
+			keyframes.begin.spread = $startSpread;
+			keyframes.end.value = $end;
+			keyframes.end.spread = $endSpread;
+			keyframes.end.ease = $ease;
+		}
+		
 		//private methods
 		
 		/**

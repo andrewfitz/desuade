@@ -61,6 +61,11 @@ package com.desuade.partigen.emitters {
 		protected var _angle:Random = new Random(0, 0, 1);
 		
 		/**
+		 *	@private
+		 */
+		protected var _life:Object = {value:0, spread:'0'};
+		
+		/**
 		 *	<p>This creates a new Emitter.</p>
 		 *	<p>This is the standard, full-featured emitter that's recommended to use. It offers an innovative and extremely powerful way to configure particle effects, based on ValueControllers from the Motion Package.</p>
 		 *	<p>An emitter is the object that controls the creation of new particles, rather than calling <code>new Particle()</code> directly, using emitters makes creating particle effects easy.</p>
@@ -119,6 +124,16 @@ package com.desuade.partigen.emitters {
 		}
 		
 		/**
+		 *	<p>This is the duration in seconds a particle will exist for.</p>
+		 *	<p>This is an object that acts like a 'begin' keyframe:</p>
+		 *	<p><code>{value:0, spread:'0'}</code></p>
+		 *	<p>If the value is 0, the particle will live forever.</p>
+		 */
+		public function get life():Object{
+			return _life;
+		}
+		
+		/**
 		 *	This starts the emitter. It also, by default, starts all the controllers managed by the EmitterController.
 		 *	
 		 *	@param	startcontrollers	 This starts all ValueControllers managed by the EmitterController.
@@ -152,11 +167,19 @@ package com.desuade.partigen.emitters {
 				np.x = this.x;
 				np.y = this.y;
 				np.z = this.z;
-				dispatchEvent(new ParticleEvent(ParticleEvent.BORN, {particle:np}));
+				if(_life.value > 0) np.addLife(randomLife());
 				controllers.particle.attachAll(np, this);
+				dispatchEvent(new ParticleEvent(ParticleEvent.BORN, {particle:np}));
 				np.startControllers();
 				renderer.addParticle(np);
 			}
+		}
+		
+		/**
+		 *	@private
+		 */
+		protected function randomLife():Number{
+			return (_life.spread !== '0') ? Random.fromRange(_life.value, (typeof _life.spread == 'string') ? _life.value + Number(_life.spread) : _life.spread, 2) : _life.value;
 		}
 
 	}

@@ -98,8 +98,8 @@ package com.desuade.partigen.particles {
 		 */
 		public function startControllers():void {
 			for (var p:String in controllers) {
-				if(controllers[p] is ValueController && controllers[p].points.isFlat()){
-					controllers[p].setStartValue();
+				if(controllers[p] is MotionController && controllers[p].keyframes.isFlat()){
+					controllers[p].keyframes.setStartValue();
 				} else {
 					controllers[p].start();
 				}
