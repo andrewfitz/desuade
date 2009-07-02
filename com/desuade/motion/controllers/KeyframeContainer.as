@@ -48,7 +48,7 @@ package com.desuade.motion.controllers {
 	
 		public function KeyframeContainer($tweenclass:Class = null) {
 			super();
-			_tweenclass = ($tweenclass != null) ? $tweenclass : Motion.tweenClass;
+			_tweenclass = ($tweenclass != null) ? $tweenclass : MotionController.tweenClass;
 			this['begin'] = new Keyframe(0, null, null);
 			this['end'] = new Keyframe(1, null);
 		}
@@ -145,11 +145,9 @@ package com.desuade.motion.controllers {
 		}
 		
 		/**
-		 *	This generates the start value of the target based on the 'value' and 'spread' properties of the 'begin' keyframe.
-		 *	
-		 *	@see #start()
+		 *	@private
 		 */
-		public function generateStartValue($target:Object, $property:String):* {
+		internal function generateStartValue($target:Object, $property:String):* {
 			var nv:Number;
 			if(this['begin'].value == null) nv = $target[$property];
 			else nv = (typeof this['begin'].value == 'string') ? $target[$property] + Number(this['begin'].value) : this['begin'].value;
@@ -157,11 +155,9 @@ package com.desuade.motion.controllers {
 		}
 		
 		/**
-		 *	This uses the method generateStartValue() to set the initial start value of the target. This normally doesn't need to be called, as it is internally called everytime start() is.
-		 *	
-		 *	@see	#generateStartValue()
+		 *	@private
 		 */
-		public function setStartValue($target:Object, $property:String):void {
+		internal function setStartValue($target:Object, $property:String):void {
 			$target[$property] = generateStartValue($target, $property);
 		}
 		

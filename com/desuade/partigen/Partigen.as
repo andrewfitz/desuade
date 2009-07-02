@@ -69,21 +69,6 @@ package com.desuade.partigen {
 		 *	Official name of the package
 		 */
 		public static const NAME:String = 'Partigen';
-		
-		/**
-		 *	The default tween class to use for emitter controllers
-		 */
-		public static var tweenClass:Class = Tween;
-		
-		/**
-		 *	The default colortween class to use for emitter controllers
-		 */
-		public static var colorTweenClass:Class = ColorTween;
-		
-		/**
-		 *	The default physics class to use for emitter controllers
-		 */
-		public static var physicsClass:Class = BasicPhysics;
 	
 	}
 

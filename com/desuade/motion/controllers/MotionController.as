@@ -35,6 +35,17 @@ package com.desuade.motion.controllers {
 
 	public class MotionController extends EventDispatcher {
 		
+		
+		/**
+		 *	The default tween class to use for emitter controllers
+		 */
+		public static var tweenClass:Class = BasicTween;
+		
+		/**
+		 *	The default colortween class to use for emitter controllers
+		 */
+		public static var colorTweenClass:Class = BasicColorTween;
+		
 		/**
 		 *	The target object that will have it's property controlled.
 		 */
@@ -108,7 +119,7 @@ package com.desuade.motion.controllers {
 		 *	@param	keyframe	 The label of the keyframe to start at.
 		 */
 		public function start($keyframe:String = null):void {
-			keyframes.setStartValue(target, property);
+			setStartValue();
 			var ta:Array = keyframes.createTweens(target, property, duration);
 			_active = true;
 			_sequence = new Sequence(keyframes.tweenclass);
@@ -134,6 +145,13 @@ package com.desuade.motion.controllers {
 			keyframes.end.value = $end;
 			keyframes.end.spread = $endSpread;
 			keyframes.end.ease = $ease;
+		}
+		
+		/**
+		 *	This sets the initial start value of the target. This normally doesn't need to be called, as it is internally called everytime start() is.
+		 */
+		public function setStartValue():void {
+			keyframes.setStartValue(target, property);
 		}
 		
 		//private methods

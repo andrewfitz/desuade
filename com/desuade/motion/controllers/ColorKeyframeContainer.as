@@ -34,15 +34,15 @@ package com.desuade.motion.controllers {
 	public dynamic class ColorKeyframeContainer extends KeyframeContainer {
 	
 		public function ColorKeyframeContainer($tweenclass:Class = null) {
-			super(($tweenclass != null) ? $tweenclass : Motion.colorTweenClass);
+			super(($tweenclass != null) ? $tweenclass : MotionController.colorTweenClass);
 			this['begin'].extras = {type:null, amount:null};
 			this['end'].extras = {type:null, amount:null};
 		}
 		
 		/**
-		 *	@inheritDoc
+		 *	@private
 		 */
-		public override function generateStartValue($target:Object, $property:String):* {
+		internal override function generateStartValue($target:Object, $property:String):* {
 			var nv:*;
 			var nt:String = this['begin'].extras.type;
 			if(this['begin'].value != null && this['begin'].value != 'none'){
@@ -52,9 +52,9 @@ package com.desuade.motion.controllers {
 		}
 		
 		/**
-		 *	@inheritDoc
+		 *	@private
 		 */
-		public override function setStartValue($target:Object, $property:String):void {
+		internal override function setStartValue($target:Object, $property:String):void {
 			var nvo:Object = generateStartValue($target, $property);
 			if($property == null){
 				$target.transform.colorTransform = new ColorTransform(nvo.redMultiplier, nvo.greenMultiplier, nvo.blueMultiplier, $target.alpha, nvo.redOffset, nvo.greenOffset, nvo.blueOffset);

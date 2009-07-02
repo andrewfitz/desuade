@@ -114,14 +114,14 @@ package com.desuade.motion.controllers {
 	     */
 	    protected function startPhysicsControllers($keyframe:String = null):void {
 	      if(this.velocity.keyframes.isFlat()){
-	        this.velocity.keyframes.setStartValue(target, property);
-	        if(this.acceleration.keyframes.isFlat()) this.acceleration.keyframes.setStartValue(target, property);
+	        this.velocity.setStartValue();
+	        if(this.acceleration.keyframes.isFlat()) this.acceleration.setStartValue();
 	        else this.acceleration.start($keyframe);
-	        if(this.friction.keyframes.isFlat()) this.friction.keyframes.setStartValue(target, property);
+	        if(this.friction.keyframes.isFlat()) this.friction.setStartValue();
 	        else this.friction.start($keyframe);
 	      } else {
-	        this.acceleration.keyframes.setStartValue(target, property);
-	        this.friction.keyframes.setStartValue(target, property);
+	        this.acceleration.setStartValue();
+	        this.friction.setStartValue();
 	        this.velocity.start($keyframe);
 	      }
 	    }
