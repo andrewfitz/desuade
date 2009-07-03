@@ -35,7 +35,7 @@ package com.desuade.partigen.particles {
 	import com.desuade.motion.controllers.*;
 	
 	/**
-	 *  This is the standard particle class used with the Emitter class that includes ValueControllers.
+	 *  This is the standard particle class used with the Emitter class that includes MotionControllers.
 	 *    
 	 *  @langversion ActionScript 3
 	 *  @playerversion Flash 9.0.0
@@ -46,7 +46,7 @@ package com.desuade.partigen.particles {
 	public dynamic class Particle extends BasicParticle {
 		
 		/**
-		 *	This holds all of the ValueControllers that are currently being ran on the particle.
+		 *	This holds all of the MotionControllers that are currently being ran on the particle.
 		 */
 		public var controllers:Object = {};
 		

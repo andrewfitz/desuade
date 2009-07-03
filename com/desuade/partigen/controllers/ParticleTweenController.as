@@ -27,12 +27,38 @@ package com.desuade.partigen.controllers {
 	import com.desuade.motion.controllers.*;
 	import com.desuade.motion.tweens.*;
 
+	/**
+	 *  Used to configure MotionControllers for the particles
+	 *    
+	 *  @langversion ActionScript 3
+	 *  @playerversion Flash 9.0.0
+	 *
+	 *  @author Andrew Fitzgerald
+	 *  @since  02.07.2009
+	 */
 	public class ParticleTweenController extends Object {
 		
+		/**
+		 *	The duration of the entire controller to last. The length of individual tweens changes dependent on this.
+		 */
 		public var duration:Number;
 		
+		/**
+		 *	This is where all the Keyframes are held and configured.
+		 */
 		public var keyframes:KeyframeContainer;
-	
+		
+		/**
+		 *	This is like a MotionController from the Motion Package, but is used as a placeholder to configure emitters.
+		 *	
+		 *	ParticleTweenControllers create MotionControllers on each particle that's created, allowing the particles to change over their lives.
+		 *	
+		 *	Using the addTween() method is recommended over calling this directly.
+		 *	
+		 *	@param	duration	 The entire duration for the controller. If this is 0, the duration will be set to the particle's life.
+		 *	@param	containerclass	 The class to use for Keyframes. Null will use the default.
+		 *	@param	tweenclass	 The class to use for tweening on the controller. Null will use the default.
+		 */
 		public function ParticleTweenController($duration:Number, $containerclass:Class = null, $tweenclass:Class = null) {
 			super();
 			duration = $duration;
@@ -40,12 +66,23 @@ package com.desuade.partigen.controllers {
 			keyframes = new containerclass($tweenclass || ParticleController.tweenClass);
 		}
 		
-		public function setSingleTween($start:*, $startSpread:*, $end:*, $endSpread:*, $ease:* = null):void {
-			keyframes.begin.value = $start;
-			keyframes.begin.spread = $startSpread;
+		/**
+		 *	This easily sets the 'begin' and 'end' keyframes of the controller to create a standard "one-shot" tween.
+		 *	
+		 *	@param	begin	 The beginning value.
+		 *	@param	beginSpread	 The beginning spread value.
+		 *	@param	end	 The end value for the tween.
+		 *	@param	endSpread	 The end spread value.
+		 *	@param	ease	 The ease to use for the tween on the end keyframe.
+		 *	@param	extras	 The extras object for the end keyframe.
+		 */
+		public function setSingleTween($begin:*, $beginSpread:*, $end:*, $endSpread:*, $ease:* = null, $extras:Object = null):void {
+			keyframes.begin.value = $begin;
+			keyframes.begin.spread = $beginSpread;
 			keyframes.end.value = $end;
 			keyframes.end.spread = $endSpread;
 			keyframes.end.ease = $ease;
+			keyframes.end.extras = $extras || {};
 		}
 	
 	}

@@ -26,9 +26,27 @@ package com.desuade.partigen.controllers {
 	
 	import com.desuade.motion.controllers.*;
 	import com.desuade.partigen.emitters.*;
-
-	public dynamic class EmitterPhysicsController extends PhysicsMultiController {
 	
+	/**
+	 *  This is a controller for the emitter that inherits a PhysicsMultiController
+	 *    
+	 *  @langversion ActionScript 3
+	 *  @playerversion Flash 9.0.0
+	 *
+	 *  @author Andrew Fitzgerald
+	 *  @since  02.07.2009
+	 */
+	public dynamic class EmitterPhysicsController extends PhysicsMultiController {
+		
+		/**
+		 *	This creates an EmitterPhysicsController (which is basically a PhysicsMultiController). Using the addPhysics() method is recommended over calling this directly.
+		 *	
+		 *	@param	target	 The emitter to tween
+		 *	@param	property	 The property to control
+		 *	@param	duration	 The entire duration for the controller. Since the emitter always exists, there must be a set duration.
+		 *	@param	containerclass	 The class to use for Keyframes. Null will use the default.
+		 *	@param	tweenclass	 The class to use for tweening on the controller. Null will use the default.
+		 */
 		public function EmitterPhysicsController($target:Emitter, $property:String, $duration:Number, $containerclass:Class = null, $tweenclass:Class = null) {
 			super($target, $property, $duration, null, $containerclass, $tweenclass || EmitterController.tweenClass);
 		}

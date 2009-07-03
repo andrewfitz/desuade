@@ -25,7 +25,16 @@ THE SOFTWARE.
 package com.desuade.motion.controllers {
 	
 	import com.desuade.motion.physics.*;
-
+	
+	/**
+	 *  An extension of a MultiController specifically for Physics objects
+	 *    
+	 *  @langversion ActionScript 3
+	 *  @playerversion Flash 9.0.0
+	 *
+	 *  @author Andrew Fitzgerald
+	 *  @since  02.07.2009
+	 */
 	public dynamic class PhysicsMultiController extends MultiController {
 		
 		/**
@@ -57,6 +66,21 @@ package com.desuade.motion.controllers {
 	     */
 	    //public var friction:MotionController;
 		
+		
+		/**
+		 *	This creates a new PhysicsMultiController. This controls the velocity, acceleration, and friction for a given target's property using a physics object.
+		 *	
+		 *	Like a regular MultiController, there are child MotionControllers. For this, there are only 3: velocity, acceleration, and friction - accessible as this.velocity, etc.
+		 *	
+		 *	If acceleration or friction controllers are used, the velocity controller will be disabled as acceleration and friction influence the target's velocity.
+		 *		
+		 *	@param	target	 The target object to set for all child MotionControllers
+		 *	@param	property	The single property to have physics applied to
+		 *	@param	duration	 The length of time to set all child controllers
+		 *	@param	physics	 The BasicPhysics object to use. If there is no existing one, set to null and an internal one will be created.
+		 *	@param	containerclass	 The class of keyframe container to use for all MotionControllers
+		 *	@param	tweenclass	 The class of tweens to pass to all the keyframe container
+		 */
 		public function PhysicsMultiController($target:Object, $property:String, $duration:Number, $physics:BasicPhysics = null, $containerclass:Class = null, $tweenclass:Class = null) {
 			super(null, [], $duration);
 			if($physics == null){
@@ -75,7 +99,7 @@ package com.desuade.motion.controllers {
 		}
 		
 		/**
-		 *	@inheritDoc
+		 *	The target for the physics to be applied to, since the internal controllers' target is the actual physics object.
 		 */
 		public override function get target():Object{
 			return _physics.target;
@@ -85,10 +109,16 @@ package com.desuade.motion.controllers {
 			_physics.target = $value;
 		}
 		
+		/**
+		 *	This is the property of the target to apply the physics to. Unlike a regular MultiController, which uses each MotionController for each property.
+		 */
 		public function get property():String{
 			return _physics.property;
 		}
 		
+		/**
+		 *	@private
+		 */
 		public function set property($value:String):void {
 			_physics.property = $value;
 		}

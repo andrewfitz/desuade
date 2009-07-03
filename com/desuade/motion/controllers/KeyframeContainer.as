@@ -28,7 +28,16 @@ package com.desuade.motion.controllers {
 	import com.desuade.motion.tweens.*
 	import com.desuade.motion.eases.*
 	import com.desuade.utils.*
-
+	
+	/**
+	 *  Manages and holds all keyframes for MotionControllers
+	 *    
+	 *  @langversion ActionScript 3
+	 *  @playerversion Flash 9.0.0
+	 *
+	 *  @author Andrew Fitzgerald
+	 *  @since  02.07.2009
+	 */
 	public dynamic class KeyframeContainer extends Object {
 		
 		/**
@@ -45,7 +54,14 @@ package com.desuade.motion.controllers {
 		 *	@private
 		 */
 		protected var _precision:int = 0;
-	
+		
+		/**
+		 *	Creates a new KeyframeContainer. This is the core of a MotionController, as it holds, configures, and manages all keyframes, and generates the tween objects.
+		 *	
+		 *	This can be created independently of a controller and shared among multiple ones.
+		 *	
+		 *	@param	tweenclass	 The class of tweening engine to use. Null will use the default tweenClass from the MotionController static class.
+		 */
 		public function KeyframeContainer($tweenclass:Class = null) {
 			super();
 			_tweenclass = ($tweenclass != null) ? $tweenclass : MotionController.tweenClass;
@@ -145,26 +161,9 @@ package com.desuade.motion.controllers {
 		}
 		
 		/**
-		 *	@private
-		 */
-		internal function generateStartValue($target:Object, $property:String):* {
-			var nv:Number;
-			if(this['begin'].value == null) nv = $target[$property];
-			else nv = (typeof this['begin'].value == 'string') ? $target[$property] + Number(this['begin'].value) : this['begin'].value;
-			return (this['begin'].spread !== '0') ? Random.fromRange(nv, ((typeof this['begin'].spread == 'string') ? nv + Number(this['begin'].spread) : this['begin'].spread), precision) : nv;
-		}
-		
-		/**
-		 *	@private
-		 */
-		internal function setStartValue($target:Object, $property:String):void {
-			$target[$property] = generateStartValue($target, $property);
-		}
-		
-		/**
 		 *	Creates an unsorted Array of all the objects in the KeyframeContainer
 		 *	
-		 *	@return		An unsorted Array of all the point Objects
+		 *	@return		An unsorted Array of all the keyframe Objects
 		 */
 		public function toLabeledArray():Array {
 			var pa:Array = [];
@@ -199,21 +198,31 @@ package com.desuade.motion.controllers {
 			npc.precision = _precision;
 			npc.tweenclass = _tweenclass;
 			var sa:Array = this.getOrderedLabels();
-			for (var i:int = 1; i < sa.length-1; i++) {
+			for (var i:int = 0; i < sa.length; i++) {
 				var p:Object = this[sa[i]];
 				npc.add(new Keyframe(p.position, p.value, p.ease, p.spread, p.extras), sa[i]);
 			}
-			npc.begin.value = this['begin'].value;
-			npc.begin.spread = this['begin'].spread;
-			npc.begin.extras = this['begin'].extras;
-			npc.end.value = this['end'].value;
-			npc.end.spread = this['end'].spread;
-			npc.end.ease = this['end'].ease;
-			npc.end.extras = this['end'].extras;
 			return npc;
 		}
 		
 		//////private
+		
+		/**
+		 *	@private
+		 */
+		internal function generateStartValue($target:Object, $property:String):* {
+			var nv:Number;
+			if(this['begin'].value == null) nv = $target[$property];
+			else nv = (typeof this['begin'].value == 'string') ? $target[$property] + Number(this['begin'].value) : this['begin'].value;
+			return (this['begin'].spread !== '0') ? Random.fromRange(nv, ((typeof this['begin'].spread == 'string') ? nv + Number(this['begin'].spread) : this['begin'].spread), precision) : nv;
+		}
+		
+		/**
+		 *	@private
+		 */
+		internal function setStartValue($target:Object, $property:String):void {
+			$target[$property] = generateStartValue($target, $property);
+		}
 		
 		/**
 		 *	@private

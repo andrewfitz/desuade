@@ -67,7 +67,7 @@ package com.desuade.partigen.emitters {
 		
 		/**
 		 *	<p>This creates a new Emitter.</p>
-		 *	<p>This is the standard, full-featured emitter that's recommended to use. It offers an innovative and extremely powerful way to configure particle effects, based on ValueControllers from the Motion Package.</p>
+		 *	<p>This is the standard, full-featured emitter that's recommended to use. It offers an innovative and extremely powerful way to configure particle effects, based on MotionControllers from the Motion Package.</p>
 		 *	<p>An emitter is the object that controls the creation of new particles, rather than calling <code>new Particle()</code> directly, using emitters makes creating particle effects easy.</p>
 		 *	<p>Particles are (generally) spawned from the current location of the emitter, unless specifically overridden by x,y,z controller start values.</p>
 		 *	<p>The management of the actual particle objects are handled by Pools, and how they are displayed on screen by Renderers. Both can be shared by multiple emitters.</p>
@@ -125,7 +125,7 @@ package com.desuade.partigen.emitters {
 		
 		/**
 		 *	<p>This is the duration in seconds a particle will exist for.</p>
-		 *	<p>This is an object that acts like a 'begin' keyframe:</p>
+		 *	<p>This is an object that acts like a keyframe:</p>
 		 *	<p><code>{value:0, spread:'0'}</code></p>
 		 *	<p>If the value is 0, the particle will live forever.</p>
 		 */
@@ -136,7 +136,7 @@ package com.desuade.partigen.emitters {
 		/**
 		 *	This starts the emitter. It also, by default, starts all the controllers managed by the EmitterController.
 		 *	
-		 *	@param	startcontrollers	 This starts all ValueControllers managed by the EmitterController.
+		 *	@param	startcontrollers	 This starts all MotionControllers managed by the EmitterController.
 		 */
 		public override function start($startcontrollers:Boolean = true):void {
 			super.start();
@@ -148,7 +148,7 @@ package com.desuade.partigen.emitters {
 		/**
 		 *	This stops the emitter. It also, by default, stops all the controllers managed by the EmitterController.
 		 *	
-		 *	@param	stopcontrollers	 This stops all ValueControllers managed by the EmitterController.
+		 *	@param	stopcontrollers	 This stops all MotionControllers managed by the EmitterController.
 		 */
 		public override function stop($stopcontrollers:Boolean = true):void {
 			super.stop();

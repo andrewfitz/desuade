@@ -32,7 +32,7 @@ package com.desuade.motion.physics {
 	import com.desuade.motion.events.*;
 	
 	/**
-	 *  This class simulates very basic physics, using motion equations to change the value of a property. This can be used like a 'tween' to change any property's value, not just positional properties like x and y.
+	 *  This class simulates very basic physics, using basic motion equations to change the value of a property. This can be used like a 'tween' to change any property's value, not just positional properties like x and y.
 	 *    
 	 *  @langversion ActionScript 3
 	 *  @playerversion Flash 9.0.0

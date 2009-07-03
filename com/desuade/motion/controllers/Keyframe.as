@@ -26,16 +26,48 @@ package com.desuade.motion.controllers {
 
 	import com.desuade.motion.eases.Linear;
 	
+	/**
+	 *  Used by KeyframeContainers to set a point for a change in value during a tween
+	 *    
+	 *  @langversion ActionScript 3
+	 *  @playerversion Flash 9.0.0
+	 *
+	 *  @author Andrew Fitzgerald
+	 *  @since  02.07.2009
+	 */
 	public class Keyframe extends Object {
-	
+		
+		/**
+		 *	The value for the given property at this keyframe.
+		 *	
+		 *	This can either be an absolute value (as a Number) or a relative value (as a String).
+		 */
 		public var value:*;
 		
+		/**
+		 *	The spread value for the current keyframe. If this is anything besides '0', it will create a random value in between the 'value' and this spread value.
+		 *	
+		 *	This can either be an absolute value (as a Number) or a relative value (as a String).
+		 */
 		public var spread:*;
 		
+		/**
+		 *	A value in between 0 and 1 that specifies the relative position of the keyframe.
+		 *	
+		 *	This will effect the duration of the tween, along with the controller's 'duration' value.
+		 */
 		public var position:Number;
 		
+		/**
+		 *	The ease to use to tween to this value.
+		 *	
+		 *	Note: the ease is used for tweens that end with this value, so the ease value on the 'begin' keyframe is irrelevant.
+		 */
 		public var ease:Function;
 		
+		/**
+		 *	An object of any extra properties to be passed to the tweening engine. Such as 'bezier', 'type', 'amount', etc.
+		 */
 		public var extras:Object;
 		
 		/**	

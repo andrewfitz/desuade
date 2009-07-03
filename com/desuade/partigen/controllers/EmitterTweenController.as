@@ -26,9 +26,27 @@ package com.desuade.partigen.controllers {
 	
 	import com.desuade.motion.controllers.*;
 	import com.desuade.partigen.emitters.*;
-
-	public class EmitterTweenController extends MotionController {
 	
+	/**
+	 *  This is a controller for the emitter that inherits a MotionController
+	 *    
+	 *  @langversion ActionScript 3
+	 *  @playerversion Flash 9.0.0
+	 *
+	 *  @author Andrew Fitzgerald
+	 *  @since  02.07.2009
+	 */
+	public class EmitterTweenController extends MotionController {
+		
+		/**
+		 *	This creates an EmitterTweenController (which is basically a MotionController). Using the addTween() method is recommended over calling this directly.
+		 *	
+		 *	@param	target	 The emitter to tween
+		 *	@param	property	 The property to control
+		 *	@param	duration	 The entire duration for the controller. Since the emitter always exists, there must be a set duration.
+		 *	@param	containerclass	 The class to use for Keyframes. Null will use the default.
+		 *	@param	tweenclass	 The class to use for tweening on the controller. Null will use the default.
+		 */
 		public function EmitterTweenController($target:Emitter, $property:String, $duration:Number, $containerclass:Class = null, $tweenclass:Class = null) {
 			super($target, $property, $duration, $containerclass, $tweenclass || EmitterController.tweenClass);
 		}

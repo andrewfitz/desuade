@@ -23,12 +23,39 @@ THE SOFTWARE.
 */
 
 package com.desuade.motion.controllers {
-
+	
+	/**
+	 *  Manages multiple MotionControllers under one controller for a single target
+	 *    
+	 *  @langversion ActionScript 3
+	 *  @playerversion Flash 9.0.0
+	 *
+	 *  @author Andrew Fitzgerald
+	 *  @since  02.07.2009
+	 */
 	public dynamic class MultiController extends Object {
 		
+		/**
+		 *	@private
+		 */
 		protected var _target:Object;
+		
+		/**
+		 *	@private
+		 */
 		protected var _duration:Number;
-	
+		
+		/**
+		 *	Creates a new MultiController. This uses a single target to control multiple properties for.
+		 *	
+		 *	Each property under this MultiController is a MotionController that is used to tween the target's same property (this['x'] == target['x'])
+		 *	
+		 *	@param	target	 The target object to set for all child MotionControllers
+		 *	@param	properties	 An array of strings of child MotionControllers to create - ex: ['x', 'y', 'alpha']
+		 *	@param	duration	 The length of time to set all child controllers
+		 *	@param	containerclass	 The class of keyframe container to use for all MotionControllers
+		 *	@param	tweenclass	 The class of tweens to pass to all the keyframe container
+		 */
 		public function MultiController($target:Object, $properties:Array, $duration:Number, $containerclass:Class = null, $tweenclass:Class = null) {
 			super();
 			_target = $target;
@@ -38,9 +65,16 @@ package com.desuade.motion.controllers {
 			}
 		}
 		
+		/**
+		 *	The target for all child controllers
+		 */
 		public function get target():Object{
 			return _target;
 		}
+		
+		/**
+		 *	@private
+		 */
 		public function set target($value:Object):void {
 			_target = $value;
 			for (var p:String in this) {
@@ -48,9 +82,16 @@ package com.desuade.motion.controllers {
 			}
 		}
 		
+		/**
+		 *	Sets/gets the duration for all child controllers
+		 */
 		public function get duration():Number{
 			return _duration;
 		}
+		
+		/**
+		 *	@private
+		 */
 		public function set duration($value:Number):void {
 			_duration = $value;
 			for (var p:String in this) {
@@ -58,6 +99,9 @@ package com.desuade.motion.controllers {
 			}
 		}
 		
+		/**
+		 *	This returns true if any of the child controllers are active. It will only return false if all the controllers are inactive.
+		 */
 		public function get active():Boolean{
 			for (var p:String in this) {
 				if(this[p].active) return true
@@ -65,10 +109,23 @@ package com.desuade.motion.controllers {
 			return false;
 		}
 		
+		/**
+		 *	Creates a new child controller for the given property
+		 *	
+		 *	@param	proprty	 The property to have controlled
+		 *	@param	containerclass	 The KeyframeContainer class to use
+		 */
 		public function addController($property:String, $containerclass:Class = null):void {
 			this[$property] = new MotionController(_target, $property, _duration, $containerclass);
 		}
 		
+		/**
+		 *	Adds a keyframe with the same label across all controllers at the same position.
+		 *	
+		 *	@param	position	 The position to add the keyframe (0-1)
+		 *	@param	keyframes	 An object that has each controller and keyframe object - ex: {x:{value:'200', spread:'50'}, y:{value:0}, alpha:{ease:Sine.easeIn, value:.3}}
+		 *	@param	label	 The label for the keyframe
+		 */
 		public function addKeyframes($position:Number, $keyframes:Object, $label:String = null):void {
 			for (var g:String in this) {
 				var found:Boolean = false;
@@ -85,6 +142,12 @@ package com.desuade.motion.controllers {
 			}
 		}
 		
+		/**
+		 *	This lets you configure a specific keyframe for each controller at once.
+		 *	
+		 *	@param	keyframe	 The label of the keyframe to set
+		 *	@param	properties	 An object that has the properties of each controller - ex: {controller1:{value:40, spread:80}, controller3:{ease:Bounce.easeOut, value:5}}
+		 */
 		public function setKeyframes($keyframe:String, $properties:Object):void {
 			for (var p:String in $properties) {
 				for (var k:String in $properties[p]) {
@@ -93,12 +156,20 @@ package com.desuade.motion.controllers {
 			}
 		}
 		
+		/**
+		 *	This starts all child MotionControllers at once. If a keyframe label is specified, each controller will be started at the given keyframe.
+		 *	
+		 *	@param	keyframe	 The label of the keyframe to start the controllers at
+		 */
 		public function start($keyframe:String = null):void {
 			for (var p:String in this){
 				this[p].start($keyframe);
 			}
 		}
 		
+		/**
+		 *	This stops all child MotionControllers at once
+		 */
 		public function stop():void {
 			for (var p:String in this){
 				this[p].stop();

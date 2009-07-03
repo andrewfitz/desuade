@@ -32,10 +32,17 @@ package com.desuade.motion.controllers {
 	
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
-
+	
+	/**
+	 *  Virtual motion editor that creates tweens similar to that of a timeline with keyframes
+	 *    
+	 *  @langversion ActionScript 3
+	 *  @playerversion Flash 9.0.0
+	 *
+	 *  @author Andrew Fitzgerald
+	 *  @since  02.07.2009
+	 */
 	public class MotionController extends EventDispatcher {
-		
-		
 		/**
 		 *	The default tween class to use for emitter controllers
 		 */
@@ -60,11 +67,6 @@ package com.desuade.motion.controllers {
 		 *	The duration of the entire sequence to last for in seconds. This affects length of the tweens, since the position is dependent on the the duration.
 		 */
 		public var duration:Number;
-		
-		/**
-		 *	The KeyframeContainer class to use to determine the kind of tween.
-		 */
-		public var containerclass:Class = KeyframeContainer;
 		
 		/**
 		 *	This is what's used to store and manage keyframes. To add, remove, and work with keyframes, see the documentation on KeyframeContainers.
@@ -94,15 +96,13 @@ package com.desuade.motion.controllers {
 		 *	@see #target
 		 *	@see #property
 		 *	@see #duration
-		 *	@see #containerclass
 		 */
-	
 		public function MotionController($target:Object, $property:String, $duration:Number, $containerclass:Class = null, $tweenclass:Class = null) {
 			super();
 			target = $target;
 			property = $property;
 			duration = $duration;
-			containerclass = ($containerclass == null) ? KeyframeContainer : $containerclass;
+			var containerclass:Class = ($containerclass == null) ? KeyframeContainer : $containerclass;
 			keyframes = new containerclass($tweenclass);
 		}
 		
@@ -139,12 +139,23 @@ package com.desuade.motion.controllers {
 			else Debug.output('motion', 10003);
 		}
 		
-		public function setSingleTween($start:*, $startSpread:*, $end:*, $endSpread:*, $ease:* = null):void {
-			keyframes.begin.value = $start;
-			keyframes.begin.spread = $startSpread;
+		/**
+		 *	This easily sets the 'begin' and 'end' keyframes of the controller to create a standard "one-shot" tween.
+		 *	
+		 *	@param	begin	 The beginning value.
+		 *	@param	beginSpread	 The beginning spread value.
+		 *	@param	end	 The end value for the tween.
+		 *	@param	endSpread	 The end spread value.
+		 *	@param	ease	 The ease to use for the tween on the end keyframe.
+		 *	@param	extras	 The extras object for the end keyframe.
+		 */
+		public function setSingleTween($begin:*, $beginSpread:*, $end:*, $endSpread:*, $ease:* = null, $extras:Object = null):void {
+			keyframes.begin.value = $begin;
+			keyframes.begin.spread = $beginSpread;
 			keyframes.end.value = $end;
 			keyframes.end.spread = $endSpread;
 			keyframes.end.ease = $ease;
+			keyframes.end.extras = $extras || {};
 		}
 		
 		/**

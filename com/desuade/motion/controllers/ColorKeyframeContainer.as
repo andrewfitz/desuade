@@ -31,12 +31,47 @@ package com.desuade.motion.controllers {
 	
 	import flash.geom.ColorTransform;
 	
+	/**
+	 *  Manages and hold keyframes specifically for color-tweening
+	 *    
+	 *  @langversion ActionScript 3
+	 *  @playerversion Flash 9.0.0
+	 *
+	 *  @author Andrew Fitzgerald
+	 *  @since  02.07.2009
+	 */
 	public dynamic class ColorKeyframeContainer extends KeyframeContainer {
-	
+		
+		/**
+		 *	Creates a new ColorKeyframeContainer. This is the core of a MotionController, as it holds, configures, and manages all keyframes, and generates the tween objects.
+		 *	
+		 *	This works the same as a regular KeyframeContainer, except it's internals are specific for color-tweening.
+		 *	
+		 *	This can be created independently of a controller and shared among multiple ones.
+		 *	
+		 *	@param	tweenclass	 The class of tweening engine to use for color. Null will use the default colorTweenClass from the MotionController static class.
+		 */
 		public function ColorKeyframeContainer($tweenclass:Class = null) {
 			super(($tweenclass != null) ? $tweenclass : MotionController.colorTweenClass);
 			this['begin'].extras = {type:null, amount:null};
 			this['end'].extras = {type:null, amount:null};
+		}
+		
+		/**
+		 *	Creates a new copy of the ColorKeyframeContainer, identical to the current one.
+		 *	
+		 *	@return		A new ColorKeyframeContainer that has the same keyframes as the current one.
+		 */
+		public override function clone():KeyframeContainer {
+			var npc:ColorKeyframeContainer = new ColorKeyframeContainer();
+			npc.precision = _precision;
+			npc.tweenclass = _tweenclass;
+			var sa:Array = this.getOrderedLabels();
+			for (var i:int = 0; i < sa.length; i++) {
+				var p:Object = this[sa[i]];
+				npc.add(new Keyframe(p.position, p.value, p.ease, p.spread, p.extras), sa[i]);
+			}
+			return npc;
 		}
 		
 		/**
@@ -61,30 +96,6 @@ package com.desuade.motion.controllers {
 			} else {
 				$target[$property] = ColorHelper.RGBToHex(nvo.redOffset, nvo.greenOffset, nvo.blueOffset);
 			}
-		}
-		
-		/**
-		 *	Creates a new copy of the ColorKeyframeContainer, identical to the current one.
-		 *	
-		 *	@return		A new ColorKeyframeContainer that has the same keyframes as the current one.
-		 */
-		public override function clone():KeyframeContainer {
-			var npc:ColorKeyframeContainer = new ColorKeyframeContainer();
-			npc.precision = _precision;
-			npc.tweenclass = _tweenclass;
-			var sa:Array = this.getOrderedLabels();
-			for (var i:int = 1; i < sa.length-1; i++) {
-				var p:Object = this[sa[i]];
-				npc.add(new Keyframe(p.position, p.value, p.ease, p.spread, p.extras), sa[i]);
-			}
-			npc.begin.value = this['begin'].value;
-			npc.begin.spread = this['begin'].spread;
-			npc.begin.extras = this['begin'].extras;
-			npc.end.value = this['end'].value;
-			npc.end.spread = this['end'].spread;
-			npc.end.ease = this['end'].ease;
-			npc.end.extras = this['end'].extras;
-			return npc;
 		}
 		
 		/**
