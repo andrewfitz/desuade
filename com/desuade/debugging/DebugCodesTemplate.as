@@ -49,7 +49,7 @@ package com.desuade.debugging {
 			setname = 'template';
 			codes = {
 				10000: "Template debug codes for aiding in development.",
-				10001: "Test code for $ and $"
+				10001: "Test code for % and %"
 			}
 			
 		}

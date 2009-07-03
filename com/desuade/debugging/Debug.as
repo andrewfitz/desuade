@@ -89,7 +89,7 @@ package com.desuade.debugging {
 		private static function r($str:String, $arr:Array):String {
 			var ns:String = $str;
 			for (var i:int = 0; i < $arr.length; i++) {
-				ns = ns.replace("$", $arr[i]);
+				ns = ns.replace("%", $arr[i]);
 			}
 			return ns;
 		}
