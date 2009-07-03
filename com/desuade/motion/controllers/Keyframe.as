@@ -80,12 +80,12 @@ package com.desuade.motion.controllers {
 		 *	If no keyframes are added, the MotionController will simply create 1 tween from 'begin' to 'end'.
 		 *	
 		 *	@param	position	 A value between 0-1 that reprsents the position of the point, 0 being the beginning of the controller and 1 being the end point (0 and 1 are already taken by 'begin' and 'end' points)
-		 *	@param	value	 A value to tween to. The target will arive (the tween will end) at this value at the position of this point. Pass a Number for absolute, or a String for relative.
+		 *	@param	value	 A value to tween to. The target will arive (the tween will end) at this value at the position of this point. Pass a Number for absolute, or a String for relative. null will use the target's start value.
 		 *	@param	ease	 What ease function to use. Ease functions like Bounce.easeOut, etc. null will default to Linear.none
 		 *	@param	spread	 A value to create a random range from. If the spread doesn't equal the 'value' value or '0', a random value will be created between the 'value' and the 'spread'. Pass a Number for absolute, or a String for relative.
 		 *	@param	extras	An object that contains extra paramaters for the tween (depends on the tweenclass used in the KeyframeContainer)
 		 */
-		public function Keyframe($position:Number, $value:*, $ease:Function = null, $spread:* = null, $extras:Object = null) {
+		public function Keyframe($position:Number, $value:* = null, $ease:Function = null, $spread:* = null, $extras:Object = null) {
 			super();
 			position = $position;
 			value = $value;

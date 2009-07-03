@@ -125,16 +125,18 @@ package com.desuade.motion.controllers {
 		 *	These always happen: the ease property becomes 'linear' and the spread becomes '0'.
 		 *	
 		 *	@param	value	 A value to set all the 'value' properties to. Pass a Number for absolute, or a String for relative.
+		 *	@param	extras	 An object containing an extra properties to pass to the tween
+		 *	
 		 *	@see #isFlat()
 		 */
-		public function flatten($value:*, $extras:Object):void {
+		public function flatten($value:*, $extras:Object = null):void {
 			var pa:Array = this.toLabeledArray();
 			for (var i:int = 0; i < pa.length; i++) {
 				var p:Object = this[pa[i].label];
 				p.ease = Linear.none;
 				p.value = $value;
 				p.spread = '0';
-				p.extras = $extras;
+				p.extras = $extras || {};
 			}
 			this['begin'].ease = null;
 		}
