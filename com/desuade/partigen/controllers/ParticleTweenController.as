@@ -56,14 +56,14 @@ package com.desuade.partigen.controllers {
 		 *	Using the addTween() method is recommended over calling this directly.
 		 *	
 		 *	@param	duration	 The entire duration for the controller. If this is 0, the duration will be set to the particle's life.
-		 *	@param	containerclass	 The class to use for Keyframes. Null will use the default.
-		 *	@param	tweenclass	 The class to use for tweening on the controller. Null will use the default.
+		 *	@param	containerClass	 The class to use for Keyframes. Null will use the default.
+		 *	@param	tweenClass	 The class to use for tweening on the controller. Null will use the default.
 		 */
-		public function ParticleTweenController($duration:Number, $containerclass:Class = null, $tweenclass:Class = null) {
+		public function ParticleTweenController($duration:Number, $containerClass:Class = null, $tweenClass:Class = null) {
 			super();
 			duration = $duration;
-			var containerclass:Class = ($containerclass == null) ? KeyframeContainer : $containerclass;
-			keyframes = new containerclass($tweenclass || ParticleController.tweenClass);
+			var containerClass:Class = ($containerClass == null) ? KeyframeContainer : $containerClass;
+			keyframes = new containerClass($tweenClass || ParticleController.tweenClass);
 		}
 		
 		/**

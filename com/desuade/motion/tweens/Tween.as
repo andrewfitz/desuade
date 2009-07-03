@@ -170,7 +170,7 @@ package com.desuade.motion.tweens {
 			if(!_completed){
 				if(_tweenID != 0){
 					if(!_completed){
-						setpauses();
+						setPauses();
 					}
 					BasicTween._tweenholder[_tweenID].end();
 				} else {
@@ -317,7 +317,7 @@ package com.desuade.motion.tweens {
 		/**
 		 *	@private
 		 */
-		protected function setpauses():void {
+		protected function setPauses():void {
 			_pausepos = position;
 			_startvalue = BasicTween._tweenholder[_tweenID].startvalue;
 			_difvalue = BasicTween._tweenholder[_tweenID].difvalue;

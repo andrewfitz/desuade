@@ -44,11 +44,11 @@ package com.desuade.partigen.controllers {
 		 *	@param	target	 The emitter to tween
 		 *	@param	property	 The property to control
 		 *	@param	duration	 The entire duration for the controller. Since the emitter always exists, there must be a set duration.
-		 *	@param	containerclass	 The class to use for Keyframes. Null will use the default.
-		 *	@param	tweenclass	 The class to use for tweening on the controller. Null will use the default.
+		 *	@param	containerClass	 The class to use for Keyframes. Null will use the default.
+		 *	@param	tweenClass	 The class to use for tweening on the controller. Null will use the default.
 		 */
-		public function EmitterTweenController($target:Emitter, $property:String, $duration:Number, $containerclass:Class = null, $tweenclass:Class = null) {
-			super($target, $property, $duration, $containerclass, $tweenclass || EmitterController.tweenClass);
+		public function EmitterTweenController($target:Emitter, $property:String, $duration:Number, $containerClass:Class = null, $tweenClass:Class = null) {
+			super($target, $property, $duration, $containerClass, $tweenClass || EmitterController.tweenClass);
 		}
 	
 	}

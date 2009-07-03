@@ -42,7 +42,12 @@ package com.desuade.partigen.controllers {
 		 *	The boolean flip (for cartesian reversal) value to be passed to the internal 'physics' object.
 		 *	@see com.desuade.motion.physics.BasicPhysics#flip
 		 */
-		public var flip:Boolean;
+		public var flip:Boolean = false;
+		
+		/**
+		 *	If this is set to true, the physics object will use the emitter's angle value. If false, no angle will be used in calculating the initial velocity.
+		 */
+		public var useAngle:Boolean = true;
 		
 		/**
 		 *	@private
@@ -59,15 +64,15 @@ package com.desuade.partigen.controllers {
 		 *	Using the addPhysics() method is recommended over calling this directly.
 		 *	
 		 *	@param	duration	 The entire duration for the controller. If this is 0, the duration will be set to the particle's life.
-		 *	@param	containerclass	 The class to use for Keyframes. Null will use the default.
-		 *	@param	tweenclass	 The class to use for tweening on the controller. Null will use the default.
+		 *	@param	containerClass	 The class to use for Keyframes. Null will use the default.
+		 *	@param	tweenClass	 The class to use for tweening on the controller. Null will use the default.
 		 */
-		public function ParticlePhysicsController($duration:Number, $containerclass:Class = null, $tweenclass:Class = null) {
+		public function ParticlePhysicsController($duration:Number, $containerClass:Class = null, $tweenClass:Class = null) {
 			super();
 			_duration = $duration;
-			this.velocity = new ParticleTweenController($duration, $containerclass, $tweenclass);
-			this.acceleration = new ParticleTweenController($duration, $containerclass, $tweenclass);
-			this.friction = new ParticleTweenController($duration, $containerclass, $tweenclass);
+			this.velocity = new ParticleTweenController($duration, $containerClass, $tweenClass);
+			this.acceleration = new ParticleTweenController($duration, $containerClass, $tweenClass);
+			this.friction = new ParticleTweenController($duration, $containerClass, $tweenClass);
 			this.velocity.keyframes.precision = 3;
 			this.acceleration.keyframes.precision = 3;
 			this.friction.keyframes.precision = 3;

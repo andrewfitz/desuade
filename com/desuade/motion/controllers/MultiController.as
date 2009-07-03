@@ -53,15 +53,15 @@ package com.desuade.motion.controllers {
 		 *	@param	target	 The target object to set for all child MotionControllers
 		 *	@param	properties	 An array of strings of child MotionControllers to create - ex: ['x', 'y', 'alpha']
 		 *	@param	duration	 The length of time to set all child controllers
-		 *	@param	containerclass	 The class of keyframe container to use for all MotionControllers
-		 *	@param	tweenclass	 The class of tweens to pass to all the keyframe container
+		 *	@param	containerClass	 The class of keyframe container to use for all MotionControllers
+		 *	@param	tweenClass	 The class of tweens to pass to all the keyframe container
 		 */
-		public function MultiController($target:Object, $properties:Array, $duration:Number, $containerclass:Class = null, $tweenclass:Class = null) {
+		public function MultiController($target:Object, $properties:Array, $duration:Number, $containerClass:Class = null, $tweenClass:Class = null) {
 			super();
 			_target = $target;
 			_duration = $duration;
 			for (var i:int = 0; i < $properties.length; i++) {
-				this[$properties[i]] = new MotionController($target, $properties[i], $duration, $containerclass, $tweenclass);
+				this[$properties[i]] = new MotionController($target, $properties[i], $duration, $containerClass, $tweenClass);
 			}
 		}
 		
@@ -113,10 +113,10 @@ package com.desuade.motion.controllers {
 		 *	Creates a new child controller for the given property
 		 *	
 		 *	@param	proprty	 The property to have controlled
-		 *	@param	containerclass	 The KeyframeContainer class to use
+		 *	@param	containerClass	 The KeyframeContainer class to use
 		 */
-		public function addController($property:String, $containerclass:Class = null):void {
-			this[$property] = new MotionController(_target, $property, _duration, $containerclass);
+		public function addController($property:String, $containerClass:Class = null):void {
+			this[$property] = new MotionController(_target, $property, _duration, $containerClass);
 		}
 		
 		/**

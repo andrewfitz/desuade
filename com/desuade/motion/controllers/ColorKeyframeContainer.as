@@ -49,10 +49,10 @@ package com.desuade.motion.controllers {
 		 *	
 		 *	This can be created independently of a controller and shared among multiple ones.
 		 *	
-		 *	@param	tweenclass	 The class of tweening engine to use for color. Null will use the default colorTweenClass from the MotionController static class.
+		 *	@param	tweenClass	 The class of tweening engine to use for color. Null will use the default colorTweenClass from the MotionController static class.
 		 */
-		public function ColorKeyframeContainer($tweenclass:Class = null) {
-			super(($tweenclass != null) ? $tweenclass : MotionController.colorTweenClass);
+		public function ColorKeyframeContainer($tweenClass:Class = null) {
+			super(($tweenClass != null) ? $tweenClass : MotionController.colorTweenClass);
 			this['begin'].extras = {type:null, amount:null};
 			this['end'].extras = {type:null, amount:null};
 		}
@@ -65,7 +65,7 @@ package com.desuade.motion.controllers {
 		public override function clone():KeyframeContainer {
 			var npc:ColorKeyframeContainer = new ColorKeyframeContainer();
 			npc.precision = _precision;
-			npc.tweenclass = _tweenclass;
+			npc.tweenClass = _tweenClass;
 			var sa:Array = this.getOrderedLabels();
 			for (var i:int = 0; i < sa.length; i++) {
 				var p:Object = this[sa[i]];

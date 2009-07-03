@@ -78,10 +78,10 @@ package com.desuade.motion.controllers {
 		 *	@param	property	The single property to have physics applied to
 		 *	@param	duration	 The length of time to set all child controllers
 		 *	@param	physics	 The BasicPhysics object to use. If there is no existing one, set to null and an internal one will be created.
-		 *	@param	containerclass	 The class of keyframe container to use for all MotionControllers
-		 *	@param	tweenclass	 The class of tweens to pass to all the keyframe container
+		 *	@param	containerClass	 The class of keyframe container to use for all MotionControllers
+		 *	@param	tweenClass	 The class of tweens to pass to all the keyframe container
 		 */
-		public function PhysicsMultiController($target:Object, $property:String, $duration:Number, $physics:BasicPhysics = null, $containerclass:Class = null, $tweenclass:Class = null) {
+		public function PhysicsMultiController($target:Object, $property:String, $duration:Number, $physics:BasicPhysics = null, $containerClass:Class = null, $tweenClass:Class = null) {
 			super(null, [], $duration);
 			if($physics == null){
 				_physics = new BasicPhysics({target:$target, property:$property});
@@ -90,9 +90,9 @@ package com.desuade.motion.controllers {
 				_physics.target = $target;
 				_physics.property = $property;
 			}
-			this.velocity = new MotionController(_physics, 'velocity', $duration, $containerclass, $tweenclass);
-			this.acceleration = new MotionController(_physics, 'acceleration', $duration, $containerclass, $tweenclass);
-			this.friction = new MotionController(_physics, 'friction', $duration, $containerclass, $tweenclass);
+			this.velocity = new MotionController(_physics, 'velocity', $duration, $containerClass, $tweenClass);
+			this.acceleration = new MotionController(_physics, 'acceleration', $duration, $containerClass, $tweenClass);
+			this.friction = new MotionController(_physics, 'friction', $duration, $containerClass, $tweenClass);
 			this.velocity.keyframes.precision = 3;
 			this.acceleration.keyframes.precision = 3;
 			this.friction.keyframes.precision = 3;

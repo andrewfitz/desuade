@@ -38,7 +38,7 @@ package com.desuade.motion {
 		/**
 		 *	The numeric version of the package. Used for version comparisions.
 		 */
-		public static const VERSION:Number = 1.003;
+		public static const VERSION:Number = 1.004;
 		
 		/**
 		 *	The "official" release version.

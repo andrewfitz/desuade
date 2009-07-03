@@ -207,7 +207,7 @@ package com.desuade.motion.tweens {
 		/**
 		 *	@private
 		 */
-		protected override function setpauses():void {
+		protected override function setPauses():void {
 			_pausepos = position;
 			_startvalues = BasicTween._tweenholder[_tweenID].arrayObject.startvalues;
 			_difvalues = BasicTween._tweenholder[_tweenID].arrayObject.difvalues;

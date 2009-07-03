@@ -30,7 +30,7 @@ package com.desuade.partigen.controllers {
 	import com.desuade.partigen.particles.*;
 
 	/**
-	 *  This is created by an emitter to manage and control all the particle motion controller configurations.
+	 *  This is created by an emitter to manage and control all the particle motion controller configurations
 	 *    
 	 *  @langversion ActionScript 3
 	 *  @playerversion Flash 9.0.0
@@ -59,6 +59,8 @@ package com.desuade.partigen.controllers {
 		
 		/**
 		 *	This sets the initial value of the 'begin' keyframe. If the property exists, it will modify the current 'begin' keyframe. If it doesn't, this creates a new ParticleTweenController.
+		 *	
+		 *	Note: this is only for ParticleTweenControllers, not ParticlePhysicsControllers. Refer to the setKeyframes() method for working with PhysicsMultiControllers.
 		 *	
 		 *	@param	property	 The particle's property to be set.
 		 *	@param	value	 The property's value.
@@ -102,10 +104,12 @@ package com.desuade.partigen.controllers {
 		 *	@param	property	 The particle's property to be set.
 		 *	@param	duration	 The entire duration for the controller. If this is 0 (default), the duration will be set to the particle's life.
 		 *	@param	flip	 To set the physics's object flip value. This is useful for some properties like 'y'.
+		 *	@param	useAngle	 To use the emitter's angle value for the physics object. Set to false for properties besides x,y,z
 		 */
-		public function addPhysics($property:String, $duration:Number = 0, $flip:Boolean = false):void {
+		public function addPhysics($property:String, $duration:Number = 0, $flip:Boolean = false, $useAngle:Boolean = true):void {
 			this[$property] = new ParticlePhysicsController($duration);
 			this[$property].flip = $flip;
+			this[$property].useAngle = $useAngle;
 		}
 		
 		//privates
@@ -116,7 +120,7 @@ package com.desuade.partigen.controllers {
 		protected function attachController($particle:Particle, $property:String, $emitter:Emitter):void {
 			if(this[$property] is ParticlePhysicsController){
 				$particle.controllers[$property] = new PhysicsMultiController($particle, $property, (this[$property].duration == 0) ? $particle.life : this[$property].duration);
-				$particle.controllers[$property].physics.angle = $emitter.angle;
+				$particle.controllers[$property].physics.angle = (this[$property].useAngle) ? $emitter.angle : null;
 				$particle.controllers[$property].physics.flip = this[$property].flip;
 				$particle.controllers[$property].velocity.keyframes = this[$property].velocity.keyframes;
 				$particle.controllers[$property].acceleration.keyframes = this[$property].acceleration.keyframes;

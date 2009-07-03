@@ -62,6 +62,25 @@ package com.desuade.partigen.controllers {
 		}
 		
 		/**
+		 *	This sets the initial value of the 'begin' keyframe. If the property exists, it will modify the current 'begin' keyframe. If it doesn't, this creates a new EmitterTweenController.
+		 *	
+		 *	Note: this is only for EmitterTweenControllers, not EmitterPhysicsControllers. Refer to the setKeyframes() method for working with PhysicsMultiControllers.
+		 *	
+		 *	@param	property	 The emitter's property to be set.
+		 *	@param	value	 The property's value.
+		 *	@param	spread	 The spread of the value. If this is anything besides '0', a random value will be generated  using the value and spread.
+		 *	@param	precision	 The amount of decimal points used when creating a spread value
+		 *	@param	extras	 An 'extras' object to be passed to the tween engine for that keyframe.
+		 */
+		public function setBeginValue($property:String, $value:*, $spread:* = '0', $precision:int = 0, $extras:Object = null):void {
+			if(this[$property] == undefined) this[$property] = new EmitterTweenController(_emitter, $property, 0);
+			this[$property].keyframes.begin.value = $value;
+			this[$property].keyframes.begin.spread = $spread;
+			this[$property].keyframes.precision = $precision;
+			if($extras != null) this[$property].keyframes.begin.extras = $extras;
+		}
+		
+		/**
 		 *	This creates an EmitterTweenController for the given property. This actually inherits a real MotionController.
 		 *	
 		 *	@param	property	 The emitter's property to be set.

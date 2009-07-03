@@ -66,7 +66,7 @@ package com.desuade.motion.sequencers {
 		/**
 		 *	@private
 		 */
-		protected var _tweenclass:Class;
+		protected var _tweenClass:Class;
 		
 		/**
 		 *	@private
@@ -81,19 +81,19 @@ package com.desuade.motion.sequencers {
 		/**
 		 *	<p>Creates a new Sequence.</p>
 		 *	<p>A sequence is a subclass of Array, so you can manipulate items in a sequence just like an array.</p>
-		 *	<p>You can pass actual tweens into the Sequence that bypass the tweenclass and overrides, or regular objects that will be created into new tweens based on the tweenclass provided.</p>
-		 *	<p>Each sequence creates tweens from objects passed, based on the given tweenclass, so the objects that are pushed into the sequence vary depending on the required parameters of the specified tweening class.</p>
+		 *	<p>You can pass actual tweens into the Sequence that bypass the tweenClass and overrides, or regular objects that will be created into new tweens based on the tweenClass provided.</p>
+		 *	<p>Each sequence creates tweens from objects passed, based on the given tweenClass, so the objects that are pushed into the sequence vary depending on the required parameters of the specified tweening class.</p>
 		 *	<p>By passing an Array into the sequence, all tween objects inside will be grouped together and played at the same time. The sequence will only advance once the tween with the longest duration is finished.</p>
 		 *	<p>Sequences can also be nested, and another sequence is a valid object to push into a sequence. Sequences can NOT be nested inside Arrays.</p>
 		 *	
-		 *	@param	tweenclass	 This is the class of tweens to use in the sequence.
-		 *	@param	args	 After passing the tweenclass, all following items passed into the contructor will be pushed into the sequence like an array.
-		 *	@see	#tweenclass
+		 *	@param	tweenClass	 This is the class of tweens to use in the sequence.
+		 *	@param	args	 After passing the tweenClass, all following items passed into the contructor will be pushed into the sequence like an array.
+		 *	@see	#tweenClass
 		 *	
 		 */
-		public function Sequence($tweenclass:Class, ... args) {
+		public function Sequence($tweenClass:Class, ... args) {
 			super();
-			_tweenclass = $tweenclass;
+			_tweenClass = $tweenClass;
 			pushArray(args);
 			Debug.output('motion', 40003);
 		}
@@ -116,15 +116,15 @@ package com.desuade.motion.sequencers {
 		 *	<p>This is the class of tweens to use in the sequence.</p>
 		 *	<p>Each Seqeuence will create only one kind of tween - ie: BasicTween, Tween, MultiTween, etc. To create a Seqeuence that contains multiple tween classes, create a new Seqeuence and then push that into the Array.</p>
 		 */
-		public function get tweenclass():Class{
-			return _tweenclass;
+		public function get tweenClass():Class{
+			return _tweenClass;
 		}
 		
 		/**
 		 *	@private
 		 */
-		public function set tweenclass($value:Class):void {
-			_tweenclass = $value;
+		public function set tweenClass($value:Class):void {
+			_tweenClass = $value;
 		}
 		
 		/**
@@ -201,7 +201,7 @@ package com.desuade.motion.sequencers {
 		 *	@return		A copy of the sequence.
 		 */
 		public function clone():Sequence {
-			var ns:Sequence = new Sequence(_tweenclass);
+			var ns:Sequence = new Sequence(_tweenClass);
 			for (var i:int = 0; i < this.length; i++){
 				var no:Object = {};
 				for (var p:String in this[i]) {
@@ -242,7 +242,7 @@ package com.desuade.motion.sequencers {
 					if(tp[i] is BasicTween){
 						_tween[i] = tp[i];
 					} else {
-						_tween[i] = new _tweenclass(tp[i]);
+						_tween[i] = new _tweenClass(tp[i]);
 						if(tp[i].allowOverrides != false){
 							for (var r:String in _overrides) {
 								_tween[i].config[r] = _overrides[r];
@@ -257,7 +257,7 @@ package com.desuade.motion.sequencers {
 				if(tp is BasicTween){
 					_tween = tp;
 				} else {
-					_tween = new _tweenclass(tp);
+					_tween = new _tweenClass(tp);
 					if(tp.allowOverrides != false){
 						for (var p:String in _overrides) {
 							_tween.config[p] = _overrides[p];

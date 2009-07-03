@@ -90,20 +90,20 @@ package com.desuade.motion.controllers {
 		 *	@param	target	 The target object that will have it's property controlled.
 		 *	@param	property	 The property that's being controlled and tweened.
 		 *	@param	duration	 The duration of the entire sequence to last for in seconds. This affects length of the tweens, since the position is dependent on the the duration.
-		 *	@param	containerclass	 The class of keyframe container to use
-		 *	@param	tweenclass	 The class of tweens to pass to the keyframe container
+		 *	@param	containerClass	 The class of keyframe container to use
+		 *	@param	tweenClass	 The class of tweens to pass to the keyframe container
 		 *	
 		 *	@see #target
 		 *	@see #property
 		 *	@see #duration
 		 */
-		public function MotionController($target:Object, $property:String, $duration:Number, $containerclass:Class = null, $tweenclass:Class = null) {
+		public function MotionController($target:Object, $property:String, $duration:Number, $containerClass:Class = null, $tweenClass:Class = null) {
 			super();
 			target = $target;
 			property = $property;
 			duration = $duration;
-			var containerclass:Class = ($containerclass == null) ? KeyframeContainer : $containerclass;
-			keyframes = new containerclass($tweenclass);
+			var containerClass:Class = ($containerClass == null) ? KeyframeContainer : $containerClass;
+			keyframes = new containerClass($tweenClass);
 		}
 		
 		/**
@@ -122,7 +122,7 @@ package com.desuade.motion.controllers {
 			setStartValue();
 			var ta:Array = keyframes.createTweens(target, property, duration);
 			_active = true;
-			_sequence = new Sequence(keyframes.tweenclass);
+			_sequence = new Sequence(keyframes.tweenClass);
 			_sequence.pushArray(ta);
 			_sequence.addEventListener(SequenceEvent.ENDED, tweenEnd, false, 0, true);
 			_sequence.addEventListener(SequenceEvent.ADVANCED, advance, false, 0, true);

@@ -48,7 +48,7 @@ package com.desuade.motion.controllers {
 		/**
 		 *	@private
 		 */
-		protected var _tweenclass:Class;
+		protected var _tweenClass:Class;
 	
 		/**
 		 *	@private
@@ -60,11 +60,11 @@ package com.desuade.motion.controllers {
 		 *	
 		 *	This can be created independently of a controller and shared among multiple ones.
 		 *	
-		 *	@param	tweenclass	 The class of tweening engine to use. Null will use the default tweenClass from the MotionController static class.
+		 *	@param	tweenClass	 The class of tweening engine to use. Null will use the default tweenClass from the MotionController static class.
 		 */
-		public function KeyframeContainer($tweenclass:Class = null) {
+		public function KeyframeContainer($tweenClass:Class = null) {
 			super();
-			_tweenclass = ($tweenclass != null) ? $tweenclass : MotionController.tweenClass;
+			_tweenClass = ($tweenClass != null) ? $tweenClass : MotionController.tweenClass;
 			this['begin'] = new Keyframe(0, null, null);
 			this['end'] = new Keyframe(1, null);
 		}
@@ -82,11 +82,11 @@ package com.desuade.motion.controllers {
 		/**
 		 *	Which tween class to use for creating the tweens. - ie: BasicTween, Tween, etc.
 		 */
-		public function get tweenclass():Class{
-			return _tweenclass;
+		public function get tweenClass():Class{
+			return _tweenClass;
 		}
-		public function set tweenclass($value:Class):void {
-			_tweenclass = $value;
+		public function set tweenClass($value:Class):void {
+			_tweenClass = $value;
 		}
 		
 		/**
@@ -198,7 +198,7 @@ package com.desuade.motion.controllers {
 		public function clone():KeyframeContainer {
 			var npc:KeyframeContainer = new KeyframeContainer();
 			npc.precision = _precision;
-			npc.tweenclass = _tweenclass;
+			npc.tweenClass = _tweenClass;
 			var sa:Array = this.getOrderedLabels();
 			for (var i:int = 0; i < sa.length; i++) {
 				var p:Object = this[sa[i]];

@@ -83,7 +83,7 @@ package com.desuade.motion.controllers {
 		 *	@param	value	 A value to tween to. The target will arive (the tween will end) at this value at the position of this point. Pass a Number for absolute, or a String for relative. null will use the target's start value.
 		 *	@param	ease	 What ease function to use. Ease functions like Bounce.easeOut, etc. null will default to Linear.none
 		 *	@param	spread	 A value to create a random range from. If the spread doesn't equal the 'value' value or '0', a random value will be created between the 'value' and the 'spread'. Pass a Number for absolute, or a String for relative.
-		 *	@param	extras	An object that contains extra paramaters for the tween (depends on the tweenclass used in the KeyframeContainer)
+		 *	@param	extras	An object that contains extra paramaters for the tween (depends on the tweenClass used in the KeyframeContainer)
 		 */
 		public function Keyframe($position:Number, $value:* = null, $ease:Function = null, $spread:* = null, $extras:Object = null) {
 			super();
