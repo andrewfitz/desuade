@@ -25,7 +25,7 @@ THE SOFTWARE.
 package com.desuade.motion.controllers {
 	
 	/**
-	 *  Manages multiple MotionControllers under one controller for a single target
+	 *  Manages multiple MotionControllers under one controller for a single target.
 	 *    
 	 *  @langversion ActionScript 3
 	 *  @playerversion Flash 9.0.0
@@ -46,9 +46,9 @@ package com.desuade.motion.controllers {
 		protected var _duration:Number;
 		
 		/**
-		 *	Creates a new MultiController. This uses a single target to control multiple properties for.
+		 *	<p>Creates a new MultiController. This controller creates MotionControllers to manage multiple properties on a single target object.</p>
 		 *	
-		 *	Each property under this MultiController is a MotionController that is used to tween the target's same property (this['x'] == target['x'])
+		 *	<p>Each property under this MultiController is a MotionController that is used to tween the target's same property (this['x'] == target['x'])</p>
 		 *	
 		 *	@param	target	 The target object to set for all child MotionControllers
 		 *	@param	properties	 An array of strings of child MotionControllers to create - ex: ['x', 'y', 'alpha']

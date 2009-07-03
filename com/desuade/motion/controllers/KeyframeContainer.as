@@ -30,7 +30,7 @@ package com.desuade.motion.controllers {
 	import com.desuade.utils.*
 	
 	/**
-	 *  Manages and holds all keyframes for MotionControllers
+	 *  Manages and holds all keyframes for MotionControllers.
 	 *    
 	 *  @langversion ActionScript 3
 	 *  @playerversion Flash 9.0.0
@@ -56,9 +56,11 @@ package com.desuade.motion.controllers {
 		protected var _precision:int = 0;
 		
 		/**
-		 *	Creates a new KeyframeContainer. This is the core of a MotionController, as it holds, configures, and manages all keyframes, and generates the tween objects.
+		 *	<p>Creates a new KeyframeContainer. This is the core of a MotionController, as it holds, configures, and manages all keyframes, and generates the tween objects.</p>
 		 *	
-		 *	This can be created independently of a controller and shared among multiple ones.
+		 *	<p>Each KeyframeContainer will always have 2 keyframes: begin and end. Setting an end value will create a tween, and adding any keyframes will essentially divide it at a specified position and create 2 tweens.</p>
+		 *	
+		 *	<p>These are always created automatically by mew MotionControllers, but can also be created independently of a controller and shared among multiple ones.</p>
 		 *	
 		 *	@param	tweenClass	 The class of tweening engine to use. Null will use the default tweenClass from the MotionController static class.
 		 */
@@ -120,9 +122,9 @@ package com.desuade.motion.controllers {
 		}
 		
 		/**
-		 *	This "flattens" the container to the given value, setting all the 'value' and 'extra' properties in each keyframe to the same value, essentially removing any tweens.
+		 *	<p>This "flattens" the container to the given value, setting all the 'value' and 'extra' properties in each keyframe to the same value, essentially removing any tweens.</p>
 		 *	
-		 *	These always happen: the ease property becomes 'linear' and the spread becomes '0'.
+		 *	<p>Note: this always happen: the ease property becomes 'linear' and the spread becomes '0'.</p>
 		 *	
 		 *	@param	value	 A value to set all the 'value' properties to. Pass a Number for absolute, or a String for relative.
 		 *	@param	extras	 An object containing an extra properties to pass to the tween
@@ -142,9 +144,9 @@ package com.desuade.motion.controllers {
 		}
 		
 		/**
-		 *	Determines if the KeyframeContainer is flat.
+		 *	<p>Determines if the KeyframeContainer is flat. Used to determine if there is any actual change in value to tween.</p>
 		 *	
-		 *	This doesn't mean that all properties that are checked are necessarily equal, but rather, if the total of keyframes end up having any change in value.
+		 *	<p>Note: this doesn't necessarily mean that all properties that are checked are necessarily equal, but rather, if the total of keyframes end up having any change in value.</p>
 		 *	
 		 *	@return		True if all the values result in the same end value.
 		 *	@see	#flatten()

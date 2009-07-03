@@ -30,7 +30,7 @@ package com.desuade.partigen.controllers {
 	import com.desuade.partigen.particles.*;
 
 	/**
-	 *  This is created by an emitter to manage and control all the particle motion controller configurations
+	 *  This is created by an emitter to manage and control all the particle motion controller configurations.
 	 *    
 	 *  @langversion ActionScript 3
 	 *  @playerversion Flash 9.0.0
@@ -58,9 +58,9 @@ package com.desuade.partigen.controllers {
 		}
 		
 		/**
-		 *	This sets the initial value of the 'begin' keyframe. If the property exists, it will modify the current 'begin' keyframe. If it doesn't, this creates a new ParticleTweenController.
+		 *	<p>This sets the initial value of the 'begin' keyframe. If the property exists, it will modify the current 'begin' keyframe. If it doesn't, this creates a new ParticleTweenController.</p>
 		 *	
-		 *	Note: this is only for ParticleTweenControllers, not ParticlePhysicsControllers. Refer to the setKeyframes() method for working with PhysicsMultiControllers.
+		 *	<p>Note: this is only for ParticleTweenControllers, not ParticlePhysicsControllers. Refer to the setKeyframes() method for working with PhysicsMultiControllers.</p>
 		 *	
 		 *	@param	property	 The particle's property to be set.
 		 *	@param	value	 The property's value.
@@ -87,9 +87,9 @@ package com.desuade.partigen.controllers {
 		}
 		
 		/**
-		 *	This creates a ParticleTweenController that is specific for color tweening. This can be used to tween other properties on the particle that are color variables, like a fill or 3D object.
+		 *	<p>This creates a ParticleTweenController that is specific for color tweening. This can be used to tween other properties on the particle that are color variables, like a fill or 3D object.</p>
 		 *	
-		 *	For a standard color tween on a display object, use the property 'color'. Any other value will assume it's a special property on the particle.
+		 *	<p>For a standard color tween on a display object, use the property 'color'. Any other value will assume it's a special property on the particle.</p>
 		 *	
 		 *	@param	property	 The particle's property to be set for color. The standard property should be 'color'.
 		 *	@param	duration	 The entire duration for the controller. If this is 0 (default), the duration will be set to the particle's life.

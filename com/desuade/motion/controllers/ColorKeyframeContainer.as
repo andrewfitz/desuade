@@ -32,7 +32,7 @@ package com.desuade.motion.controllers {
 	import flash.geom.ColorTransform;
 	
 	/**
-	 *  Manages and hold keyframes specifically for color-tweening
+	 *  Manages and hold keyframes specifically for color-tweening.
 	 *    
 	 *  @langversion ActionScript 3
 	 *  @playerversion Flash 9.0.0
@@ -43,11 +43,11 @@ package com.desuade.motion.controllers {
 	public dynamic class ColorKeyframeContainer extends KeyframeContainer {
 		
 		/**
-		 *	Creates a new ColorKeyframeContainer. This is the core of a MotionController, as it holds, configures, and manages all keyframes, and generates the tween objects.
+		 *	<p>Creates a new ColorKeyframeContainer. This is the core of a MotionController, as it holds, configures, and manages all keyframes, and generates the tween objects.</p>
 		 *	
-		 *	This works the same as a regular KeyframeContainer, except it's internals are specific for color-tweening.
+		 *	<p>This works the same as a regular KeyframeContainer, except it's internals are specific for color-tweening.</p>
 		 *	
-		 *	This can be created independently of a controller and shared among multiple ones.
+		 *	<p>This can be created independently of a controller and shared among multiple ones.</p>
 		 *	
 		 *	@param	tweenClass	 The class of tweening engine to use for color. Null will use the default colorTweenClass from the MotionController static class.
 		 */

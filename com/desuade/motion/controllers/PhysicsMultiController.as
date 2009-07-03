@@ -27,7 +27,7 @@ package com.desuade.motion.controllers {
 	import com.desuade.motion.physics.*;
 	
 	/**
-	 *  An extension of a MultiController specifically for Physics objects
+	 *  An extension of a MultiController specifically for Physics objects.
 	 *    
 	 *  @langversion ActionScript 3
 	 *  @playerversion Flash 9.0.0
@@ -68,11 +68,11 @@ package com.desuade.motion.controllers {
 		
 		
 		/**
-		 *	This creates a new PhysicsMultiController. This controls the velocity, acceleration, and friction for a given target's property using a physics object.
+		 *	<p>This creates a new PhysicsMultiController. This controls the velocity, acceleration, and friction for a given target's property using a physics object.</p>
 		 *	
-		 *	Like a regular MultiController, there are child MotionControllers. For this, there are only 3: velocity, acceleration, and friction - accessible as this.velocity, etc.
+		 *	<p>Like a regular MultiController, there are child MotionControllers. For this, there are only 3: velocity, acceleration, and friction - accessible as this.velocity, etc.</p>
 		 *	
-		 *	If acceleration or friction controllers are used, the velocity controller will be disabled as acceleration and friction influence the target's velocity.
+		 *	<p>If acceleration or friction controllers are used, the velocity controller will be disabled as acceleration and friction influence the target's velocity.</p>
 		 *		
 		 *	@param	target	 The target object to set for all child MotionControllers
 		 *	@param	property	The single property to have physics applied to

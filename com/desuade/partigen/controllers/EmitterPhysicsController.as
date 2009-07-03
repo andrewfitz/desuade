@@ -28,7 +28,7 @@ package com.desuade.partigen.controllers {
 	import com.desuade.partigen.emitters.*;
 	
 	/**
-	 *  This is a controller for the emitter that inherits a PhysicsMultiController
+	 *  This is a controller for the emitter that inherits a PhysicsMultiController.
 	 *    
 	 *  @langversion ActionScript 3
 	 *  @playerversion Flash 9.0.0

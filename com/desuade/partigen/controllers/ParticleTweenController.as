@@ -28,7 +28,7 @@ package com.desuade.partigen.controllers {
 	import com.desuade.motion.tweens.*;
 
 	/**
-	 *  Used to configure MotionControllers for the particles
+	 *  Used to configure MotionControllers for the particles.
 	 *    
 	 *  @langversion ActionScript 3
 	 *  @playerversion Flash 9.0.0
@@ -49,11 +49,11 @@ package com.desuade.partigen.controllers {
 		public var keyframes:KeyframeContainer;
 		
 		/**
-		 *	This is like a MotionController from the Motion Package, but is used as a placeholder to configure emitters.
+		 *	<p>This is like a MotionController from the Motion Package, but is used as a placeholder to configure emitters.</p>
 		 *	
-		 *	ParticleTweenControllers create MotionControllers on each particle that's created, allowing the particles to change over their lives.
+		 *	<p>ParticleTweenControllers create MotionControllers on each particle that's created, allowing the particles to change over their lives.</p>
 		 *	
-		 *	Using the addTween() method is recommended over calling this directly.
+		 *	<p>Using the addTween() method is recommended over calling this directly.</p>
 		 *	
 		 *	@param	duration	 The entire duration for the controller. If this is 0, the duration will be set to the particle's life.
 		 *	@param	containerClass	 The class to use for Keyframes. Null will use the default.

@@ -29,7 +29,7 @@ package com.desuade.partigen.controllers {
 	import com.desuade.partigen.emitters.*;
 	
 	/**
-	 *  This controls the configuration for controllers that effect the actual emitter
+	 *  This controls the configuration for controllers that effect the actual emitter.
 	 *    
 	 *  @langversion ActionScript 3
 	 *  @playerversion Flash 9.0.0
@@ -50,9 +50,9 @@ package com.desuade.partigen.controllers {
 		protected var _emitter:Emitter;
 	
 		/**
-		 *	This creates a new EmitterController. This shouldn't be called, as it's created by the emitter automatically.
+		 *	<p>This creates a new EmitterController. This shouldn't be called, as it's created by the emitter automatically.</p>
 		 *	
-		 *	All the controllers (by default) get started whenever the emitter starts.
+		 *	<p>All the controllers (by default) get started whenever the emitter starts.</p>
 		 *	
 		 *	@param	emitter	 The emitter to control
 		 */
@@ -62,9 +62,9 @@ package com.desuade.partigen.controllers {
 		}
 		
 		/**
-		 *	This sets the initial value of the 'begin' keyframe. If the property exists, it will modify the current 'begin' keyframe. If it doesn't, this creates a new EmitterTweenController.
+		 *	<p>This sets the initial value of the 'begin' keyframe. If the property exists, it will modify the current 'begin' keyframe. If it doesn't, this creates a new EmitterTweenController.</p>
 		 *	
-		 *	Note: this is only for EmitterTweenControllers, not EmitterPhysicsControllers. Refer to the setKeyframes() method for working with PhysicsMultiControllers.
+		 *	<p>Note: this is only for EmitterTweenControllers, not EmitterPhysicsControllers. Refer to the setKeyframes() method for working with PhysicsMultiControllers.</p>
 		 *	
 		 *	@param	property	 The emitter's property to be set.
 		 *	@param	value	 The property's value.

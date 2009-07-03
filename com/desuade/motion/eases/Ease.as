@@ -1,7 +1,7 @@
 package com.desuade.motion.eases {
 
 	/**
-	 *  Ease base class
+	 *  Ease base class.
 	 *    
 	 *  @langversion ActionScript 3
 	 *  @playerversion Flash 9.0.0

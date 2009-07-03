@@ -28,7 +28,7 @@ package com.desuade.partigen.controllers {
 	import com.desuade.motion.tweens.*;
 	
 	/**
-	 *  Used to configure PhysicsMultiControllers for the particles
+	 *  Used to configure PhysicsMultiControllers for the particles.
 	 *    
 	 *  @langversion ActionScript 3
 	 *  @playerversion Flash 9.0.0
@@ -55,13 +55,13 @@ package com.desuade.partigen.controllers {
 		protected var _duration:Number;
 		
 		/**
-		 *	This is like a PhysicsMultiController from the Motion Package, but is used as a placeholder to configure emitters.
+		 *	<p>This is like a PhysicsMultiController from the Motion Package, but is used as a placeholder to configure emitters.</p>
 		 *	
-		 *	ParticlePhysicsControllers create PhysicsMultiControllers on each particle that's created, allowing the particles to change over their lives with physics.
+		 *	<p>ParticlePhysicsControllers create PhysicsMultiControllers on each particle that's created, allowing the particles to change over their lives with physics.</p>
 		 *	
-		 *	Each one has 3 sub ParticleTweenControllers: velocity, acceleration, friction. These can each be configured like normal ParticleTweenControllers.
+		 *	<p>Each one has 3 sub ParticleTweenControllers: velocity, acceleration, friction. These can each be configured like normal ParticleTweenControllers.</p>
 		 *	
-		 *	Using the addPhysics() method is recommended over calling this directly.
+		 *	<p>Using the addPhysics() method is recommended over calling this directly.</p>
 		 *	
 		 *	@param	duration	 The entire duration for the controller. If this is 0, the duration will be set to the particle's life.
 		 *	@param	containerClass	 The class to use for Keyframes. Null will use the default.

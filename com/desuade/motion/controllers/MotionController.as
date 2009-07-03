@@ -34,7 +34,7 @@ package com.desuade.motion.controllers {
 	import flash.events.EventDispatcher;
 	
 	/**
-	 *  Virtual motion editor that creates tweens similar to that of a timeline with keyframes
+	 *  Virtual motion editor that creates tweens similar to that of a timeline with keyframes.
 	 *    
 	 *  @langversion ActionScript 3
 	 *  @playerversion Flash 9.0.0
@@ -85,7 +85,17 @@ package com.desuade.motion.controllers {
 		protected var _sequence:*;
 		
 		/**
-		 *	Creates a new MotionController.
+		 *	<p>Creates a new MotionController for the given target and property.</p>
+		 *	
+		 *	<p>MotionControllers are basically pragmatic motion editors, like those found in Flash CS4 and After Effects.</p>
+		 *	
+		 *	<p>They use 'keyframes' just like the timeline or motion editor to mark a position where there's a change of value.</p>
+		 *	
+		 *	<p>Note: DMP Keyframes are not "real" Flash keyframes, and all animation are time-based in the package, rather than frame-based)</p>
+		 *	
+		 *	<p>Keyframes are managed by a 'KeyframeContainer' which provides methods for adding, configuring, and working with keyframes.</p>
+		 *	
+		 *	<p>MotionControllers basically "take control" over a property and manage it's value over time. It acts a sequence that tweens properties to the value indicated by 'keyframes', from the 'begin' keyframe to the 'end' keyframe, and any custom keyframes in between.</p>
 		 *	
 		 *	@param	target	 The target object that will have it's property controlled.
 		 *	@param	property	 The property that's being controlled and tweened.
