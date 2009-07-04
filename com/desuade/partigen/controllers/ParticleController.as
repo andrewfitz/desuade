@@ -58,22 +58,23 @@ package com.desuade.partigen.controllers {
 		}
 		
 		/**
-		 *	<p>This sets the initial value of the 'begin' keyframe. If the property exists, it will modify the current 'begin' keyframe. If it doesn't, this creates a new ParticleTweenController.</p>
+		 *	<p>This sets the initial value of the given property. If the property exists as a ParticleTweenController already, it will modify the current 'begin' keyframe. If it doesn't, this creates a new ParticleTweenController and sets its 'begin' keyframe.</p>
 		 *	
-		 *	<p>Note: this is only for ParticleTweenControllers, not ParticlePhysicsControllers. Refer to the setKeyframes() method for working with PhysicsMultiControllers.</p>
+		 *	<p>Note: this only sets ParticleTweenControllers, NOT ParticlePhysicsControllers.</p>
 		 *	
 		 *	@param	property	 The particle's property to be set.
 		 *	@param	value	 The property's value.
-		 *	@param	spread	 The spread of the value. If this is anything besides '0', a random value will be generated  using the value and spread.
+		 *	@param	spread	 The spread of the value. If this is anything besides '0', a random value will be generated using the value and spread.
 		 *	@param	precision	 The amount of decimal points used when creating a spread value
 		 *	@param	extras	 An 'extras' object to be passed to the tween engine for that keyframe.
 		 */
-		public function setBeginValue($property:String, $value:*, $spread:* = '0', $precision:int = 0, $extras:Object = null):void {
+		public function addBeginValue($property:String, $value:*, $spread:* = '0', $precision:int = 0, $extras:Object = null):ParticleTweenController {
 			if(this[$property] == undefined) this[$property] = new ParticleTweenController(0);
 			this[$property].keyframes.begin.value = $value;
 			this[$property].keyframes.begin.spread = $spread;
 			this[$property].keyframes.precision = $precision;
 			if($extras != null) this[$property].keyframes.begin.extras = $extras;
+			return this[$property];
 		}
 		
 		/**
@@ -82,8 +83,8 @@ package com.desuade.partigen.controllers {
 		 *	@param	property	 The particle's property to be set.
 		 *	@param	duration	 The entire duration for the controller. If this is 0 (default), the duration will be set to the particle's life.
 		 */
-		public function addTween($property:String, $duration:Number = 0):void {
-			this[$property] = new ParticleTweenController($duration);
+		public function addTween($property:String, $duration:Number = 0):ParticleTweenController {
+			return this[$property] = new ParticleTweenController($duration);
 		}
 		
 		/**
@@ -94,8 +95,8 @@ package com.desuade.partigen.controllers {
 		 *	@param	property	 The particle's property to be set for color. The standard property should be 'color'.
 		 *	@param	duration	 The entire duration for the controller. If this is 0 (default), the duration will be set to the particle's life.
 		 */
-		public function addColorTween($property:String = 'color', $duration:Number = 0):void {
-			this['color'] = new ParticleTweenController($duration, ColorKeyframeContainer, colorTweenClass);
+		public function addColorTween($property:String = 'color', $duration:Number = 0):ParticleTweenController {
+			return this['color'] = new ParticleTweenController($duration, ColorKeyframeContainer, colorTweenClass);
 		}
 		
 		/**
@@ -106,10 +107,11 @@ package com.desuade.partigen.controllers {
 		 *	@param	flip	 To set the physics's object flip value. This is useful for some properties like 'y'.
 		 *	@param	useAngle	 To use the emitter's angle value for the physics object. Set to false for properties besides x,y,z
 		 */
-		public function addPhysics($property:String, $duration:Number = 0, $flip:Boolean = false, $useAngle:Boolean = true):void {
+		public function addPhysics($property:String, $duration:Number = 0, $flip:Boolean = false, $useAngle:Boolean = true):ParticlePhysicsController {
 			this[$property] = new ParticlePhysicsController($duration);
 			this[$property].flip = $flip;
 			this[$property].useAngle = $useAngle;
+			return this[$property];
 		}
 		
 		//privates

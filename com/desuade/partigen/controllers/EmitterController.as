@@ -62,22 +62,23 @@ package com.desuade.partigen.controllers {
 		}
 		
 		/**
-		 *	<p>This sets the initial value of the 'begin' keyframe. If the property exists, it will modify the current 'begin' keyframe. If it doesn't, this creates a new EmitterTweenController.</p>
+		 *	<p>This sets the initial value of the given property. If the property exists as a EmitterTweenController already, it will modify the current 'begin' keyframe. If it doesn't, this creates a new EmitterTweenController and sets its 'begin' keyframe.</p>
 		 *	
-		 *	<p>Note: this is only for EmitterTweenControllers, not EmitterPhysicsControllers. Refer to the setKeyframes() method for working with PhysicsMultiControllers.</p>
+		 *	<p>Note: this only sets EmitterTweenControllers, NOT EmitterPhysicsControllers.</p>
 		 *	
 		 *	@param	property	 The emitter's property to be set.
 		 *	@param	value	 The property's value.
-		 *	@param	spread	 The spread of the value. If this is anything besides '0', a random value will be generated  using the value and spread.
+		 *	@param	spread	 The spread of the value. If this is anything besides '0', a random value will be generated using the value and spread.
 		 *	@param	precision	 The amount of decimal points used when creating a spread value
 		 *	@param	extras	 An 'extras' object to be passed to the tween engine for that keyframe.
 		 */
-		public function setBeginValue($property:String, $value:*, $spread:* = '0', $precision:int = 0, $extras:Object = null):void {
+		public function addBeginValue($property:String, $value:*, $spread:* = '0', $precision:int = 0, $extras:Object = null):EmitterTweenController {
 			if(this[$property] == undefined) this[$property] = new EmitterTweenController(_emitter, $property, 0);
 			this[$property].keyframes.begin.value = $value;
 			this[$property].keyframes.begin.spread = $spread;
 			this[$property].keyframes.precision = $precision;
 			if($extras != null) this[$property].keyframes.begin.extras = $extras;
+			return this[$property];
 		}
 		
 		/**
@@ -86,35 +87,36 @@ package com.desuade.partigen.controllers {
 		 *	@param	property	 The emitter's property to be set.
 		 *	@param	duration	 The entire duration for the controller. Since the emitter always exists, there must be a set duration.
 		 */
-		public function addTween($property:String, $duration:Number):void {
-			this[$property] = new EmitterTweenController(_emitter, $property, $duration);
+		public function addTween($property:String, $duration:Number):EmitterTweenController {
+			return this[$property] = new EmitterTweenController(_emitter, $property, $duration);
 		}
 		
 		/**
-		 *	This creates a ParticlePhysicsController (which inherits PhysicsMultiController) that has 3 ParticleTweenControllers for each physics property: velocity, acceleration, and friction.
+		 *	This creates a EmitterPhysicsController (which inherits PhysicsMultiController) that has 3 EmitterTweenControllers for each physics property: velocity, acceleration, and friction.
 		 *	
 		 *	@param	property	 The emitter's property to be set.
 		 *	@param	duration	 The entire duration for the controller. Since the emitter always exists, there must be a set duration.
 		 *	@param	flip	 To set the physics's object flip value. This is useful for some properties like 'y'.
 		 */
-		public function addPhysics($property:String, $duration:Number, $flip:Boolean = false):void {
+		public function addPhysics($property:String, $duration:Number, $flip:Boolean = false):EmitterPhysicsController {
 			this[$property] = new EmitterPhysicsController(_emitter, $property, $duration);
 			this[$property].physics.flip = $flip;
+			return this[$property];
 		}
 		
 		/**
-		 *	This starts all the MotionControllers at once.
+		 *	This starts all the emitter MotionControllers at once.
 		 */
-		public function startAll():void {
+		public function start():void {
 			for (var p:String in this) {
 				this[p].start();
 			}
 		}
 		
 		/**
-		 *	This stops all the MotionControllers at once.
+		 *	This stops all the emitter MotionControllers at once.
 		 */
-		public function stopAll():void {
+		public function stop():void {
 			for (var p:String in this) {
 				this[p].stop();
 			}

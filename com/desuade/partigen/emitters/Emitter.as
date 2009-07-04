@@ -141,7 +141,7 @@ package com.desuade.partigen.emitters {
 		public override function start($startcontrollers:Boolean = true):void {
 			super.start();
 			if($startcontrollers){
-				controllers.emitter.startAll();
+				controllers.emitter.start();
 			}
 		}
 		
@@ -153,7 +153,7 @@ package com.desuade.partigen.emitters {
 		public override function stop($stopcontrollers:Boolean = true):void {
 			super.stop();
 			if($stopcontrollers){
-				controllers.emitter.stopAll();
+				controllers.emitter.stop();
 			}
 		}
 		
