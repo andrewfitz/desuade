@@ -25,7 +25,16 @@ THE SOFTWARE.
 package com.desuade.partigen.particles {
 	
 	import com.desuade.utils.*;
-
+	
+	/**
+	 *  A Particle class that acts as a single particle, yet contains multiple child particles.
+	 *    
+	 *  @langversion ActionScript 3
+	 *  @playerversion Flash 9.0.0
+	 *
+	 *  @author Andrew Fitzgerald
+	 *  @since  03.07.2009
+	 */
 	public dynamic class GroupParticle extends Particle {
 		
 		/**

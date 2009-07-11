@@ -1,7 +1,18 @@
 Desuade Library Changelog
 -------------------------
 
-Beta 2:
+Beta 3:
+
+	Motion:
+	
+	Partigen:
+		-Fix: addColorTween always using 'color'
+		
+	Debugging:
+	
+	Utils:
+
+Beta 2 (2009/7/03):
 
 	Motion:
 		-rewrote controllers
@@ -15,10 +26,16 @@ Beta 2:
 		-Changed PhysicsEvent 'stopped' to 'ended'
 		-added 'property' to BasicColorTween/ColorTween to allow for non-DisplayObject color tweening
 		-added debug codes for BasicPhysics
+		-lots of little tweaks
 
-	Partigen: none
+	Partigen:
+		-rewrote controllers
+			-major syntax change reflecting new Motion Package changes
+			-better integration with new Motion classes
+			-lots of little tweaks
 
-	Debugging: none
+	Debugging:
+		-changed the replace character to % (instead of $)
 
 	Utils: none
 	
