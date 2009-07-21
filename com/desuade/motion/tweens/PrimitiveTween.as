@@ -24,11 +24,8 @@ THE SOFTWARE.
 
 package com.desuade.motion.tweens {
 
-	import flash.display.*; 
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
-	import flash.utils.Timer;
-	import flash.events.TimerEvent;
 	import flash.utils.getTimer;
 	
 	import com.desuade.motion.eases.Linear;
@@ -50,11 +47,6 @@ package com.desuade.motion.tweens {
 		 *	@private
 		 */
 		public static var _count:int = 1;
-		
-		/**
-		 *	@private
-		 */
-		internal static var _sprite:Sprite = new Sprite();
 		
 		/**
 		 *	This is the unique internal id of the tween.
@@ -125,7 +117,6 @@ package com.desuade.motion.tweens {
 				difvalue = (startvalue > value) ? (value-startvalue) : -(startvalue-value);
 			}
 			dispatchEvent(new TweenEvent(TweenEvent.STARTED, {primitiveTween:this}));
-			_sprite.addEventListener(Event.ENTER_FRAME, update, false, 0, true);
 			Debug.output('motion', 50001, [id]);
 		}
 		
@@ -136,21 +127,22 @@ package com.desuade.motion.tweens {
 		 */
 		public function end($broadcast:Boolean = true):void {
 			Debug.output('motion', 50002, [id]);
-			_sprite.removeEventListener(Event.ENTER_FRAME, update);
 			if($broadcast) dispatchEvent(new TweenEvent(TweenEvent.ENDED, {primitiveTween:this}));
 			delete this;
 		}
 		
 		/**
-		 *	@private
+		 *	This renders the tween. It calculates and sets the new value, and checks to see if the tween is finished.
+		 *	
+		 *	@param	time	 The current getTimer() time.
 		 */
-		protected function update($u:Object):void {
-			var tmr:int = getTimer() - starttime;
-			if(tmr >= duration){
+		public function render($time:int):void {
+			$time -= starttime;
+			if($time >= duration){
 				target[property] = value;
 				end();
 			} else {
-				target[property] = ease(tmr, startvalue, difvalue, duration);
+				target[property] = ease($time, startvalue, difvalue, duration);
 				dispatchEvent(new TweenEvent(TweenEvent.UPDATED, {primitiveTween:this}));
 			}
 		}

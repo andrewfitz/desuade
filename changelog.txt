@@ -4,7 +4,11 @@ Desuade Library Changelog
 Beta 3:
 
 	Motion:
-	
+		-200% speed boost! Renders 2x as many tweens without performance hit
+		-removed individual PrimitiveTween update listeners - now uses a BasicTween loop update
+		-added render() methods for PrimitiveTweens
+		-PrimitiveTweens now do not run an update event automatically - you can use your own loop/timer/event to run render()
+		
 	Partigen:
 		-Fix: addColorTween always using 'color'
 		

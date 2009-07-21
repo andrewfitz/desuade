@@ -24,11 +24,12 @@ THE SOFTWARE.
 
 package com.desuade.motion.tweens {
 
-	//Easing functions can be included with import fl.motion.easing.*
+	import flash.display.*; 
 	import com.desuade.debugging.*
 	import com.desuade.motion.events.*
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
+	import flash.utils.getTimer;
 	
 	/**
 	 *  A very basic tween that allows you to tween a given value on any object to a new value.
@@ -44,7 +45,17 @@ package com.desuade.motion.tweens {
 		/**
 		 *	@private
 		 */
+		internal static var inited:Boolean = false;
+		
+		/**
+		 *	@private
+		 */
 		protected static var _tweenholder:Object = {};
+		
+		/**
+		 *	@private
+		 */
+		internal static var _sprite:Sprite = new Sprite();
 		
 		/**
 		 *	@private
@@ -60,6 +71,24 @@ package com.desuade.motion.tweens {
 		 *	@private
 		 */
 		protected var _active:Boolean = false;
+		
+		/**
+		 *	@private
+		 */
+		protected static function init():void {
+			_sprite.addEventListener(Event.ENTER_FRAME, update, false, 0, true);
+			inited = true;
+		}
+		
+		/**
+		 *	@private
+		 */
+		protected static function update($u:Object):void {
+			var times:int = getTimer();
+			for each (var tween:PrimitiveTween in _tweenholder) {
+				tween.render(times);
+			}
+		}
 		
 		/**
 		 *	<p>The constructor accepts an object that has all the paramaters needed to create a new tween.</p>
@@ -83,6 +112,7 @@ package com.desuade.motion.tweens {
 		 */
 		public function BasicTween($tweenObject:Object) {
 			super();
+			if(!inited) init();
 			_tweenconfig = $tweenObject;
 			Debug.output('motion', 40001);
 		}
@@ -127,6 +157,13 @@ package com.desuade.motion.tweens {
 		 */
 		public function get config():Object{
 			return _tweenconfig;
+		}
+		
+		/**
+		 *	Gets the primitivetween id
+		 */
+		public function get ptid():int{
+			return _tweenID;
 		}
 		
 		/**

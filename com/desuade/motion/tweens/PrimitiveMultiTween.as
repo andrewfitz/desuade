@@ -85,18 +85,20 @@ package com.desuade.motion.tweens {
 		}
 		
 		/**
-		 *	@private
+		 *	This renders the tween. It calculates and sets the new value, and checks to see if the tween is finished.
+		 *	
+		 *	@param	time	 The current getTimer() time.
 		 */
-		protected override function update($u:Object):void {
-			var tmr:int = getTimer() - starttime;
-			if(tmr >= duration){
+		public override function render($time:int):void {
+			$time -= starttime;
+			if($time >= duration){
 				for (var i:int = 0; i < arrayObject.props.length; i++) {
 					target[arrayObject.props[i]] = arrayObject.values[i];
 				}
 				end();
 			} else {
 				for (var k:int = 0; k < arrayObject.props.length; k++) {
-					target[arrayObject.props[k]] = ease(tmr, arrayObject.startvalues[k], arrayObject.difvalues[k], duration);
+					target[arrayObject.props[k]] = ease($time, arrayObject.startvalues[k], arrayObject.difvalues[k], duration);
 				}
 				dispatchEvent(new TweenEvent(TweenEvent.UPDATED, {primitiveTween:this}));
 			}
