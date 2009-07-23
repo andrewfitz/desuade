@@ -33,17 +33,17 @@ package com.desuade.partigen {
 	 *  @author Andrew Fitzgerald
 	 *  @since  20.04.2009
 	 */
-	public class Partigen extends Object {
+	public class Partigen {
 		
 		/**
 		 *	The numeric version of the package. Used for version comparisions.
 		 */
-		public static const VERSION:Number = 2.003;
+		public static const VERSION:Number = 2.004;
 		
 		/**
 		 *	The "official" release version.
 		 */
-		public static const VERSIONLABEL:String = '2.0 Beta 2';
+		public static const VERSIONLABEL:String = '2.0 Beta 3';
 		
 		/**
 		 *	Company that owns the source code

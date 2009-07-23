@@ -242,12 +242,13 @@ package com.desuade.motion.sequencers {
 					if(tp[i] is BasicTween){
 						_tween[i] = tp[i];
 					} else {
-						_tween[i] = new _tweenClass(tp[i]);
 						if(tp[i].allowOverrides != false){
 							for (var r:String in _overrides) {
-								_tween[i].config[r] = _overrides[r];
+								tp[i][r] = _overrides[r];
 							}
 						}
+						_tween[i] = new _tweenClass(tp[i].target, tp[i]);
+						delete _tween[i].config.target;
 					}
 					if(_tween[i].config.duration > longdur[0]) longdur = [_tween[i].config.duration, _tween[i]];
 					_tween[i].start();
@@ -257,12 +258,13 @@ package com.desuade.motion.sequencers {
 				if(tp is BasicTween){
 					_tween = tp;
 				} else {
-					_tween = new _tweenClass(tp);
 					if(tp.allowOverrides != false){
 						for (var p:String in _overrides) {
-							_tween.config[p] = _overrides[p];
+							tp[p] = _overrides[p];
 						}
 					}
+					_tween = new _tweenClass(tp.target, tp);
+					delete _tween.config.target;
 				}
 				_tween.addEventListener(TweenEvent.ENDED, advance, false, 0, true);
 				_tween.start();

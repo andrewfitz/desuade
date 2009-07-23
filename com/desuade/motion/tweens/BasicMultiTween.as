@@ -45,21 +45,23 @@ package com.desuade.motion.tweens {
 		 *	<p>The constructor accepts an object that has all the paramaters needed to create a new tween.</p>
 		 *	<p>Paramaters for the tween object:</p>
 		 *	<ul>
-		 *	<li>target:Object – an object to have it's property tweened</li>
 		 *	<li>properties:Object – an object of properties and values to tween. Passing a Number will tween it to that absolute value, passing a String will use a relative value (target.property + value) - ie: <code>{x:100}</code> or <code>{y:"200"}</code></li>
 		 *	<li>ease:Function – the easing function to use. Default is Linear.none.</li>
 		 *	<li>duration:Number – how long in seconds for the tween to last</li>
 		 *	</ul>
 		 *	
-		 *	<p>Example: <code>var mt:BasicMultiTween = new BasicMultiTween({target:myobj, properties:{x:200, y:'50', alpha:0.5}, duration:2, ease:Bounce.easeIn})</code></p>
+		 *	<p>Example: <code>var mt:BasicMultiTween = new BasicMultiTween(myobj, {properties:{x:200, y:'50', alpha:0.5}, duration:2, ease:Bounce.easeIn})</code></p>
+		 *	
+		 *	@param	target	 The target object to have it's property tweened
+		 *	@param	tweenObject	 The config object that has all the values for the tween
 		 *	
 		 *	@see	PrimitiveTween#target
 		 *	@see	PrimitiveTween#duration
 		 *	@see	PrimitiveTween#ease
 		 *	
 		 */
-		public function BasicMultiTween($tweenObject:Object) {
-			super($tweenObject);
+		public function BasicMultiTween($target:Object, $tweenObject:Object) {
+			super($target, $tweenObject);
 		}
 		
 		/**
@@ -67,9 +69,9 @@ package com.desuade.motion.tweens {
 		 */
 		protected override function createTween($to:Object):int {
 			for (var p:String in $to.properties) {
-				$to.properties[p] = (typeof $to.properties[p] == 'string') ? $to.target[p] + Number($to.properties[p]) : $to.properties[p];
+				$to.properties[p] = (typeof $to.properties[p] == 'string') ? target[p] + Number($to.properties[p]) : $to.properties[p];
 			}
-			var pt:PrimitiveMultiTween = BasicTween._tweenholder[PrimitiveTween._count] = new PrimitiveMultiTween($to.target, $to.properties, $to.duration*1000, $to.ease);
+			var pt:PrimitiveMultiTween = BasicTween._tweenholder[PrimitiveTween._count] = new PrimitiveMultiTween(target, $to.properties, $to.duration*1000, $to.ease);
 			pt.addEventListener(TweenEvent.ENDED, endFunc, false, 0, true);
 			return pt.id;
 		}
@@ -77,8 +79,8 @@ package com.desuade.motion.tweens {
 		/**
 		 *	@inheritDoc
 		 */
-		public override function clone():* {
-			return new BasicMultiTween(duplicateConfig());
+		public override function clone($target:Object):* {
+			return new BasicMultiTween($target, duplicateConfig());
 		}
 
 	}

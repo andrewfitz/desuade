@@ -45,7 +45,7 @@ package com.desuade.motion.tweens {
 		/**
 		 *	@private
 		 */
-		internal static var inited:Boolean = false;
+		internal static var _inited:Boolean = false;
 		
 		/**
 		 *	@private
@@ -73,11 +73,16 @@ package com.desuade.motion.tweens {
 		protected var _active:Boolean = false;
 		
 		/**
+		 *	The target object to perform the tween on.
+		 */
+		public var target:Object;
+		
+		/**
 		 *	@private
 		 */
 		protected static function init():void {
 			_sprite.addEventListener(Event.ENTER_FRAME, update, false, 0, true);
-			inited = true;
+			_inited = true;
 		}
 		
 		/**
@@ -92,16 +97,18 @@ package com.desuade.motion.tweens {
 		
 		/**
 		 *	<p>The constructor accepts an object that has all the paramaters needed to create a new tween.</p>
-		 *	<p>Paramaters for the tween object:</p>
+		 *	<p>Paramaters for the tweenObject:</p>
 		 *	<ul>
-		 *	<li>target:Object – an object to have it's property tweened</li>
 		 *	<li>property:String – the property to tween</li>
 		 *	<li>value:* – the new (end) value. Passing a Number will tween it to that absolute value, passing a String will use a relative value (target.property + value) - ie: <code>{value: 100}</code> or <code>{value:"200"}</code></li>
 		 *	<li>ease:Function – the easing function to use. Default is Linear.none.</li>
 		 *	<li>duration:Number – how long in seconds for the tween to last</li>
 		 *	</ul>
 		 *	
-		 *	<p>Example: <code>var mt:BasicTween = new BasicTween({target:myobj, property:'x', value:.5, duration:2, ease:Bounce.easeIn})</code></p>
+		 *	<p>Example: <code>var mt:BasicTween = new BasicTween(myobj, {property:'x', value:.5, duration:2, ease:Bounce.easeIn})</code></p>
+		 *	
+		 *	@param	target	 The target object to have it's property tweened
+		 *	@param	tweenObject	 The config object that has all the values for the tween
 		 *	
 		 *	@see	PrimitiveTween#target
 		 *	@see	PrimitiveTween#property
@@ -110,9 +117,10 @@ package com.desuade.motion.tweens {
 		 *	@see	PrimitiveTween#ease
 		 *	
 		 */
-		public function BasicTween($tweenObject:Object) {
+		public function BasicTween($target:Object, $tweenObject:Object) {
 			super();
-			if(!inited) init();
+			if(!_inited) init();
+			target = $target;
 			_tweenconfig = $tweenObject;
 			Debug.output('motion', 40001);
 		}
@@ -153,14 +161,14 @@ package com.desuade.motion.tweens {
 		}
 		
 		/**
-		 *	Gets the tween config object that was passed in the constructor (target, value, ease, etc). The properties in this object can be modified.
+		 *	Gets the tween config object that was passed in the constructor (property, value, ease, etc). The properties in this object can be modified.
 		 */
 		public function get config():Object{
 			return _tweenconfig;
 		}
 		
 		/**
-		 *	Gets the primitivetween id
+		 *	The primitivetween's id
 		 */
 		public function get ptid():int{
 			return _tweenID;
@@ -169,10 +177,12 @@ package com.desuade.motion.tweens {
 		/**
 		 *	This creates a new tween that is a duplicate clone of this.
 		 *	
+		 *	@param	target	 The new target object.
+		 *	
 		 *	@return		A new copy of the current tween.
 		 */
-		public function clone():* {
-			return new BasicTween(duplicateConfig());
+		public function clone($target:Object):* {
+			return new BasicTween($target, duplicateConfig());
 		}
 		
 		/**
@@ -190,8 +200,8 @@ package com.desuade.motion.tweens {
 		 *	@private
 		 */
 		protected function createTween($to:Object):int {
-	      var newval:Number = (typeof $to.value == 'string') ? $to.target[$to.property] + Number($to.value) : $to.value;
-	      var pt:PrimitiveTween = _tweenholder[PrimitiveTween._count] = new PrimitiveTween($to.target, $to.property, newval, $to.duration*1000, $to.ease);
+	      var newval:Number = (typeof $to.value == 'string') ? target[$to.property] + Number($to.value) : $to.value;
+	      var pt:PrimitiveTween = _tweenholder[PrimitiveTween._count] = new PrimitiveTween(target, $to.property, newval, $to.duration*1000, $to.ease);
 	      pt.addEventListener(TweenEvent.ENDED, endFunc, false, 0, true);
 	      return pt.id;
 		}

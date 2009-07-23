@@ -52,7 +52,6 @@ package com.desuade.motion.tweens {
 		 *	<p>The constructor accepts an object that has all the paramaters needed to create a new tween.</p>
 		 *	<p>Paramaters for the tween object:</p>
 		 *	<ul>
-		 *	<li>target:Object – an object to have it's color tweened</li>
 		 *	<li>type:String – the type of color transformation to apply. Defaults to 'tint', see ColorHelper for more types.</li>
 		 *	<li>amount:int – The amount of transform to apply. Depends on 'type'</li>
 		 *	<li>value:* – the new (end) color. A string or hex is accepted - ie: <code>{value: '#ff0038}</code> or <code>{value:0xff883a}</code></li>
@@ -61,7 +60,10 @@ package com.desuade.motion.tweens {
 		 *	<li>property:String – To tween a hex value instead of a DisplayObject, set this to the property</li>
 		 *	</ul>
 		 *	
-		 *	<p>Example: <code>var mt:BasicColorTween = new BasicColorTween({target:myobj, value:0xff77d5, amount:0.8, duration:2})</code></p>
+		 *	<p>Example: <code>var mt:BasicColorTween = new BasicColorTween(myobj, {value:0xff77d5, amount:0.8, duration:2})</code></p>
+		 *	
+		 *	@param	target	 The target object to have it's property tweened
+		 *	@param	tweenObject	 The config object that has all the values for the tween
 		 *	
 		 *	@see	PrimitiveTween#target
 		 *	@see	PrimitiveTween#duration
@@ -69,22 +71,22 @@ package com.desuade.motion.tweens {
 		 *	@see	com.desuade.utils.ColorHelper#getColorObject()
 		 *	
 		 */
-		public function BasicColorTween($tweenObject:Object) {
-			super($tweenObject);
+		public function BasicColorTween($target:Object, $tweenObject:Object) {
+			super($target, $tweenObject);
 		}
 		
 		/**
 		 *	@inheritDoc
 		 */
-		public override function clone():* {
-			return new BasicColorTween(duplicateConfig());
+		public override function clone($target:Object):* {
+			return new BasicColorTween($target, duplicateConfig());
 		}
 		
 		/**
 		 *	@private
 		 */
 		protected override function createTween($to:Object):int {
-			_colorholder = ($to.property != undefined) ? ColorHelper.getColorObject('tint', 1, $to.target[$to.property]) : $to.target.transform.colorTransform;
+			_colorholder = ($to.property != undefined) ? ColorHelper.getColorObject('tint', 1, target[$to.property]) : target.transform.colorTransform;
 			var cpo:Object = ColorHelper.getColorObject($to.type || 'tint', $to.amount || 1, $to.value, _colorholder);
 			var pt:PrimitiveMultiTween = BasicTween._tweenholder[PrimitiveTween._count] = new PrimitiveMultiTween(_colorholder, cpo, $to.duration*1000, $to.ease);
 			pt.addEventListener(TweenEvent.ENDED, endFunc, false, 0, true);
@@ -97,14 +99,14 @@ package com.desuade.motion.tweens {
 		 *	@private
 		 */
 		protected function docolorupdater($o:Object):void {
-			_tweenconfig.target.transform.colorTransform = new ColorTransform(_colorholder.redMultiplier, _colorholder.greenMultiplier, _colorholder.blueMultiplier, _tweenconfig.target.alpha, _colorholder.redOffset, _colorholder.greenOffset, _colorholder.blueOffset);
+			target.transform.colorTransform = new ColorTransform(_colorholder.redMultiplier, _colorholder.greenMultiplier, _colorholder.blueMultiplier, target.alpha, _colorholder.redOffset, _colorholder.greenOffset, _colorholder.blueOffset);
 		};
 		
 		/**
 		 *	@private
 		 */
 		protected function hexcolorupdater($o:Object):void {
-			_tweenconfig.target[_tweenconfig.property] = ColorHelper.RGBToHex(_colorholder.redOffset, _colorholder.greenOffset, _colorholder.blueOffset);
+			target[_tweenconfig.property] = ColorHelper.RGBToHex(_colorholder.redOffset, _colorholder.greenOffset, _colorholder.blueOffset);
 		};
 	
 	}

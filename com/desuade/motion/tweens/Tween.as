@@ -79,7 +79,6 @@ package com.desuade.motion.tweens {
 		 *	<p>The constructor accepts an object that has all the paramaters needed to create a new tween.</p>
 		 *	<p>Paramaters for the tween object:</p>
 		 *	<ul>
-		 *	<li>target:Object – an object to have it's property tweened</li>
 		 *	<li>property:String – the property to tween</li>
 		 *	<li>value:* – the new (end) value. Passing a Number will tween it to that absolute value, passing a String will use a relative value (target.property + value) - ie: <code>{value: 100}</code> or <code>{value:"200"}</code></li>
 		 *	<li>ease:Function – the easing function to use. Default is Linear.none.</li>
@@ -91,7 +90,10 @@ package com.desuade.motion.tweens {
 		 *	<li>relative:Boolean – this overrides the number/string check on the value to set the value relative to the current value</li>
 		 *	</ul>
 		 *	
-		 *	<p>Example: <code>var mt:Tween = new Tween({target:myobj, property:'x', value:50, duration:2, ease:Bounce.easeIn, delay:2, position:0, round:false, relative:true, bezier:[60, '200, -10]})</code></p>
+		 *	<p>Example: <code>var mt:Tween = new Tween(myobj, {property:'x', value:50, duration:2, ease:Bounce.easeIn, delay:2, position:0, round:false, relative:true, bezier:[60, '200, -10]})</code></p>
+		 *	
+		 *	@param	target	 The target object to have it's property tweened
+		 *	@param	tweenObject	 The config object that has all the values for the tween
 		 *	
 		 *	@see	PrimitiveTween#target
 		 *	@see	PrimitiveTween#property
@@ -100,36 +102,8 @@ package com.desuade.motion.tweens {
 		 *	@see	PrimitiveTween#ease
 		 *	
 		 */
-		public function Tween($tweenObject:Object) {
-			super($tweenObject);
-		}
-		
-		/**
-		 *	<p>This is a static method that creates and starts a tween with a strict syntax.</p>
-		 *	
-		 *	@param	target	an object to have it's property tweened
-		 *	@param	property	the property to tween
-		 *	@param	value	the new (end) value. Passing a Number will tween it to that absolute value, passing a String will use a relative value (target.property + value) - ie: <code>{value: 100}</code> or <code>{value:"200"}</code>
-		 *	@param	duration	how long in seconds for the tween to last
-		 *	@param	ease	the easing function to use. Default is Linear.none.
-		 *	@param	delay	how long in seconds to delay starting the tween
-		 *	@param	round	round the values on update (to an int)
-		 *	@param	position	what position to start the tween at 0-1
-		 *	@param	bezier	an array of bezier curve points
-		 *	
-		 *	<p>Example: <code>Tween.tween(myobj, 'x', 300, 2.5, null, 0, false, 0, [100])</code></p>
-		 *	
-		 *	@see	PrimitiveTween#target
-		 *	@see	PrimitiveTween#property
-		 *	@see	PrimitiveTween#value
-		 *	@see	PrimitiveTween#duration
-		 *	@see	PrimitiveTween#ease
-		 *	
-		 */
-		public static function tween($target:Object, $property:String, $value:*, $duration:Number, $ease:Function = null, $delay:Number = 0, $round:Boolean = false, $position:Number = 0, $bezier:Array = null):Tween {
-			var st:Tween = new Tween({target:$target, value:$value, property:$property, duration:$duration, ease:$ease, delay:$delay, round:$round, position:$position, bezier:$bezier});
-			st.start();
-			return st;
+		public function Tween($target:Object, $tweenObject:Object) {
+			super($target, $tweenObject);
 		}
 		
 		/**
@@ -195,7 +169,7 @@ package com.desuade.motion.tweens {
 				return 0;
 			} else {
 				var pt:PrimitiveTween;
-				var ftv:Object = $to.target[$to.property];
+				var ftv:Object = target[$to.property];
 				var ntval:*;
 				if(isNaN(_newval)){
 					if($to.value is Random) ntval = $to.value.randomValue;
@@ -205,13 +179,13 @@ package com.desuade.motion.tweens {
 					else _newval = (typeof ntval == 'string') ? ftv + Number(ntval) : ntval;
 				}
 				if($to.bezier == undefined || $to.bezier == null){
-					 pt = BasicTween._tweenholder[PrimitiveTween._count] = new PrimitiveTween($to.target, $to.property, _newval, $to.duration*1000, $to.ease);
+					 pt = BasicTween._tweenholder[PrimitiveTween._count] = new PrimitiveTween(target, $to.property, _newval, $to.duration*1000, $to.ease);
 				} else {
 					var newbez:Array = [];
 					for (var i:int = 0; i < $to.bezier.length; i++) {
 						newbez.push((typeof $to.bezier[i] == 'string') ? ftv + Number($to.bezier[i]) : $to.bezier[i]);
 					}
-					pt = BasicTween._tweenholder[PrimitiveTween._count] = new PrimitiveBezierTween($to.target, $to.property, _newval, $to.duration*1000, newbez, $to.ease);
+					pt = BasicTween._tweenholder[PrimitiveTween._count] = new PrimitiveBezierTween(target, $to.property, _newval, $to.duration*1000, newbez, $to.ease);
 				}
 				pt.addEventListener(TweenEvent.ENDED, endFunc, false, 0, true);
 				if($to.position > 0) {
@@ -243,8 +217,8 @@ package com.desuade.motion.tweens {
 		/**
 		 *	@inheritDoc
 		 */
-		public override function clone():* {
-			return new Tween(duplicateConfig());
+		public override function clone($target:Object):* {
+			return new Tween($target, duplicateConfig());
 		}
 		
 		/**

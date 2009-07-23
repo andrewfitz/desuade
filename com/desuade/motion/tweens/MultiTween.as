@@ -69,7 +69,6 @@ package com.desuade.motion.tweens {
 		 *	<p>The constructor accepts an object that has all the paramaters needed to create a new tween.</p>
 		 *	<p>Paramaters for the tween object:</p>
 		 *	<ul>
-		 *	<li>target:Object – an object to have it's property tweened</li>
 		 *	<li>properties:Object – an object of properties and values to tween. Passing a Number will tween it to that absolute value, passing a String will use a relative value (target.property + value) - ie: <code>{x:100}</code> or <code>{y:"200"}</code></li>
 		 *	<li>ease:Function – the easing function to use. Default is Linear.none.</li>
 		 *	<li>duration:Number – how long in seconds for the tween to last</li>
@@ -79,7 +78,10 @@ package com.desuade.motion.tweens {
 		 *	<li>relative:Boolean – this overrides the number/string check on the value to set the value relative to the current value</li>
 		 *	</ul>
 		 *	
-		 *	<p>Example: <code>var mt:MultiTween = new MultiTween({target:myobj, properties:{x:40, y:200}, duration:2, ease:Bounce.easeIn, delay:2, position:0, round:false, relative:true})</code></p>
+		 *	<p>Example: <code>var mt:MultiTween = new MultiTween(myobj, {properties:{x:40, y:200}, duration:2, ease:Bounce.easeIn, delay:2, position:0, round:false, relative:true})</code></p>
+		 *	
+		 *	@param	target	 The target object to have it's property tweened
+		 *	@param	tweenObject	 The config object that has all the values for the tween
 		 *	
 		 *	@see	PrimitiveTween#target
 		 *	@see	PrimitiveTween#duration
@@ -87,32 +89,8 @@ package com.desuade.motion.tweens {
 		 *	@see	BasicMultiTween
 		 *	
 		 */
-		public function MultiTween($tweenObject:Object) {
-			super($tweenObject);
-		}
-		
-		/**
-		 *	<p>This is a static method that creates and starts a tween with a strict syntax.</p>
-		 *	
-		 *	@param	target	an object to have it's property tweened
-		 *	@param	properties	an object of properties and values to tween. Passing a Number will tween it to that absolute value, passing a String will use a relative value (target.property + value) - ie: <code>{x:100}</code> or <code>{y:"200"}</code>
-		 *	@param	duration	how long in seconds for the tween to last
-		 *	@param	ease	the easing function to use. Default is Linear.none.
-		 *	@param	delay	how long in seconds to delay starting the tween
-		 *	@param	round	round the values on update (to an int)
-		 *	@param	position	what position to start the tween at 0-1
-		 *	
-		 *	<p>example: MultiTween.tween(myobj, {x:200, y:'400'}, 2.5, null, 0, false, false, 0)</p>
-		 *	
-		 *	@see	PrimitiveTween#target
-		 *	@see	PrimitiveTween#duration
-		 *	@see	PrimitiveTween#ease
-		 *	
-		 */
-		public static function tween($target:Object, $properties:Object, $duration:Number, $ease:Function = null, $delay:Number = 0, $round:Boolean = false, $position:Number = 0):MultiTween {
-			var st:MultiTween = new MultiTween({target:$target, properties:$properties, duration:$duration, ease:$ease, delay:$delay, round:$round, position:$position});
-			st.start();
-			return st;
+		public function MultiTween($target:Object, $tweenObject:Object) {
+			super($target, $tweenObject);
 		}
 		
 		/**
@@ -129,7 +107,7 @@ package com.desuade.motion.tweens {
 				if(_newvals.length == 0){
 					var t:Object = $to.properties;
 					for (var p:String in t) {
-						var ftv:Object = $to.target[p];
+						var ftv:Object = target[p];
 						var tp:* = t[p];
 						var ntval:*;
 						var newvaly:Number;
@@ -143,7 +121,7 @@ package com.desuade.motion.tweens {
 					}
 				}
 				//no bezier tweens for multitweening
-				pt = BasicTween._tweenholder[PrimitiveTween._count] = new PrimitiveMultiTween($to.target, _newproperties, $to.duration*1000, $to.ease);
+				pt = BasicTween._tweenholder[PrimitiveTween._count] = new PrimitiveMultiTween(target, _newproperties, $to.duration*1000, $to.ease);
 				pt.addEventListener(TweenEvent.ENDED, endFunc, false, 0, true);
 				if($to.position > 0) {
 					pt.starttime -= ($to.position*$to.duration)*1000;
@@ -174,8 +152,8 @@ package com.desuade.motion.tweens {
 		/**
 		 *	@inheritDoc
 		 */
-		public override function clone():* {
-			return new MultiTween(duplicateConfig());
+		public override function clone($target:Object):* {
+			return new MultiTween($target, duplicateConfig());
 		}
 		
 		////new methods

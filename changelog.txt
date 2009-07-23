@@ -3,13 +3,22 @@ Desuade Library Changelog
 
 Beta 3:
 
+	[Motion package not fully backwards compatible]
+
 	Motion:
 		-200% speed boost! Renders 2x as many tweens without performance hit
-		-removed individual PrimitiveTween update listeners - now uses a BasicTween loop update
+		-removed individual PrimitiveTween update sprite listeners - now uses a BasicTween loop update
 		-added render() methods for PrimitiveTweens
 		-PrimitiveTweens now do not run an update event automatically - you can use your own loop/timer/event to run render()
+		-added BasicTween.ptid for the PrimitiveTween.id
+		-Physics and Tween classes now separate 'target' from the tween config for constructor:
+			new Tween(target, {property:'x', value:50, duration:2});
+			new BasicPhysics(target, {property:'y', velocity:2});
+		-updated controllers and sequencers to reflect API changes
+		-Fix: KeyframeContainer.isFlat()  0 === '0' bug
 		
 	Partigen:
+		-added SweepPool to remove particles at a set interval (performance effect unknown)
 		-Fix: addColorTween always using 'color'
 		
 	Debugging:
@@ -17,6 +26,8 @@ Beta 3:
 	Utils:
 
 Beta 2 (2009/7/03):
+
+	[not backwards compatible at all]
 
 	Motion:
 		-rewrote controllers

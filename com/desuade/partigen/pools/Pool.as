@@ -79,7 +79,7 @@ package com.desuade.partigen.pools {
 		 *	@param	id	 The id of the particle to remove.
 		 */
 		public function removeParticle($id:int):void {
-			Debug.output('partigen', 40005);
+			Debug.output('partigen', 40005, [$id]);
 		}
 	
 	}

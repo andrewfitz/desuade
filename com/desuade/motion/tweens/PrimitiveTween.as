@@ -79,6 +79,11 @@ package com.desuade.motion.tweens {
 		public var ease:Function;
 		
 		/**
+		 *	Has the PrimitiveTween ended or not
+		 */
+		public var ended:Boolean = false;
+		
+		/**
 		 *	@private
 		 */
 		internal var startvalue:Number;
@@ -121,14 +126,14 @@ package com.desuade.motion.tweens {
 		}
 		
 		/**
-		 *	This ends and kills the tween immediately.
+		 *	This ends the tween immediately.
 		 *	
 		 *	@param	broadcast	 If false, this will not broadcast an ENDED event.
 		 */
 		public function end($broadcast:Boolean = true):void {
-			Debug.output('motion', 50002, [id]);
+			ended = true;
 			if($broadcast) dispatchEvent(new TweenEvent(TweenEvent.ENDED, {primitiveTween:this}));
-			delete this;
+			Debug.output('motion', 50002, [id]);
 		}
 		
 		/**

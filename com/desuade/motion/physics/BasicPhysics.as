@@ -115,7 +115,6 @@ package com.desuade.motion.physics {
 		 *	<p>Unlike tweens, there is no end value, and the BasicPhysics' update will continue to run until it is stopped.</p>
 		 *	
 		 *	<ul>
-		 *	<li>target:Object – The target object.</li>
 		 *	<li>property:String – The property to apply the physics to.</li>
 		 *	<li>velocity:Number – The velocity of the property. Defaults 0.</li>
 		 *	<li>acceleration:Number – The acceleration of the property. Defaults 0.</li>
@@ -124,6 +123,9 @@ package com.desuade.motion.physics {
 		 *	<li>flip:Boolean – To flip the cartesian coordinates or not. Defaults false.</li>
 		 *	</ul>
 		 *	
+		 *	@param	target	 The target object.
+		 *	@param	physicsObject	 The object containing the physics configuration values.
+		 *	
 		 *	@see #target
 		 *	@see #property
 		 *	@see #velocity
@@ -131,11 +133,12 @@ package com.desuade.motion.physics {
 		 *	@see #friction
 		 *	@see #angle
 		 *	@see #flip
+		 *	@see #config
 		 */
-		public function BasicPhysics($physicsObject:Object) {
+		public function BasicPhysics($target:Object, $physicsObject:Object) {
 			super();
 			_physicsconfig = $physicsObject;
-			target = $physicsObject.target;
+			target = $target;
 			property = $physicsObject.property;
 			velocity = $physicsObject.velocity || 0;
 			acceleration = $physicsObject.acceleration || 0;

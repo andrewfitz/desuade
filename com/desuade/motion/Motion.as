@@ -33,17 +33,17 @@ package com.desuade.motion {
 	 *  @author Andrew Fitzgerald
 	 *  @since  20.04.2009
 	 */
-	public class Motion extends Object {
+	public class Motion {
 		
 		/**
 		 *	The numeric version of the package. Used for version comparisions.
 		 */
-		public static const VERSION:Number = 1.004;
+		public static const VERSION:Number = 1.005;
 		
 		/**
 		 *	The "official" release version.
 		 */
-		public static const VERSIONLABEL:String = '1.0 Beta 2';
+		public static const VERSIONLABEL:String = '1.0 Beta 3';
 		
 		/**
 		 *	Company that owns the source code

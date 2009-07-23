@@ -84,7 +84,7 @@ package com.desuade.motion.controllers {
 		public function PhysicsMultiController($target:Object, $property:String, $duration:Number, $physics:BasicPhysics = null, $containerClass:Class = null, $tweenClass:Class = null) {
 			super(null, [], $duration);
 			if($physics == null){
-				_physics = new BasicPhysics({target:$target, property:$property});
+				_physics = new BasicPhysics($target, {property:$property});
 			} else {
 				_physics = $physics;
 				_physics.target = $target;
