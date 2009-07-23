@@ -1,7 +1,7 @@
 Desuade Library Changelog
 -------------------------
 
-Beta 3:
+Beta 3 (2009/7/23):
 
 	[Motion package not fully backwards compatible]
 
@@ -18,12 +18,14 @@ Beta 3:
 		-Fix: KeyframeContainer.isFlat()  0 === '0' bug
 		
 	Partigen:
+		-performance increase inherited from Motion Package
 		-added SweepPool to remove particles at a set interval (performance effect unknown)
 		-Fix: addColorTween always using 'color'
+		-Updated debug codes
 		
-	Debugging:
+	Debugging: none
 	
-	Utils:
+	Utils: none
 
 Beta 2 (2009/7/03):
 
