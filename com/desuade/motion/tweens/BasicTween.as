@@ -30,6 +30,8 @@ package com.desuade.motion.tweens {
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	import flash.utils.getTimer;
+	import flash.utils.*;
+	import com.desuade.motion.eases.*;
 	
 	/**
 	 *  A very basic tween that allows you to tween a given value on any object to a new value.
@@ -117,11 +119,11 @@ package com.desuade.motion.tweens {
 		 *	@see	PrimitiveTween#ease
 		 *	
 		 */
-		public function BasicTween($target:Object, $tweenObject:Object) {
+		public function BasicTween($target:Object, $tweenObject:Object = null) {
 			super();
 			if(!_inited) init();
 			target = $target;
-			_tweenconfig = $tweenObject;
+			_tweenconfig = $tweenObject || {};
 			Debug.output('motion', 40001);
 		}
 		
@@ -175,35 +177,43 @@ package com.desuade.motion.tweens {
 		}
 		
 		/**
-		 *	This creates a new tween that is a duplicate clone of this.
-		 *	
-		 *	@param	target	 The new target object.
-		 *	
-		 *	@return		A new copy of the current tween.
+		 *	This creates an XML object that represents the tween, based on it's config object.
 		 */
-		public function clone($target:Object):* {
-			return new BasicTween($target, duplicateConfig());
+		public function toXML():XML {
+			var txml:XML = <tween />;
+			txml.setLocalName(getQualifiedClassName(this).replace("com.desuade.motion.tweens::", ""));
+			for (var p:String in _tweenconfig) {
+				if(_tweenconfig[p] != undefined) txml.@[p] = _tweenconfig[p];
+			}
+			if(_tweenconfig.value != undefined) txml.@value = (typeof _tweenconfig.value == 'string') ? "*" + _tweenconfig.value : _tweenconfig.value;
+			if(_tweenconfig.ease != undefined && typeof _tweenconfig.ease != 'string') Debug.output('motion', 10008);
+			return txml;
 		}
 		
 		/**
-		 *	@private
+		 *	Configures the tween based on the values provided by the XML.
+		 *	
+		 *	@param	xml	 A single line of XML to use for configuration
+		 *	@return		Returns the Tween object that called the method
 		 */
-		protected function duplicateConfig():Object {
-			var ntc:Object = new Object();
-			for (var p:String in _tweenconfig) {
-				ntc[p] = _tweenconfig[p];
+		public function fromXML($xml:XML):BasicTween {
+			var ats:XMLList = $xml.attributes();
+			for (var p:String in ats) {
+				var an:String = ats[p].name();
+				_tweenconfig[an] = isNaN($xml.@[an]) ? String($xml.@[an]) : Number($xml.@[an]);
 			}
-			return ntc;
+			if(_tweenconfig.value != undefined && typeof _tweenconfig.value == 'string' && _tweenconfig.value.charCodeAt(0) == 42) _tweenconfig.value = _tweenconfig.value.slice(1);
+			return this;
 		}
 		
 		/**
 		 *	@private
 		 */
 		protected function createTween($to:Object):int {
-	      var newval:Number = (typeof $to.value == 'string') ? target[$to.property] + Number($to.value) : $to.value;
-	      var pt:PrimitiveTween = _tweenholder[PrimitiveTween._count] = new PrimitiveTween(target, $to.property, newval, $to.duration*1000, $to.ease);
-	      pt.addEventListener(TweenEvent.ENDED, endFunc, false, 0, true);
-	      return pt.id;
+			var newval:Number = (typeof $to.value == 'string') ? target[$to.property] + Number($to.value) : $to.value;
+			var pt:PrimitiveTween = _tweenholder[PrimitiveTween._count] = new PrimitiveTween(target, $to.property, newval, $to.duration*1000, $to.ease);
+			pt.addEventListener(TweenEvent.ENDED, endFunc, false, 0, true);
+			return pt.id;
 		}
 		
 		/**

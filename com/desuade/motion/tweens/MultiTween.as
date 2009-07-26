@@ -29,6 +29,7 @@ package com.desuade.motion.tweens {
 	import flash.utils.getTimer;
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
+	import flash.utils.*;
 	
 	import com.desuade.debugging.*
 	import com.desuade.utils.*
@@ -89,7 +90,7 @@ package com.desuade.motion.tweens {
 		 *	@see	BasicMultiTween
 		 *	
 		 */
-		public function MultiTween($target:Object, $tweenObject:Object) {
+		public function MultiTween($target:Object, $tweenObject:Object = null) {
 			super($target, $tweenObject);
 		}
 		
@@ -131,8 +132,7 @@ package com.desuade.motion.tweens {
 					}
 					Debug.output('motion', 40007, [$to.position]);
 				}
-				pt.addEventListener(TweenEvent.UPDATED, updateListener, false, 0, true);
-				if($to.round) addEventListener(TweenEvent.UPDATED, roundTweenValue, false, 0, true);
+				pt.updateFunc = updateListener;
 				return pt.id;
 			}
 		}
@@ -147,13 +147,6 @@ package com.desuade.motion.tweens {
 				}
 			}
 			super.endFunc($o);
-		}
-		
-		/**
-		 *	@inheritDoc
-		 */
-		public override function clone($target:Object):* {
-			return new MultiTween($target, duplicateConfig());
 		}
 		
 		////new methods
@@ -172,14 +165,26 @@ package com.desuade.motion.tweens {
 		}
 		
 		/**
+		 *	@inheritDoc
+		 */
+		public override function toXML():XML {
+			var txml:XML = super.toXML();
+			delete txml.@properties;
+			for (var r:String in _tweenconfig.properties) {
+				txml.prependChild(<property />);
+				txml.property[0].@name = r;
+				txml.property[0].@value = (typeof _tweenconfig.properties[r] == 'string') ? "*" + _tweenconfig.properties[r] : _tweenconfig.properties[r];
+			}
+			return txml;
+		}
+		
+		/**
 		 *	@private
 		 */
 		protected override function roundTweenValue($i:Object):void {
-			var pt:Object = $i.data.primitiveTween;
-			for (var p:String in pt.arrayObject.props) {
-				pt.target[p] = int(pt.target[p]);
+			for (var p:String in $i.arrayObject.props) {
+				$i.target[p] = int($i.target[p]);
 			}
-			Debug.output('motion', 50003, [pt.id, pt.target[pt.property], int(pt.target[pt.property])]);
 		}
 		
 		/**

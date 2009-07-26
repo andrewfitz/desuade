@@ -52,6 +52,7 @@ package com.desuade.motion {
 				10005: "[Tween] can not start, tween has completed",
 				10006: "[Sequence] can not start, sequence is already active or has no items",
 				10007: "[Sequence] can not stop, sequence is not active",
+				10008: "Direct functions can't be converted to XML. Please make your ease a String instead - ie: ease:'easeOutBounce'",
 				
 				// low level codes
 				40001: "[Tween] new tween created",
@@ -69,7 +70,8 @@ package com.desuade.motion {
 				//primitive low level codes
 				50001: "[PrimitiveTween] tween started: %",
 				50002: "[PrimitiveTween] tween ended: %",
-				50003: "[Tween] rounding tween %: % -> %"
+				50003: "[Tween] rounding tween %: % -> %",
+				50004: "DMP Depreciated: eases should be a String, not the direct function - ie: Bounce.easeOut -> 'easeOutBounce'"
 				
 			}
 			

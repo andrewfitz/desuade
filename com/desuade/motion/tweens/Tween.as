@@ -102,7 +102,7 @@ package com.desuade.motion.tweens {
 		 *	@see	PrimitiveTween#ease
 		 *	
 		 */
-		public function Tween($target:Object, $tweenObject:Object) {
+		public function Tween($target:Object, $tweenObject:Object = null) {
 			super($target, $tweenObject);
 		}
 		
@@ -196,8 +196,7 @@ package com.desuade.motion.tweens {
 					}
 					Debug.output('motion', 40007, [$to.position]);
 				}
-				pt.addEventListener(TweenEvent.UPDATED, updateListener, false, 0, true);
-				if($to.round) addEventListener(TweenEvent.UPDATED, roundTweenValue, false, 0, true);
+				pt.updateFunc = updateListener;
 				return pt.id;
 			}
 		}
@@ -212,13 +211,6 @@ package com.desuade.motion.tweens {
 				}
 			}
 			super.endFunc($o);
-		}
-		
-		/**
-		 *	@inheritDoc
-		 */
-		public override function clone($target:Object):* {
-			return new Tween($target, duplicateConfig());
 		}
 		
 		/**
@@ -254,6 +246,23 @@ package com.desuade.motion.tweens {
 		}
 		
 		/**
+		 *	@inheritDoc
+		 */
+		public override function toXML():XML {
+			var nx:XML = super.toXML();
+			if(_tweenconfig.bezier != undefined){
+				var na:Array = _tweenconfig.bezier;
+				var ns:String = "";
+				for (var i:int = 0; i < na.length; i++) {
+					if(i != 0) ns += ",";
+					ns += (typeof na[i] == 'string') ? "*" + na[i] : na[i];
+				}
+				nx.@bezier = ns;
+			}
+			return nx;
+		}
+		
+		/**
 		 *	@private
 		 */
 		protected function delayedTween($delay:int):void {
@@ -276,6 +285,7 @@ package com.desuade.motion.tweens {
 		 *	@private
 		 */
 		protected function updateListener($i:Object):void {
+			if(_tweenconfig.round) roundTweenValue($i);
 			dispatchEvent(new TweenEvent(TweenEvent.UPDATED, {tween:this, primitiveTween:BasicTween._tweenholder[_tweenID]}));
 		}
 		
@@ -283,9 +293,7 @@ package com.desuade.motion.tweens {
 		 *	@private
 		 */
 		protected function roundTweenValue($i:Object):void {
-			var pt:Object = $i.data.primitiveTween;
-			pt.target[pt.property] = int(pt.target[pt.property]);
-			Debug.output('motion', 50003, [pt.id, pt.target[pt.property], int(pt.target[pt.property])]);
+			$i.target[$i.property] = int($i.target[$i.property]);
 		}
 		
 		/**

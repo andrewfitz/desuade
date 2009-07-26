@@ -1,6 +1,26 @@
 Desuade Library Changelog
 -------------------------
 
+Release Candidate 1 (2009/7/28):
+	
+	[Compatible with Beta 3, with depreciations]
+	[Individual ease classes will be removed next revision, start using ease strings]
+	
+	Motion:
+		-added toXML() and fromXML() methods to most classes
+		-removed clone() since you can use XML to duplicate now
+		-eases should now be entered as Strings - Bounce.easeOut -> 'easeOutBounce'
+			eases can also be entered as functions, but will not work with XML and is not recommended
+		-changed: tween constructors only require a target
+		-added: Easing class for passing eases as strings
+		
+	Partigen: none
+	
+	Debugging: none
+	
+	Utils: none
+		
+
 Beta 3 (2009/7/23):
 
 	[Motion package not fully backwards compatible]

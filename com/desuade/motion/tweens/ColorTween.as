@@ -47,7 +47,12 @@ package com.desuade.motion.tweens {
 		 *	@private
 		 */
 		protected var _colorholder:Object;
-	
+		
+		/**
+		 *	@private
+		 */
+		protected var colorFunc:Function;
+		
 		/**
 		 *	<p>The constructor accepts an object that has all the paramaters needed to create a new tween.</p>
 		 *	<p>Paramaters for the tween object:</p>
@@ -74,21 +79,21 @@ package com.desuade.motion.tweens {
 		 *	@see	com.desuade.utils.ColorHelper#getColorObject()
 		 *	
 		 */
-		public function ColorTween($target:Object, $tweenObject:Object) {
+		public function ColorTween($target:Object, $tweenObject:Object = null) {
 			super($target, $tweenObject);
 		}
 		
 		/**
 		 *	@private
 		 */
-		protected function docolorupdater($o:Object):void {
+		protected function docolorupdater():void {
 			target.transform.colorTransform = new ColorTransform(_colorholder.redMultiplier, _colorholder.greenMultiplier, _colorholder.blueMultiplier, target.alpha, _colorholder.redOffset, _colorholder.greenOffset, _colorholder.blueOffset);
 		};
 		
 		/**
 		 *	@private
 		 */
-		protected function hexcolorupdater($o:Object):void {
+		protected function hexcolorupdater():void {
 			target[_tweenconfig.property] = ColorHelper.RGBToHex(_colorholder.redOffset, _colorholder.greenOffset, _colorholder.blueOffset);
 		};
 		
@@ -115,8 +120,7 @@ package com.desuade.motion.tweens {
 				}
 				pt = BasicTween._tweenholder[PrimitiveTween._count] = new PrimitiveMultiTween(_colorholder, cpo, $to.duration*1000, $to.ease);
 				pt.addEventListener(TweenEvent.ENDED, endFunc, false, 0, true);
-				if($to.property != undefined && $to.property != null) pt.addEventListener(TweenEvent.UPDATED, hexcolorupdater, false, 0, true);
-				else pt.addEventListener(TweenEvent.UPDATED, docolorupdater, false, 0, true);
+				colorFunc = ($to.property != undefined && $to.property != null) ? hexcolorupdater : docolorupdater;
 				if($to.position > 0) {
 					pt.starttime -= ($to.position*$to.duration)*1000;
 					if(_newvals.length > 0) {
@@ -125,17 +129,18 @@ package com.desuade.motion.tweens {
 					}
 					Debug.output('motion', 40007, [$to.position]);
 				}
-				pt.addEventListener(TweenEvent.UPDATED, updateListener, false, 0, true);
-				if($to.round) addEventListener(TweenEvent.UPDATED, roundTweenValue, false, 0, true);
+				//pt.addEventListener(TweenEvent.UPDATED, updateListener, false, 0, true);
+				pt.updateFunc = updateListener;
 				return pt.id;
 			}
 		}
 		
 		/**
-		 *	@inheritDoc
+		 *	@private
 		 */
-		public override function clone($target:Object):* {
-			return new ColorTween($target, duplicateConfig());
+		protected override function updateListener($i:Object):void {
+			super.updateListener($i);
+			colorFunc();
 		}
 	
 	}

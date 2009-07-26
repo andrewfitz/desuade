@@ -28,7 +28,7 @@ package com.desuade.motion.tweens {
 	import flash.events.EventDispatcher;
 	import flash.utils.getTimer;
 	
-	import com.desuade.motion.eases.Linear;
+	import com.desuade.motion.eases.*;
 	import com.desuade.debugging.*
 	import com.desuade.motion.events.*
 
@@ -84,6 +84,11 @@ package com.desuade.motion.tweens {
 		public var ended:Boolean = false;
 		
 		/**
+		 *	The function to run on update
+		 */
+		public var updateFunc:Function = uf;
+		
+		/**
 		 *	@private
 		 */
 		internal var startvalue:Number;
@@ -114,9 +119,9 @@ package com.desuade.motion.tweens {
 		 *	@see	#ease
 		 *	
 		 */
-		public function PrimitiveTween($target:Object, $property:String, $value:Number, $duration:int, $ease:Function = null) {
+		public function PrimitiveTween($target:Object, $property:String, $value:Number, $duration:int, $ease:* = null) {
 			super();
-			id = _count++, target = $target, duration = $duration, ease = $ease || Linear.none, starttime = getTimer();
+			id = _count++, target = $target, duration = $duration, ease = makeEase($ease) || Linear.none, starttime = getTimer();
 			if($property != null) {
 				property = $property, value = $value, startvalue = $target[$property];
 				difvalue = (startvalue > value) ? (value-startvalue) : -(startvalue-value);
@@ -148,9 +153,27 @@ package com.desuade.motion.tweens {
 				end();
 			} else {
 				target[property] = ease($time, startvalue, difvalue, duration);
-				dispatchEvent(new TweenEvent(TweenEvent.UPDATED, {primitiveTween:this}));
+				updateFunc(this);
+				//dispatchEvent(new TweenEvent(TweenEvent.UPDATED, {primitiveTween:this}));
 			}
 		}
+		
+		/**
+		 *	@private
+		 */
+		protected function makeEase($ease:*):Function {
+			if(typeof $ease == 'string'){
+				return Easing[$ease];
+			} else {
+				Debug.output('motion', 50004);
+				return $ease;
+			}
+		}
+		
+		/**
+		 *	@private
+		 */
+		protected function uf($i):void{}
 	
 	}
 

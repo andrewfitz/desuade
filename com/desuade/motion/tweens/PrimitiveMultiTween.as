@@ -100,7 +100,8 @@ package com.desuade.motion.tweens {
 				for (var k:int = 0; k < arrayObject.props.length; k++) {
 					target[arrayObject.props[k]] = ease($time, arrayObject.startvalues[k], arrayObject.difvalues[k], duration);
 				}
-				dispatchEvent(new TweenEvent(TweenEvent.UPDATED, {primitiveTween:this}));
+				updateFunc(this);
+				//dispatchEvent(new TweenEvent(TweenEvent.UPDATED, {primitiveTween:this}));
 			}
 		}
 	

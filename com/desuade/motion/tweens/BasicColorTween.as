@@ -71,15 +71,8 @@ package com.desuade.motion.tweens {
 		 *	@see	com.desuade.utils.ColorHelper#getColorObject()
 		 *	
 		 */
-		public function BasicColorTween($target:Object, $tweenObject:Object) {
+		public function BasicColorTween($target:Object, $tweenObject:Object = null) {
 			super($target, $tweenObject);
-		}
-		
-		/**
-		 *	@inheritDoc
-		 */
-		public override function clone($target:Object):* {
-			return new BasicColorTween($target, duplicateConfig());
 		}
 		
 		/**
@@ -90,8 +83,7 @@ package com.desuade.motion.tweens {
 			var cpo:Object = ColorHelper.getColorObject($to.type || 'tint', $to.amount || 1, $to.value, _colorholder);
 			var pt:PrimitiveMultiTween = BasicTween._tweenholder[PrimitiveTween._count] = new PrimitiveMultiTween(_colorholder, cpo, $to.duration*1000, $to.ease);
 			pt.addEventListener(TweenEvent.ENDED, endFunc, false, 0, true);
-			if($to.property != undefined) pt.addEventListener(TweenEvent.UPDATED, hexcolorupdater, false, 0, true);
-			else pt.addEventListener(TweenEvent.UPDATED, docolorupdater, false, 0, true);
+			pt.updateFunc = ($to.property != undefined && $to.property != null) ? hexcolorupdater : docolorupdater;
 			return pt.id;
 		}
 		

@@ -197,22 +197,6 @@ package com.desuade.motion.sequencers {
 		}
 		
 		/**
-		 *	Creates a duplicate Sequence from the current one.
-		 *	@return		A copy of the sequence.
-		 */
-		public function clone():Sequence {
-			var ns:Sequence = new Sequence(_tweenClass);
-			for (var i:int = 0; i < this.length; i++){
-				var no:Object = {};
-				for (var p:String in this[i]) {
-					no[p] = this[i][p]
-				}
-				ns.push(no);
-			}
-			return ns;
-		}
-		
-		/**
 		 *	Removes all the items in the Sequence.
 		 *	@return		An array of all the items emptied from the sequence.
 		 */

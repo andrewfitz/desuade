@@ -29,6 +29,7 @@ package com.desuade.motion.tweens {
 	import com.desuade.motion.events.*
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
+	import flash.utils.*;
 
 	/**
 	 *  This creates a BasicTween, but accepts a parameters object that can contain many properties and values.
@@ -60,7 +61,7 @@ package com.desuade.motion.tweens {
 		 *	@see	PrimitiveTween#ease
 		 *	
 		 */
-		public function BasicMultiTween($target:Object, $tweenObject:Object) {
+		public function BasicMultiTween($target:Object, $tweenObject:Object = null) {
 			super($target, $tweenObject);
 		}
 		
@@ -79,8 +80,15 @@ package com.desuade.motion.tweens {
 		/**
 		 *	@inheritDoc
 		 */
-		public override function clone($target:Object):* {
-			return new BasicMultiTween($target, duplicateConfig());
+		public override function toXML():XML {
+			var txml:XML = super.toXML();
+			delete txml.@properties;
+			for (var r:String in _tweenconfig.properties) {
+				txml.prependChild(<property />);
+				txml.property[0].@name = r;
+				txml.property[0].@value = (typeof _tweenconfig.properties[r] == 'string') ? "*" + _tweenconfig.properties[r] : _tweenconfig.properties[r];
+			}
+			return txml;
 		}
 
 	}
