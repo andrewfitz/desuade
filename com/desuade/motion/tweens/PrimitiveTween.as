@@ -24,13 +24,10 @@ THE SOFTWARE.
 
 package com.desuade.motion.tweens {
 
-	import flash.events.Event;
-	import flash.events.EventDispatcher;
 	import flash.utils.getTimer;
 	
 	import com.desuade.motion.eases.*;
 	import com.desuade.debugging.*
-	import com.desuade.motion.events.*
 
 	/**
 	 *  This is the most basic tween with no management. Users should not create this directly, instead use BasicTween.
@@ -41,7 +38,7 @@ package com.desuade.motion.tweens {
 	 *  @author Andrew Fitzgerald
 	 *  @since  01.05.2009
 	 */
-	public class PrimitiveTween extends EventDispatcher {
+	public class PrimitiveTween extends Object {
 		
 		/**
 		 *	@private
@@ -89,6 +86,11 @@ package com.desuade.motion.tweens {
 		public var updateFunc:Function = uf;
 		
 		/**
+		 *	The function to run on end
+		 */
+		public var endFunc:Function = ef;
+		
+		/**
 		 *	@private
 		 */
 		internal var startvalue:Number;
@@ -121,12 +123,11 @@ package com.desuade.motion.tweens {
 		 */
 		public function PrimitiveTween($target:Object, $property:String, $value:Number, $duration:int, $ease:* = null) {
 			super();
-			id = _count++, target = $target, duration = $duration, ease = makeEase($ease) || Linear.none, starttime = getTimer();
+			id = _count++, target = $target, duration = $duration, ease = makeEase($ease) || Easing.linear, starttime = getTimer();
 			if($property != null) {
 				property = $property, value = $value, startvalue = $target[$property];
 				difvalue = (startvalue > value) ? (value-startvalue) : -(startvalue-value);
 			}
-			dispatchEvent(new TweenEvent(TweenEvent.STARTED, {primitiveTween:this}));
 			Debug.output('motion', 50001, [id]);
 		}
 		
@@ -137,7 +138,7 @@ package com.desuade.motion.tweens {
 		 */
 		public function end($broadcast:Boolean = true):void {
 			ended = true;
-			if($broadcast) dispatchEvent(new TweenEvent(TweenEvent.ENDED, {primitiveTween:this}));
+			if($broadcast) endFunc(this);
 			Debug.output('motion', 50002, [id]);
 		}
 		
@@ -174,6 +175,11 @@ package com.desuade.motion.tweens {
 		 *	@private
 		 */
 		protected function uf($i):void{}
+		
+		/**
+		 *	@private
+		 */
+		protected function ef($i):void{}
 	
 	}
 

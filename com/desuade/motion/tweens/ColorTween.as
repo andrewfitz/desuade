@@ -119,7 +119,7 @@ package com.desuade.motion.tweens {
 					}	
 				}
 				pt = BasicTween._tweenholder[PrimitiveTween._count] = new PrimitiveMultiTween(_colorholder, cpo, $to.duration*1000, $to.ease);
-				pt.addEventListener(TweenEvent.ENDED, endFunc, false, 0, true);
+				pt.endFunc = endFunc;
 				colorFunc = ($to.property != undefined && $to.property != null) ? hexcolorupdater : docolorupdater;
 				if($to.position > 0) {
 					pt.starttime -= ($to.position*$to.duration)*1000;
@@ -129,7 +129,6 @@ package com.desuade.motion.tweens {
 					}
 					Debug.output('motion', 40007, [$to.position]);
 				}
-				//pt.addEventListener(TweenEvent.UPDATED, updateListener, false, 0, true);
 				pt.updateFunc = updateListener;
 				return pt.id;
 			}

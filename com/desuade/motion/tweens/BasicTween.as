@@ -212,7 +212,7 @@ package com.desuade.motion.tweens {
 		protected function createTween($to:Object):int {
 			var newval:Number = (typeof $to.value == 'string') ? target[$to.property] + Number($to.value) : $to.value;
 			var pt:PrimitiveTween = _tweenholder[PrimitiveTween._count] = new PrimitiveTween(target, $to.property, newval, $to.duration*1000, $to.ease);
-			pt.addEventListener(TweenEvent.ENDED, endFunc, false, 0, true);
+			pt.endFunc = endFunc;
 			return pt.id;
 		}
 		
@@ -222,7 +222,6 @@ package com.desuade.motion.tweens {
 		protected function endFunc($o:Object):void {
 			dispatchEvent(new TweenEvent(TweenEvent.ENDED, {tween:this, primitiveTween:_tweenholder[_tweenID]}));
 			_active = false;
-			_tweenholder[_tweenID].removeEventListener(TweenEvent.ENDED, endFunc);
 			_tweenholder[_tweenID] = null;
 			delete _tweenholder[_tweenID];
 			_tweenID = 0;

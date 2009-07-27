@@ -135,7 +135,7 @@ package com.desuade.motion.controllers {
 			var pa:Array = this.toLabeledArray();
 			for (var i:int = 0; i < pa.length; i++) {
 				var p:Object = this[pa[i].label];
-				p.ease = Linear.none;
+				p.ease = 'linear';
 				p.value = $value;
 				p.spread = '0';
 				p.extras = $extras || {};

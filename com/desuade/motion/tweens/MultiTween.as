@@ -123,7 +123,7 @@ package com.desuade.motion.tweens {
 				}
 				//no bezier tweens for multitweening
 				pt = BasicTween._tweenholder[PrimitiveTween._count] = new PrimitiveMultiTween(target, _newproperties, $to.duration*1000, $to.ease);
-				pt.addEventListener(TweenEvent.ENDED, endFunc, false, 0, true);
+				pt.endFunc = endFunc;
 				if($to.position > 0) {
 					pt.starttime -= ($to.position*$to.duration)*1000;
 					if(_newvals.length > 0) {
@@ -141,8 +141,8 @@ package com.desuade.motion.tweens {
 		 *	@private
 		 */
 		protected override function endFunc($o:Object):void {
-			if($o.data.primitiveTween.arrayObject.props[0] != undefined){
-				if($o.data.primitiveTween.target[$o.data.primitiveTween.arrayObject.props[0]] == $o.data.primitiveTween.arrayObject.values[0]){
+			if($o.arrayObject.props[0] != undefined){
+				if($o.target[$o.arrayObject.props[0]] == $o.arrayObject.values[0]){
 					_completed = true;
 				}
 			}

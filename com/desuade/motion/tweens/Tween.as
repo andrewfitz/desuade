@@ -187,7 +187,7 @@ package com.desuade.motion.tweens {
 					}
 					pt = BasicTween._tweenholder[PrimitiveTween._count] = new PrimitiveBezierTween(target, $to.property, _newval, $to.duration*1000, newbez, $to.ease);
 				}
-				pt.addEventListener(TweenEvent.ENDED, endFunc, false, 0, true);
+				pt.endFunc = endFunc;
 				if($to.position > 0) {
 					pt.starttime -= ($to.position*$to.duration)*1000;
 					if(!isNaN(_newval)) {
@@ -205,8 +205,8 @@ package com.desuade.motion.tweens {
 		 *	@private
 		 */
 		protected override function endFunc($o:Object):void {
-			if($o.data.primitiveTween.property != undefined){
-				if($o.data.primitiveTween.target[$o.data.primitiveTween.property] == $o.data.primitiveTween.value){
+			if($o.property != undefined){
+				if($o.target[$o.property] == $o.value){
 					_completed = true;
 				}
 			}

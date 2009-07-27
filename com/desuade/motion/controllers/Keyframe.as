@@ -24,7 +24,7 @@ THE SOFTWARE.
 
 package com.desuade.motion.controllers {
 
-	import com.desuade.motion.eases.Linear;
+	import com.desuade.motion.eases.Easing;
 	
 	/**
 	 *  Used by KeyframeContainers to set a point for a change in value during a tween.
@@ -63,7 +63,7 @@ package com.desuade.motion.controllers {
 		 *	
 		 *	<p>Note: the ease is used for tweens that end with this value, so the ease value on the 'begin' keyframe is irrelevant.</p>
 		 */
-		public var ease:Function;
+		public var ease:*;
 		
 		/**
 		 *	An object of any extra properties to be passed to the tweening engine. Such as 'bezier', 'type', 'amount', etc.
@@ -81,15 +81,15 @@ package com.desuade.motion.controllers {
 		 *	
 		 *	@param	position	 A value between 0-1 that reprsents the position of the point, 0 being the beginning of the controller and 1 being the end point (0 and 1 are already taken by 'begin' and 'end' points)
 		 *	@param	value	 A value to tween to. The target will arive (the tween will end) at this value at the position of this point. Pass a Number for absolute, or a String for relative. null will use the target's start value.
-		 *	@param	ease	 What ease function to use. Ease functions like Bounce.easeOut, etc. null will default to Linear.none
+		 *	@param	ease	 What ease to use. Eases like 'easeOutBounce', etc. null will default to 'linear'
 		 *	@param	spread	 A value to create a random range from. If the spread doesn't equal the 'value' value or '0', a random value will be created between the 'value' and the 'spread'. Pass a Number for absolute, or a String for relative.
 		 *	@param	extras	An object that contains extra paramaters for the tween (depends on the tweenClass used in the KeyframeContainer)
 		 */
-		public function Keyframe($position:Number, $value:* = null, $ease:Function = null, $spread:* = null, $extras:Object = null) {
+		public function Keyframe($position:Number, $value:* = null, $ease:* = null, $spread:* = null, $extras:Object = null) {
 			super();
 			position = $position;
 			value = $value;
-			ease = $ease || Linear.none;
+			ease = $ease || 'linear';
 			spread = $spread || "0";
 			extras = $extras || {};
 		}

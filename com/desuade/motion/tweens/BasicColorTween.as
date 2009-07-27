@@ -82,7 +82,7 @@ package com.desuade.motion.tweens {
 			_colorholder = ($to.property != undefined) ? ColorHelper.getColorObject('tint', 1, target[$to.property]) : target.transform.colorTransform;
 			var cpo:Object = ColorHelper.getColorObject($to.type || 'tint', $to.amount || 1, $to.value, _colorholder);
 			var pt:PrimitiveMultiTween = BasicTween._tweenholder[PrimitiveTween._count] = new PrimitiveMultiTween(_colorholder, cpo, $to.duration*1000, $to.ease);
-			pt.addEventListener(TweenEvent.ENDED, endFunc, false, 0, true);
+			pt.endFunc = endFunc;
 			pt.updateFunc = ($to.property != undefined && $to.property != null) ? hexcolorupdater : docolorupdater;
 			return pt.id;
 		}
