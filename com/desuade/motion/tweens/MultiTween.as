@@ -76,6 +76,7 @@ package com.desuade.motion.tweens {
 		 *	<li>delay:Number – how long in seconds to delay starting the tween</li>
 		 *	<li>position:Number – what position to start the tween at 0-1</li>
 		 *	<li>round:Boolean – round the values on update (to an int)</li>
+		 *	<li>update:Boolean – enable broadcasting of UPDATED event (can lower performance)</li>
 		 *	<li>relative:Boolean – this overrides the number/string check on the value to set the value relative to the current value</li>
 		 *	</ul>
 		 *	
@@ -176,6 +177,20 @@ package com.desuade.motion.tweens {
 				txml.property[0].@value = (typeof _tweenconfig.properties[r] == 'string') ? "*" + _tweenconfig.properties[r] : _tweenconfig.properties[r];
 			}
 			return txml;
+		}
+		
+		/**
+		 *	@inheritDoc
+		 */
+		public override function fromXML($xml:XML):BasicTween {
+			super.fromXML($xml);
+			var cd:XMLList = $xml.children();
+			var po:Object = {};
+			for (var i:int = 0; i < cd.length(); i++) {
+				po[cd[i].@name] = (cd[i].@value.charCodeAt(0) == 42) ? String(cd[i].@value.slice(1)) : Number(cd[i].@value);
+			}
+			_tweenconfig.properties = po;
+			return this;
 		}
 		
 		/**

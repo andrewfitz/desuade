@@ -64,6 +64,7 @@ package com.desuade.motion.tweens {
 		 *	<li>duration:Number – how long in seconds for the tween to last</li>
 		 *	<li>delay:Number – how long in seconds to delay starting the tween</li>
 		 *	<li>position:Number – what position to start the tween at 0-1</li>
+		 *	<li>update:Boolean – enable broadcasting of UPDATED event (can lower performance)</li>
 		 *	<li>property:String – To tween a hex value instead of a DisplayObject, set this to the property</li>
 		 *	</ul>
 		 *	

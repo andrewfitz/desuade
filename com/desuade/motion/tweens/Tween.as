@@ -87,6 +87,7 @@ package com.desuade.motion.tweens {
 		 *	<li>position:Number – what position to start the tween at 0-1</li>
 		 *	<li>bezier:Array – an array of bezier curve points</li>
 		 *	<li>round:Boolean – round the values on update (to an int)</li>
+		 *	<li>update:Boolean – enable broadcasting of UPDATED event (can lower performance)</li>
 		 *	<li>relative:Boolean – this overrides the number/string check on the value to set the value relative to the current value</li>
 		 *	</ul>
 		 *	
@@ -262,6 +263,19 @@ package com.desuade.motion.tweens {
 			return nx;
 		}
 		
+		public override function fromXML($xml:XML):BasicTween {
+			super.fromXML($xml);
+			if(_tweenconfig.bezier != undefined){
+				var ba:Array = _tweenconfig.bezier.split(",");
+				var na:Array = [];
+				for (var i:int = 0; i < ba.length; i++) {
+					na.push((ba[i].charCodeAt(0) == 42) ? String(ba[i].slice(1)) : Number(ba[i]));
+				}
+			}
+			_tweenconfig.bezier = na;
+			return this;
+		}
+		
 		/**
 		 *	@private
 		 */
@@ -286,7 +300,7 @@ package com.desuade.motion.tweens {
 		 */
 		protected function updateListener($i:Object):void {
 			if(_tweenconfig.round) roundTweenValue($i);
-			dispatchEvent(new TweenEvent(TweenEvent.UPDATED, {tween:this, primitiveTween:BasicTween._tweenholder[_tweenID]}));
+			if(_tweenconfig.update) dispatchEvent(new TweenEvent(TweenEvent.UPDATED, {tween:this, primitiveTween:BasicTween._tweenholder[_tweenID]}));
 		}
 		
 		/**

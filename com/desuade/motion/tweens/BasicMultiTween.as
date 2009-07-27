@@ -69,10 +69,11 @@ package com.desuade.motion.tweens {
 		 *	@private
 		 */
 		protected override function createTween($to:Object):int {
+			var npo:Object = {};
 			for (var p:String in $to.properties) {
-				$to.properties[p] = (typeof $to.properties[p] == 'string') ? target[p] + Number($to.properties[p]) : $to.properties[p];
+				npo[p] = (typeof $to.properties[p] == 'string') ? target[p] + Number($to.properties[p]) : $to.properties[p];
 			}
-			var pt:PrimitiveMultiTween = BasicTween._tweenholder[PrimitiveTween._count] = new PrimitiveMultiTween(target, $to.properties, $to.duration*1000, $to.ease);
+			var pt:PrimitiveMultiTween = BasicTween._tweenholder[PrimitiveTween._count] = new PrimitiveMultiTween(target, npo, $to.duration*1000, $to.ease);
 			pt.endFunc = endFunc;
 			return pt.id;
 		}
@@ -89,6 +90,20 @@ package com.desuade.motion.tweens {
 				txml.property[0].@value = (typeof _tweenconfig.properties[r] == 'string') ? "*" + _tweenconfig.properties[r] : _tweenconfig.properties[r];
 			}
 			return txml;
+		}
+		
+		/**
+		 *	@inheritDoc
+		 */
+		public override function fromXML($xml:XML):BasicTween {
+			super.fromXML($xml);
+			var cd:XMLList = $xml.children();
+			var po:Object = {};
+			for (var i:int = 0; i < cd.length(); i++) {
+				po[cd[i].@name] = (cd[i].@value.charCodeAt(0) == 42) ? String(cd[i].@value.slice(1)) : Number(cd[i].@value);
+			}
+			_tweenconfig.properties = po;
+			return this;
 		}
 
 	}

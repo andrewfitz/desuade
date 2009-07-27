@@ -80,8 +80,8 @@ package com.desuade.partigen.emitters {
 		}
 		
 		/**
-		 *	<p>This is the angle used by ParticlePhysicsControllers on new particles. This only effects properties that are using physics.</p>
-		 *	<p>This number will be random based on the angle_min and angle_max values. If this value is set to a Number, both min and max will be set to the same value.</p>
+		 *	<p>This is the angle used by ParticlePhysicsControllers on new particles. This only effects properties that are using physics, NOT tweens.</p>
+		 *	<p>This number will be random based on the angle_min and angle_max values. If this is set to a value, both min and max will be set to the same value. Set angle_min and angle_max separately to create a range.</p>
 		 *	<p>The default value is 0, which is pointing "right". 90 is "up", 180 is "left", and 270 is "down".</p>
 		 */
 		public function get angle():Number{

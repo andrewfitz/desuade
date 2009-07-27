@@ -193,7 +193,7 @@ package com.desuade.motion.tweens {
 		/**
 		 *	Configures the tween based on the values provided by the XML.
 		 *	
-		 *	@param	xml	 A single line of XML to use for configuration
+		 *	@param	xml	The XML to use for configuration
 		 *	@return		Returns the Tween object that called the method
 		 */
 		public function fromXML($xml:XML):BasicTween {
