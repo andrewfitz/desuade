@@ -28,6 +28,8 @@ package com.desuade.partigen.controllers {
 	import com.desuade.motion.tweens.*;
 	import com.desuade.partigen.emitters.*;
 	
+	import flash.utils.*;
+	
 	/**
 	 *  This controls the configuration for controllers that effect the actual emitter.
 	 *    
@@ -121,6 +123,37 @@ package com.desuade.partigen.controllers {
 				this[p].stop();
 			}
 		}
+		
+		/**
+		 *	Creates an XML object containing configuration for the EmitterController
+		 *	
+		 *	@return		An XML object representing the EmitterController
+		 */
+		public function toXML():XML {
+			var txml:XML = <EmitterController />;
+			for (var p:String in this){
+				txml.appendChild(this[p].toXML());
+			}
+			return txml;
+		}
+		
+		/**
+		 *	This configures the EmitterController from XML and creates all child controllers.
+		 *	
+		 *	@param	xml	 The XML object used to configure the EmitterController.
+		 *	
+		 *	@return		The EmitterController object (for chaining)
+		 */
+		public function fromXML($xml:XML):EmitterController {
+			var cd:XMLList = $xml.children();
+			for (var i:int = 0; i < cd.length(); i++) {
+				var contclass:Class = getDefinitionByName("com.desuade.partigen.controllers::" + cd[i].localName()) as Class;
+				this[cd[i].@property] = new contclass(_emitter, cd[i].@property, 0).fromXML(cd[i]);
+			}
+			return this;
+		}
+		
+		
 	
 	}
 
