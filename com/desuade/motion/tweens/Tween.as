@@ -247,36 +247,6 @@ package com.desuade.motion.tweens {
 		}
 		
 		/**
-		 *	@inheritDoc
-		 */
-		public override function toXML():XML {
-			var nx:XML = super.toXML();
-			if(_tweenconfig.bezier != undefined){
-				var na:Array = _tweenconfig.bezier;
-				var ns:String = "";
-				for (var i:int = 0; i < na.length; i++) {
-					if(i != 0) ns += ",";
-					ns += (typeof na[i] == 'string') ? "*" + na[i] : na[i];
-				}
-				nx.@bezier = ns;
-			}
-			return nx;
-		}
-		
-		public override function fromXML($xml:XML):BasicTween {
-			super.fromXML($xml);
-			if(_tweenconfig.bezier != undefined){
-				var ba:Array = _tweenconfig.bezier.split(",");
-				var na:Array = [];
-				for (var i:int = 0; i < ba.length; i++) {
-					na.push((ba[i].charCodeAt(0) == 42) ? String(ba[i].slice(1)) : Number(ba[i]));
-				}
-			}
-			_tweenconfig.bezier = na;
-			return this;
-		}
-		
-		/**
 		 *	@private
 		 */
 		protected function delayedTween($delay:int):void {

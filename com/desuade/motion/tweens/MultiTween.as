@@ -34,6 +34,7 @@ package com.desuade.motion.tweens {
 	import com.desuade.debugging.*
 	import com.desuade.utils.*
 	import com.desuade.motion.events.*
+	import com.desuade.utils.XMLHelper;
 	
 	/**
 	 *  This is the same as the Tween class, except it can tween multiple properties at once, and offers no bezier.
@@ -174,7 +175,7 @@ package com.desuade.motion.tweens {
 			for (var r:String in _tweenconfig.properties) {
 				txml.prependChild(<property />);
 				txml.property[0].@name = r;
-				txml.property[0].@value = (typeof _tweenconfig.properties[r] == 'string') ? "*" + _tweenconfig.properties[r] : _tweenconfig.properties[r];
+				txml.property[0].@value = XMLHelper.xmlize(_tweenconfig.properties[r]);
 			}
 			return txml;
 		}
@@ -187,7 +188,7 @@ package com.desuade.motion.tweens {
 			var cd:XMLList = $xml.children();
 			var po:Object = {};
 			for (var i:int = 0; i < cd.length(); i++) {
-				po[cd[i].@name] = (cd[i].@value.charCodeAt(0) == 42) ? String(cd[i].@value.slice(1)) : Number(cd[i].@value);
+				po[cd[i].@name] = XMLHelper.dexmlize(cd[i].@value);
 			}
 			_tweenconfig.properties = po;
 			return this;

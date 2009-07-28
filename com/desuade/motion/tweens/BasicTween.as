@@ -27,6 +27,7 @@ package com.desuade.motion.tweens {
 	import flash.display.*; 
 	import com.desuade.debugging.*
 	import com.desuade.motion.events.*
+	import com.desuade.utils.XMLHelper;
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	import flash.utils.getTimer;
@@ -185,9 +186,8 @@ package com.desuade.motion.tweens {
 			var txml:XML = <tween />;
 			txml.setLocalName(getQualifiedClassName(this).replace("com.desuade.motion.tweens::", ""));
 			for (var p:String in _tweenconfig) {
-				if(_tweenconfig[p] != undefined) txml.@[p] = _tweenconfig[p];
+				if(_tweenconfig[p] != undefined) txml.@[p] = XMLHelper.xmlize(_tweenconfig[p]);
 			}
-			if(_tweenconfig.value != undefined) txml.@value = (typeof _tweenconfig.value == 'string') ? "*" + _tweenconfig.value : _tweenconfig.value;
 			if(_tweenconfig.ease != undefined && typeof _tweenconfig.ease != 'string') Debug.output('motion', 10008);
 			return txml;
 		}
@@ -204,15 +204,8 @@ package com.desuade.motion.tweens {
 			var ats:XMLList = $xml.attributes();
 			for (var p:String in ats) {
 				var an:String = ats[p].name();
-				if(String($xml.@[an]) === "false"){
-					_tweenconfig[an] = false;
-				} else if(String($xml.@[an]) === "true"){
-					_tweenconfig[an] = true;
-				} else {
-					_tweenconfig[an] = isNaN($xml.@[an]) ? String($xml.@[an]) : Number($xml.@[an]);
-				}
+				_tweenconfig[an] = XMLHelper.dexmlize($xml.@[an]);
 			}
-			if(_tweenconfig.value != undefined && typeof _tweenconfig.value == 'string' && _tweenconfig.value.charCodeAt(0) == 42) _tweenconfig.value = _tweenconfig.value.slice(1);
 			return this;
 		}
 		

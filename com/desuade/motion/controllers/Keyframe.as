@@ -23,8 +23,10 @@ THE SOFTWARE.
 */
 
 package com.desuade.motion.controllers {
-
+	
+	import com.desuade.debugging.*
 	import com.desuade.motion.eases.Easing;
+	import com.desuade.utils.XMLHelper;
 	
 	/**
 	 *  Used by KeyframeContainers to set a point for a change in value during a tween.
@@ -92,6 +94,43 @@ package com.desuade.motion.controllers {
 			ease = $ease || 'linear';
 			spread = $spread || "0";
 			extras = $extras || {};
+		}
+		
+		/**
+		 *	Creates an XML object representing the Keyframe.
+		 *	
+		 *	@return		An XML object.
+		 */
+		public function toXML():XML {
+			var txml:XML = <Keyframe />;
+			txml.@position = position;
+			txml.@ease = ease;
+			if(typeof ease != 'string') Debug.output('motion', 10008);
+			if(value != null) txml.@value = (typeof value == 'string') ? "*" + value : value;
+			txml.@spread = (typeof spread == 'string') ? "*" + spread : spread;
+			for (var p:String in extras) {
+				txml.@[p] = XMLHelper.xmlize(extras[p]);
+			}
+			return txml;
+		}
+		
+		public function fromXML($xml:XML):Keyframe {
+			if($xml.@label != undefined) delete $xml.@label;
+			position = Number($xml.@position);
+			ease = String($xml.@ease);
+			
+			// ($xml.@[an].charCodeAt(0) == 42) ? String($xml.@[an]).slice(1) : Number($xml.@[an]);
+			
+			delete $xml.@ease;
+			delete $xml.@position;
+			delete $xml.@value;
+			delete $xml.@spread;
+			var ats:XMLList = $xml.attributes();
+			for (var p:String in ats) {
+				var an:String = ats[p].name();
+				extras[an] = XMLHelper.dexmlize($xml.@[an]);
+			}
+			return this;
 		}
 	
 	}

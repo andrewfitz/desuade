@@ -137,14 +137,18 @@ package com.desuade.motion.physics {
 		 */
 		public function BasicPhysics($target:Object, $physicsObject:Object = null) {
 			super();
-			_physicsconfig = $physicsObject || {};
 			target = $target;
-			property = $physicsObject.property;
-			velocity = $physicsObject.velocity || 0;
-			acceleration = $physicsObject.acceleration || 0;
-			friction = $physicsObject.friction || 0;
-			flip = $physicsObject.flip || false;
-			angle = $physicsObject.angle || null;
+			if($physicsObject != null){
+				_physicsconfig = $physicsObject;
+				property = $physicsObject.property;
+				velocity = $physicsObject.velocity || 0;
+				acceleration = $physicsObject.acceleration || 0;
+				friction = $physicsObject.friction || 0;
+				flip = $physicsObject.flip || false;
+				angle = $physicsObject.angle || null;
+			} else {
+				_physicsconfig = new Object();
+			}
 			Debug.output('motion', 40009);
 		}
 		
@@ -227,7 +231,7 @@ package com.desuade.motion.physics {
 				var an:String = ats[p].name();
 				this[an] = _physicsconfig[an] = $xml.@[an];
 			}
-			flip = _physicsconfig.flip = (String($xml.@flip) === "true") ? true : false;
+			if($xml.@flip != undefined) flip = _physicsconfig.flip = (String($xml.@flip) === "true") ? true : false;
 			return this;
 		}
 		
