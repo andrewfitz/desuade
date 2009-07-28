@@ -178,6 +178,8 @@ package com.desuade.motion.tweens {
 		
 		/**
 		 *	This creates an XML object that represents the tween, based on it's config object.
+		 *	
+		 *	@return		An XML object of the tween's config
 		 */
 		public function toXML():XML {
 			var txml:XML = <tween />;
@@ -191,16 +193,24 @@ package com.desuade.motion.tweens {
 		}
 		
 		/**
-		 *	Configures the tween based on the values provided by the XML.
+		 *	<p>Configures the tween based on the values provided by the XML.</p>
+		 *	<p>Most properties can assigned in the attributes using the same names.</p>
+		 *	<p>The values of the attributes will be converted to Numbers if they're not NaN. For values that should be Strings (for relative), use a '&#42;' – ie: value='&#42;50'</p>
 		 *	
 		 *	@param	xml	The XML to use for configuration
-		 *	@return		Returns the Tween object that called the method
+		 *	@return		The Tween object that called the method (for chaining)
 		 */
 		public function fromXML($xml:XML):BasicTween {
 			var ats:XMLList = $xml.attributes();
 			for (var p:String in ats) {
 				var an:String = ats[p].name();
-				_tweenconfig[an] = isNaN($xml.@[an]) ? String($xml.@[an]) : Number($xml.@[an]);
+				if(String($xml.@[an]) === "false"){
+					_tweenconfig[an] = false;
+				} else if(String($xml.@[an]) === "true"){
+					_tweenconfig[an] = true;
+				} else {
+					_tweenconfig[an] = isNaN($xml.@[an]) ? String($xml.@[an]) : Number($xml.@[an]);
+				}
 			}
 			if(_tweenconfig.value != undefined && typeof _tweenconfig.value == 'string' && _tweenconfig.value.charCodeAt(0) == 42) _tweenconfig.value = _tweenconfig.value.slice(1);
 			return this;

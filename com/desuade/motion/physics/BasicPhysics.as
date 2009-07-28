@@ -135,9 +135,9 @@ package com.desuade.motion.physics {
 		 *	@see #flip
 		 *	@see #config
 		 */
-		public function BasicPhysics($target:Object, $physicsObject:Object) {
+		public function BasicPhysics($target:Object, $physicsObject:Object = null) {
 			super();
-			_physicsconfig = $physicsObject;
+			_physicsconfig = $physicsObject || {};
 			target = $target;
 			property = $physicsObject.property;
 			velocity = $physicsObject.velocity || 0;
@@ -199,6 +199,36 @@ package com.desuade.motion.physics {
 			_sprite.removeEventListener(Event.ENTER_FRAME, update);
 			dispatchEvent(new PhysicsEvent(PhysicsEvent.ENDED, {basicPhysics:this}));
 			Debug.output('motion', 40011);
+		}
+		
+		/**
+		 *	<p>This creates an XML object that represents the BasicPhysics object.</p>
+		 *	<p>The velocity used is the original velocity, not the current velocity.</p>
+		 *	@return		An XML object representing the BasicPhysics object
+		 */
+		public function toXML():XML {
+			var txml:XML = <BasicPhysics />;
+			txml.@property = property;
+			txml.@velocity = _physicsconfig.velocity;
+			txml.@friction = friction;
+			txml.@acceleration = acceleration;
+			if(angle != null) txml.@angle = angle;
+			txml.@flip = flip;
+			return txml;
+		}
+		
+		/**
+		 *	This sets the config object and all the propertieds of the BasicPhysics object from the XML.
+		 *	@return		The BasicPhysics object.
+		 */
+		public function fromXML($xml:XML):BasicPhysics {
+			var ats:XMLList = $xml.attributes();
+			for (var p:String in ats) {
+				var an:String = ats[p].name();
+				this[an] = _physicsconfig[an] = $xml.@[an];
+			}
+			flip = _physicsconfig.flip = (String($xml.@flip) === "true") ? true : false;
+			return this;
 		}
 		
 		/**

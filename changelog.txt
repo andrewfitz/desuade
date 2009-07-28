@@ -1,7 +1,7 @@
 Desuade Library Changelog
 -------------------------
 
-Beta 4 (2009/7/28):
+Release Candidate 1 (2009/7/29):
 	
 	[Compatible with Beta 3, with depreciations]
 	[Individual ease classes will be removed next revision, start using ease strings]
@@ -18,7 +18,8 @@ Beta 4 (2009/7/28):
 		-changed: TweenEvent.UPDATED only gets dispatched if "update:true" is passed to the tween's config
 		-fix: BasicMultiTween updated properties directly, effecting the tweenconfig
 		
-	Partigen: none
+	Partigen:
+		-changed: eps is now a Number (not int), and allows for 1 emission for more than 1 second 
 	
 	Debugging: none
 	

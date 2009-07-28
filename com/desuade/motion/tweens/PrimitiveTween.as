@@ -174,12 +174,12 @@ package com.desuade.motion.tweens {
 		/**
 		 *	@private
 		 */
-		protected function uf($i):void{}
+		protected function uf($i:PrimitiveTween):void{}
 		
 		/**
 		 *	@private
 		 */
-		protected function ef($i):void{}
+		protected function ef($i:PrimitiveTween):void{}
 	
 	}
 

@@ -98,7 +98,7 @@ package com.desuade.partigen.emitters {
 		/**
 		 *	@private
 		 */
-		protected var _eps:int;
+		protected var _eps:Number;
 		
 		/**
 		 *	@private
@@ -126,16 +126,17 @@ package com.desuade.partigen.emitters {
 		/**
 		 *	<p>This stands for "emissions per second". This is how many times per-second that the emitter will run the <code>emit()</code> method.</p>
 		 *	<p>The total amount of particles-per-second depends on this eps value, the burst, and the group amount.</p>
-		 *	<p>Note: this internally sets up a timer each time it's set, so the eps value can not be tweened.</p>
+		 *	<p>In order to do 1 emission every 2 seconds, etc, divide 1 by the amount of seconds - ie: eps = 0.5</p>
+		 *	<p>Note: this internally sets up a timer each time it's set, so the eps value can not be currently tweened.</p>
 		 */
-		public function get eps():int{
+		public function get eps():Number{
 			return _eps;
 		}
 		
 		/**
 		 *	@private
 		 */
-		public function set eps($value:int):void {
+		public function set eps($value:Number):void {
 			_eps = $value;
 			setTimer(true);
 		}
