@@ -109,7 +109,7 @@ package com.desuade.motion.controllers {
 			txml.@spread = XMLHelper.xmlize(spread);
 			//extras loop
 			for (var p:String in extras) {
-				txml.@[p] = XMLHelper.xmlize(extras[p]);
+				if(extras[p] != null) txml.@[p] = XMLHelper.xmlize(extras[p]);
 			}
 			if(typeof ease != 'string') Debug.output('motion', 10008);
 			return txml;
@@ -127,7 +127,7 @@ package com.desuade.motion.controllers {
 			if($xml.@label != undefined) delete $xml.@label;
 			if($useposition) position = XMLHelper.dexmlize($xml.@position);
 			ease = XMLHelper.dexmlize($xml.@ease);
-			value = XMLHelper.dexmlize($xml.@value);
+			if($xml.@value != undefined) value = XMLHelper.dexmlize($xml.@value);
 			spread = XMLHelper.dexmlize($xml.@spread);
 			delete $xml.@ease;
 			delete $xml.@position;

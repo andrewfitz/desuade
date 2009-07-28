@@ -32,6 +32,7 @@ package com.desuade.motion.controllers {
 	
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
+	import flash.utils.*;
 	
 	/**
 	 *  Virtual motion editor that creates tweens similar to that of a timeline with keyframes.
@@ -173,6 +174,36 @@ package com.desuade.motion.controllers {
 		 */
 		public function setStartValue():void {
 			keyframes.setStartValue(target, property);
+		}
+		
+		/**
+		 *	Create an XML object that contains the MotionController config, KeyframeContainer, and all child Keyframes.
+		 *	
+		 *	@return		An XML object representing the MotionController
+		 */
+		public function toXML():XML {
+			var txml:XML = <MotionController />;
+			txml.@duration = duration;
+			txml.@property = property;
+			txml.appendChild(keyframes.toXML());
+			return txml;
+		}
+		
+		/**
+		 *	Configures the MotionController from the XML object and sets the keyframes to the child KeyframeContainer XML and it's child Keyframes.
+		 *	
+		 *	@param	xml	 The XML object containing the config for the MotionController
+		 *	@param	useproperty	 If this is true, the current MotionController's property will change. If false, it will stay the same.
+		 *	@param	useduration	 If this is true, the current MotionController's duration will change. If false, it will stay the same.
+		 *	
+		 *	@return		The MotionController object (for chaining)
+		 */
+		public function fromXML($xml:XML, $useproperty:Boolean = true, $useduration:Boolean = true):MotionController {
+			if($useproperty) property = String($xml.@property);
+			if($useduration) duration = Number($xml.@duration);
+			var kfclass:Class = getDefinitionByName("com.desuade.motion.controllers::" + $xml.children()[0].localName()) as Class;
+			keyframes = new kfclass().fromXML($xml.children()[0]);
+			return this;
 		}
 		
 		//private methods

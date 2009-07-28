@@ -8,22 +8,24 @@ Release Candidate 1 (2009/7/29):
 	
 	Motion:
 		-tween performance is now 5x faster! 2000 tweens: 11fps -> 53fps
-		-added toXML() and fromXML() methods to most classes
-		-removed clone() since you can use XML to duplicate now
-		-eases should now be entered as Strings - Bounce.easeOut -> 'easeOutBounce'
+		-added: toXML() and fromXML() methods to most classes
+		-removed: clone() since you can use XML to duplicate now
+		-changed: eases should now be entered as Strings - Bounce.easeOut -> 'easeOutBounce'
 			eases can also be entered as functions, but will not work with XML and is not recommended
 		-changed: tween constructors only require a target
 		-added: eases.Easing class for passing eases as strings (now default)
 		-changed: PrimitiveTweens no longer dispatch events (updateFunc and endFunc) for performance
 		-changed: TweenEvent.UPDATED only gets dispatched if "update:true" is passed to the tween's config
 		-fix: BasicMultiTween updated properties directly, effecting the tweenconfig
+		-changed: MultiController duration/properties constructor order switched
 		
 	Partigen:
-		-changed: eps is now a Number (not int), and allows for 1 emission for more than 1 second 
+		-changed: eps is now a Number (not int), and allows for 1 emission greater than 1 second 
 	
 	Debugging: none
 	
-	Utils: none
+	Utils:
+		-added: XMLHelper class
 		
 
 Beta 3 (2009/7/23):

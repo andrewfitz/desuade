@@ -51,17 +51,19 @@ package com.desuade.motion.controllers {
 		 *	<p>Each property under this MultiController is a MotionController that is used to tween the target's same property (this['x'] == target['x'])</p>
 		 *	
 		 *	@param	target	 The target object to set for all child MotionControllers
-		 *	@param	properties	 An array of strings of child MotionControllers to create - ex: ['x', 'y', 'alpha']
 		 *	@param	duration	 The length of time to set all child controllers
+		 *	@param	properties	 An array of strings of child MotionControllers to create - ex: ['x', 'y', 'alpha']
 		 *	@param	containerClass	 The class of keyframe container to use for all MotionControllers
 		 *	@param	tweenClass	 The class of tweens to pass to all the keyframe container
 		 */
-		public function MultiController($target:Object, $properties:Array, $duration:Number, $containerClass:Class = null, $tweenClass:Class = null) {
+		public function MultiController($target:Object, $duration:Number, $properties:Array = null, $containerClass:Class = null, $tweenClass:Class = null) {
 			super();
 			_target = $target;
 			_duration = $duration;
-			for (var i:int = 0; i < $properties.length; i++) {
-				this[$properties[i]] = new MotionController($target, $properties[i], $duration, $containerClass, $tweenClass);
+			if($properties != null){
+				for (var i:int = 0; i < $properties.length; i++) {
+					this[$properties[i]] = new MotionController($target, $properties[i], $duration, $containerClass, $tweenClass);
+				}
 			}
 		}
 		
@@ -174,6 +176,37 @@ package com.desuade.motion.controllers {
 			for (var p:String in this){
 				this[p].stop();
 			}
+		}
+		
+		/**
+		 *	This creates an XML object representing the MultiController and it's child MotionControllers.
+		 *	
+		 *	@return		And XML object for the MultiController
+		 */
+		public function toXML():XML {
+			var txml:XML = <MultiController />;
+			txml.@duration = duration;
+			for (var p:String in this){
+				txml.appendChild(this[p].toXML());
+			}
+			return txml;
+		}
+		
+		/**
+		 *	Configures the MultiController and creates all child MotionControllers.
+		 *	
+		 *	@param	xml	 The XML object to use for configuration
+		 *	@param	usealldurations	 If true, this uses all original durations for each controller. If false, all durations are set to the MultiController's duration value.
+		 *	
+		 *	@return		The MultiController object (for chaining)
+		 */
+		public function fromXML($xml:XML, $usealldurations:Boolean = true):MultiController {
+			duration = $xml.@duration;
+			var cd:XMLList = $xml.children();
+			for (var i:int = 0; i < cd.length(); i++) {
+				this[cd[i].@property] = new MotionController(_target, cd[i].@property, duration).fromXML(cd[i], false, $usealldurations);
+			}
+			return this;
 		}
 	
 	}

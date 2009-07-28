@@ -24,9 +24,6 @@ THE SOFTWARE.
 
 package com.desuade.utils {
 	
-	import com.desuade.debugging.*
-	import com.desuade.motion.eases.Easing;
-	
 	/**
 	 *  Helps with XML parsing.
 	 *    

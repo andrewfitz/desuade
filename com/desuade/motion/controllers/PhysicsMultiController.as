@@ -82,7 +82,7 @@ package com.desuade.motion.controllers {
 		 *	@param	tweenClass	 The class of tweens to pass to all the keyframe container
 		 */
 		public function PhysicsMultiController($target:Object, $property:String, $duration:Number, $physics:BasicPhysics = null, $containerClass:Class = null, $tweenClass:Class = null) {
-			super(null, [], $duration);
+			super(null, $duration);
 			if($physics == null){
 				_physics = new BasicPhysics($target, {property:$property});
 			} else {
@@ -137,6 +137,15 @@ package com.desuade.motion.controllers {
 		 */
 		public override function start($keyframe:String = null):void {
 			startPhysicsControllers($keyframe);
+		}
+		
+		/**
+		 *	@inheritDoc
+		 */
+		public override function toXML():XML {
+			var xmly:XML = super.toXML();
+			xmly.setLocalName("PhysicsMultiController");
+			return xmly;
 		}
 		
 		/**
