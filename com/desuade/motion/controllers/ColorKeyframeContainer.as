@@ -58,23 +58,6 @@ package com.desuade.motion.controllers {
 		}
 		
 		/**
-		 *	Creates a new copy of the ColorKeyframeContainer, identical to the current one.
-		 *	
-		 *	@return		A new ColorKeyframeContainer that has the same keyframes as the current one.
-		 */
-		public override function clone():KeyframeContainer {
-			var npc:ColorKeyframeContainer = new ColorKeyframeContainer();
-			npc.precision = _precision;
-			npc.tweenClass = _tweenClass;
-			var sa:Array = this.getOrderedLabels();
-			for (var i:int = 0; i < sa.length; i++) {
-				var p:Object = this[sa[i]];
-				npc.add(new Keyframe(p.position, p.value, p.ease, p.spread, p.extras), sa[i]);
-			}
-			return npc;
-		}
-		
-		/**
 		 *	@private
 		 */
 		internal override function generateStartValue($target:Object, $property:String):* {

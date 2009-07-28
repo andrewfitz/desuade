@@ -29,6 +29,8 @@ package com.desuade.motion.controllers {
 	import com.desuade.motion.eases.*
 	import com.desuade.utils.*
 	
+	import flash.utils.*;
+	
 	/**
 	 *  Manages and holds all keyframes for MotionControllers.
 	 *    
@@ -193,20 +195,40 @@ package com.desuade.motion.controllers {
 		}
 		
 		/**
-		 *	Creates a new copy of the KeyframeContainer, identical to the current one.
+		 *	This creates an XML object that represents a KeyframeContainer and all it's Keyframes.
 		 *	
-		 *	@return		A new KeyframeContainer that has the same keyframes as the current one.
+		 *	@return		An XML object representing the KeyframeContainer including child Keyframes.
 		 */
-		public function clone():KeyframeContainer {
-			var npc:KeyframeContainer = new KeyframeContainer();
-			npc.precision = _precision;
-			npc.tweenClass = _tweenClass;
+		public function toXML():XML {
+			var txml:XML = <kfc />;
+			txml.setLocalName(getQualifiedClassName(this).replace("com.desuade.motion.controllers::", ""));
+			txml.@tweenClass = getQualifiedClassName(_tweenClass).replace("com.desuade.motion.tweens::", "");
+			txml.@precision = _precision;
 			var sa:Array = this.getOrderedLabels();
 			for (var i:int = 0; i < sa.length; i++) {
-				var p:Object = this[sa[i]];
-				npc.add(new Keyframe(p.position, p.value, p.ease, p.spread, p.extras), sa[i]);
+				var k:Keyframe = this[sa[i]];
+				var kx:XML = k.toXML();
+				kx.@label = sa[i];
+				txml.appendChild(kx);
 			}
-			return npc;
+			return txml;
+		}
+		
+		/**
+		 *	Configures the KeyframeContainer based on the values in the XML and creates child Keyframes.
+		 *	
+		 *	@param	xml	 The XML object to use.
+		 *	
+		 *	@return		This KeyframeContainer object (for chaining)
+		 */
+		public function fromXML($xml:XML):KeyframeContainer {
+			_tweenClass = getDefinitionByName("com.desuade.motion.tweens::" + $xml.@tweenClass) as Class;
+			_precision = $xml.@precision;
+			var cd:XMLList = $xml.children();
+			for (var i:int = 0; i < cd.length(); i++) {
+				this[cd[i].@label] = new Keyframe(0).fromXML(cd[i]);
+			}
+			return this;
 		}
 		
 		//////private
