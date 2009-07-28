@@ -26,6 +26,8 @@ package com.desuade.partigen.controllers {
 	
 	import com.desuade.motion.controllers.*;
 	import com.desuade.motion.tweens.*;
+	
+	import flash.utils.*;
 
 	/**
 	 *  Used to configure MotionControllers for the particles.
@@ -84,7 +86,35 @@ package com.desuade.partigen.controllers {
 			keyframes.end.ease = $ease;
 			keyframes.end.extras = $extras || {};
 		}
-	
+		
+		/**
+		 *	<p>Create an XML object that contains the ParticleTweenController config, KeyframeContainer, and all child Keyframes.</p>
+		 *	<p>Note: this does not include the "property" unless it's called from the ParticleController.</p>
+		 *	
+		 *	@return		An XML object representing the ParticleTweenController
+		 */
+		public function toXML():XML {
+			var txml:XML = <ParticleTweenController />;
+			txml.@duration = duration;
+			txml.appendChild(keyframes.toXML());
+			return txml;
+		}
+		
+		/**
+		 *	<p>Configures the ParticleTweenController from the XML object and sets the keyframes to the child KeyframeContainer XML and it's child Keyframes.</p>
+		 *	<p>Note: this does not include the "property" unless it's called from the ParticleController.</p>
+		 *	
+		 *	@param	xml	 The XML object containing the config for the ParticleTweenController
+		 *	
+		 *	@return		The ParticleTweenController object (for chaining)
+		 */
+		public function fromXML($xml:XML):ParticleTweenController {
+			duration = Number($xml.@duration);
+			var kfclass:Class = getDefinitionByName("com.desuade.motion.controllers::" + $xml.children()[0].localName()) as Class;
+			keyframes = new kfclass().fromXML($xml.children()[0]);
+			return this;
+		}
+		
 	}
 
 }

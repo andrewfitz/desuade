@@ -28,6 +28,8 @@ package com.desuade.partigen.controllers {
 	import com.desuade.motion.tweens.*;
 	import com.desuade.partigen.emitters.*;
 	import com.desuade.partigen.particles.*;
+	
+	import flash.utils.*;
 
 	/**
 	 *  This is created by an emitter to manage and control all the particle motion controller configurations.
@@ -112,6 +114,37 @@ package com.desuade.partigen.controllers {
 			this[$property].flip = $flip;
 			this[$property].useAngle = $useAngle;
 			return this[$property];
+		}
+		
+		/**
+		 *	Creates an XML object containing configuration for the ParticleController
+		 *	
+		 *	@return		An XML object representing the ParticleController
+		 */
+		public function toXML():XML {
+			var txml:XML = <ParticleController />;
+			for (var p:String in this){
+				var nx:XML = this[p].toXML();
+				nx.@property = p;
+				txml.appendChild(nx);
+			}
+			return txml;
+		}
+		
+		/**
+		 *	This configures the ParticleController from XML and creates all child controllers.
+		 *	
+		 *	@param	xml	 The XML object used to configure the ParticleController.
+		 *	
+		 *	@return		The ParticleController object (for chaining)
+		 */
+		public function fromXML($xml:XML):ParticleController {
+			var cd:XMLList = $xml.children();
+			for (var i:int = 0; i < cd.length(); i++) {
+				var contclass:Class = getDefinitionByName("com.desuade.partigen.controllers::" + cd[i].localName()) as Class;
+				this[cd[i].@property] = new contclass(0).fromXML(cd[i]);
+			}
+			return this;
 		}
 		
 		//privates

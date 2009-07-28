@@ -94,6 +94,44 @@ package com.desuade.partigen.controllers {
 				this[p].duration = $value;
 			}
 		}
+		
+		/**
+		 *	<p>This creates an XML object representing the ParticlePhysicsController and it's child ParticleTweenControllers.</p>
+		 *	<p>Note: this does not include the "property" unless it's called from the ParticleController.</p>
+		 *	
+		 *	@return		And XML object for the ParticlePhysicsController
+		 */
+		public function toXML():XML {
+			var txml:XML = <ParticlePhysicsController />;
+			txml.@duration = duration;
+			txml.@flip = flip;
+			txml.@useAngle = useAngle;
+			for (var p:String in this){
+				var nx:XML = this[p].toXML();
+				nx.@property = p;
+				txml.appendChild(nx);
+			}
+			return txml;
+		}
+		
+		/**
+		 *	<p>Configures the ParticlePhysicsController and creates all child ParticleTweenControllers.</p>
+		 *	<p>Note: this does not include the "property" unless it's called from the ParticleController.</p>
+		 *	
+		 *	@param	xml	 The XML object to use for configuration
+		 *	
+		 *	@return		The ParticlePhysicsController object (for chaining)
+		 */
+		public function fromXML($xml:XML):ParticlePhysicsController {
+			duration = $xml.@duration;
+			flip = $xml.@flip;
+			useAngle = $xml.@useAngle;
+			var cd:XMLList = $xml.children();
+			for (var i:int = 0; i < cd.length(); i++) {
+				this[cd[i].@property] = new ParticleTweenController(duration).fromXML(cd[i]);
+			}
+			return this;
+		}
 	
 	}
 

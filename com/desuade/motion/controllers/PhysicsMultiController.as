@@ -140,15 +140,6 @@ package com.desuade.motion.controllers {
 		}
 		
 		/**
-		 *	@inheritDoc
-		 */
-		public override function toXML():XML {
-			var xmly:XML = super.toXML();
-			xmly.setLocalName("PhysicsMultiController");
-			return xmly;
-		}
-		
-		/**
 	     *  @private
 	     */
 	    protected function startPhysicsControllers($keyframe:String = null):void {
