@@ -105,22 +105,30 @@ package com.desuade.motion.controllers {
 			var txml:XML = <Keyframe />;
 			txml.@position = position;
 			txml.@ease = ease;
-			if(typeof ease != 'string') Debug.output('motion', 10008);
-			if(value != null) txml.@value = (typeof value == 'string') ? "*" + value : value;
-			txml.@spread = (typeof spread == 'string') ? "*" + spread : spread;
+			if(value != null) txml.@value = XMLHelper.xmlize(value);
+			txml.@spread = XMLHelper.xmlize(spread);
+			//extras loop
 			for (var p:String in extras) {
 				txml.@[p] = XMLHelper.xmlize(extras[p]);
 			}
+			if(typeof ease != 'string') Debug.output('motion', 10008);
 			return txml;
 		}
 		
-		public function fromXML($xml:XML):Keyframe {
+		/**
+		 *	Configures the Keyframe from an XML object.
+		 *	
+		 *	@param	xml	 The XML to use.
+		 *	@param	useposition	 If true, this will use the position provided in xml. If false, it will use the Keyframe's current position value.
+		 *	
+		 *	@return		The Keyframe object (for chaining)
+		 */
+		public function fromXML($xml:XML, $useposition:Boolean = true):Keyframe {
 			if($xml.@label != undefined) delete $xml.@label;
-			position = Number($xml.@position);
-			ease = String($xml.@ease);
-			
-			// ($xml.@[an].charCodeAt(0) == 42) ? String($xml.@[an]).slice(1) : Number($xml.@[an]);
-			
+			if($useposition) position = XMLHelper.dexmlize($xml.@position);
+			ease = XMLHelper.dexmlize($xml.@ease);
+			value = XMLHelper.dexmlize($xml.@value);
+			spread = XMLHelper.dexmlize($xml.@spread);
 			delete $xml.@ease;
 			delete $xml.@position;
 			delete $xml.@value;
