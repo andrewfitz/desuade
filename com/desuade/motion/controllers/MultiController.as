@@ -24,6 +24,8 @@ THE SOFTWARE.
 
 package com.desuade.motion.controllers {
 	
+	import com.desuade.utils.*
+	
 	/**
 	 *  Manages multiple MotionControllers under one controller for a single target.
 	 *    
@@ -185,6 +187,7 @@ package com.desuade.motion.controllers {
 		 */
 		public function toXML():XML {
 			var txml:XML = <MultiController />;
+			txml.setLocalName(XMLHelper.getSimpleClassName(this));
 			txml.@duration = duration;
 			for (var p:String in this){
 				txml.appendChild(this[p].toXML());

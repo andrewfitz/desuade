@@ -183,6 +183,7 @@ package com.desuade.motion.controllers {
 		 */
 		public function toXML():XML {
 			var txml:XML = <MotionController />;
+			txml.setLocalName(XMLHelper.getSimpleClassName(this));
 			txml.@duration = duration;
 			txml.@property = property;
 			txml.appendChild(keyframes.toXML());

@@ -24,6 +24,8 @@ THE SOFTWARE.
 
 package com.desuade.utils {
 	
+	import flash.utils.*;
+	
 	/**
 	 *  Helps with XML parsing.
 	 *    
@@ -81,6 +83,17 @@ package com.desuade.utils {
 			} else {
 				return $xval.toString();
 			}
+		}
+		
+		/**
+		 *	Returns a string for the class name. This is like getQualifiedClassName, except without the first half.
+		 *	
+		 *	@param	object	 The object to get the class name of
+		 *	
+		 *	@return		String of the object's class.
+		 */
+		public static function getSimpleClassName($object:Object):String {
+			return getQualifiedClassName($object).split("::")[1];
 		}
 	
 	}

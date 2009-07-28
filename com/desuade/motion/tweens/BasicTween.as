@@ -184,7 +184,7 @@ package com.desuade.motion.tweens {
 		 */
 		public function toXML():XML {
 			var txml:XML = <tween />;
-			txml.setLocalName(getQualifiedClassName(this).replace("com.desuade.motion.tweens::", ""));
+			txml.setLocalName(XMLHelper.getSimpleClassName(this));
 			for (var p:String in _tweenconfig) {
 				if(_tweenconfig[p] != undefined) txml.@[p] = XMLHelper.xmlize(_tweenconfig[p]);
 			}

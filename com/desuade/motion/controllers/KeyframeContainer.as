@@ -201,8 +201,8 @@ package com.desuade.motion.controllers {
 		 */
 		public function toXML():XML {
 			var txml:XML = <kfc />;
-			txml.setLocalName(getQualifiedClassName(this).replace("com.desuade.motion.controllers::", ""));
-			txml.@tweenClass = getQualifiedClassName(_tweenClass).replace("com.desuade.motion.tweens::", "");
+			txml.setLocalName(XMLHelper.getSimpleClassName(this));
+			txml.@tweenClass = XMLHelper.getSimpleClassName(_tweenClass);
 			txml.@precision = _precision;
 			var sa:Array = this.getOrderedLabels();
 			for (var i:int = 0; i < sa.length; i++) {
