@@ -81,7 +81,7 @@ package com.desuade.motion.tweens {
 		 *	<ul>
 		 *	<li>property:String – the property to tween</li>
 		 *	<li>value:* – the new (end) value. Passing a Number will tween it to that absolute value, passing a String will use a relative value (target.property + value) - ie: <code>{value: 100}</code> or <code>{value:"200"}</code></li>
-		 *	<li>ease:Function – the easing function to use. Default is Linear.none.</li>
+		 *	<li>ease:String – the easing to use. Default is 'linear'. Can pass a Function, but may not be fully compatable.</li>
 		 *	<li>duration:Number – how long in seconds for the tween to last</li>
 		 *	<li>delay:Number – how long in seconds to delay starting the tween</li>
 		 *	<li>position:Number – what position to start the tween at 0-1</li>
@@ -163,43 +163,36 @@ package com.desuade.motion.tweens {
 		 *	@private
 		 */
 		protected override function createTween($to:Object):int {
-			if($to.func != undefined){
-				$to.func.apply(null, $to.args);
-				_completed = true;
-				dispatchEvent(new TweenEvent(TweenEvent.ENDED, {tween:this}));
-				return 0;
-			} else {
-				var pt:PrimitiveTween;
-				var ftv:Object = target[$to.property];
-				var ntval:*;
-				if(isNaN(_newval)){
-					if($to.value is Random) ntval = $to.value.randomValue;
-					else ntval = $to.value;
-					if($to.relative === true) _newval = ftv + Number(ntval);
-					else if($to.relative === false) _newval = Number(ntval);
-					else _newval = (typeof ntval == 'string') ? ftv + Number(ntval) : ntval;
-				}
-				if($to.bezier == undefined || $to.bezier == null){
-					 pt = BasicTween._tweenholder[PrimitiveTween._count] = new PrimitiveTween(target, $to.property, _newval, $to.duration*1000, $to.ease);
-				} else {
-					var newbez:Array = [];
-					for (var i:int = 0; i < $to.bezier.length; i++) {
-						newbez.push((typeof $to.bezier[i] == 'string') ? ftv + Number($to.bezier[i]) : $to.bezier[i]);
-					}
-					pt = BasicTween._tweenholder[PrimitiveTween._count] = new PrimitiveBezierTween(target, $to.property, _newval, $to.duration*1000, newbez, $to.ease);
-				}
-				pt.endFunc = endFunc;
-				if($to.position > 0) {
-					pt.starttime -= ($to.position*$to.duration)*1000;
-					if(!isNaN(_newval)) {
-						pt.startvalue = _startvalue;
-						pt.difvalue = _difvalue;
-					}
-					Debug.output('motion', 40007, [$to.position]);
-				}
-				pt.updateFunc = updateListener;
-				return pt.id;
+			var pt:PrimitiveTween;
+			var ftv:Object = target[$to.property];
+			var ntval:*;
+			if(isNaN(_newval)){
+				if($to.value is Random) ntval = $to.value.randomValue;
+				else ntval = $to.value;
+				if($to.relative === true) _newval = ftv + Number(ntval);
+				else if($to.relative === false) _newval = Number(ntval);
+				else _newval = (typeof ntval == 'string') ? ftv + Number(ntval) : ntval;
 			}
+			if($to.bezier == undefined || $to.bezier == null){
+				 pt = BasicTween._tweenholder[PrimitiveTween._count] = new PrimitiveTween(target, $to.property, _newval, $to.duration*1000, $to.ease);
+			} else {
+				var newbez:Array = [];
+				for (var i:int = 0; i < $to.bezier.length; i++) {
+					newbez.push((typeof $to.bezier[i] == 'string') ? ftv + Number($to.bezier[i]) : $to.bezier[i]);
+				}
+				pt = BasicTween._tweenholder[PrimitiveTween._count] = new PrimitiveBezierTween(target, $to.property, _newval, $to.duration*1000, newbez, $to.ease);
+			}
+			pt.endFunc = endFunc;
+			if($to.position > 0) {
+				pt.starttime -= ($to.position*$to.duration)*1000;
+				if(!isNaN(_newval)) {
+					pt.startvalue = _startvalue;
+					pt.difvalue = _difvalue;
+				}
+				Debug.output('motion', 40007, [$to.position]);
+			}
+			pt.updateFunc = updateListener;
+			return pt.id;
 		}
 		
 		/**

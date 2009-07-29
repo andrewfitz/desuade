@@ -60,7 +60,7 @@ package com.desuade.motion.tweens {
 		 *	<li>type:String – the type of color transformation to apply. Defaults to 'tint', see ColorHelper for more types.</li>
 		 *	<li>amount:int – The amount of transform to apply. Depends on 'type'</li>
 		 *	<li>value:* – the new (end) color. A string or hex is accepted - ie: <code>{value: '#ff0038}</code> or <code>{value:0xff883a}</code></li>
-		 *	<li>ease:Function – the easing function to use. Default is Linear.none.</li>
+		 *	<li>ease:String – the easing to use. Default is 'linear'. Can pass a Function, but may not be fully compatable.</li>
 		 *	<li>duration:Number – how long in seconds for the tween to last</li>
 		 *	<li>delay:Number – how long in seconds to delay starting the tween</li>
 		 *	<li>position:Number – what position to start the tween at 0-1</li>
@@ -102,37 +102,30 @@ package com.desuade.motion.tweens {
 		 *	@private
 		 */
 		protected override function createTween($to:Object):int {
-			if($to.func != undefined){
-				$to.func.apply(null, $to.args);
-				_completed = true;
-				dispatchEvent(new TweenEvent(TweenEvent.ENDED, {tween:this}));
-				return 0;
-			} else {
-				var pt:PrimitiveMultiTween;
-				_colorholder = ($to.property != undefined && $to.property != null) ? ColorHelper.getColorObject('tint', 1, target[$to.property]) : target.transform.colorTransform;
-				var cpo:Object = ColorHelper.getColorObject($to.type || 'tint', $to.amount || 1, $to.value, _colorholder);
-				if(_newvals.length == 0){
-					for (var p:String in cpo) {
-						var ntval:*;
-						if(cpo[p] is RandomColor) ntval = cpo[p].randomValue;
-						else ntval = cpo[p];
-						_newvals.push(ntval);
-					}	
-				}
-				pt = BasicTween._tweenholder[PrimitiveTween._count] = new PrimitiveMultiTween(_colorholder, cpo, $to.duration*1000, $to.ease);
-				pt.endFunc = endFunc;
-				colorFunc = ($to.property != undefined && $to.property != null) ? hexcolorupdater : docolorupdater;
-				if($to.position > 0) {
-					pt.starttime -= ($to.position*$to.duration)*1000;
-					if(_newvals.length > 0) {
-						pt.arrayObject.startvalues = _startvalues;
-						pt.arrayObject.difvalues = _difvalues;
-					}
-					Debug.output('motion', 40007, [$to.position]);
-				}
-				pt.updateFunc = updateListener;
-				return pt.id;
+			var pt:PrimitiveMultiTween;
+			_colorholder = ($to.property != undefined && $to.property != null) ? ColorHelper.getColorObject('tint', 1, target[$to.property]) : target.transform.colorTransform;
+			var cpo:Object = ColorHelper.getColorObject($to.type || 'tint', $to.amount || 1, $to.value, _colorholder);
+			if(_newvals.length == 0){
+				for (var p:String in cpo) {
+					var ntval:*;
+					if(cpo[p] is RandomColor) ntval = cpo[p].randomValue;
+					else ntval = cpo[p];
+					_newvals.push(ntval);
+				}	
 			}
+			pt = BasicTween._tweenholder[PrimitiveTween._count] = new PrimitiveMultiTween(_colorholder, cpo, $to.duration*1000, $to.ease);
+			pt.endFunc = endFunc;
+			colorFunc = ($to.property != undefined && $to.property != null) ? hexcolorupdater : docolorupdater;
+			if($to.position > 0) {
+				pt.starttime -= ($to.position*$to.duration)*1000;
+				if(_newvals.length > 0) {
+					pt.arrayObject.startvalues = _startvalues;
+					pt.arrayObject.difvalues = _difvalues;
+				}
+				Debug.output('motion', 40007, [$to.position]);
+			}
+			pt.updateFunc = updateListener;
+			return pt.id;
 		}
 		
 		/**

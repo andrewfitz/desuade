@@ -55,7 +55,7 @@ package com.desuade.motion.tweens {
 		 *	<li>type:String – the type of color transformation to apply. Defaults to 'tint', see ColorHelper for more types.</li>
 		 *	<li>amount:int – The amount of transform to apply. Depends on 'type'</li>
 		 *	<li>value:* – the new (end) color. A string or hex is accepted - ie: <code>{value: '#ff0038}</code> or <code>{value:0xff883a}</code></li>
-		 *	<li>ease:Function – the easing function to use. Default is Linear.none.</li>
+		 *	<li>ease:String – the easing to use. Default is 'linear'. Can pass a Function, but may not be fully compatable.</li>
 		 *	<li>duration:Number – how long in seconds for the tween to last</li>
 		 *	<li>property:String – To tween a hex value instead of a DisplayObject, set this to the property</li>
 		 *	</ul>
