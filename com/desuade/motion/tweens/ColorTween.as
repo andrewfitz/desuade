@@ -68,7 +68,7 @@ package com.desuade.motion.tweens {
 		 *	<li>property:String – To tween a hex value instead of a DisplayObject, set this to the property</li>
 		 *	</ul>
 		 *	
-		 *	<p>Example: <code>var mt:ColorTween = new ColorTween(myobj, {value:0xff77d5, amount:0.8, duration:2, ease:Bounce.easeIn, delay:2, position:0})</code></p>
+		 *	<p>Example: <code>var mt:ColorTween = new ColorTween(myobj, {value:0xff77d5, amount:0.8, duration:2, ease:'easeInBounce', delay:2, position:0})</code></p>
 		 *	
 		 *	@param	target	 The target object to have it's property tweened
 		 *	@param	tweenObject	 The config object that has all the values for the tween

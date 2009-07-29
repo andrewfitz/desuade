@@ -52,7 +52,7 @@ package com.desuade.motion.tweens {
 		 *	<li>duration:Number – how long in seconds for the tween to last</li>
 		 *	</ul>
 		 *	
-		 *	<p>Example: <code>var mt:BasicMultiTween = new BasicMultiTween(myobj, {properties:{x:200, y:'50', alpha:0.5}, duration:2, ease:Bounce.easeIn})</code></p>
+		 *	<p>Example: <code>var mt:BasicMultiTween = new BasicMultiTween(myobj, {properties:{x:200, y:'50', alpha:0.5}, duration:2, ease:'easeInBounce'})</code></p>
 		 *	
 		 *	@param	target	 The target object to have it's property tweened
 		 *	@param	tweenObject	 The config object that has all the values for the tween

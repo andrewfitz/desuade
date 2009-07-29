@@ -75,9 +75,13 @@ package com.desuade.motion.sequences {
 				for (var p:String in _overrides) {
 					$o[p] = _overrides[p];
 				}
-				var targ:Object = $o.target;
-				delete $o.target;
-				return new motionClass(targ, $o);
+				if($o.target != undefined){
+					var targ:Object = $o.target;
+					delete $o.target;
+					return new motionClass(targ, $o);
+				} else {
+					return new motionClass($o);
+				}
 			}
 		}
 		

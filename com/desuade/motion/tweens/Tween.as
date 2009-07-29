@@ -91,7 +91,7 @@ package com.desuade.motion.tweens {
 		 *	<li>relative:Boolean – this overrides the number/string check on the value to set the value relative to the current value</li>
 		 *	</ul>
 		 *	
-		 *	<p>Example: <code>var mt:Tween = new Tween(myobj, {property:'x', value:50, duration:2, ease:Bounce.easeIn, delay:2, position:0, round:false, relative:true, bezier:[60, '200, -10]})</code></p>
+		 *	<p>Example: <code>var mt:Tween = new Tween(myobj, {property:'x', value:50, duration:2, ease:'easeInBounce', delay:2, position:0, round:false, relative:true, bezier:[60, '200, -10]})</code></p>
 		 *	
 		 *	@param	target	 The target object to have it's property tweened
 		 *	@param	tweenObject	 The config object that has all the values for the tween
