@@ -28,6 +28,7 @@ package com.desuade.motion.tweens {
 	import com.desuade.debugging.*
 	import com.desuade.motion.events.*
 	import com.desuade.utils.XMLHelper;
+	import com.desuade.motion.bases.*;
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	import flash.utils.*;
@@ -69,12 +70,12 @@ package com.desuade.motion.tweens {
 		/**
 		 *	@private
 		 */
-		protected override function createTween($to:Object):int {
+		protected override function createPrimitive($to:Object):int {
 			var npo:Object = {};
 			for (var p:String in $to.properties) {
 				npo[p] = (typeof $to.properties[p] == 'string') ? target[p] + Number($to.properties[p]) : $to.properties[p];
 			}
-			var pt:PrimitiveMultiTween = BasicTween._tweenholder[PrimitiveTween._count] = new PrimitiveMultiTween(target, npo, $to.duration*1000, $to.ease);
+			var pt:PrimitiveMultiTween = BaseTicker.addItem(new PrimitiveMultiTween(target, npo, $to.duration*1000, $to.ease));
 			pt.endFunc = endFunc;
 			return pt.id;
 		}
@@ -85,10 +86,10 @@ package com.desuade.motion.tweens {
 		public override function toXML():XML {
 			var txml:XML = super.toXML();
 			delete txml.@properties;
-			for (var r:String in _tweenconfig.properties) {
+			for (var r:String in _config.properties) {
 				txml.prependChild(<property />);
 				txml.property[0].@name = r;
-				txml.property[0].@value = XMLHelper.xmlize(_tweenconfig.properties[r]);
+				txml.property[0].@value = XMLHelper.xmlize(_config.properties[r]);
 			}
 			return txml;
 		}
@@ -96,14 +97,14 @@ package com.desuade.motion.tweens {
 		/**
 		 *	@inheritDoc
 		 */
-		public override function fromXML($xml:XML):BasicTween {
+		public override function fromXML($xml:XML):BaseBasic {
 			super.fromXML($xml);
 			var cd:XMLList = $xml.children();
 			var po:Object = {};
 			for (var i:int = 0; i < cd.length(); i++) {
 				po[cd[i].@name] = XMLHelper.dexmlize(cd[i].@value);
 			}
-			_tweenconfig.properties = po;
+			_config.properties = po;
 			return this;
 		}
 

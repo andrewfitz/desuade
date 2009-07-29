@@ -27,6 +27,7 @@ package com.desuade.motion.tweens {
 	import com.desuade.debugging.*
 	import com.desuade.utils.*
 	import com.desuade.motion.events.*
+	import com.desuade.motion.bases.*;
 	
 	import flash.geom.ColorTransform;
 	import flash.events.Event;
@@ -95,13 +96,13 @@ package com.desuade.motion.tweens {
 		 *	@private
 		 */
 		protected function hexcolorupdater():void {
-			target[_tweenconfig.property] = ColorHelper.RGBToHex(_colorholder.redOffset, _colorholder.greenOffset, _colorholder.blueOffset);
+			target[_config.property] = ColorHelper.RGBToHex(_colorholder.redOffset, _colorholder.greenOffset, _colorholder.blueOffset);
 		};
 		
 		/**
 		 *	@private
 		 */
-		protected override function createTween($to:Object):int {
+		protected override function createPrimitive($to:Object):int {
 			var pt:PrimitiveMultiTween;
 			_colorholder = ($to.property != undefined && $to.property != null) ? ColorHelper.getColorObject('tint', 1, target[$to.property]) : target.transform.colorTransform;
 			var cpo:Object = ColorHelper.getColorObject($to.type || 'tint', $to.amount || 1, $to.value, _colorholder);
@@ -113,7 +114,7 @@ package com.desuade.motion.tweens {
 					_newvals.push(ntval);
 				}	
 			}
-			pt = BasicTween._tweenholder[PrimitiveTween._count] = new PrimitiveMultiTween(_colorholder, cpo, $to.duration*1000, $to.ease);
+			pt = BaseTicker.addItem(new PrimitiveMultiTween(_colorholder, cpo, $to.duration*1000, $to.ease));
 			pt.endFunc = endFunc;
 			colorFunc = ($to.property != undefined && $to.property != null) ? hexcolorupdater : docolorupdater;
 			if($to.position > 0) {

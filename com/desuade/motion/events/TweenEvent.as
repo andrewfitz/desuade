@@ -37,7 +37,7 @@ package com.desuade.motion.events {
 	 */
 	public class TweenEvent extends MotionEvent {
 		/**
-		 *	This event is fired when a tween starts.
+		 *	<p>This event is fired when a tween starts.</p>
 		 */
 		public static const STARTED:String = "started";
 		
@@ -56,8 +56,7 @@ package com.desuade.motion.events {
 		/**
 		 *	<p>This this object that gets passed that has different objects depending on what dispatches it and what event:</p>
 		 *	
-		 *	<p>PrimitiveTweens pass 1 object, themselves: <code>primitiveTween</code>.</p>
-		 *	<p>BasicTweens and Tweens (and decedents) pass 2 objects, themselves and the PrimitiveTweens they create: <code>tween</code> and <code>primitiveTween</code>.</p>
+		 *	<p>BasicTweens and Tweens (and decedents) pass 2 objects, themselves and the PrimitiveTweens they create: <code>basic</code> and <code>primitive</code>.</p>
 		 *	<p>Note: The ENDED event does not pass a PrimitiveTween when it's a func-only tween, or when a delayed tween is stopped before it begins to tween.</p>
 		 *	
 		 */

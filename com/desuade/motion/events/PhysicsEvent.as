@@ -43,7 +43,8 @@ package com.desuade.motion.events {
 		public static const STARTED:String = "started";
 		
 		/**
-		 *	This event is fired when a BasicPhysics object is updating the target's property.
+		 *	<p>This event is fired when a BasicPhysics object is updating the target's property.</p>
+		 *	<p>This does not get fired by default, and will only boradcast if update:true is passed to the config</p>
 		 */
 		public static const UPDATED:String = "updated";
 		
@@ -53,7 +54,7 @@ package com.desuade.motion.events {
 		public static const ENDED:String = "ended";
 		
 		/**
-		 *	<p>This this object that gets passed when an event is fired. It contains the BasicPhysics object: <code>basicPhysics</code></p>
+		 *	<p>This this object that gets passed when an event is fired. It contains the BasicPhysics object and PrimitivePhysics: <code>base</code> and <code>primitive</code></p>
 		 */
 		public var data:Object;
 		

@@ -23,10 +23,9 @@ THE SOFTWARE.
 */
 
 package com.desuade.motion.tweens {
-
-	import flash.utils.getTimer;
 	
 	import com.desuade.motion.eases.*;
+	import com.desuade.motion.bases.*;
 	import com.desuade.debugging.*
 
 	/**
@@ -38,22 +37,7 @@ package com.desuade.motion.tweens {
 	 *  @author Andrew Fitzgerald
 	 *  @since  01.05.2009
 	 */
-	public class PrimitiveTween extends Object {
-		
-		/**
-		 *	@private
-		 */
-		public static var _count:int = 1;
-		
-		/**
-		 *	This is the unique internal id of the tween.
-		 */
-		public var id:int;
-		
-		/**
-		 *	The target object to perform the tween on.
-		 */
-		public var target:Object;
+	public class PrimitiveTween extends BasePrimitive {
 		
 		/**
 		 *	The property to tween on the target.
@@ -76,29 +60,9 @@ package com.desuade.motion.tweens {
 		public var ease:Function;
 		
 		/**
-		 *	Has the PrimitiveTween ended or not
-		 */
-		public var ended:Boolean = false;
-		
-		/**
-		 *	The function to run on update
-		 */
-		public var updateFunc:Function = uf;
-		
-		/**
-		 *	The function to run on end
-		 */
-		public var endFunc:Function = ef;
-		
-		/**
 		 *	@private
 		 */
 		internal var startvalue:Number;
-		
-		/**
-		 *	@private
-		 */
-		internal var starttime:int;
 		
 		/**
 		 *	@private
@@ -122,32 +86,18 @@ package com.desuade.motion.tweens {
 		 *	
 		 */
 		public function PrimitiveTween($target:Object, $property:String, $value:Number, $duration:int, $ease:* = null) {
-			super();
-			id = _count++, target = $target, duration = $duration, ease = makeEase($ease) || Easing.linear, starttime = getTimer();
+			super($target);
+			duration = $duration, ease = makeEase($ease) || Easing.linear
 			if($property != null) {
 				property = $property, value = $value, startvalue = $target[$property];
 				difvalue = (startvalue > value) ? (value-startvalue) : -(startvalue-value);
 			}
-			Debug.output('motion', 50001, [id]);
 		}
 		
 		/**
-		 *	This ends the tween immediately.
-		 *	
-		 *	@param	broadcast	 If false, this will not broadcast an ENDED event.
+		 *	@inheritDoc
 		 */
-		public function end($broadcast:Boolean = true):void {
-			ended = true;
-			if($broadcast) endFunc(this);
-			Debug.output('motion', 50002, [id]);
-		}
-		
-		/**
-		 *	This renders the tween. It calculates and sets the new value, and checks to see if the tween is finished.
-		 *	
-		 *	@param	time	 The current getTimer() time.
-		 */
-		public function render($time:int):void {
+		public override function render($time:int):void {
 			$time -= starttime;
 			if($time >= duration){
 				target[property] = value;
@@ -155,7 +105,6 @@ package com.desuade.motion.tweens {
 			} else {
 				target[property] = ease($time, startvalue, difvalue, duration);
 				updateFunc(this);
-				//dispatchEvent(new TweenEvent(TweenEvent.UPDATED, {primitiveTween:this}));
 			}
 		}
 		
@@ -171,16 +120,6 @@ package com.desuade.motion.tweens {
 			}
 		}
 		
-		/**
-		 *	@private
-		 */
-		protected function uf($i:PrimitiveTween):void{}
-		
-		/**
-		 *	@private
-		 */
-		protected function ef($i:PrimitiveTween):void{}
-	
 	}
 
 }

@@ -33,6 +33,7 @@ package com.desuade.motion.tweens {
 	import com.desuade.debugging.*
 	import com.desuade.utils.*
 	import com.desuade.motion.events.*
+	import com.desuade.motion.bases.*;
 	
 	/**
 	 *  Changes a property's value over time by 'tweening'. The standard tweening class to use.
@@ -113,26 +114,26 @@ package com.desuade.motion.tweens {
 		 *	@param	delay	 Overrides the tween's delay and uses the passed one.
 		 *	@param	position	 Starts the tween at a given position 0-1.
 		 *	
-		 *	@return		True if the tween could be started, false if already active or has ended. Use reset() to start again.
+		 *	@return		The tween object (for chaining)
 		 *	
 		 */
-		public override function start($delay:Number = -1, $position:Number = -1):Boolean {
+		public override function start($delay:Number = -1, $position:Number = -1):BaseBasic {
 			if(!_completed && !active){
-				_tweenconfig.delay = ($delay == -1) ? _tweenconfig.delay : $delay;
+				_config.delay = ($delay == -1) ? _config.delay : $delay;
 				if($position == -1){
-					if(!isNaN(_pausepos)) _tweenconfig.position = _pausepos;
+					if(!isNaN(_pausepos)) _config.position = _pausepos;
 				} else {
-					_tweenconfig.position = $position;
+					_config.position = $position;
 				}
-				_tweenconfig.position = ($position == -1) ? _tweenconfig.position : $position;
+				_config.position = ($position == -1) ? _config.position : $position;
 				_active = true;
 				dispatchEvent(new TweenEvent(TweenEvent.STARTED, {tween:this}));
-				if(_tweenconfig.delay > 0) delayedTween(_tweenconfig.delay);
-				else _tweenID = createTween(_tweenconfig);
-				return true;
+				if(_config.delay > 0) delayedTween(_config.delay);
+				else _primitiveID = createPrimitive(_config);
+				return this;
 			} else {
 				Debug.output('motion', 10005);
-				return false;
+				return this;
 			}
 		}
 		
@@ -143,11 +144,11 @@ package com.desuade.motion.tweens {
 		 */
 		public override function stop():Boolean {
 			if(!_completed){
-				if(_tweenID != 0){
+				if(_primitiveID != 0){
 					if(!_completed){
 						setPauses();
 					}
-					BasicTween._tweenholder[_tweenID].end();
+					BaseTicker.getItem(_primitiveID).end();
 				} else {
 					_delayTimer.stop();
 					dispatchEvent(new TweenEvent(TweenEvent.ENDED, {tween:this}));
@@ -162,7 +163,7 @@ package com.desuade.motion.tweens {
 		/**
 		 *	@private
 		 */
-		protected override function createTween($to:Object):int {
+		protected override function createPrimitive($to:Object):int {
 			var pt:PrimitiveTween;
 			var ftv:Object = target[$to.property];
 			var ntval:*;
@@ -174,13 +175,13 @@ package com.desuade.motion.tweens {
 				else _newval = (typeof ntval == 'string') ? ftv + Number(ntval) : ntval;
 			}
 			if($to.bezier == undefined || $to.bezier == null){
-				 pt = BasicTween._tweenholder[PrimitiveTween._count] = new PrimitiveTween(target, $to.property, _newval, $to.duration*1000, $to.ease);
+				 pt = BaseTicker.addItem(new PrimitiveTween(target, $to.property, _newval, $to.duration*1000, $to.ease));
 			} else {
 				var newbez:Array = [];
 				for (var i:int = 0; i < $to.bezier.length; i++) {
 					newbez.push((typeof $to.bezier[i] == 'string') ? ftv + Number($to.bezier[i]) : $to.bezier[i]);
 				}
-				pt = BasicTween._tweenholder[PrimitiveTween._count] = new PrimitiveBezierTween(target, $to.property, _newval, $to.duration*1000, newbez, $to.ease);
+				pt = BaseTicker.addItem(new PrimitiveBezierTween(target, $to.property, _newval, $to.duration*1000, newbez, $to.ease));
 			}
 			pt.endFunc = endFunc;
 			if($to.position > 0) {
@@ -216,15 +217,15 @@ package com.desuade.motion.tweens {
 			_difvalue = undefined;
 			_startvalue = undefined;
 			_completed = false;
-			_tweenconfig.position = 0;
+			_config.position = 0;
 		}
 		
 		/**
 		 *	Gets the current position 0-1 of the tween. Does not include delay.
 		 */
 		public function get position():Number {
-			if(_tweenID != 0){
-				var pt:PrimitiveTween = BasicTween._tweenholder[_tweenID];
+			if(_primitiveID != 0){
+				var pt:PrimitiveTween = BaseTicker.getItem(_primitiveID);
 				//var pos:Number = (pt.target[pt.property]-pt.startvalue)/(pt.value-pt.startvalue); //this is for ease pos
 				var pos:Number = (getTimer()-pt.starttime)/pt.duration;
 				return pos;
@@ -255,15 +256,15 @@ package com.desuade.motion.tweens {
 		protected function dtFunc($i:Object):void {
 			_delayTimer.stop();
 			_delayTimer = null;
-			_tweenID = createTween(_tweenconfig);
+			_primitiveID = createPrimitive(_config);
 		}
 		
 		/**
 		 *	@private
 		 */
 		protected function updateListener($i:Object):void {
-			if(_tweenconfig.round) roundTweenValue($i);
-			if(_tweenconfig.update) dispatchEvent(new TweenEvent(TweenEvent.UPDATED, {tween:this, primitiveTween:BasicTween._tweenholder[_tweenID]}));
+			if(_config.round) roundTweenValue($i);
+			if(_config.update) dispatchEvent(new TweenEvent(TweenEvent.UPDATED, {tween:this, primitiveTween:BaseTicker.getItem(_primitiveID)}));
 		}
 		
 		/**
@@ -278,8 +279,8 @@ package com.desuade.motion.tweens {
 		 */
 		protected function setPauses():void {
 			_pausepos = position;
-			_startvalue = BasicTween._tweenholder[_tweenID].startvalue;
-			_difvalue = BasicTween._tweenholder[_tweenID].difvalue;
+			_startvalue = BaseTicker.getItem(_primitiveID).startvalue;
+			_difvalue = BaseTicker.getItem(_primitiveID).difvalue;
 		}
 	
 	}

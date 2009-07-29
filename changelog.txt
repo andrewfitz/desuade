@@ -9,7 +9,7 @@ Release Candidate 1 (2009/7/29):
 	Motion:
 		-tween performance is now 5x faster! 2000 tweens: 11fps -> 53fps
 		-added: toXML() and fromXML() methods to most classes
-		-added: new Sequence, ClassSequence, and SequenceGroup classes
+		-added: new Sequence, ClassSequence, SequenceGroup, and DelayableFunc classes
 		-added: Sequence.manualAdvance/SequenceGroup.manualServe - this prevents the sequence from automatically advancing
 		-added: MotionEvent that all motion.events inherit
 		-added: eases.Easing class for passing eases as strings (now default)
