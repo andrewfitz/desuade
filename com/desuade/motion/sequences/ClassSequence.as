@@ -28,12 +28,12 @@ package com.desuade.motion.sequences {
 	import com.desuade.motion.events.*;
 	import com.desuade.motion.tweens.*;
 	
-	public class ClassSequence extends Sequence {
+	public dynamic class ClassSequence extends Sequence {
 		
 		/**
 		 *	@private
 		 */
-		protected var _tweenClass:Class;
+		protected var _motionClass:Class;
 		
 		/**
 		 *	@private
@@ -41,39 +41,53 @@ package com.desuade.motion.sequences {
 		protected var _overrides:Object;
 		
 		/**
-		 *	@private
-		 */
-		protected var _allowOverrides:Boolean = true;
-		
-		/**
 		 *	<p>This is a Sequence that only uses one class to create sequence items.</p>
+		 *	
+		 *	@param	motionClass	 The class to use in creating the sequence
 		 */
-		public function ClassSequence($tweenClass:Class, ... args) {
+		public function ClassSequence($motionClass:Class, ... args) {
 			super();
 			pushArray(args);
-			_tweenClass = $tweenClass;
-		}
-		
-		/**
-		 *	<p>This is the class of tweens to use in the sequence.</p>
-		 *	<p>Each Seqeuence will create only one kind of tween - ie: BasicTween, Tween, MultiTween, etc. To create a Seqeuence that contains multiple tween classes, create a new Seqeuence and then push that into the Array.</p>
-		 */
-		public function get tweenClass():Class{
-			return _tweenClass;
+			_motionClass = $motionClass;
 		}
 		
 		/**
 		 *	@private
 		 */
-		public function set tweenClass($value:Class):void {
-			_tweenClass = $value;
+		protected override function itemCheck($o:*):* {
+			if($o is SequenceGroup) {
+				return $o;
+			} else if($o is Sequence){
+				return $o;
+			} else if($o is Array) {
+				return itemCheck(new SequenceGroup().pushArray($o));
+			} else {
+				for (var p:String in _overrides) {
+					$o[p] = _overrides[p];
+				}
+				var targ:Object = $o.target;
+				delete $o.target;
+				return new motionClass(targ, $o);
+			}
+		}
+		
+		/**
+		 *	<p>This is the class to use in creating the sequence.</p>
+		 */
+		public function get motionClass():Class{
+			return _motionClass;
+		}
+		
+		/**
+		 *	@private
+		 */
+		public function set motionClass($value:Class):void {
+			_motionClass = $value;
 		}
 		
 		/**
 		 *	<p>An Object that represents a normal Sequence object, that contains properties to be applied to every object in the Sequence.</p>
-		 *	
-		 *	<p>For example: <code>seq.overrides = {target:my_obj, ease:Linear.none}</code> will assign all the tweens in the sequence their 'target' and 'ease' values to the given values in the overrides object, unless the object has <code>{allowOverrides:false}</code></p>
-		 *	
+		 *	<p>For example: <code>seq.overrides = {duration:3, ease:Linear.none}</code> will assign all the tweens in the sequence their 'duration' and 'ease' values to the given values in the overrides object.</p>
 		 */
 		public function get overrides():Object{
 			return _overrides;
@@ -84,20 +98,6 @@ package com.desuade.motion.sequences {
 		 */
 		public function set overrides($value:Object):void {
 			_overrides = $value;
-		}
-		
-		/**
-		 *	Does the Seqeuence allow it's objects to be replaced with override values.
-		 */
-		public function get allowOverrides():Boolean{
-			return _allowOverrides;
-		}
-		
-		/**
-		 *	@private
-		 */
-		public function set allowOverrides($value:Boolean):void {
-			_allowOverrides = $value;
 		}
 
 	}

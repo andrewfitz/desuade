@@ -55,7 +55,7 @@ package com.desuade.motion.sequences {
 		/**
 		 *	@private
 		 */
-		protected var _tween:*;
+		protected var _current:Object;
 		
 		/**
 		 *	@private
@@ -70,7 +70,6 @@ package com.desuade.motion.sequences {
 		 *	<p>Sequences can also be nested, and another sequence is a valid object to push into a sequence. Sequences can NOT be nested inside Arrays.</p>
 		 *	
 		 *	@param	args	 All the items passed into the constructor will be pushed into the sequence like an array.
-		 *	@see	#tweenClass
 		 *	
 		 */
 		public function Sequence(... args) {
@@ -94,6 +93,13 @@ package com.desuade.motion.sequences {
 		}
 		
 		/**
+		 *	The current motion object that's running.
+		 */
+		public function get current():Object{
+			return _current;
+		}
+		
+		/**
 		 *	Starts the Seqeuence from the specified position, or the beginning if no position is specified.
 		 *	@param	position	 Which object to start from in the Sequence (Array), starting from 0.
 		 */
@@ -101,7 +107,7 @@ package com.desuade.motion.sequences {
 			if(!active && this.length != 0){
 				_active = true;
 				Debug.output('motion', 40008);
-				_dispatcher.dispatchEvent(new SequenceEvent(SequenceEvent.STARTED, {sequence:this}));
+				dispatchEvent(new SequenceEvent(SequenceEvent.STARTED, {sequence:this}));
 				play($position);
 			} else {
 				Debug.output('motion', 10006);
@@ -113,8 +119,8 @@ package com.desuade.motion.sequences {
 		 */
 		public function stop():void {
 			if(active){
-				_tween.removeEventListener(TweenEvent.ENDED, advance);
-				_tween.stop();
+				current.removeEventListener(MotionEvent.ENDED, advance);
+				current.stop();
 				end();
 			} else {
 				Debug.output('motion', 10007);
@@ -132,61 +138,28 @@ package com.desuade.motion.sequences {
 		}
 		
 		/**
-		 *	Removes all the items in the Sequence.
-		 *	@return		An array of all the items emptied from the sequence.
-		 */
-		public function empty():Array {
-			return splice(0);
-		}
-		
-		/**
 		 *	@private
 		 */
 		protected function play($position:int):void {
 			Debug.output('motion', 40004, [$position]);
 			_position = $position;
-			var tp:Object = this[_position];
-			if(tp is Sequence){
-				if(tp.allowOverrides != false) {
-					for (var e:String in _overrides) {
-						tp.overrides[e] = _overrides[e];
-					}
-				}
-				tp.addEventListener(SequenceEvent.ENDED, advance, false, 0, true);
-				tp.start();
-			} else if(tp is Array){
-				_tween = [];
-				var longdur:Array = [-1, _tween];
-				for (var i:int = 0; i < tp.length; i++) {
-					if(tp[i] is BasicTween){
-						_tween[i] = tp[i];
-					} else {
-						if(tp[i].allowOverrides != false){
-							for (var r:String in _overrides) {
-								tp[i][r] = _overrides[r];
-							}
-						}
-						_tween[i] = new _tweenClass(tp[i].target, tp[i]);
-						delete _tween[i].config.target;
-					}
-					if(_tween[i].config.duration > longdur[0]) longdur = [_tween[i].config.duration, _tween[i]];
-					_tween[i].start();
-				}
-				longdur[1].addEventListener(TweenEvent.ENDED, advance, false, 0, true);
+			_current = itemCheck(this[_position]);
+			current.addEventListener(MotionEvent.ENDED, advance, false, 0, true);
+			current.start();
+		}
+		
+		/**
+		 *	@private
+		 */
+		protected function itemCheck($o:*):* {
+			if($o is SequenceGroup) {
+				return $o;
+			} else if($o is Sequence){
+				return $o;
+			} else if($o is Array) {
+				return itemCheck(new SequenceGroup().pushArray($o));
 			} else {
-				if(tp is BasicTween){
-					_tween = tp;
-				} else {
-					if(tp.allowOverrides != false){
-						for (var p:String in _overrides) {
-							tp[p] = _overrides[p];
-						}
-					}
-					_tween = new _tweenClass(tp.target, tp);
-					delete _tween.config.target;
-				}
-				_tween.addEventListener(TweenEvent.ENDED, advance, false, 0, true);
-				_tween.start();
+				return $o;
 			}
 		}
 		
@@ -194,9 +167,9 @@ package com.desuade.motion.sequences {
 		 *	@private
 		 */
 		protected function end():void {
-			_tween = null;
+			_current = null;
 			_active = false;
-			_dispatcher.dispatchEvent(new SequenceEvent(SequenceEvent.ENDED, {sequence:this}));
+			dispatchEvent(new SequenceEvent(SequenceEvent.ENDED, {sequence:this}));
 			Debug.output('motion', 40005);
 		}
 		
@@ -204,11 +177,10 @@ package com.desuade.motion.sequences {
 		 *	@private
 		 */
 		protected function advance($i:Object):void {
-			if($i is SequenceEvent) $i.data.sequence.removeEventListener(SequenceEvent.ENDED, advance);
-			else $i.data.tween.removeEventListener(TweenEvent.ENDED, advance);
+			current.removeEventListener(MotionEvent.ENDED, advance);
 			if(_position < length-1){
 				play(++_position);
-				_dispatcher.dispatchEvent(new SequenceEvent(SequenceEvent.ADVANCED, {position:_position, sequence:this}));
+				dispatchEvent(new SequenceEvent(SequenceEvent.ADVANCED, {position:_position, sequence:this}));
 			} else {
 				end();
 			}

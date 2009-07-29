@@ -35,7 +35,7 @@ package com.desuade.motion.events {
 	 *  @author Andrew Fitzgerald
 	 *  @since  23.04.2009
 	 */
-	public class PhysicsEvent extends Event {
+	public class PhysicsEvent extends MotionEvent {
 		
 		/**
 		 *	This event is fired when a BasicPhysics object starts.

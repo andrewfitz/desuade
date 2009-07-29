@@ -25,7 +25,7 @@ THE SOFTWARE.
 package com.desuade.motion.controllers {
 	
 	import com.desuade.debugging.*
-	import com.desuade.motion.sequencers.*
+	import com.desuade.motion.sequences.*
 	import com.desuade.motion.tweens.*
 	import com.desuade.utils.*
 	import com.desuade.motion.events.*
@@ -133,7 +133,7 @@ package com.desuade.motion.controllers {
 			setStartValue();
 			var ta:Array = keyframes.createTweens(target, property, duration);
 			_active = true;
-			_sequence = new Sequence(keyframes.tweenClass);
+			_sequence = new ClassSequence(keyframes.tweenClass);
 			_sequence.pushArray(ta);
 			_sequence.addEventListener(SequenceEvent.ENDED, tweenEnd, false, 0, true);
 			_sequence.addEventListener(SequenceEvent.ADVANCED, advance, false, 0, true);

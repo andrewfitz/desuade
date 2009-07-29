@@ -35,7 +35,7 @@ package com.desuade.motion.events {
 	 *  @author Andrew Fitzgerald
 	 *  @since  23.04.2009
 	 */
-	public class SequenceEvent extends Event {
+	public class SequenceEvent extends MotionEvent {
 		
 		/**
 		 *	This event is fired when a sequence starts.

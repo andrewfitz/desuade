@@ -35,7 +35,7 @@ package com.desuade.motion.events {
 	 *  @author Andrew Fitzgerald
 	 *  @since  23.04.2009
 	 */
-	public class TweenEvent extends Event {
+	public class TweenEvent extends MotionEvent {
 		/**
 		 *	This event is fired when a tween starts.
 		 */

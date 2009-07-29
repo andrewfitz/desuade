@@ -27,7 +27,7 @@ package com.desuade.motion.events {
 	import flash.events.Event;
 	
 	/**
-	 *  This event is created by controller classes in the Motion package.
+	 *  This base event is created by any of the classes in the motion package.
 	 *    
 	 *  @langversion ActionScript 3
 	 *  @playerversion Flash 9.0.0
@@ -35,46 +35,42 @@ package com.desuade.motion.events {
 	 *  @author Andrew Fitzgerald
 	 *  @since  23.04.2009
 	 */
-	public class ControllerEvent extends MotionEvent {
+	public class MotionEvent extends Event {
 		
 		/**
-		 *	This event is fired when a controller starts at the 'begin' point.
+		 *	This event gets broadcasted when a MotionObject starts.
 		 */
 		public static const STARTED:String = "started";
 		
 		/**
-		 *	This event is fired when a controller gets to and begins a tween from the next point.
+		 *	This event gets broadcasted when a value is updated.
+		 */
+		public static const UPDATED:String = "updated";
+		
+		/**
+		 *	This event gets broadcasted when a sequence moves to the next item.
 		 */
 		public static const ADVANCED:String = "advanced";
 		
 		/**
-		 *	This event is fired when a controller finishes and reaches the 'end' point.
+		 *	This event gets broadcasted when a MotionObject ends.
 		 */
 		public static const ENDED:String = "ended";
-
+		
 		/**
-		 *	<p>This this object that gets passed that has different objects depending on what event:</p>
-		 *	
-		 *	<p>STARTED and ENDED: <code>controller</code></p>
-		 *	<p>ADVANCED: <code>controller</code> and <code>position</code></p>
+		 *	Creates a new MotionEvent. Events get dispatched internally, manual creation isn't necessary.
 		 */
-		public var data:Object;
-
-		/**
-		 *	Creates a new ControllerEvent. Events get dispatched internally, manual creation isn't necessary.
-		 */
-		public function ControllerEvent($type:String, $data:Object = null, $bubbles:Boolean = false, $cancelable:Boolean = false){
+		public function MotionEvent($type:String, $bubbles:Boolean = false, $cancelable:Boolean = false){
 			super($type, $bubbles, $cancelable);
-			this.data = $data;
 		}
 
 		/**
 		 *	@inheritDoc
 		 */
 		public override function clone():Event{
-			return new ControllerEvent(this.type, this.data, this.bubbles, this.cancelable);
+			return new MotionEvent(this.type, this.bubbles, this.cancelable);
 		}
-
+		
 	}
-
+	
 }
