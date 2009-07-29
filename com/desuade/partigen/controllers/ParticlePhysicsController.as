@@ -124,8 +124,8 @@ package com.desuade.partigen.controllers {
 		 */
 		public function fromXML($xml:XML):ParticlePhysicsController {
 			duration = $xml.@duration;
-			flip = $xml.@flip;
-			useAngle = $xml.@useAngle;
+			if($xml.@flip != undefined) flip = $xml.@flip;
+			if($xml.@useAngle != undefined) useAngle = $xml.@useAngle;
 			var cd:XMLList = $xml.children();
 			for (var i:int = 0; i < cd.length(); i++) {
 				this[cd[i].@property] = new ParticleTweenController(duration).fromXML(cd[i]);

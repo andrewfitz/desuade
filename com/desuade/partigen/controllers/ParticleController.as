@@ -152,10 +152,10 @@ package com.desuade.partigen.controllers {
 		/**
 		 *	@private
 		 */
-		protected function attachController($particle:Particle, $property:String, $emitter:Emitter):void {
+		protected function attachController($particle:Particle, $property:String, $emitter:Emitter, $angle:Number):void {
 			if(this[$property] is ParticlePhysicsController){
 				$particle.controllers[$property] = new PhysicsMultiController($particle, $property, (this[$property].duration == 0) ? $particle.life : this[$property].duration);
-				$particle.controllers[$property].physics.angle = (this[$property].useAngle) ? $emitter.angle : null;
+				$particle.controllers[$property].physics.angle = (this[$property].useAngle) ? $angle : null;
 				$particle.controllers[$property].physics.flip = this[$property].flip;
 				$particle.controllers[$property].velocity.keyframes = this[$property].velocity.keyframes;
 				$particle.controllers[$property].acceleration.keyframes = this[$property].acceleration.keyframes;
@@ -170,8 +170,9 @@ package com.desuade.partigen.controllers {
 		 *	@private
 		 */
 		public function attachAll($particle:Particle, $emitter:Emitter):void {
+			var newangle:Number = $emitter.randomAngle();
 			for (var p:String in this) {
-				attachController($particle, p, $emitter);
+				attachController($particle, p, $emitter, newangle);
 			}
 			if($particle.controllers['color'] != undefined) {
 				$particle.controllers['color'].property = null;

@@ -3,7 +3,7 @@ Desuade Library Changelog
 
 Release Candidate 1 (2009/7/29):
 	
-	[Compatible with Beta 3, with depreciations]
+	[Not 100% compatible with Beta 3, some depreciations and changes]
 	[Individual ease classes will be removed next revision, start using ease strings]
 	
 	Motion:
@@ -20,6 +20,9 @@ Release Candidate 1 (2009/7/29):
 		-changed: MultiController duration/properties constructor order switched
 		
 	Partigen:
+		-added: toXML() and fromXML() methods to most classes
+		-changed: life is now: life and lifeSpread
+		-changed: angle is now: angle and angleSpread
 		-changed: eps is now a Number (not int), and allows for 1 emission greater than 1 second 
 	
 	Debugging: none

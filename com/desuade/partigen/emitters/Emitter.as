@@ -56,14 +56,28 @@ package com.desuade.partigen.emitters {
 		public var controllers:Object = {};
 		
 		/**
-		 *	@private
+		 *	<p>This is the angle used by ParticlePhysicsControllers on new particles. This only effects properties that are using physics, NOT ParticleTweenControllers.</p>
+		 *	<p>The default value is 0, which is pointing "right". 90 is "up", 180 is "left", and 270 is "down".</p>
 		 */
-		protected var _angle:Random = new Random(0, 0, 1);
+		public var angle:Number = 0;
 		
 		/**
-		 *	@private
+		 *	This is the spread for the angle, to create a random range for ParticlePhysicsControllers.
 		 */
-		protected var _life:Object = {value:0, spread:'0'};
+		public var angleSpread:* = "0";
+		
+		/**
+		 *	<p>This is the duration in seconds a particle will exist for.</p>
+		 *	<p>If the value is 0, the particle will live forever.</p>
+		 */
+		public var life:Number = 0;
+		
+		/**
+		 *	<p>This is the spread for particle lives. This will create a random range for the life of new particles.</p>
+		 *	<p>Note: if the life value is 0, this has no effect.</p>
+		 */
+		public var lifeSpread:* = "0";
+		
 		
 		/**
 		 *	<p>This creates a new Emitter.</p>
@@ -77,60 +91,6 @@ package com.desuade.partigen.emitters {
 			group = GroupParticle;
 			controllers.particle = new ParticleController();
 			controllers.emitter = new EmitterController(this);
-		}
-		
-		/**
-		 *	<p>This is the angle used by ParticlePhysicsControllers on new particles. This only effects properties that are using physics, NOT tweens.</p>
-		 *	<p>This number will be random based on the angle_min and angle_max values. If this is set to a value, both min and max will be set to the same value. Set angle_min and angle_max separately to create a range.</p>
-		 *	<p>The default value is 0, which is pointing "right". 90 is "up", 180 is "left", and 270 is "down".</p>
-		 */
-		public function get angle():Number{
-			return _angle.randomValue;
-		}
-		
-		/**
-		 *	The minimum angle used to create a random <code>angle</code> value.
-		 */
-		public function get angle_min():Number{
-			return _angle.min;
-		}
-		
-		/**
-		 *	The maximum angle used to create a random <code>angle</code> value.
-		 */
-		public function get angle_max():Number{
-			return _angle.max;
-		}
-		
-		/**
-		 *	@private
-		 */
-		public function set angle($value:Number):void {
-			_angle.min = _angle.max = $value;
-		}
-		
-		/**
-		 *	@private
-		 */
-		public function set angle_min($value:Number):void {
-			_angle.min = $value;
-		}
-		
-		/**
-		 *	@private
-		 */
-		public function set angle_max($value:Number):void {
-			_angle.max = $value;
-		}
-		
-		/**
-		 *	<p>This is the duration in seconds a particle will exist for.</p>
-		 *	<p>This is an object that acts like a keyframe:</p>
-		 *	<p><code>{value:0, spread:'0'}</code></p>
-		 *	<p>If the value is 0, the particle will live forever.</p>
-		 */
-		public function get life():Object{
-			return _life;
 		}
 		
 		/**
@@ -167,7 +127,7 @@ package com.desuade.partigen.emitters {
 				np.x = this.x;
 				np.y = this.y;
 				np.z = this.z;
-				if(_life.value > 0) np.addLife(randomLife());
+				if(life > 0) np.addLife(randomLife());
 				controllers.particle.attachAll(np, this);
 				dispatchEvent(new ParticleEvent(ParticleEvent.BORN, {particle:np}));
 				np.startControllers();
@@ -176,10 +136,53 @@ package com.desuade.partigen.emitters {
 		}
 		
 		/**
+		 *	@inheritDoc
+		 */
+		public override function toXML():XML {
+			var txml:XML = super.toXML();
+			txml.@life = life;
+			txml.@lifeSpread = XMLHelper.xmlize(lifeSpread);
+			txml.@angle = angle;
+			txml.@angleSpread = XMLHelper.xmlize(angleSpread);
+			txml.appendChild(<Controllers />);
+			txml.children()[0].appendChild(controllers.emitter.toXML());
+			txml.children()[0].appendChild(controllers.particle.toXML());
+			return txml;
+		}
+		
+		/**
+		 *	@inheritDoc
+		 */
+		public override function fromXML($xml:XML):BasicEmitter {
+			super.fromXML($xml);
+			life = Number($xml.@life);
+			if($xml.@lifeSpread != undefined) lifeSpread = XMLHelper.dexmlize($xml.@lifeSpread);
+			if($xml.@angle != undefined) angle = Number($xml.@angle);
+			if($xml.@angleSpread != undefined) angleSpread = XMLHelper.dexmlize($xml.@angleSpread);
+			if($xml.hasOwnProperty("Controllers")){
+				for (var i:int = 0; i < $xml.Controllers.children().length(); i++) {
+					if($xml.Controllers.children()[i].name() == "ParticleController"){
+						controllers.particle.fromXML($xml.Controllers.children()[i]);
+					} else if($xml.Controllers.children()[i].name() == "EmitterController"){
+						controllers.emitter.fromXML($xml.Controllers.children()[i]);
+					}
+				}
+			}
+			return this;
+		}
+		
+		/**
 		 *	@private
 		 */
-		protected function randomLife():Number{
-			return (_life.spread !== '0') ? Random.fromRange(_life.value, (typeof _life.spread == 'string') ? _life.value + Number(_life.spread) : _life.spread, 2) : _life.value;
+		public function randomLife():Number{
+			return (lifeSpread !== '0') ? Random.fromRange(life, (typeof lifeSpread == 'string') ? life + Number(lifeSpread) : lifeSpread, 2) : life;
+		}
+		
+		/**
+		 *	@private
+		 */
+		public function randomAngle():Number{
+			return (angleSpread !== '0') ? Random.fromRange(angle, (typeof angleSpread == 'string') ? angle + Number(angleSpread) : angleSpread, 2) : angle;
 		}
 
 	}

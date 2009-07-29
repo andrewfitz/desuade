@@ -28,6 +28,7 @@ package com.desuade.partigen.emitters {
 	import flash.utils.Timer;
     import flash.events.TimerEvent;
 	import flash.utils.getTimer;
+	import flash.utils.*;
 	
 	import com.desuade.debugging.Debug;
 	import com.desuade.utils.*;
@@ -193,6 +194,42 @@ package com.desuade.partigen.emitters {
 				dispatchEvent(new ParticleEvent(ParticleEvent.BORN, {particle:np}));
 				renderer.addParticle(np);
 			}
+		}
+		
+		/**
+		 *	This generates an XML object representing the entire emitter
+		 *	
+		 *	@return		An XML object representing the emitter
+		 */
+		public function toXML():XML {
+			var txml:XML = <emitter />;
+			txml.setLocalName(XMLHelper.getSimpleClassName(this));
+			txml.@particle = getQualifiedClassName(particle);
+			txml.@eps = eps;
+			txml.@burst = burst;
+			if(groupAmount > 1){
+				txml.@group = XMLHelper.getSimpleClassName(group);
+				txml.@groupAmount = groupAmount;
+				txml.@groupProximity = groupProximity;
+			}
+			return txml;
+		}
+		
+		/**
+		 *	This configures the emitter based on the XML, and adds any controllers (if available)
+		 *	
+		 *	@param	xml	 The XML object to use to configure the emitter
+		 *	
+		 *	@return		The emitter object (for chaining)
+		 */
+		public function fromXML($xml:XML):BasicEmitter {
+			particle = getDefinitionByName($xml.@particle) as Class;
+			eps = Number($xml.@eps);
+			if($xml.@burst != undefined) burst = Number($xml.@burst);
+			if($xml.@group != undefined) group = getDefinitionByName("com.desuade.partigen.particles::" + $xml.@group) as Class;
+			if($xml.@groupAmount != undefined) groupAmount = Number($xml.@groupAmount);
+			if($xml.@groupProximity != undefined) groupProximity = Number($xml.@groupProximity);
+			return this;
 		}
 		
 		/**
