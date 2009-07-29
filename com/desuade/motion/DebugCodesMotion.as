@@ -51,7 +51,7 @@ package com.desuade.motion {
 				10004: "[Tween] can not stop, tween has completed",
 				10005: "[Tween] can not start, tween has completed",
 				10006: "[Sequence] can not start, sequence is already active or has no items",
-				10007: "[Sequence] can not stop, sequence is not active",
+				10007: "[Sequence] can not stop/advance, sequence is not active",
 				10008: "Direct functions can't be converted to XML. Please make your ease a String instead - ie: ease:'easeOutBounce'",
 				
 				// low level codes
@@ -66,6 +66,7 @@ package com.desuade.motion {
 				40009: "[Physics] new physics object created",
 				40010: "[Physics] physics engine started",
 				40011: "[Physics] physics engine stopped",
+				40012: "[Sequence] new SequenceGroup created",
 				
 				//primitive low level codes
 				50001: "[PrimitiveTween] tween started: %",

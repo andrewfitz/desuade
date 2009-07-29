@@ -28,6 +28,15 @@ package com.desuade.motion.sequences {
 	import com.desuade.motion.events.*;
 	import com.desuade.motion.tweens.*;
 	
+	/**
+	 *  A Sequence that uses a single class and config objects to create a sequence.
+	 *    
+	 *  @langversion ActionScript 3
+	 *  @playerversion Flash 9.0.0
+	 *
+	 *  @author Andrew Fitzgerald
+	 *  @since  29.07.2009
+	 */
 	public dynamic class ClassSequence extends Sequence {
 		
 		/**
@@ -42,6 +51,7 @@ package com.desuade.motion.sequences {
 		
 		/**
 		 *	<p>This is a Sequence that only uses one class to create sequence items.</p>
+		 *	<p>All Config Objects passed in after the motionClass parametere will be added to the sequence.</p>
 		 *	
 		 *	@param	motionClass	 The class to use in creating the sequence
 		 */
@@ -54,13 +64,13 @@ package com.desuade.motion.sequences {
 		/**
 		 *	@private
 		 */
-		protected override function itemCheck($o:*):* {
+		internal override function itemCheck($o:*):* {
 			if($o is SequenceGroup) {
 				return $o;
 			} else if($o is Sequence){
 				return $o;
 			} else if($o is Array) {
-				return itemCheck(new SequenceGroup().pushArray($o));
+				return new SequenceGroup().pushArray($o);
 			} else {
 				for (var p:String in _overrides) {
 					$o[p] = _overrides[p];

@@ -60,6 +60,11 @@ package com.desuade.motion.sequences {
 		/**
 		 *	@private
 		 */
+		protected var _manualAdvance:Boolean = false;
+		
+		/**
+		 *	@private
+		 */
 		protected var _dispatcher:EventDispatcher = new EventDispatcher();
 		
 		/**
@@ -100,6 +105,20 @@ package com.desuade.motion.sequences {
 		}
 		
 		/**
+		 *	If set to true, the sequence will not add a listener, and will not advance the sequence until advance() is called.
+		 */
+		public function get manualAdvance():Boolean{
+			return _manualAdvance;
+		}
+		
+		/**
+		 *	@private
+		 */
+		public function set manualAdvance($value:Boolean):void {
+			_manualAdvance = $value;
+		}
+		
+		/**
 		 *	Starts the Seqeuence from the specified position, or the beginning if no position is specified.
 		 *	@param	position	 Which object to start from in the Sequence (Array), starting from 0.
 		 */
@@ -130,10 +149,30 @@ package com.desuade.motion.sequences {
 		/**
 		 *	Takes all the items in an Array and pushes them into the Sequence.
 		 *	@param	array	 An Array with Sequenceable Objects.
+		 *	@return		Returns the Sequence (for chaining)
 		 */
-		public function pushArray($array:Array):void {
+		public function pushArray($array:Array):Sequence {
 			for (var i:int = 0; i < $array.length; i++) {
 				this.push($array[i]);
+			}
+			return this;
+		}
+		
+		/**
+		 *	<p>This advances the currently playing sequence.</p>
+		 *	<p>This happens automatically unless manualAdvance = true</p>
+		 */
+		public function advance($i:Object = null):void {
+			if(active){
+				if(!_manualAdvance) current.removeEventListener(MotionEvent.ENDED, advance);
+				if(_position < length-1){
+					play(++_position);
+					dispatchEvent(new SequenceEvent(SequenceEvent.ADVANCED, {position:_position, sequence:this}));
+				} else {
+					end();
+				}
+			} else {
+				Debug.output('motion', 10007);
 			}
 		}
 		
@@ -144,20 +183,20 @@ package com.desuade.motion.sequences {
 			Debug.output('motion', 40004, [$position]);
 			_position = $position;
 			_current = itemCheck(this[_position]);
-			current.addEventListener(MotionEvent.ENDED, advance, false, 0, true);
-			current.start();
+			if(!_manualAdvance) current.addEventListener(MotionEvent.ENDED, advance, false, 0, true);
+			current.start((_current is SequenceGroup) ? this : null);
 		}
 		
 		/**
 		 *	@private
 		 */
-		protected function itemCheck($o:*):* {
+		internal function itemCheck($o:*):* {
 			if($o is SequenceGroup) {
 				return $o;
 			} else if($o is Sequence){
 				return $o;
 			} else if($o is Array) {
-				return itemCheck(new SequenceGroup().pushArray($o));
+				return new SequenceGroup().pushArray($o);
 			} else {
 				return $o;
 			}
@@ -171,19 +210,6 @@ package com.desuade.motion.sequences {
 			_active = false;
 			dispatchEvent(new SequenceEvent(SequenceEvent.ENDED, {sequence:this}));
 			Debug.output('motion', 40005);
-		}
-		
-		/**
-		 *	@private
-		 */
-		protected function advance($i:Object):void {
-			current.removeEventListener(MotionEvent.ENDED, advance);
-			if(_position < length-1){
-				play(++_position);
-				dispatchEvent(new SequenceEvent(SequenceEvent.ADVANCED, {position:_position, sequence:this}));
-			} else {
-				end();
-			}
 		}
 		
 		/**
