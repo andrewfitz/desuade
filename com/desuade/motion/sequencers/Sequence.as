@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-package com.desuade.motion.sequencers {
+package com.desuade.motion.sequences {
 
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
@@ -30,10 +30,9 @@ package com.desuade.motion.sequencers {
 
 	import com.desuade.debugging.*;
 	import com.desuade.motion.events.*;
-	import com.desuade.motion.tweens.BasicTween;
 
 	/**
-	 *  <p>A Sequence is an object that contains an ordered group of tweens that get called right after another, in the order given.</p>
+	 *  <p>A Sequence is an Array that contains an ordered group of motion objects that get called right after another, in the order given.</p>
 	 *	
 	 *  @langversion ActionScript 3
 	 *  @playerversion Flash 9.0.0
@@ -64,36 +63,18 @@ package com.desuade.motion.sequencers {
 		protected var _dispatcher:EventDispatcher = new EventDispatcher();
 		
 		/**
-		 *	@private
-		 */
-		protected var _tweenClass:Class;
-		
-		/**
-		 *	@private
-		 */
-		protected var _overrides:Object;
-		
-		/**
-		 *	@private
-		 */
-		protected var _allowOverrides:Boolean = true;
-		
-		/**
 		 *	<p>Creates a new Sequence.</p>
 		 *	<p>A sequence is a subclass of Array, so you can manipulate items in a sequence just like an array.</p>
-		 *	<p>You can pass actual tweens into the Sequence that bypass the tweenClass and overrides, or regular objects that will be created into new tweens based on the tweenClass provided.</p>
-		 *	<p>Each sequence creates tweens from objects passed, based on the given tweenClass, so the objects that are pushed into the sequence vary depending on the required parameters of the specified tweening class.</p>
+		 *	<p>Any motion class that broadbasts an MotionEvent.ENDED can be sequenced.</p>
 		 *	<p>By passing an Array into the sequence, all tween objects inside will be grouped together and played at the same time. The sequence will only advance once the tween with the longest duration is finished.</p>
 		 *	<p>Sequences can also be nested, and another sequence is a valid object to push into a sequence. Sequences can NOT be nested inside Arrays.</p>
 		 *	
-		 *	@param	tweenClass	 This is the class of tweens to use in the sequence.
-		 *	@param	args	 After passing the tweenClass, all following items passed into the contructor will be pushed into the sequence like an array.
+		 *	@param	args	 All the items passed into the constructor will be pushed into the sequence like an array.
 		 *	@see	#tweenClass
 		 *	
 		 */
-		public function Sequence($tweenClass:Class, ... args) {
+		public function Sequence(... args) {
 			super();
-			_tweenClass = $tweenClass;
 			pushArray(args);
 			Debug.output('motion', 40003);
 		}
@@ -110,52 +91,6 @@ package com.desuade.motion.sequencers {
 		 */
 		public function get active():Boolean{
 			return _active;
-		}
-		
-		/**
-		 *	<p>This is the class of tweens to use in the sequence.</p>
-		 *	<p>Each Seqeuence will create only one kind of tween - ie: BasicTween, Tween, MultiTween, etc. To create a Seqeuence that contains multiple tween classes, create a new Seqeuence and then push that into the Array.</p>
-		 */
-		public function get tweenClass():Class{
-			return _tweenClass;
-		}
-		
-		/**
-		 *	@private
-		 */
-		public function set tweenClass($value:Class):void {
-			_tweenClass = $value;
-		}
-		
-		/**
-		 *	<p>An Object that represents a normal Sequence object, that contains properties to be applied to every object in the Sequence.</p>
-		 *	
-		 *	<p>For example: <code>seq.overrides = {target:my_obj, ease:Linear.none}</code> will assign all the tweens in the sequence their 'target' and 'ease' values to the given values in the overrides object, unless the object has <code>{allowOverrides:false}</code></p>
-		 *	
-		 */
-		public function get overrides():Object{
-			return _overrides;
-		}
-		
-		/**
-		 *	@private
-		 */
-		public function set overrides($value:Object):void {
-			_overrides = $value;
-		}
-		
-		/**
-		 *	Does the Seqeuence allow it's objects to be replaced with override values.
-		 */
-		public function get allowOverrides():Boolean{
-			return _allowOverrides;
-		}
-		
-		/**
-		 *	@private
-		 */
-		public function set allowOverrides($value:Boolean):void {
-			_allowOverrides = $value;
 		}
 		
 		/**
@@ -317,4 +252,3 @@ package com.desuade.motion.sequencers {
 	}
 
 }
-
