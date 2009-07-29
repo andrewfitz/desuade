@@ -139,7 +139,7 @@ package com.desuade.motion.bases {
 		 */
 		protected static function update($u:Object):void {
 			var times:int = getTimer();
-			for each (var item in _holder) {
+			for each (var item:BasePrimitive in _holder) {
 				item.render(times);
 			}
 			dispatchEvent(new MotionEvent(MotionEvent.UPDATED));

@@ -27,6 +27,8 @@ Release Candidate 1 (2009/7/29):
 		
 	Partigen:
 		-added: toXML() and fromXML() methods to most classes
+		-added: emitter.enableEvents:Boolean to enable/disable particle events
+		-changed: emtiters no longer broadcast particle events by default
 		-changed: life is now: life and lifeSpread
 		-changed: angle is now: angle and angleSpread
 		-changed: eps is now a Number (not int), and allows for 1 emission greater than 1 second 

@@ -92,6 +92,11 @@ package com.desuade.partigen.emitters {
 		public var groupProximity:int;
 		
 		/**
+		 *	Enable particle BORN and DIED events. The default is false;
+		 */
+		public var enableEvents:Boolean = false;
+		
+		/**
 		 *	@private
 		 */
 		protected var _id:int;
@@ -191,7 +196,7 @@ package com.desuade.partigen.emitters {
 				np.x = this.x;
 				np.y = this.y;
 				np.z = this.z;
-				dispatchEvent(new ParticleEvent(ParticleEvent.BORN, {particle:np}));
+				if(enableEvents) dispatchEvent(new ParticleEvent(ParticleEvent.BORN, {particle:np}));
 				renderer.addParticle(np);
 			}
 		}
@@ -236,7 +241,7 @@ package com.desuade.partigen.emitters {
 		 *	@private
 		 */
 		public function dispatchDeath(p:BasicParticle):void {
-			dispatchEvent(new ParticleEvent(ParticleEvent.DIED, {particle:p}));
+			if(enableEvents) dispatchEvent(new ParticleEvent(ParticleEvent.DIED, {particle:p}));
 		}
 		
 		/**

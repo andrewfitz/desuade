@@ -129,7 +129,7 @@ package com.desuade.partigen.emitters {
 				np.z = this.z;
 				if(life > 0) np.addLife(randomLife());
 				controllers.particle.attachAll(np, this);
-				dispatchEvent(new ParticleEvent(ParticleEvent.BORN, {particle:np}));
+				if(enableEvents) dispatchEvent(new ParticleEvent(ParticleEvent.BORN, {particle:np}));
 				np.startControllers();
 				renderer.addParticle(np);
 			}
