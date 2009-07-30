@@ -33,7 +33,8 @@ Release Candidate 1 (2009/7/29):
 		-changed: emtiters no longer broadcast particle events by default
 		-changed: life is now: life and lifeSpread
 		-changed: angle is now: angle and angleSpread
-		-changed: eps is now a Number (not int), and allows for 1 emission greater than 1 second 
+		-changed: eps is now a Number (not int), and allows for 1 emission greater than 1 second
+		-fixed: particle physics objects were not being stopped on death
 	
 	Debugging: none
 	

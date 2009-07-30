@@ -98,14 +98,11 @@ package com.desuade.partigen.particles {
 		 */
 		public function startControllers():void {
 			for (var p:String in controllers) {
-				if(controllers[p] is PhysicsMultiController){
-					controllers[p].start();
-					controllers[p].physics.start();
-				}
-				else if(controllers[p] is MotionController && controllers[p].keyframes.isFlat()){
+				if(controllers[p] is MotionController && controllers[p].keyframes.isFlat()){
 					controllers[p].setStartValue();
 				} else {
 					controllers[p].start();
+					if(controllers[p] is PhysicsMultiController) controllers[p].physics.start();
 				}
 			}
 		}
@@ -118,6 +115,7 @@ package com.desuade.partigen.particles {
 				if(controllers[p].active){
 					controllers[p].stop();
 				}
+				if(controllers[p] is PhysicsMultiController) controllers[p].physics.stop();
 			}
 		}
 		
