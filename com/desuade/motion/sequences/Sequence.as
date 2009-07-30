@@ -121,8 +121,10 @@ package com.desuade.motion.sequences {
 		/**
 		 *	Starts the Seqeuence from the specified position, or the beginning if no position is specified.
 		 *	@param	position	 Which object to start from in the Sequence (Array), starting from 0.
+		 *	
+		 *	@return		The sequence (for chaining)
 		 */
-		public function start($position:int = 0):void {
+		public function start($position:int = 0):* {
 			if(!active && this.length != 0){
 				_active = true;
 				Debug.output('motion', 40008);
@@ -131,6 +133,7 @@ package com.desuade.motion.sequences {
 			} else {
 				Debug.output('motion', 10006);
 			}
+			return this
 		}
 		
 		/**

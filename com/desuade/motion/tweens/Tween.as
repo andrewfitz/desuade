@@ -117,7 +117,7 @@ package com.desuade.motion.tweens {
 		 *	@return		The tween object (for chaining)
 		 *	
 		 */
-		public override function start($delay:Number = -1, $position:Number = -1):BaseBasic {
+		public override function start($delay:Number = -1, $position:Number = -1):* {
 			if(!_completed && !active){
 				_config.delay = ($delay == -1) ? _config.delay : $delay;
 				if($position == -1){
@@ -262,7 +262,7 @@ package com.desuade.motion.tweens {
 		/**
 		 *	@private
 		 */
-		protected function updateListener($i:Object):void {
+		protected override function updateListener($i:Object):void {
 			super.updateListener($i);
 			if(_config.round) roundTweenValue($i);
 		}

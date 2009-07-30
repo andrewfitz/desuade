@@ -101,7 +101,7 @@ package com.desuade.motion.sequences {
 		
 		/**
 		 *	<p>An Object that represents a normal Sequence object, that contains properties to be applied to every object in the Sequence.</p>
-		 *	<p>For example: <code>seq.overrides = {duration:3, ease:Linear.none}</code> will assign all the tweens in the sequence their 'duration' and 'ease' values to the given values in the overrides object.</p>
+		 *	<p>For example: <code>seq.overrides = {duration:3, ease:'linear'}</code> will assign all the tweens in the sequence their 'duration' and 'ease' values to the given values in the overrides object.</p>
 		 */
 		public function get overrides():Object{
 			return _overrides;

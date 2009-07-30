@@ -69,8 +69,10 @@ package com.desuade.motion.sequences {
 		
 		/**
 		 *	Runs the function with a delay (if provided).
+		 *	
+		 *	@return		The DelayableFunc (for chaining)
 		 */
-		public function start():void {
+		public function start():DelayableFunc {
 			dispatchEvent(new MotionEvent(MotionEvent.STARTED, {delableFunc:this}));
 			returned = null;
 			if(_funcconfig.delay != undefined && _funcconfig.delay > 0) {
@@ -78,6 +80,7 @@ package com.desuade.motion.sequences {
 			} else {
 				runFunc(_funcconfig);
 			}
+			return this;
 		}
 		
 		/**

@@ -91,7 +91,7 @@ package com.desuade.motion.bases {
 		 *	
 		 *	@return		The object (for chaining)
 		 */
-		public function start($delay:Number = -1, $position:Number = -1):BaseBasic {
+		public function start($delay:Number = -1, $position:Number = -1):* {
 			if(!_active){
 				_active = true;
 				dispatchEvent(new _eventClass(_eventClass.STARTED, {basic:this}));
@@ -169,7 +169,7 @@ package com.desuade.motion.bases {
 		 *	@private
 		 */
 		protected function createPrimitive($to:Object):int {
-			return null;
+			return 0;
 		}
 		
 		/**

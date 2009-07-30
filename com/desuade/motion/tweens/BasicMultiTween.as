@@ -98,7 +98,7 @@ package com.desuade.motion.tweens {
 		/**
 		 *	@inheritDoc
 		 */
-		public override function fromXML($xml:XML):BaseBasic {
+		public override function fromXML($xml:XML):* {
 			super.fromXML($xml);
 			var cd:XMLList = $xml.children();
 			var po:Object = {};

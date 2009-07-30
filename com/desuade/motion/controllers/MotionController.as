@@ -128,8 +128,9 @@ package com.desuade.motion.controllers {
 		 *	Starts the controller. This will internally create a Sequence (of tweens) that will be ran to match the points in the controller's PointsContainer, running from 'begin' to 'end' points.
 		 *	
 		 *	@param	keyframe	 The label of the keyframe to start at.
+		 *	@return		The MotionController (for chaining)
 		 */
-		public function start($keyframe:String = null):void {
+		public function start($keyframe:String = null):* {
 			setStartValue();
 			var ta:Array = keyframes.createTweens(target, property, duration);
 			_active = true;
@@ -140,6 +141,7 @@ package com.desuade.motion.controllers {
 			if($keyframe != null) _sequence.start(keyframes.getOrderedLabels().indexOf($keyframe));
 			else _sequence.start();
 			dispatchEvent(new ControllerEvent(ControllerEvent.STARTED, {controller:this}));
+			return this;
 		}
 		
 		/**

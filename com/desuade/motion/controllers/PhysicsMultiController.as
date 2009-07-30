@@ -135,7 +135,7 @@ package com.desuade.motion.controllers {
 		/**
 		 *	@inheritDoc
 		 */
-		public override function start($keyframe:String = null):void {
+		public override function start($keyframe:String = null):* {
 			startPhysicsControllers($keyframe);
 		}
 		

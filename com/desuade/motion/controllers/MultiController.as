@@ -164,11 +164,14 @@ package com.desuade.motion.controllers {
 		 *	This starts all child MotionControllers at once. If a keyframe label is specified, each controller will be started at the given keyframe.
 		 *	
 		 *	@param	keyframe	 The label of the keyframe to start the controllers at
+		 *	
+		 *	@return		The MultiController (for chaining)
 		 */
-		public function start($keyframe:String = null):void {
+		public function start($keyframe:String = null):* {
 			for (var p:String in this){
 				this[p].start($keyframe);
 			}
+			return this;
 		}
 		
 		/**

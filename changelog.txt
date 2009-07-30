@@ -23,6 +23,7 @@ Release Candidate 1 (2009/7/29):
 		-changed: motion.sequencers package is now motion.sequences
 		-changed: Sequences with Objects have been re-factored into ClassSequence class
 		-changed: BasicPhysics refactored to use new Bases package
+		-changed: start() returns the object started instead of void/boolean
 		-removed: sequence.empty() - use sequence.splice(0)
 		-removed: clone() since you can use XML to duplicate now
 		-fixed: BasicMultiTween updated properties directly, effecting the tweenconfig
