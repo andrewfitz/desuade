@@ -156,7 +156,7 @@ package com.desuade.motion.bases {
 		 *	@param	xml	The XML to use for configuration
 		 *	@return		The object that called the method (for chaining)
 		 */
-		public function fromXML($xml:XML):BaseBasic {
+		public function fromXML($xml:XML):* {
 			var ats:XMLList = $xml.attributes();
 			for (var p:String in ats) {
 				var an:String = ats[p].name();
@@ -180,6 +180,13 @@ package com.desuade.motion.bases {
 			_active = false;
 			BaseTicker.removeItem(_primitiveID);
 			_primitiveID = 0;
+		}
+		
+		/**
+		 *	@private
+		 */
+		protected function updateListener($i:Object):void {
+			if(_config.update) dispatchEvent(new _eventClass(_eventClass.UPDATED, {basic:this, primitive:BaseTicker.getItem(_primitiveID)}));
 		}
 
 	}

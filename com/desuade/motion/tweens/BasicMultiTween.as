@@ -51,6 +51,7 @@ package com.desuade.motion.tweens {
 		 *	<li>properties:Object – an object of properties and values to tween. Passing a Number will tween it to that absolute value, passing a String will use a relative value (target.property + value) - ie: <code>{x:100}</code> or <code>{y:"200"}</code></li>
 		 *	<li>ease:String – the easing to use. Default is 'linear'. Can pass a Function, but may not be fully compatable.</li>
 		 *	<li>duration:Number – how long in seconds for the tween to last</li>
+		 *	<li>update:Boolean – enable broadcasting of UPDATED event (can lower performance)</li>
 		 *	</ul>
 		 *	
 		 *	<p>Example: <code>var mt:BasicMultiTween = new BasicMultiTween(myobj, {properties:{x:200, y:'50', alpha:0.5}, duration:2, ease:'easeInBounce'})</code></p>

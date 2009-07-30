@@ -52,6 +52,7 @@ package com.desuade.motion.tweens {
 		 *	<li>value:* – the new (end) value. Passing a Number will tween it to that absolute value, passing a String will use a relative value (target.property + value) - ie: <code>{value: 100}</code> or <code>{value:"200"}</code></li>
 		 *	<li>ease:String – the easing to use. Default is 'linear'. Can pass a Function, but may not be fully compatable.</li>
 		 *	<li>duration:Number – how long in seconds for the tween to last</li>
+		 *	<li>update:Boolean – enable broadcasting of UPDATED event (can lower performance)</li>
 		 *	</ul>
 		 *	
 		 *	<p>Example: <code>var mt:BasicTween = new BasicTween(myobj, {property:'x', value:.5, duration:2, ease:'easeInBounce'})</code></p>
@@ -77,8 +78,9 @@ package com.desuade.motion.tweens {
 		 */
 		protected override function createPrimitive($to:Object):int {
 			var newval:Number = (typeof $to.value == 'string') ? target[$to.property] + Number($to.value) : $to.value;
-			var pt:PrimitiveTween = BaseTicker.addItem(new PrimitiveTween(target, $to.property, newval, $to.duration*1000, $to.ease));
+			var pt:PrimitiveTween = BaseTicker.addItem(new PrimitiveTween(target, $to.property, newval, $to.duration*1000, $to.ease || null));
 			pt.endFunc = endFunc;
+			pt.updateFunc = updateListener;
 			return pt.id;
 		}
 

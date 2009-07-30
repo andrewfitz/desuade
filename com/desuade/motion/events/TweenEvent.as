@@ -43,7 +43,7 @@ package com.desuade.motion.events {
 		
 		/**
 		 *	<p>This event is fired when a tween is updating the target's property.</p>
-		 *	<p>This is not enabled by default for performance reasons, and is excluded in BasicTween classes.</p>
+		 *	<p>This is not enabled by default for performance reasons.</p>
 		 *	<p>To enable this in Tween classes, pass update:true into the tween config object – {property:'x', value:50, update:true, duration:2}</p>
 		 */
 		public static const UPDATED:String = "updated";

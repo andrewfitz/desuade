@@ -41,17 +41,22 @@ package com.desuade.motion.bases {
 	public class BasePrimitive extends Object {
 		
 		/**
-		 *	This is the unique internal id of the tween.
+		 *	This is the unique internal id of the item.
 		 */
 		public var id:int;
 		
 		/**
-		 *	The target object to perform the tween on.
+		 *	The target object.
 		 */
 		public var target:Object;
 		
 		/**
-		 *	Has the PrimitiveTween ended or not
+		 *	The property on the target.
+		 */
+		public var property:String;
+		
+		/**
+		 *	Has the Primitive ended or not
 		 */
 		public var ended:Boolean = false;
 		
@@ -74,10 +79,11 @@ package com.desuade.motion.bases {
 		 *	Creates a new BasePrimitive. This is a base class and should be extended, not used directly.
 		 *	
 		 *	@param	target	 The target object
+		 *	@param	property	 The property to use
 		 */
-		public function BasePrimitive($target:Object) {
+		public function BasePrimitive($target:Object, $property:String) {
 			super();
-			id = BaseTicker.aquireID(), target = $target, starttime = getTimer();
+			id = BaseTicker.aquireID(), target = $target, property = $property, starttime = getTimer();
 			Debug.output('motion', 50001, [id]);
 		}
 		

@@ -7,12 +7,13 @@ Release Candidate 1 (2009/7/29):
 	[Individual ease classes will be removed next revision, start using ease strings]
 	
 	Motion:
-		-tween performance is now 5x faster! 2000 tweens: 11fps -> 53fps
+		-tween and physics performance is now 5x faster! 2000 tweens: 11fps -> 53fps
 		-added: toXML() and fromXML() methods to most classes
 		-added: new Sequence, ClassSequence, SequenceGroup, and DelayableFunc classes
 		-added: Sequence.manualAdvance/SequenceGroup.manualServe - this prevents the sequence from automatically advancing
 		-added: MotionEvent that all motion.events inherit
 		-added: eases.Easing class for passing eases as strings (now default)
+		-added: Bases package: BaseTicker, BaseBasic, BasePrimitive classes
 		-changed: eases should now be entered as Strings - Bounce.easeOut -> 'easeOutBounce'
 			eases can also be entered as functions, but will not work with XML and is not recommended anymore
 		-changed: tween/physics constructors only require a target
@@ -21,6 +22,7 @@ Release Candidate 1 (2009/7/29):
 		-changed: MultiController duration/properties constructor order switched
 		-changed: motion.sequencers package is now motion.sequences
 		-changed: Sequences with Objects have been re-factored into ClassSequence class
+		-changed: BasicPhysics refactored to use new Bases package
 		-removed: sequence.empty() - use sequence.splice(0)
 		-removed: clone() since you can use XML to duplicate now
 		-fixed: BasicMultiTween updated properties directly, effecting the tweenconfig

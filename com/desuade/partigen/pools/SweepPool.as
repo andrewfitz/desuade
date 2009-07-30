@@ -131,6 +131,7 @@ package com.desuade.partigen.pools {
 		public function sweep($o:Object):void {
 			Debug.output('partigen', 20006, [getTimer(), _marked.length]);
 			for (var i:int = 0; i < _marked.length; i++) {
+				_particles[_marked[i]] = null;
 				delete _particles[_marked[i]];
 				super.removeParticle(_marked[i]);
 			}

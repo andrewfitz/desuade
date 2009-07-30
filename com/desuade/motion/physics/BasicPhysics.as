@@ -30,6 +30,7 @@ package com.desuade.motion.physics {
 	import flash.events.EventDispatcher;
 	
 	import com.desuade.motion.events.*;
+	import com.desuade.motion.bases.*;
 	
 	/**
 	 *  This class simulates very basic physics, using basic motion equations to change the value of a property. This can be used like a 'tween' to change any property's value, not just positional properties like x and y.
@@ -40,72 +41,7 @@ package com.desuade.motion.physics {
 	 *  @author Andrew Fitzgerald
 	 *  @since  27.04.2009
 	 */
-	public class BasicPhysics extends EventDispatcher {
-		
-		/**
-		 *	@private
-		 */
-		internal static var _sprite:Sprite = new Sprite();
-		
-		/**
-		 *	@private
-		 */
-		protected var _active:Boolean;
-		
-		/**
-		 *	@private
-		 */
-		protected var _friction:Number;
-		
-		/**
-		 *	@private
-		 */
-		protected var _calcfriction:Number;
-		
-		/**
-		 *	@private
-		 */
-		protected var _calcangle:Number;
-		
-		/**
-		 *	@private
-		 */
-		protected var _physicsconfig:Object;
-		
-		/**
-		 *	The target object. Any Object, not just a DisplayObject.
-		 */
-		public var target:Object;
-		
-		/**
-		 *	The property to apply the physics to.
-		 */
-		public var property:String;
-		
-		/**
-		 *	The velocity of the property. This is added to the current value every frame - ie: FPS of 50, with a velocity of 2 = 100/second.
-		 *	Shortcut: "v" - (BasicPhysics.velocity == BasicPhysics.v)
-		 */
-		public var velocity:Number;
-		
-		/**
-		 *	The acceleration of the property. This is added to the current velocity. A negative acceleration would represent gravity.
-		 *	Shortcut: "a" - (BasicPhysics.acceleration == BasicPhysics.a)
-		 */
-		public var acceleration:Number;
-		
-		/**
-		 *	Setting this to true will 'flip' the way the property is handled. This is for properties such as 'y' that are reversed from the cartesian coordinate system.
-		 */
-		public var flip:Boolean;
-		
-		/**
-		 *	This is the angle to simulate the beginning velocity. This needs to be set before the engine starts, and only effects the start velocity.
-		 *	This is usually set for both 'x' and 'y' to show an angle.
-		 *	
-		 *	0 = right, 90 = up, 180 = left, 270 = down, 360 = right.
-		 */
-		public var angle:* = null;
+	public class BasicPhysics extends BaseBasic {
 		
 		/**
 		 *	<p>This creates a BasicPhysics object.</p>
@@ -113,146 +49,104 @@ package com.desuade.motion.physics {
 		 *	<p>Each BasicPhysics object controls a single property on a given target object, and applies basic physics equations to calculate a change in value.</p>
 		 *	
 		 *	<p>Unlike tweens, there is no end value, and the BasicPhysics' update will continue to run until it is stopped.</p>
-		 *	
+		 *	<p>Paramaters for the configObject:</p>
 		 *	<ul>
 		 *	<li>property:String – The property to apply the physics to.</li>
 		 *	<li>velocity:Number – The velocity of the property. Defaults 0.</li>
 		 *	<li>acceleration:Number – The acceleration of the property. Defaults 0.</li>
 		 *	<li>friction:Number – The friction of the property. Defaults 0.</li>
-		 *	<li>angle:* – The angle at which to start at. Defaults null (disabled).</li>
+		 *	<li>angle:* – The angle at which to start at. Defaults disabled. 0 = right, 90 = up, 180 = left, 270 = down, 360 = right</li>
 		 *	<li>flip:Boolean – To flip the cartesian coordinates or not. Defaults false.</li>
+		 *	<li>update:Boolean – enable broadcasting of UPDATED event (can lower performance)</li>
 		 *	</ul>
 		 *	
 		 *	@param	target	 The target object.
-		 *	@param	physicsObject	 The object containing the physics configuration values.
+		 *	@param	configObject	 The object containing the physics configuration values.
 		 *	
 		 *	@see #target
 		 *	@see #property
-		 *	@see #velocity
-		 *	@see #acceleration
-		 *	@see #friction
+		 *	@see PrimitivePhysics#velocity
+		 *	@see PrimitivePhysics#acceleration
+		 *	@see PrimitivePhysics#friction
 		 *	@see #angle
-		 *	@see #flip
+		 *	@see PrimitivePhysics#flip
 		 *	@see #config
 		 */
-		public function BasicPhysics($target:Object, $physicsObject:Object = null) {
-			super();
-			target = $target;
-			if($physicsObject != null){
-				_physicsconfig = $physicsObject;
-				property = $physicsObject.property;
-				velocity = $physicsObject.velocity || 0;
-				acceleration = $physicsObject.acceleration || 0;
-				friction = $physicsObject.friction || 0;
-				flip = $physicsObject.flip || false;
-				angle = $physicsObject.angle || null;
-			} else {
-				_physicsconfig = new Object();
+		public function BasicPhysics($target:Object, $configObject:Object = null) {
+			if($configObject != null){
+				$configObject.velocity =($configObject.velocity != undefined) ? $configObject.velocity : 0;
+				$configObject.acceleration = ($configObject.acceleration != undefined) ? $configObject.acceleration : 0;
+				$configObject.friction = ($configObject.friction != undefined) ? $configObject.friction : 0;
+				$configObject.angle = ($configObject.angle != undefined) ? $configObject.angle : null;
+				$configObject.flip = ($configObject.flip != undefined) ? $configObject.flip : false;
 			}
+			super($target, $configObject);
+			_eventClass = PhysicsEvent;
 			Debug.output('motion', 40009);
-		}
+		}		
 		
 		/**
-		 *	The friction of the property. This will slow down the velocity to 0 if there is no acceleration. Should be a positive number.
+		 *	Sets/gets the velocity of the config and PrimitivePhysics object
 		 */
-		public function set friction($value:Number):void {
-			_calcfriction = (1 - ($value / 100));
-			_friction = $value;
+		public function get velocity():Number{
+			return (pid != 0) ? BaseTicker.getItem(pid).velocity : _config.velocity;
 		}
 		
 		/**
 		 *	@private
+		 */
+		public function set velocity($value:Number):void {
+			if(pid != 0) BaseTicker.getItem(pid).velocity = $value;
+			_config.velocity = $value;
+		}
+		
+		/**
+		 *	Sets/gets the acceleration of the config and PrimitivePhysics object
+		 */
+		public function get acceleration():Number{
+			return (pid != 0) ? BaseTicker.getItem(pid).acceleration : _config.acceleration;
+		}
+		
+		/**
+		 *	@private
+		 */
+		public function set acceleration($value:Number):void {
+			if(pid != 0) BaseTicker.getItem(pid).acceleration = $value;
+			_config.acceleration = $value;
+		}
+		
+		/**
+		 *	Sets/gets the friction of the config and PrimitivePhysics object
 		 */
 		public function get friction():Number{
-			return _friction;
-		}
-		
-		/**
-		 *	If the engine is active or not.
-		 */
-		public function get active():Boolean{
-			return _active;
-		}
-		
-		/**
-		 *	Gets the original physics config object that was passed in the constructor (target, velocity, etc). The properties in this object can be modified, but unlike tween classes, it doesn't directly effect the physics.
-		 */
-		public function get config():Object{
-			return _physicsconfig;
-		}
-		
-		/**
-		 *	Starts the physics simulation.
-		 *	
-		 *	@param	setangle	 Apply the angle to the velocity when starting.
-		 *	@see	#angle
-		 */
-		public function start($setangle:Boolean = true):void {
-			_active = true;
-			dispatchEvent(new PhysicsEvent(PhysicsEvent.STARTED, {basicPhysics:this}));
-			if($setangle && angle != null) setAngle(angle);
-			_sprite.addEventListener(Event.ENTER_FRAME, update, false, 0, true);
-			Debug.output('motion', 40010);
-		}
-		
-		/**
-		 *	Stops the physics simulation.
-		 */
-		public function stop():void {
-			_active = false;
-			_sprite.removeEventListener(Event.ENTER_FRAME, update);
-			dispatchEvent(new PhysicsEvent(PhysicsEvent.ENDED, {basicPhysics:this}));
-			Debug.output('motion', 40011);
-		}
-		
-		/**
-		 *	<p>This creates an XML object that represents the BasicPhysics object.</p>
-		 *	<p>The velocity used is the original velocity, not the current velocity.</p>
-		 *	@return		An XML object representing the BasicPhysics object
-		 */
-		public function toXML():XML {
-			var txml:XML = <BasicPhysics />;
-			txml.@property = property;
-			txml.@velocity = _physicsconfig.velocity;
-			txml.@friction = friction;
-			txml.@acceleration = acceleration;
-			if(angle != null) txml.@angle = angle;
-			txml.@flip = flip;
-			return txml;
-		}
-		
-		/**
-		 *	This sets the config object and all the propertieds of the BasicPhysics object from the XML.
-		 *	@return		The BasicPhysics object.
-		 */
-		public function fromXML($xml:XML):BasicPhysics {
-			var ats:XMLList = $xml.attributes();
-			for (var p:String in ats) {
-				var an:String = ats[p].name();
-				this[an] = _physicsconfig[an] = $xml.@[an];
-			}
-			if($xml.@flip != undefined) flip = _physicsconfig.flip = (String($xml.@flip) === "true") ? true : false;
-			return this;
+			return (pid != 0) ? BaseTicker.getItem(pid).friction : _config.friction;
 		}
 		
 		/**
 		 *	@private
 		 */
-		protected function setAngle($value:Number):void {
-			angle = $value;
-			_calcangle = (flip) ? Math.sin($value * Math.PI / 180) : Math.cos($value * Math.PI / 180);
-			velocity *= _calcangle;
+		public function set friction($value:Number):void {
+			if(pid != 0) BaseTicker.getItem(pid).friction = $value;
+			_config.friction = $value;
 		}
 		
 		/**
 		 *	@private
 		 */
-		public function update(u:Object):void {
-			velocity += acceleration;
-			velocity *= _calcfriction;
-			if(flip) target[property] -= velocity;
-			else target[property] += velocity;
-			dispatchEvent(new PhysicsEvent(PhysicsEvent.UPDATED, {basicPhysics:this}));
+		protected override function createPrimitive($to:Object):int {
+			var nv:Number = ($to.angle != null) ? setAngle($to.velocity, $to.angle, $to.flip || false) : $to.velocity;
+			var pt:PrimitivePhysics = BaseTicker.addItem(new PrimitivePhysics(target, $to.property, nv, $to.acceleration, $to.friction, $to.flip));
+			pt.endFunc = endFunc;
+			pt.updateFunc = updateListener;
+			return pt.id;
+		}
+		
+		/**
+		 *	@private
+		 */
+		protected static function setAngle($velocity:Number, $angle:Number, $flip:Boolean):Number {
+			var calcangle:Number = ($flip) ? Math.sin($angle * Math.PI / 180) : Math.cos($angle * Math.PI / 180);
+			return $velocity * calcangle;
 		}
 		
 	}

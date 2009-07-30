@@ -88,7 +88,7 @@ package com.desuade.motion.controllers {
 			} else {
 				_physics = $physics;
 				_physics.target = $target;
-				_physics.property = $property;
+				_physics.config.property = $property;
 			}
 			this.velocity = new MotionController(_physics, 'velocity', $duration, $containerClass, $tweenClass);
 			this.acceleration = new MotionController(_physics, 'acceleration', $duration, $containerClass, $tweenClass);
@@ -113,14 +113,14 @@ package com.desuade.motion.controllers {
 		 *	This is the property of the target to apply the physics to. Unlike a regular MultiController, which uses each MotionController for each property.
 		 */
 		public function get property():String{
-			return _physics.property;
+			return _physics.config.property;
 		}
 		
 		/**
 		 *	@private
 		 */
 		public function set property($value:String):void {
-			_physics.property = $value;
+			_physics.config.property = $value;
 		}
 		
 		/**

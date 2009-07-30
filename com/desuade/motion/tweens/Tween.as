@@ -263,8 +263,8 @@ package com.desuade.motion.tweens {
 		 *	@private
 		 */
 		protected function updateListener($i:Object):void {
+			super.updateListener($i);
 			if(_config.round) roundTweenValue($i);
-			if(_config.update) dispatchEvent(new TweenEvent(TweenEvent.UPDATED, {tween:this, primitiveTween:BaseTicker.getItem(_primitiveID)}));
 		}
 		
 		/**

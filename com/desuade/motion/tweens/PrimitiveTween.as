@@ -40,11 +40,6 @@ package com.desuade.motion.tweens {
 	public class PrimitiveTween extends BasePrimitive {
 		
 		/**
-		 *	The property to tween on the target.
-		 */
-		public var property:String;
-		
-		/**
 		 *	The new (end) value the property will be tweened to.
 		 */
 		public var value:Number;
@@ -86,7 +81,7 @@ package com.desuade.motion.tweens {
 		 *	
 		 */
 		public function PrimitiveTween($target:Object, $property:String, $value:Number, $duration:int, $ease:* = null) {
-			super($target);
+			super($target, $property);
 			duration = $duration, ease = makeEase($ease) || Easing.linear
 			if($property != null) {
 				property = $property, value = $value, startvalue = $target[$property];

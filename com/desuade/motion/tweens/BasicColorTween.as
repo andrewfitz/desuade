@@ -58,6 +58,7 @@ package com.desuade.motion.tweens {
 		 *	<li>value:* – the new (end) color. A string or hex is accepted - ie: <code>{value: '#ff0038}</code> or <code>{value:0xff883a}</code></li>
 		 *	<li>ease:String – the easing to use. Default is 'linear'. Can pass a Function, but may not be fully compatable.</li>
 		 *	<li>duration:Number – how long in seconds for the tween to last</li>
+		 *	<li>update:Boolean – enable broadcasting of UPDATED event (can lower performance)</li>
 		 *	<li>property:String – To tween a hex value instead of a DisplayObject, set this to the property</li>
 		 *	</ul>
 		 *	
@@ -80,7 +81,7 @@ package com.desuade.motion.tweens {
 		 *	@private
 		 */
 		protected override function createPrimitive($to:Object):int {
-			_colorholder = ($to.property != undefined) ? ColorHelper.getColorObject('tint', 1, target[$to.property]) : target.transform.colorTransform;
+			_colorholder = ($to.property != undefined && $to.property != null) ? ColorHelper.getColorObject('tint', 1, target[$to.property]) : target.transform.colorTransform;
 			var cpo:Object = ColorHelper.getColorObject($to.type || 'tint', $to.amount || 1, $to.value, _colorholder);
 			var pt:PrimitiveMultiTween = BaseTicker.addItem(new PrimitiveMultiTween(_colorholder, cpo, $to.duration*1000, $to.ease));
 			pt.endFunc = endFunc;

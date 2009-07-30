@@ -155,8 +155,8 @@ package com.desuade.partigen.controllers {
 		protected function attachController($particle:Particle, $property:String, $emitter:Emitter, $angle:Number):void {
 			if(this[$property] is ParticlePhysicsController){
 				$particle.controllers[$property] = new PhysicsMultiController($particle, $property, (this[$property].duration == 0) ? $particle.life : this[$property].duration);
-				$particle.controllers[$property].physics.angle = (this[$property].useAngle) ? $angle : null;
-				$particle.controllers[$property].physics.flip = this[$property].flip;
+				$particle.controllers[$property].physics.config.angle = (this[$property].useAngle) ? $angle : null;
+				$particle.controllers[$property].physics.config.flip = this[$property].flip;
 				$particle.controllers[$property].velocity.keyframes = this[$property].velocity.keyframes;
 				$particle.controllers[$property].acceleration.keyframes = this[$property].acceleration.keyframes;
 				$particle.controllers[$property].friction.keyframes = this[$property].friction.keyframes;

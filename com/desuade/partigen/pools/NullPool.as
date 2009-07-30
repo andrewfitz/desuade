@@ -62,6 +62,7 @@ package com.desuade.partigen.pools {
 		 *	@inheritDoc
 		 */
 		public override function removeParticle($id:int):void {
+			_particles[$id] = null;
 			delete _particles[$id];
 			super.removeParticle($id);
 		}
