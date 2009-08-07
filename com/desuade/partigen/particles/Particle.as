@@ -25,8 +25,6 @@ THE SOFTWARE.
 package com.desuade.partigen.particles {
 	
 	import flash.display.Sprite;
-	import flash.utils.Timer;
-    import flash.events.TimerEvent;
 	
 	import com.desuade.debugging.*;
 	import com.desuade.partigen.emitters.*;
@@ -49,16 +47,6 @@ package com.desuade.partigen.particles {
 		 *	This holds all of the MotionControllers that are currently being ran on the particle.
 		 */
 		public var controllers:Object = {};
-		
-		/**
-		 *	The life of the particle: how long the particle will live for. This effects the duration of controller tweens.
-		 */
-		public var life:Number;
-		
-		/**
-		 *	@private
-		 */
-		protected var _lifeTimer:Timer;
 	
 		/**
 		 *	Creates a new particle. This should normally not be called; use <code>emitter.emit()</code> instead of this.
@@ -81,16 +69,6 @@ package com.desuade.partigen.particles {
 		 */
 		public function set scale($value:Number):void {
 			scaleX = scaleY = $value;
-		}
-		
-		/**
-		 *	@private
-		 */
-		public function addLife($life:Number):void {
-			life = $life;
-			_lifeTimer = new Timer($life*1000);
-			_lifeTimer.addEventListener(TimerEvent.TIMER, kill, false, 0, true);
-			_lifeTimer.start();
 		}
 		
 		/**
@@ -124,8 +102,6 @@ package com.desuade.partigen.particles {
 		 */
 		public override function kill(... args):void {
 			stopControllers();
-			_lifeTimer.stop();
-			_lifeTimer = null;
 			super.kill(args);
 		}
 	

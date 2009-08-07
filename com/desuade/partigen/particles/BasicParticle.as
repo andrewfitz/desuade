@@ -25,6 +25,8 @@ THE SOFTWARE.
 package com.desuade.partigen.particles {
 	
 	import flash.display.Sprite;
+	import flash.utils.Timer;
+    import flash.events.TimerEvent;
 	
 	import com.desuade.debugging.Debug;
 	import com.desuade.partigen.emitters.BasicEmitter;
@@ -55,7 +57,17 @@ package com.desuade.partigen.particles {
 		 *	@private
 		 */
 		protected var _id:int;
-	
+		
+		/**
+		 *	The life of the particle: how long the particle will live for. This also effects the duration of controller tweens.
+		 */
+		public var life:Number;
+		
+		/**
+		 *	@private
+		 */
+		protected var _lifeTimer:Timer;
+		
 		/**
 		 *	Creates a new particle. This should normally not be called; use <code>emitter.emit()</code> instead of this.
 		 *	
@@ -71,7 +83,6 @@ package com.desuade.partigen.particles {
 		public function init($emitter:BasicEmitter):void {
 			_emitter = $emitter;
 			_id = _count++;
-			name = "particle_"+_id;
 			Debug.output('partigen', 50001, [id]);
 		}
 		
@@ -100,10 +111,24 @@ package com.desuade.partigen.particles {
 		 *	This instantly kills the particle and dispatches a "DIED" event.
 		 */
 		public function kill(... args):void {
+			if(_lifeTimer != null){
+				_lifeTimer.stop();
+				_lifeTimer = null;
+			}
 			_emitter.dispatchDeath(this);
 			Debug.output('partigen', 50002, [id]);
 			_emitter.renderer.removeParticle(this);
 			_emitter.pool.removeParticle(this.id);
+		}
+		
+		/**
+		 *	@private
+		 */
+		public function addLife($life:Number):void {
+			life = $life;
+			_lifeTimer = new Timer($life*1000);
+			_lifeTimer.addEventListener(TimerEvent.TIMER, kill, false, 0, true);
+			_lifeTimer.start();
 		}
 	
 	}

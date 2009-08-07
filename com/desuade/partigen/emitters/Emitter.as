@@ -67,19 +67,6 @@ package com.desuade.partigen.emitters {
 		public var angleSpread:* = "0";
 		
 		/**
-		 *	<p>This is the duration in seconds a particle will exist for.</p>
-		 *	<p>If the value is 0, the particle will live forever.</p>
-		 */
-		public var life:Number = 0;
-		
-		/**
-		 *	<p>This is the spread for particle lives. This will create a random range for the life of new particles.</p>
-		 *	<p>Note: if the life value is 0, this has no effect.</p>
-		 */
-		public var lifeSpread:* = "0";
-		
-		
-		/**
 		 *	<p>This creates a new Emitter.</p>
 		 *	<p>This is the standard, full-featured emitter that's recommended to use. It offers an innovative and extremely powerful way to configure particle effects, based on MotionControllers from the Motion Package.</p>
 		 *	<p>An emitter is the object that controls the creation of new particles, rather than calling <code>new Particle()</code> directly, using emitters makes creating particle effects easy.</p>
@@ -169,13 +156,6 @@ package com.desuade.partigen.emitters {
 				}
 			}
 			return this;
-		}
-		
-		/**
-		 *	@private
-		 */
-		public function randomLife():Number{
-			return (lifeSpread !== '0') ? Random.fromRange(life, (typeof lifeSpread == 'string') ? life + Number(lifeSpread) : lifeSpread, 2) : life;
 		}
 		
 		/**

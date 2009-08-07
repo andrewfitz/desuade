@@ -97,6 +97,18 @@ package com.desuade.partigen.emitters {
 		public var enableEvents:Boolean = false;
 		
 		/**
+		 *	<p>This is the duration in seconds a particle will exist for.</p>
+		 *	<p>If the value is 0, the particle will live forever.</p>
+		 */
+		public var life:Number = 0;
+		
+		/**
+		 *	<p>This is the spread for particle lives. This will create a random range for the life of new particles.</p>
+		 *	<p>Note: if the life value is 0, this has no effect.</p>
+		 */
+		public var lifeSpread:* = "0";
+		
+		/**
 		 *	@private
 		 */
 		protected var _id:int;
@@ -104,7 +116,7 @@ package com.desuade.partigen.emitters {
 		/**
 		 *	@private
 		 */
-		protected var _eps:Number;
+		protected var _eps:Number = 0;
 		
 		/**
 		 *	@private
@@ -183,7 +195,6 @@ package com.desuade.partigen.emitters {
 			setTimer(false);
 		}
 		
-		
 		/**
 		 *	This method creates new particles each time it's called. The amount of particles it creates is dependent on the burst amount passed.
 		 *	
@@ -196,9 +207,25 @@ package com.desuade.partigen.emitters {
 				np.x = this.x;
 				np.y = this.y;
 				np.z = this.z;
+				if(life > 0) np.addLife(randomLife());
 				if(enableEvents) dispatchEvent(new ParticleEvent(ParticleEvent.BORN, {particle:np}));
 				renderer.addParticle(np);
 			}
+		}
+		
+		/**
+		 *	Getter/setter that uses XML methods to return (as XML) or set the configuration of the emitter from String/XML.
+		 */
+		[Inspectable(name = "XML Config", defaultValue = "", variable = "config", type = "String")]
+		public function get config():XML{
+			return toXML();
+		}
+		
+		/**
+		 *	@private
+		 */
+		public function set config($value:*):void {
+			if($value != "") fromXML((typeof $value == 'string') ? new XML($value) : $value);
 		}
 		
 		/**
@@ -240,6 +267,13 @@ package com.desuade.partigen.emitters {
 		/**
 		 *	@private
 		 */
+		public function randomLife():Number{
+			return (lifeSpread !== '0') ? Random.fromRange(life, (typeof lifeSpread == 'string') ? life + Number(lifeSpread) : lifeSpread, 2) : life;
+		}
+		
+		/**
+		 *	@private
+		 */
 		public function dispatchDeath(p:BasicParticle):void {
 			if(enableEvents) dispatchEvent(new ParticleEvent(ParticleEvent.DIED, {particle:p}));
 		}
@@ -265,7 +299,7 @@ package com.desuade.partigen.emitters {
 		 */
 		protected function update($o:Object):void {
 			emit(burst);
-			Debug.output('partigen', 40001, [id, getTimer()]);
+			//Debug.output('partigen', 40001, [id]);
 		}
 
 	}

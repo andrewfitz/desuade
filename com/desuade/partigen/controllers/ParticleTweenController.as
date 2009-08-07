@@ -78,7 +78,7 @@ package com.desuade.partigen.controllers {
 		 *	@param	ease	 The ease to use for the tween on the end keyframe.
 		 *	@param	extras	 The extras object for the end keyframe.
 		 */
-		public function setSingleTween($begin:*, $beginSpread:*, $end:*, $endSpread:*, $ease:* = null, $extras:Object = null):void {
+		public function setSingleTween($begin:*, $beginSpread:*='0', $end:*='0', $endSpread:*='0', $ease:* = null, $extras:Object = null):void {
 			keyframes.begin.value = $begin;
 			keyframes.begin.spread = $beginSpread;
 			keyframes.end.value = $end;

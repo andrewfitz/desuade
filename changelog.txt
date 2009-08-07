@@ -1,6 +1,16 @@
 Desuade Library Changelog
 -------------------------
 
+RC2
+
+	Motion:
+		-changed: defaults for MotionControllers
+		
+	Partigen:
+		-added: very basic BitmapRenderer
+		-changed: moved life settings to BasicEmitter and BasicParticle
+		-changed: defaults for ParticleTweenControllers
+
 Release Candidate 1 (2009/7/29):
 	
 	[Mostly, but not 100% compatible with Beta 3]

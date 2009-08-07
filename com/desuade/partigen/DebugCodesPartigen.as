@@ -57,7 +57,7 @@ package com.desuade.partigen {
 				20007: "[Pool] (time: %) sweep completed!",
 				
 				//
-				40001: "[Emitter] running update on emitter: % at: %",
+				40001: "[Emitter] running update on emitter: %",
 				40002: "[Renderer] particle (id:%) was added to the renderer",
 				40003: "[Pool] a particle was added to the pool",
 				40004: "[Renderer] particle (id:%) was removed from the renderer",
