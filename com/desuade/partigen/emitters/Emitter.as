@@ -127,8 +127,6 @@ package com.desuade.partigen.emitters {
 		 */
 		public override function toXML():XML {
 			var txml:XML = super.toXML();
-			txml.@life = life;
-			txml.@lifeSpread = XMLHelper.xmlize(lifeSpread);
 			txml.@angle = angle;
 			txml.@angleSpread = XMLHelper.xmlize(angleSpread);
 			txml.appendChild(<Controllers />);
@@ -142,8 +140,6 @@ package com.desuade.partigen.emitters {
 		 */
 		public override function fromXML($xml:XML):BasicEmitter {
 			super.fromXML($xml);
-			life = Number($xml.@life);
-			if($xml.@lifeSpread != undefined) lifeSpread = XMLHelper.dexmlize($xml.@lifeSpread);
 			if($xml.@angle != undefined) angle = Number($xml.@angle);
 			if($xml.@angleSpread != undefined) angleSpread = XMLHelper.dexmlize($xml.@angleSpread);
 			if($xml.hasOwnProperty("Controllers")){

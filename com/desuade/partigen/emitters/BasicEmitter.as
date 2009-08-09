@@ -214,21 +214,6 @@ package com.desuade.partigen.emitters {
 		}
 		
 		/**
-		 *	Getter/setter that uses XML methods to return (as XML) or set the configuration of the emitter from String/XML.
-		 */
-		[Inspectable(name = "XML Config", defaultValue = "", variable = "config", type = "String")]
-		public function get config():XML{
-			return toXML();
-		}
-		
-		/**
-		 *	@private
-		 */
-		public function set config($value:*):void {
-			if($value != "") fromXML((typeof $value == 'string') ? new XML($value) : $value);
-		}
-		
-		/**
 		 *	This generates an XML object representing the entire emitter
 		 *	
 		 *	@return		An XML object representing the emitter
@@ -239,6 +224,8 @@ package com.desuade.partigen.emitters {
 			txml.@particle = getQualifiedClassName(particle);
 			txml.@eps = eps;
 			txml.@burst = burst;
+			txml.@life = life;
+			txml.@lifeSpread = XMLHelper.xmlize(lifeSpread);
 			if(groupAmount > 1){
 				txml.@group = XMLHelper.getSimpleClassName(group);
 				txml.@groupAmount = groupAmount;
@@ -261,6 +248,8 @@ package com.desuade.partigen.emitters {
 			if($xml.@group != undefined) group = getDefinitionByName("com.desuade.partigen.particles::" + $xml.@group) as Class;
 			if($xml.@groupAmount != undefined) groupAmount = Number($xml.@groupAmount);
 			if($xml.@groupProximity != undefined) groupProximity = Number($xml.@groupProximity);
+			life = Number($xml.@life);
+			if($xml.@lifeSpread != undefined) lifeSpread = XMLHelper.dexmlize($xml.@lifeSpread);
 			return this;
 		}
 		

@@ -26,6 +26,7 @@ package com.desuade.partigen.controllers {
 	
 	import com.desuade.motion.controllers.*;
 	import com.desuade.motion.tweens.*;
+	import com.desuade.utils.*;
 	
 	/**
 	 *  Used to configure PhysicsMultiControllers for the particles.
@@ -103,9 +104,9 @@ package com.desuade.partigen.controllers {
 		 */
 		public function toXML():XML {
 			var txml:XML = <ParticlePhysicsController />;
-			txml.@duration = duration;
-			txml.@flip = flip;
-			txml.@useAngle = useAngle;
+			txml.@duration = XMLHelper.xmlize(duration);
+			txml.@flip = XMLHelper.xmlize(flip);
+			txml.@useAngle = XMLHelper.xmlize(useAngle);
 			for (var p:String in this){
 				var nx:XML = this[p].toXML();
 				nx.@property = p;
@@ -124,8 +125,8 @@ package com.desuade.partigen.controllers {
 		 */
 		public function fromXML($xml:XML):ParticlePhysicsController {
 			duration = $xml.@duration;
-			if($xml.@flip != undefined) flip = $xml.@flip;
-			if($xml.@useAngle != undefined) useAngle = $xml.@useAngle;
+			if($xml.@flip != undefined) flip = XMLHelper.dexmlize($xml.@flip);
+			if($xml.@useAngle != undefined) useAngle = XMLHelper.dexmlize($xml.@useAngle);
 			var cd:XMLList = $xml.children();
 			for (var i:int = 0; i < cd.length(); i++) {
 				this[cd[i].@property] = new ParticleTweenController(duration).fromXML(cd[i]);

@@ -134,7 +134,7 @@ package com.desuade.motion.physics {
 		 *	@private
 		 */
 		protected override function createPrimitive($to:Object):int {
-			var nv:Number = ($to.angle != null) ? setAngle($to.velocity, $to.angle, $to.flip || false) : $to.velocity;
+			var nv:Number = ($to.angle != null) ? setAngle($to.velocity, $to.angle, $to.flip) : $to.velocity;
 			var pt:PrimitivePhysics = BaseTicker.addItem(new PrimitivePhysics(target, $to.property, nv, $to.acceleration, $to.friction, $to.flip));
 			pt.endFunc = endFunc;
 			pt.updateFunc = updateListener;

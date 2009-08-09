@@ -10,6 +10,7 @@ RC2
 		-added: very basic BitmapRenderer
 		-changed: moved life settings to BasicEmitter and BasicParticle
 		-changed: defaults for ParticleTweenControllers
+		-fixed: XML not parsing PhysicsParticleController flip and useAngle params
 
 Release Candidate 1 (2009/7/29):
 	
