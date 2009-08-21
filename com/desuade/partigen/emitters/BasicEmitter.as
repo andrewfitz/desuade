@@ -274,7 +274,7 @@ package com.desuade.partigen.emitters {
 			if($set){
 				if(_updatetimer != null) setTimer(false);
 				_updatetimer = new Timer(1000/_eps);
-				_updatetimer.addEventListener(TimerEvent.TIMER, update, false, 0, true);
+				_updatetimer.addEventListener(TimerEvent.TIMER, update, false, 0, false);
 				if(_active) _updatetimer.start();
 			} else {
 				_updatetimer.stop();

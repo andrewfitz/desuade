@@ -112,6 +112,7 @@ package com.desuade.partigen.particles {
 		 */
 		public function kill(... args):void {
 			if(_lifeTimer != null){
+				_lifeTimer.removeEventListener(TimerEvent.TIMER, kill);
 				_lifeTimer.stop();
 				_lifeTimer = null;
 			}
@@ -127,7 +128,7 @@ package com.desuade.partigen.particles {
 		public function addLife($life:Number):void {
 			life = $life;
 			_lifeTimer = new Timer($life*1000);
-			_lifeTimer.addEventListener(TimerEvent.TIMER, kill, false, 0, true);
+			_lifeTimer.addEventListener(TimerEvent.TIMER, kill, false, 0, false);
 			_lifeTimer.start();
 		}
 	

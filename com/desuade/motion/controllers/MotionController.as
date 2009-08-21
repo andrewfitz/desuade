@@ -136,8 +136,8 @@ package com.desuade.motion.controllers {
 			_active = true;
 			_sequence = new ClassSequence(keyframes.tweenClass);
 			_sequence.pushArray(ta);
-			_sequence.addEventListener(SequenceEvent.ENDED, tweenEnd, false, 0, true);
-			_sequence.addEventListener(SequenceEvent.ADVANCED, advance, false, 0, true);
+			_sequence.addEventListener(SequenceEvent.ENDED, tweenEnd, false, 0, false);
+			_sequence.addEventListener(SequenceEvent.ADVANCED, advance, false, 0, false);
 			if($keyframe != null) _sequence.start(keyframes.getOrderedLabels().indexOf($keyframe));
 			else _sequence.start();
 			dispatchEvent(new ControllerEvent(ControllerEvent.STARTED, {controller:this}));

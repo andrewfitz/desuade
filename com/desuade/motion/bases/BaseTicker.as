@@ -79,7 +79,7 @@ package com.desuade.motion.bases {
 		 */
 		public static function start():void {
 			if(!_inited){
-				_sprite.addEventListener(Event.ENTER_FRAME, update, false, 0, true);
+				_sprite.addEventListener(Event.ENTER_FRAME, update, false, 0, false);
 				_inited = true;
 				dispatchEvent(new MotionEvent(MotionEvent.STARTED));
 			}

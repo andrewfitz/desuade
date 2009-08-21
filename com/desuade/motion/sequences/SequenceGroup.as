@@ -118,7 +118,7 @@ package com.desuade.motion.sequences {
 		internal function start($parent:Sequence):void {
 			for (var i:int = 0; i < this.length; i++) {
 				_current[i] = $parent.itemCheck(this[i]);
-				if(!_manualServe) _current[i].addEventListener(MotionEvent.ENDED, serve, false, 0, true);
+				if(!_manualServe) _current[i].addEventListener(MotionEvent.ENDED, serve, false, 0, false);
 				_current[i].start((_current[i] is SequenceGroup) ? $parent : null);
 			}
 			_waiting = _current.length;

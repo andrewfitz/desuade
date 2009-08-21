@@ -103,6 +103,7 @@ package com.desuade.motion.sequences {
 		 */
 		protected function end():void {
 			if(_delayTimer != null){
+				_delayTimer.removeEventListener(TimerEvent.TIMER, dtFunc);
 				_delayTimer.stop();
 				_delayTimer = null;
 			}
@@ -115,7 +116,7 @@ package com.desuade.motion.sequences {
 		 */
 		protected function doDelay($delay:int):void {
 			_delayTimer = new Timer($delay*1000);
-			_delayTimer.addEventListener(TimerEvent.TIMER, dtFunc, false, 0, true);
+			_delayTimer.addEventListener(TimerEvent.TIMER, dtFunc, false, 0, false);
 			_delayTimer.start();
 		}
 		

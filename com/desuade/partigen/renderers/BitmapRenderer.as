@@ -53,9 +53,9 @@ package com.desuade.partigen.renderers {
 		public var bitmapdata:BitmapData;
 		
 		/**
-		 *	What function to run on the bitmap
+		 *	What function to run on the bitmap on each render.
 		 *	
-		 *	@param	bitmap	 The bitmapdata is passed to the function
+		 *	@param	bitmap	 The BitmapData that is passed to the function
 		 */
 		public var renderfunc:Function = nullfunc;
 		
@@ -158,9 +158,6 @@ package com.desuade.partigen.renderers {
 			if(fadeBlur != 0) _offbitmap.applyFilter(_offbitmap, _offbitmap.rect, _zeroPoint, _blur);
 			_offbitmap.draw(target);
 			renderfunc(_offbitmap);
-			//var pixels:ByteArray = _offbitmap.getPixels(_offbitmap.rect);
-			//pixels.position = 0;
-			//bitmapdata.setPixels(_offbitmap.rect, pixels);
 			bitmapdata.copyPixels(_offbitmap, _offbitmap.rect, _zeroPoint);
 		}
 	

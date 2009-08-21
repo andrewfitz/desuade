@@ -111,7 +111,7 @@ package com.desuade.partigen.pools {
 		public function startSweeper($interval:int):void {
 			_interval = $interval;
 			_sweepTimer = new Timer(_interval);
-			_sweepTimer.addEventListener(TimerEvent.TIMER, sweep, false, 0, true);
+			_sweepTimer.addEventListener(TimerEvent.TIMER, sweep, false, 0, false);
 			_sweepTimer.start();
 			Debug.output('partigen', 20004);
 		}
@@ -120,6 +120,7 @@ package com.desuade.partigen.pools {
 		 *	This stops the sweeper.
 		 */
 		public function stopSweeper():void {
+			_sweepTimer.removeEventListener(TimerEvent.TIMER, sweep);
 			_sweepTimer.stop();
 			_sweepTimer = null;
 			Debug.output('partigen', 20005);

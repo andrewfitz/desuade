@@ -186,7 +186,7 @@ package com.desuade.motion.sequences {
 			Debug.output('motion', 40004, [$position]);
 			_position = $position;
 			_current = itemCheck(this[_position]);
-			if(!_manualAdvance) current.addEventListener(MotionEvent.ENDED, advance, false, 0, true);
+			if(!_manualAdvance) current.addEventListener(MotionEvent.ENDED, advance, false, 0, false);
 			if(_current is SequenceGroup) current.start(this);
 			else current.start();
 		}

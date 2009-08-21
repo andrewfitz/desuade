@@ -246,7 +246,7 @@ package com.desuade.motion.tweens {
 		protected function delayedTween($delay:int):void {
 			Debug.output('motion', 40002, [$delay]);
 			_delayTimer = new Timer($delay*1000);
-			_delayTimer.addEventListener(TimerEvent.TIMER, dtFunc, false, 0, true);
+			_delayTimer.addEventListener(TimerEvent.TIMER, dtFunc, false, 0, false);
 			_delayTimer.start();
 		}
 		
@@ -254,6 +254,7 @@ package com.desuade.motion.tweens {
 		 *	@private
 		 */
 		protected function dtFunc($i:Object):void {
+			_delayTimer.removeEventListener(TimerEvent.TIMER, dtFunc);
 			_delayTimer.stop();
 			_delayTimer = null;
 			_primitiveID = createPrimitive(_config);
