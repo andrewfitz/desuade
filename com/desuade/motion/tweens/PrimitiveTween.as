@@ -110,7 +110,7 @@ package com.desuade.motion.tweens {
 			if(typeof $ease == 'string'){
 				return Easing[$ease];
 			} else {
-				Debug.output('motion', 50004);
+				//Debug.output('motion', 50004);
 				return $ease;
 			}
 		}

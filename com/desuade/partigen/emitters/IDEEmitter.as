@@ -25,6 +25,7 @@ THE SOFTWARE.
 package com.desuade.partigen.emitters {
 	
 	import flash.events.MouseEvent;
+	import com.desuade.partigen.renderers.*;
 	
 	/**
 	 *  This is the class used for Partigen Emitter components for the Flash IDE.
@@ -46,6 +47,11 @@ package com.desuade.partigen.emitters {
 		 *	@private
 		 */
 		protected var _followMouse:Boolean = false;
+		
+		/**
+		 *	@private
+		 */
+		protected var _renderToParent:Boolean = true;
 		
 		/**
 		 *	Creates a new IDEEmitter (usually from a component)
@@ -102,6 +108,24 @@ package com.desuade.partigen.emitters {
 				stage.addEventListener(MouseEvent.MOUSE_MOVE, fmouse);
 			} else {
 				stage.removeEventListener(MouseEvent.MOUSE_MOVE, fmouse);
+			}
+		}
+		
+		/**
+		 *	This automatically creates a StandardRenderer targeting the emitter's parent.
+		 */
+		[Inspectable(name = "Render to Parent", defaultValue = true, variable = "renderToParent", type = "Boolean")]
+		public function get renderToParent():Boolean{
+			return _renderToParent;
+		}
+		
+		/**
+		 *	@private
+		 */
+		public function set renderToParent($value:Boolean):void {
+			_renderToParent = $value;
+			if(_renderToParent){
+				renderer = new StandardRenderer(this.parent);
 			}
 		}
 		
