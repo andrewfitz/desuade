@@ -4,7 +4,9 @@ Desuade Library Changelog
 RC2
 
 	Motion:
+		-added: KeyframeContainer toLabeledArray() now has sort param
 		-changed: defaults for MotionControllers
+		-fixed: KeyframeContainer isFlat() skipping first keyframe
 		-fixed: delayed tween weakrefs @Maxfo12 (http://code.google.com/p/desuade/issues/detail?id=1&can=1)
 		
 	Partigen:

@@ -155,7 +155,7 @@ package com.desuade.motion.controllers {
 		 */
 		public function isFlat():Boolean {
 			var pa:Array = this.toLabeledArray();
-			for (var i:int = 1; i < pa.length; i++) {
+			for (var i:int = 0; i < pa.length; i++) {
 				if(pa[i].spread === '0' && pa[i].value === '0'){
 				} else {
 					if(pa[i].spread !== '0') return false;
@@ -169,14 +169,16 @@ package com.desuade.motion.controllers {
 		/**
 		 *	Creates an unsorted Array of all the objects in the KeyframeContainer
 		 *	
+		 *	@param	sort	 Sort the Array based on position
+		 *	
 		 *	@return		An unsorted Array of all the keyframe Objects
 		 */
-		public function toLabeledArray():Array {
+		public function toLabeledArray($sort:Boolean = false):Array {
 			var pa:Array = [];
 			for (var p:String in this) {
 				pa.push({value:this[p].value, spread:this[p].spread, ease:this[p].ease, position:this[p].position, extras:this[p].extras, label:p});
 			}
-			return pa;
+			return ($sort) ? pa.sort(sortOnPosition) : pa;
 		}
 		
 		/**
@@ -185,9 +187,8 @@ package com.desuade.motion.controllers {
 		 *	@return		An orderded Array with the labels of all keyframes in the container
 		 */
 		public function getOrderedLabels():Array {
-			var pa:Array = this.toLabeledArray();
+			var pa:Array = this.toLabeledArray(true);
 			var sa:Array = [];
-			pa.sort(sortOnPosition);
 			for (var i:int = 0; i < pa.length; i++) {
 				sa.push(pa[i].label);
 			}
