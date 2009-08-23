@@ -137,7 +137,7 @@ package com.desuade.partigen.pools {
 				super.removeParticle(_marked[i]);
 			}
 			Debug.output('partigen', 20007, [getTimer()]);
-			_marked = new Array();
+			_marked = [];
 		}
 	
 	}

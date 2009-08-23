@@ -5,11 +5,13 @@ RC2
 
 	Motion:
 		-changed: defaults for MotionControllers
+		-fixed: delayed tween weakrefs @Maxfo12 (http://code.google.com/p/desuade/issues/detail?id=1&can=1)
 		
 	Partigen:
 		-added: very basic BitmapRenderer
 		-changed: moved life settings to BasicEmitter and BasicParticle
 		-changed: defaults for ParticleTweenControllers
+		-changed: SweepPool - new Array() -> [] (performance+)
 		-fixed: XML not parsing PhysicsParticleController flip and useAngle params
 
 Release Candidate 1 (2009/7/29):
