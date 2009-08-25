@@ -138,7 +138,7 @@ package com.desuade.partigen.emitters {
 		/**
 		 *	@inheritDoc
 		 */
-		public override function fromXML($xml:XML):BasicEmitter {
+		public override function fromXML($xml:XML):* {
 			super.fromXML($xml);
 			if($xml.@angle != undefined) angle = Number($xml.@angle);
 			if($xml.@angleSpread != undefined) angleSpread = XMLHelper.dexmlize($xml.@angleSpread);

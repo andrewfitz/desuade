@@ -108,7 +108,7 @@ package com.desuade.motion.controllers {
 		 *	@see #property
 		 *	@see #duration
 		 */
-		public function MotionController($target:Object, $property:String, $duration:Number, $containerClass:Class = null, $tweenClass:Class = null) {
+		public function MotionController($target:Object, $property:String = null, $duration:Number = 0, $containerClass:Class = null, $tweenClass:Class = null) {
 			super();
 			target = $target;
 			property = $property;

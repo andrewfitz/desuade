@@ -241,7 +241,7 @@ package com.desuade.partigen.emitters {
 		 *	
 		 *	@return		The emitter object (for chaining)
 		 */
-		public function fromXML($xml:XML):BasicEmitter {
+		public function fromXML($xml:XML):* {
 			particle = getDefinitionByName($xml.@particle) as Class;
 			eps = Number($xml.@eps);
 			if($xml.@burst != undefined) burst = Number($xml.@burst);

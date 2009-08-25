@@ -58,7 +58,7 @@ package com.desuade.motion.controllers {
 		 *	@param	containerClass	 The class of keyframe container to use for all MotionControllers
 		 *	@param	tweenClass	 The class of tweens to pass to all the keyframe container
 		 */
-		public function MultiController($target:Object, $duration:Number, $properties:Array = null, $containerClass:Class = null, $tweenClass:Class = null) {
+		public function MultiController($target:Object, $duration:Number = 0, $properties:Array = null, $containerClass:Class = null, $tweenClass:Class = null) {
 			super();
 			_target = $target;
 			_duration = $duration;

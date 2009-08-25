@@ -1,20 +1,28 @@
 Desuade Library Changelog
 -------------------------
 
-RC2
+Release Candidate 2 (2009/8/24)
 
 	Motion:
-		-added: KeyframeContainer toLabeledArray() now has sort param
+		-removed: individual ease classes
+		-changed: KeyframeContainer.toLabeledArray() now has sort param
 		-changed: defaults for MotionControllers
-		-fixed: KeyframeContainer isFlat() skipping first keyframe
-		-fixed: delayed tween weakrefs @Maxfo12 (http://code.google.com/p/desuade/issues/detail?id=1&can=1)
+		-changed: controller constructors only require target now
+		-fixed: KeyframeContainer.isFlat() skipping first Keyframe
+		-fixed: delayed tween weakrefs (thanks Maxfo12) (http://code.google.com/p/desuade/issues/detail?id=1&can=1)
 		
 	Partigen:
-		-added: very basic BitmapRenderer
+		-added: basic BitmapRenderer
 		-changed: moved life settings to BasicEmitter and BasicParticle
 		-changed: defaults for ParticleTweenControllers
 		-changed: SweepPool - new Array() -> [] (performance+)
+		-fixed: emitter.fromXML() returns *
 		-fixed: XML not parsing PhysicsParticleController flip and useAngle params
+		
+		Debugging: none
+
+		Utils: none
+		
 
 Release Candidate 1 (2009/7/29):
 	

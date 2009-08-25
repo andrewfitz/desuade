@@ -81,7 +81,7 @@ package com.desuade.motion.controllers {
 		 *	@param	containerClass	 The class of keyframe container to use for all MotionControllers
 		 *	@param	tweenClass	 The class of tweens to pass to all the keyframe container
 		 */
-		public function PhysicsMultiController($target:Object, $property:String, $duration:Number, $physics:BasicPhysics = null, $containerClass:Class = null, $tweenClass:Class = null) {
+		public function PhysicsMultiController($target:Object, $property:String = null, $duration:Number = 0, $physics:BasicPhysics = null, $containerClass:Class = null, $tweenClass:Class = null) {
 			super(null, $duration);
 			if($physics == null){
 				_physics = new BasicPhysics($target, {property:$property});
