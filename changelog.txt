@@ -1,6 +1,17 @@
 Desuade Library Changelog
 -------------------------
 
+Motion Package 1.0 & Partigen 2.0 Final
+
+	Motion:
+	
+	Partigen:
+		-examples: typo for addBeginValue
+	
+	Debugging: none
+	
+	Utils: none
+
 Release Candidate 2 (2009/8/24)
 
 	Motion:
