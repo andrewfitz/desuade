@@ -30,14 +30,35 @@ package com.desuade.stageflow {
 	import flash.display.StageAlign;
 	import flash.display.StageScaleMode;
 	
+	/**
+	 *  Stageflow provides managment for display objects to keep alignment when a stage is resized.
+	 *    
+	 *  @langversion ActionScript 3
+	 *  @playerversion Flash 9.0.0
+	 *
+	 *  @author Andrew Fitzgerald
+	 *  @since  27.08.2009
+	 */
 	public class Stageflow extends Object {
 		
+		/**
+		 *	The padding on the top of the stage
+		 */
 		public var padding_top:Number = 0;
 		
+		/**
+		 *	The padding on the right of the stage
+		 */
 		public var padding_right:Number = 0;
 		
+		/**
+		 *	The padding on the bottom of the stage
+		 */
 		public var padding_bottom:Number = 0;
 		
+		/**
+		 *	The padding on the left of the stage
+		 */
 		public var padding_left:Number = 0;
 		
 		/**
@@ -50,6 +71,11 @@ package com.desuade.stageflow {
 		 */
 		protected var _managed:Dictionary = new Dictionary();
 		
+		/**
+		 *	Creates a new Stageflow instance.
+		 *	
+		 *	@param	target	 The stage object to use. This is usually root.stage.
+		 */
 		public function Stageflow($target:Object) {
 			super();
 			_target = $target;
@@ -57,19 +83,37 @@ package com.desuade.stageflow {
 			_target.addEventListener(Event.RESIZE, resizeHandler);
 		}
 		
+		/**
+		 *	Sets up the stage to be properly used by Stageflow
+		 */
 		public function init():void {
 			_target.align = StageAlign.TOP_LEFT;
 			_target.scaleMode = StageScaleMode.NO_SCALE;
 		}
 		
+		/**
+		 *	The target stage object used by the Stageflow instance
+		 */
 		public function get target():Object{
 			return _target;
 		}
 		
+		/**
+		 *	Adds an object to the list of managed objects to realign on a stage resize.
+		 *	
+		 *	@param	target	 The target object to be realigned on resize
+		 *	@param	location	 The location on the target object to align
+		 *	@param	alignment	 The location of the stage to align to
+		 */
 		public function add($target:Object, $location:String, $alignment:String):void {
 			_managed[$target] = {location:$location, alignment:$alignment};
 		}
 		
+		/**
+		 *	This removes the given object from the managed objects.
+		 *	
+		 *	@param	target	 The object to remove
+		 */
 		public function remove($target:Object):void {
 			delete _managed[$target];
 		}
@@ -78,7 +122,10 @@ package com.desuade.stageflow {
 			padding_top = $t, padding_right = $r, padding_bottom = $b, padding_left = $l;
 		}
 		
-		protected function resizeHandler($o:Object):void {
+		/**
+		 *	This realigns all the managed objects according to their requested locations.
+		 */
+		public function realign():void {
 			for (var f:Object in _managed) {
 				var p1:Point = Align.getLocation(f, _managed[f].location);
 				var p2:Point = getStageLocation(_managed[f].alignment);
@@ -87,7 +134,17 @@ package com.desuade.stageflow {
 			}
 		}
 		
-		public function getStageLocation($location:String):Point {
+		/**
+		 *	@private
+		 */
+		protected function resizeHandler($o:Object):void {
+			realign();
+		}
+		
+		/**
+		 *	@private
+		 */
+		protected function getStageLocation($location:String):Point {
 			var tp:Point = new Point(0,0);
 			switch ($location) {
 				case 'top_left':
@@ -133,4 +190,3 @@ package com.desuade.stageflow {
 	}
 
 }
-
