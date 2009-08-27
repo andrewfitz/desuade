@@ -41,17 +41,13 @@ package com.desuade.stageflow {
 		 *	<p>This returns a Point containing the x and y values for the given location passed.</p>
 		 *	<p>This is a list of available locations:</p>
 		 *	<ul>
-		 *	<li>top</li>
 		 *	<li>top_left</li>
 		 *	<li>top_center</li>
 		 *	<li>top_right</li>
-		 *	<li>bottom</li>
 		 *	<li>bottom_left</li>
 		 *	<li>bottom_center</li>
 		 *	<li>bottom_right</li>
-		 *	<li>left</li>
 		 *	<li>left_center</li>
-		 *	<li>right</li>
 		 *	<li>right_center</li>
 		 *	<li>center</li>
 		 *	</ul>
@@ -64,9 +60,6 @@ package com.desuade.stageflow {
 		public static function getLocation($target:Object, $location:String):Point {
 			var tp:Point = new Point(0,0);
 			switch ($location) {
-				case 'top':
-					tp.y = $target.y;
-					break;
 				case 'top_left':
 					tp.y = $target.y;
 					tp.x = $target.x;
@@ -78,9 +71,6 @@ package com.desuade.stageflow {
 				case 'top_right':
 					tp.y = $target.y;
 					tp.x = $target.x + $target.width;
-					break;
-				case 'bottom':
-					tp.y = $target.y + $target.height;
 					break;
 				case 'bottom_left':
 					tp.y = $target.y + $target.height;
@@ -94,15 +84,9 @@ package com.desuade.stageflow {
 					tp.y = $target.y + $target.height;
 					tp.x = $target.x + $target.width;
 					break;
-				case 'left':
-					tp.x = $target.x;
-					break;
 				case 'left_center':
 					tp.x = $target.x;
 					tp.y = $target.y + ($target.height/2);
-					break;
-				case 'right':
-					tp.x = $target.x + $target.width;
 					break;
 				case 'right_center':
 					tp.x = $target.x + $target.width;
@@ -139,7 +123,7 @@ package com.desuade.stageflow {
 		 *	@param	offsetY	 Any offset to set on the Y value
 		 */
 		public static function top($target:Object, $alignedTarget:Object, $offsetY:Number = 0):void {
-			var p:Point = getLocation($alignedTarget, 'top');
+			var p:Point = getLocation($alignedTarget, 'top_left');
 			$target.y = p.y + $offsetY;
 		}
 		
@@ -190,7 +174,7 @@ package com.desuade.stageflow {
 		 *	@param	offsetY	 Any offset to set on the Y value
 		 */
 		public static function bottom($target:Object, $alignedTarget:Object, $offsetY:Number = 0):void {
-			var p:Point = getLocation($alignedTarget, 'bottom');
+			var p:Point = getLocation($alignedTarget, 'bottom_left');
 			$target.y = p.y + $offsetY;
 		}
 		
@@ -241,7 +225,7 @@ package com.desuade.stageflow {
 		 *	@param	offsetX	 Any offset to set on the X value
 		 */
 		public static function left($target:Object, $alignedTarget:Object, $offsetX:Number = 0):void {
-			var p:Point = getLocation($alignedTarget, 'left');
+			var p:Point = getLocation($alignedTarget, 'top_left');
 			$target.x = p.x + $offsetX;
 		}
 		
@@ -266,7 +250,7 @@ package com.desuade.stageflow {
 		 *	@param	offsetX	 Any offset to set on the X value
 		 */
 		public static function right($target:Object, $alignedTarget:Object, $offsetX:Number = 0):void {
-			var p:Point = getLocation($alignedTarget, 'right');
+			var p:Point = getLocation($alignedTarget, 'top_right');
 			$target.x = p.x + $offsetX;
 		}
 		
