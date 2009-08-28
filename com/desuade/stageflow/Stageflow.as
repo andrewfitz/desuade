@@ -42,6 +42,11 @@ package com.desuade.stageflow {
 	public class Stageflow extends Object {
 		
 		/**
+		 *	Version of Stageflow
+		 */
+		public static const VERSION:Number = 0.9;
+		
+		/**
 		 *	The padding on the top of the stage
 		 */
 		public var padding_top:Number = 0;
@@ -84,12 +89,17 @@ package com.desuade.stageflow {
 		/**
 		 *	@private
 		 */
-		protected var _target:Object;
+		protected var _targetStage:Object;
 		
 		/**
 		 *	@private
 		 */
 		protected var _managedPosition:Dictionary = new Dictionary();
+		
+		/**
+		 *	@private
+		 */
+		protected var _managedSize:Dictionary = new Dictionary();
 		
 		/**
 		 *	Creates a new Stageflow instance.
@@ -98,28 +108,40 @@ package com.desuade.stageflow {
 		 */
 		public function Stageflow($target:Object) {
 			super();
-			_target = $target;
+			_targetStage = $target;
 			init();
-			_target.addEventListener(Event.RESIZE, resizeHandler);
+			_targetStage.addEventListener(Event.RESIZE, resizeHandler);
 		}
 		
 		/**
 		 *	Sets up the stage to be properly used by Stageflow
 		 */
 		public function init():void {
-			_target.align = StageAlign.TOP_LEFT;
-			_target.scaleMode = StageScaleMode.NO_SCALE;
+			_targetStage.align = StageAlign.TOP_LEFT;
+			_targetStage.scaleMode = StageScaleMode.NO_SCALE;
 		}
 		
 		/**
 		 *	The target stage object used by the Stageflow instance
 		 */
-		public function get target():Object{
-			return _target;
+		public function get targetStage():Object{
+			return _targetStage;
 		}
 		
 		/**
-		 *	Adds an object to the list of managed objects to realign on a stage resize.
+		 *	<p>Adds an object to the list of managed objects to realign on a stage resize.</p>
+		 *	<p>This is a list of available locations:</p>
+		 *	<ul>
+		 *	<li>top_left</li>
+		 *	<li>top_center</li>
+		 *	<li>top_right</li>
+		 *	<li>bottom_left</li>
+		 *	<li>bottom_center</li>
+		 *	<li>bottom_right</li>
+		 *	<li>left_center</li>
+		 *	<li>right_center</li>
+		 *	<li>center</li>
+		 *	</ul>
 		 *	
 		 *	@param	target	 The target object to be realigned on resize
 		 *	@param	location	 The location on the target object to align
@@ -141,7 +163,58 @@ package com.desuade.stageflow {
 		 *	@param	lockY	 This prevents any changes the Y value
 		 */
 		public function positionRelative($target:Object, $lockX:Boolean = false, $lockY:Boolean = false):void {
-			_managedPosition[$target] = {ox:$target.x, oy:$target.y, osw:_target.stageWidth, osh:_target.stageHeight, lockX:$lockX, lockY:$lockY};
+			_managedPosition[$target] = {ox:$target.x, oy:$target.y, osw:_targetStage.stageWidth, osh:_targetStage.stageHeight, lockX:$lockX, lockY:$lockY};
+		}
+		
+		/**
+		 *	This adds the target object to the Stageflow, automatically controlling it's width and height relative to the stage's
+		 *	
+		 *	@param	target	 The target object to be resized
+		 *	@param	lockWidth	 This prevents any changes to the object's width
+		 *	@param	lockHeight	 This prevents any changes to the object's height
+		 */
+		public function sizeRelative($target:Object, $lockWidth:Boolean = false, $lockHeight:Boolean = false):void {
+			_managedSize[$target] = {ow:$target.width, oh:$target.height, osw:_targetStage.stageWidth, osh:_targetStage.stageHeight, lockWidth:$lockWidth, lockHeight:$lockHeight};
+		}
+		
+		/**
+		 *	This resizes all the managed objects.
+		 */
+		public function resizeAll():void {
+			for (var f:Object in _managedSize) {
+				resize(f);
+			}
+		}
+		
+		/**
+		 *	Resizes the target object that's managed by the Stageflow object
+		 *	
+		 *	@param	target	 The target object to resize
+		 */
+		public function resize($target:Object):void {
+			var ns:Object = getNewSize($target);
+			$target.width = ns.width;
+			$target.height = ns.height;
+		}
+		
+		/**
+		 *	This gets the new width and height of the target based on the stage.
+		 *	
+		 *	@param	target	 The target object to retrieve the new values for
+		 *	@return		An object containing 'width' and 'height' values
+		 */
+		public function getNewSize($target:Object):Object {
+			var bo:Object = {width:$target.width, height:$target.height};
+			var m:Object = _managedSize[$target];
+			if(!m.lockWidth) bo.width = m.ow + (_targetStage.stageWidth - m.osw);
+			if(!m.lockHeight) bo.height = m.oh + (_targetStage.stageHeight - m.osh);
+			var edgeW:Number = $target.x + bo.width;
+			var edgeH:Number = $target.y + bo.height;
+			if(max_width != 0 && edgeW > max_width) bo.width = max_width - $target.x;
+			if(max_height != 0 && edgeH > max_height) bo.height = max_height - $target.y;
+			if(min_width != 0 && edgeW < min_width) bo.width = min_width - $target.x;
+			if(min_height != 0 && edgeH < min_height) bo.height = min_height - $target.y;
+			return bo;
 		}
 		
 		/**
@@ -151,8 +224,9 @@ package com.desuade.stageflow {
 		 */
 		public function remove($target:Object):void {
 			if(_managedPosition[$target] != undefined) delete _managedPosition[$target];
+			if(_managedSize[$target] != undefined) delete _managedSize[$target];
 		}
-		
+
 		/**
 		 *	Sets all the padding at once.
 		 *	
@@ -199,11 +273,11 @@ package com.desuade.stageflow {
 				if(!m.lockX) np.x = (($target.x - p1.x) + p2.x) + m.offsetX;
 				if(!m.lockY) np.y = (($target.y - p1.y) + p2.y) + m.offsetY;
 			} else {
-				if(!m.lockX) np.x = m.ox - (m.osw - _target.stageWidth);
-				if(!m.lockY) np.y = m.oy - (m.osh - _target.stageHeight);
+				if(!m.lockX) np.x = m.ox - (m.osw - _targetStage.stageWidth);
+				if(!m.lockY) np.y = m.oy - (m.osh - _targetStage.stageHeight);
 			}
-			if(max_width != 0 && (np.x) > max_width) np.x = max_width;
-			if(max_height != 0 && (np.y) > max_height) np.y = max_height;			
+			if(max_width != 0 && np.x > max_width) np.x = max_width;
+			if(max_height != 0 && np.y > max_height) np.y = max_height;			
 			if(min_width != 0 && np.x < min_width) np.x = min_width;
 			if(min_height != 0 && np.y < min_height) np.y = min_height;
 			return np;
@@ -214,6 +288,7 @@ package com.desuade.stageflow {
 		 */
 		protected function resizeHandler($o:Object):void {
 			realignAll();
+			resizeAll();
 		}
 		
 		/**
@@ -223,40 +298,40 @@ package com.desuade.stageflow {
 			var tp:Point = new Point(0,0);
 			switch ($location) {
 				case 'top_left':
-					tp.y = _target.y + padding_top;
-					tp.x = _target.x + padding_left;
+					tp.y = _targetStage.y + padding_top;
+					tp.x = _targetStage.x + padding_left;
 					break;
 				case 'top_center':
-					tp.y = _target.y + padding_top;
-					tp.x = _target.x + (_target.stageWidth/2);
+					tp.y = _targetStage.y + padding_top;
+					tp.x = _targetStage.x + (_targetStage.stageWidth/2);
 					break;
 				case 'top_right':
-					tp.y = _target.y + padding_top;
-					tp.x = _target.x + _target.stageWidth - padding_right;
+					tp.y = _targetStage.y + padding_top;
+					tp.x = _targetStage.x + _targetStage.stageWidth - padding_right;
 					break;
 				case 'bottom_left':
-					tp.y = _target.y + _target.stageHeight - padding_bottom;
-					tp.x = _target.x + padding_left;
+					tp.y = _targetStage.y + _targetStage.stageHeight - padding_bottom;
+					tp.x = _targetStage.x + padding_left;
 					break;
 				case 'bottom_center':
-					tp.y = _target.y + _target.stageHeight - padding_bottom;
-					tp.x = _target.x + (_target.stageWidth/2);
+					tp.y = _targetStage.y + _targetStage.stageHeight - padding_bottom;
+					tp.x = _targetStage.x + (_targetStage.stageWidth/2);
 					break;
 				case 'bottom_right':
-					tp.y = _target.y + _target.stageHeight - padding_bottom;
-					tp.x = _target.x + _target.stageWidth - padding_right;
+					tp.y = _targetStage.y + _targetStage.stageHeight - padding_bottom;
+					tp.x = _targetStage.x + _targetStage.stageWidth - padding_right;
 					break;
 				case 'left_center':
-					tp.y = _target.y + (_target.stageHeight/2);
-					tp.x = _target.x + padding_left;
+					tp.y = _targetStage.y + (_targetStage.stageHeight/2);
+					tp.x = _targetStage.x + padding_left;
 					break;
 				case 'right_center':
-					tp.y = _target.y + (_target.stageHeight/2);
-					tp.x = _target.x + _target.stageWidth - padding_right;
+					tp.y = _targetStage.y + (_targetStage.stageHeight/2);
+					tp.x = _targetStage.x + _targetStage.stageWidth - padding_right;
 					break;
 				case 'center':
-					tp.y = _target.y + (_target.stageHeight/2);
-					tp.x = _target.x + (_target.stageWidth/2);
+					tp.y = _targetStage.y + (_targetStage.stageHeight/2);
+					tp.x = _targetStage.x + (_targetStage.stageWidth/2);
 					break;
 			}
 			return tp;
