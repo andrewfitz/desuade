@@ -116,7 +116,7 @@ package com.desuade.stageflow {
 		}
 		
 		/**
-		 *	Aligns the target with the location of the alignedTarget
+		 *	Aligns the target with the location of the alignedTarget (sets only y value)
 		 *	
 		 *	@param	target	 The target object to align
 		 *	@param	alignedTarget	 The object that that target will align with
@@ -167,7 +167,7 @@ package com.desuade.stageflow {
 		}
 		
 		/**
-		 *	Aligns the target with the location of the alignedTarget
+		 *	Aligns the target with the location of the alignedTarget (sets only y value)
 		 *	
 		 *	@param	target	 The target object to align
 		 *	@param	alignedTarget	 The object that that target will align with
@@ -218,7 +218,7 @@ package com.desuade.stageflow {
 		}
 		
 		/**
-		 *	Aligns the target with the location of the alignedTarget
+		 *	Aligns the target with the location of the alignedTarget (sets only x value)
 		 *	
 		 *	@param	target	 The target object to align
 		 *	@param	alignedTarget	 The object that that target will align with
@@ -243,7 +243,7 @@ package com.desuade.stageflow {
 		}
 		
 		/**
-		 *	Aligns the target with the location of the alignedTarget
+		 *	Aligns the target with the location of the alignedTarget (sets only x value)
 		 *	
 		 *	@param	target	 The target object to align
 		 *	@param	alignedTarget	 The object that that target will align with

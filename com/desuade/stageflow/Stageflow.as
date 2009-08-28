@@ -62,6 +62,26 @@ package com.desuade.stageflow {
 		public var padding_left:Number = 0;
 		
 		/**
+		 *	The minimum width objects should align to. No X position less than this.
+		 */
+		public var min_width:Number = 0;
+		
+		/**
+		 *	The minimum height objects should align to. No Y position less than this.
+		 */
+		public var min_height:Number = 0;
+		
+		/**
+		 *	The maximum width objects should align to. No X position greater than this.
+		 */
+		public var max_width:Number = 0;
+		
+		/**
+		 *	The maximum height objects should align to. No Y position greater than this.
+		 */
+		public var max_height:Number = 0;
+		
+		/**
 		 *	@private
 		 */
 		protected var _target:Object;
@@ -69,7 +89,7 @@ package com.desuade.stageflow {
 		/**
 		 *	@private
 		 */
-		protected var _managed:Dictionary = new Dictionary();
+		protected var _managedPosition:Dictionary = new Dictionary();
 		
 		/**
 		 *	Creates a new Stageflow instance.
@@ -104,20 +124,43 @@ package com.desuade.stageflow {
 		 *	@param	target	 The target object to be realigned on resize
 		 *	@param	location	 The location on the target object to align
 		 *	@param	alignment	 The location of the stage to align to
+		 *	@param	offsetX	 Any offset for the X value
+		 *	@param	offsetY	 Any offset for the Y value
+		 *	@param	lockX	 This prevents any changes the X value
+		 *	@param	lockY	 This prevents any changes the Y value
 		 */
-		public function add($target:Object, $location:String, $alignment:String):void {
-			_managed[$target] = {location:$location, alignment:$alignment};
+		public function positionAlign($target:Object, $location:String, $alignment:String, $offsetX:Number = 0, $offsetY:Number = 0, $lockX:Boolean = false, $lockY:Boolean = false):void {
+			_managedPosition[$target] = {location:$location, alignment:$alignment, offsetX:$offsetX, offsetY:$offsetY, lockX:$lockX, lockY:$lockY};
 		}
 		
 		/**
-		 *	This removes the given object from the managed objects.
+		 *	This adds the target object to the Stageflow, moving the object relative the the new stage height and width.
+		 *	
+		 *	@param	target	 The target object to be realigned on resize
+		 *	@param	lockX	 This prevents any changes the X value
+		 *	@param	lockY	 This prevents any changes the Y value
+		 */
+		public function positionRelative($target:Object, $lockX:Boolean = false, $lockY:Boolean = false):void {
+			_managedPosition[$target] = {ox:$target.x, oy:$target.y, osw:_target.stageWidth, osh:_target.stageHeight, lockX:$lockX, lockY:$lockY};
+		}
+		
+		/**
+		 *	This removes the given object from all the managed objects.
 		 *	
 		 *	@param	target	 The object to remove
 		 */
 		public function remove($target:Object):void {
-			delete _managed[$target];
+			if(_managedPosition[$target] != undefined) delete _managedPosition[$target];
 		}
 		
+		/**
+		 *	Sets all the padding at once.
+		 *	
+		 *	@param	t	 The padding_top value
+		 *	@param	r	 The padding_right value
+		 *	@param	b	 The padding_bottom value
+		 *	@param	l	 The padding_left value
+		 */
 		public function setPadding($t:Number, $r:Number, $b:Number, $l:Number):void {
 			padding_top = $t, padding_right = $r, padding_bottom = $b, padding_left = $l;
 		}
@@ -125,20 +168,52 @@ package com.desuade.stageflow {
 		/**
 		 *	This realigns all the managed objects according to their requested locations.
 		 */
-		public function realign():void {
-			for (var f:Object in _managed) {
-				var p1:Point = Align.getLocation(f, _managed[f].location);
-				var p2:Point = getStageLocation(_managed[f].alignment);
-				f.x = (f.x - p1.x) + p2.x;
-				f.y = (f.y - p1.y) + p2.y;
+		public function realignAll():void {
+			for (var f:Object in _managedPosition) {
+				realign(f);
 			}
+		}
+		
+		/**
+		 *	This realigns the given target.
+		 *	
+		 *	@param	target	 The target object (that's already managed) to realign
+		 */
+		public function realign($target:Object):void {
+			var p:Point = getNewPosition($target);
+			$target.x = p.x, $target.y = p.y;
+		}
+		
+		/**
+		 *	Gets the new position of the target.
+		 *	
+		 *	@param	target	 The target object (that's already managed) to get the new position of
+		 *	@return		Point with the target's new position
+		 */
+		public function getNewPosition($target:Object):Point {
+			var np:Point = new Point($target.x, $target.y);
+			var m:Object = _managedPosition[$target];
+			if(m.location != undefined){
+				var p1:Point = Align.getLocation($target, m.location);
+				var p2:Point = getStageLocation(m.alignment);
+				if(!m.lockX) np.x = (($target.x - p1.x) + p2.x) + m.offsetX;
+				if(!m.lockY) np.y = (($target.y - p1.y) + p2.y) + m.offsetY;
+			} else {
+				if(!m.lockX) np.x = m.ox - (m.osw - _target.stageWidth);
+				if(!m.lockY) np.y = m.oy - (m.osh - _target.stageHeight);
+			}
+			if(max_width != 0 && (np.x) > max_width) np.x = max_width;
+			if(max_height != 0 && (np.y) > max_height) np.y = max_height;			
+			if(min_width != 0 && np.x < min_width) np.x = min_width;
+			if(min_height != 0 && np.y < min_height) np.y = min_height;
+			return np;
 		}
 		
 		/**
 		 *	@private
 		 */
 		protected function resizeHandler($o:Object):void {
-			realign();
+			realignAll();
 		}
 		
 		/**
