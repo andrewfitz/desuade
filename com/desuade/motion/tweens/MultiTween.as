@@ -119,7 +119,7 @@ package com.desuade.motion.tweens {
 				}
 			}
 			//no bezier tweens for multitweening
-			pt = BaseTicker.addItem(new PrimitiveMultiTween(target, _newproperties, $to.duration*1000, $to.ease));
+			pt = BaseTicker.addItem(new PrimitiveMultiTween(target, _newproperties, $to.duration*1000, makeEase($to.ease)));
 			pt.endFunc = endFunc;
 			if($to.position > 0) {
 				pt.starttime -= ($to.position*$to.duration)*1000;

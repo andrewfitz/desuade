@@ -24,7 +24,6 @@ THE SOFTWARE.
 
 package com.desuade.motion.tweens {
 	
-	import com.desuade.motion.eases.*;
 	import com.desuade.motion.bases.*;
 	import com.desuade.debugging.*
 
@@ -80,9 +79,9 @@ package com.desuade.motion.tweens {
 		 *	@see	#ease
 		 *	
 		 */
-		public function PrimitiveTween($target:Object, $property:String, $value:Number, $duration:int, $ease:* = null) {
+		public function PrimitiveTween($target:Object, $property:String, $value:Number, $duration:int, $ease:Function) {
 			super($target, $property);
-			duration = $duration, ease = makeEase($ease) || Easing.linear
+			duration = $duration, ease = $ease;
 			if($property != null) {
 				property = $property, value = $value, startvalue = $target[$property];
 				difvalue = (startvalue > value) ? (value-startvalue) : -(startvalue-value);
@@ -100,18 +99,6 @@ package com.desuade.motion.tweens {
 			} else {
 				target[property] = ease($time, startvalue, difvalue, duration);
 				updateFunc(this);
-			}
-		}
-		
-		/**
-		 *	@private
-		 */
-		protected function makeEase($ease:*):Function {
-			if(typeof $ease == 'string'){
-				return Easing[$ease];
-			} else {
-				//Debug.output('motion', 50004);
-				return $ease;
 			}
 		}
 		

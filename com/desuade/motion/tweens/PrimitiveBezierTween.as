@@ -68,7 +68,7 @@ package com.desuade.motion.tweens {
 		 *	@see	PrimitiveTween#bezier
 		 *	@see	PrimitiveTween#ease
 		 */
-		public function PrimitiveBezierTween($target:Object, $property:String, $value:Number, $duration:int, $bezier:Array, $ease:* = null) {
+		public function PrimitiveBezierTween($target:Object, $property:String, $value:Number, $duration:int, $bezier:Array, $ease:Function) {
 			bezier = $bezier;
 			super($target, $property, $value, $duration, $ease);
 		}

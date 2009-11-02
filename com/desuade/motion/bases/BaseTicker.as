@@ -183,3 +183,5 @@ package com.desuade.motion.bases {
 	}
 
 }
+
+////value ticker, frame ticker (this), event ticker, interval ticker

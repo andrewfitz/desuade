@@ -79,7 +79,7 @@ package com.desuade.motion.tweens {
 		 *	@see	PrimitiveTween#ease
 		 *	
 		 */
-		public function PrimitiveMultiTween($target:Object, $properties:Object, $duration:int, $ease:*) {
+		public function PrimitiveMultiTween($target:Object, $properties:Object, $duration:int, $ease:Function) {
 			super($target, null, 0, $duration, $ease);
 			arrayObject = PrimitiveMultiTween.makeMultiArrays($target, $properties);
 		}

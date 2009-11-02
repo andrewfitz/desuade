@@ -4,9 +4,13 @@ Desuade Library Changelog
 Motion Package 1.0 & Partigen 2.0 Final
 
 	Motion:
+		-changed: ease function/string/null conversions done in tween classes > BasicTween
+		-changed: primitiveTweens now strictly require ease functions, doesn't require Easing class
+		-examples: added new MotionController example
 	
 	Partigen:
-		-examples: typo for addBeginValue
+		-fix: emitters won't error out on stop() when they're not active
+		-examples: typos and doc updates
 	
 	Debugging: none
 	

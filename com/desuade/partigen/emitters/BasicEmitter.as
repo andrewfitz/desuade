@@ -181,8 +181,10 @@ package com.desuade.partigen.emitters {
 		 *	@param	runcontrollers	 This does nothing for BasicEmitters, and is only used for emitter classes with controllers.
 		 */
 		public function start($runcontrollers:Boolean = true):void {
-			_active = true;
-			setTimer(true);
+			if(!_active){
+				_active = true;
+				setTimer(true);
+			}
 		}
 		
 		/**
@@ -191,8 +193,10 @@ package com.desuade.partigen.emitters {
 		 *	@param	runcontrollers	 This does nothing for BasicEmitters, and is only used for emitter classes with controllers.
 		 */
 		public function stop($runcontrollers:Boolean = true):void {
-			_active = false;
-			setTimer(false);
+			if(_active){
+				_active = false;
+				setTimer(false);	
+			}
 		}
 		
 		/**

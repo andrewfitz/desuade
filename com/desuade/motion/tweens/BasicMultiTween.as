@@ -76,7 +76,7 @@ package com.desuade.motion.tweens {
 			for (var p:String in $to.properties) {
 				npo[p] = (typeof $to.properties[p] == 'string') ? target[p] + Number($to.properties[p]) : $to.properties[p];
 			}
-			var pt:PrimitiveMultiTween = BaseTicker.addItem(new PrimitiveMultiTween(target, npo, $to.duration*1000, $to.ease));
+			var pt:PrimitiveMultiTween = BaseTicker.addItem(new PrimitiveMultiTween(target, npo, $to.duration*1000, makeEase($to.ease)));
 			pt.endFunc = endFunc;
 			return pt.id;
 		}
