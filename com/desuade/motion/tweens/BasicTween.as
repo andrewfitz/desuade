@@ -88,13 +88,9 @@ package com.desuade.motion.tweens {
 		 *	@private
 		 */
 		protected function makeEase($ease:*):Function {
-			if($ease == null){
-				return Easing.linear;
-			} else if(typeof $ease == 'string'){
-				return Easing[$ease];
-			} else {
-				return $ease;
-			}
+			if(typeof $ease == 'string') return Easing[$ease];
+			else if(typeof $ease == 'function') return $ease;
+			else return Easing.linear;
 		}
 
 	}

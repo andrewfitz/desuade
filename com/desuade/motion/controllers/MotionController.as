@@ -83,7 +83,7 @@ package com.desuade.motion.controllers {
 		/**
 		 *	@private
 		 */
-		protected var _sequence:*;
+		protected var _sequence:* = null;
 		
 		/**
 		 *	<p>Creates a new MotionController for the given target and property.</p>
@@ -128,17 +128,17 @@ package com.desuade.motion.controllers {
 		 *	Starts the controller. This will internally create a Sequence (of tweens) that will be ran to match the points in the controller's PointsContainer, running from 'begin' to 'end' points.
 		 *	
 		 *	@param	keyframe	 The label of the keyframe to start at.
+		 *	@param	rebuild		 Forces a rebuild of the internal sequence on start.
 		 *	@return		The MotionController (for chaining)
 		 */
-		public function start($keyframe:String = null):* {
-			setStartValue();
-			var ta:Array = keyframes.createTweens(target, property, duration);
+		public function start($keyframe:String = 'begin', $rebuild:Boolean = false):* {
+			//$keyframe = (keyframes[$keyframe] == undefined) ? 'begin' : $keyframe;
+			setStartValue($keyframe);
 			_active = true;
-			_sequence = new ClassSequence(keyframes.tweenClass);
-			_sequence.pushArray(ta);
+			if(_sequence == null || $rebuild) buildSequence();
 			_sequence.addEventListener(SequenceEvent.ENDED, tweenEnd, false, 0, false);
 			_sequence.addEventListener(SequenceEvent.ADVANCED, advance, false, 0, false);
-			if($keyframe != null) _sequence.start(keyframes.getOrderedLabels().indexOf($keyframe));
+			if($keyframe != 'begin') _sequence.start(keyframes.getOrderedLabels().indexOf($keyframe));
 			else _sequence.start();
 			dispatchEvent(new ControllerEvent(ControllerEvent.STARTED, {controller:this}));
 			return this;
@@ -150,6 +150,15 @@ package com.desuade.motion.controllers {
 		public function stop():void {
 			if(_active) _sequence.stop();
 			else Debug.output('motion', 10003);
+		}
+		
+		/**
+		 *	@private
+		 */
+		protected function buildSequence():void {
+			_sequence = new ClassSequence(keyframes.tweenClass);
+			_sequence.overrides = {target:target};
+			_sequence.pushArray(keyframes.createTweens(target, property, duration));
 		}
 		
 		/**
@@ -173,9 +182,11 @@ package com.desuade.motion.controllers {
 		
 		/**
 		 *	This sets the initial start value of the target. This normally doesn't need to be called, as it is internally called everytime start() is.
+		 *	
+		 *	@param	keyframe	 This is the label of the keyframe to generate a starting value from.
 		 */
-		public function setStartValue():void {
-			keyframes.setStartValue(target, property);
+		public function setStartValue($keyframe:String = 'begin'):void {
+			keyframes.setStartValue(target, property, $keyframe);
 		}
 		
 		/**

@@ -60,20 +60,21 @@ package com.desuade.motion.controllers {
 		/**
 		 *	@private
 		 */
-		internal override function generateStartValue($target:Object, $property:String):* {
+		internal override function generateStartValue($target:Object, $property:String, $keyframe:String):* {
 			var nv:*;
-			var nt:String = this['begin'].extras.type;
-			if(this['begin'].value != null && this['begin'].value != 'none'){
-				nv = (this['begin'].spread != '0') ? RandomColor.fromRange(this['begin'].value, this['begin'].spread) : this['begin'].value;	
+			var bkf:Keyframe = this[$keyframe];
+			var nt:String = bkf.extras.type;
+			if(bkf.value != null && bkf.value != 'none'){
+				nv = (bkf.spread != '0') ? RandomColor.fromRange(bkf.value, bkf.spread) : bkf.value;	
 			} else nt = 'clear';
-			return ColorHelper.getColorObject(nt || 'tint', this['begin'].extras.amount || 1, nv, ($property == null) ? $target.transform.colorTransform : null);
+			return ColorHelper.getColorObject(nt || 'tint', bkf.extras.amount || 1, nv, ($property == null) ? $target.transform.colorTransform : null);
 		}
 		
 		/**
 		 *	@private
 		 */
-		internal override function setStartValue($target:Object, $property:String):void {
-			var nvo:Object = generateStartValue($target, $property);
+		internal override function setStartValue($target:Object, $property:String, $keyframe:String):void {
+			var nvo:Object = generateStartValue($target, $property, $keyframe);
 			if($property == null){
 				$target.transform.colorTransform = new ColorTransform(nvo.redMultiplier, nvo.greenMultiplier, nvo.blueMultiplier, $target.alpha, nvo.redOffset, nvo.greenOffset, nvo.blueOffset);
 			} else {

@@ -237,18 +237,19 @@ package com.desuade.motion.controllers {
 		/**
 		 *	@private
 		 */
-		internal function generateStartValue($target:Object, $property:String):* {
+		internal function generateStartValue($target:Object, $property:String, $keyframe:String):* {
 			var nv:Number;
-			if(this['begin'].value == null) nv = $target[$property];
-			else nv = (typeof this['begin'].value == 'string') ? $target[$property] + Number(this['begin'].value) : this['begin'].value;
-			return (this['begin'].spread !== '0') ? Random.fromRange(nv, ((typeof this['begin'].spread == 'string') ? nv + Number(this['begin'].spread) : this['begin'].spread), precision) : nv;
+			var bkf:Keyframe = this[$keyframe];
+			if(bkf.value == null) nv = $target[$property];
+			else nv = (typeof bkf.value == 'string') ? $target[$property] + Number(bkf.value) : bkf.value;
+			return (bkf.spread !== '0') ? Random.fromRange(nv, ((typeof bkf.spread == 'string') ? nv + Number(bkf.spread) : bkf.spread), precision) : nv;
 		}
 		
 		/**
 		 *	@private
 		 */
-		internal function setStartValue($target:Object, $property:String):void {
-			$target[$property] = generateStartValue($target, $property);
+		internal function setStartValue($target:Object, $property:String, $keyframe:String):void {
+			$target[$property] = generateStartValue($target, $property, $keyframe);
 		}
 		
 		/**
@@ -294,7 +295,7 @@ package com.desuade.motion.controllers {
 					} else nuv = nnnv;
 				}
 				var nv:Number = (np.spread !== '0') ? Random.fromRange(nuv, ((typeof np.spread == 'string') ? nuv + Number(np.spread) : np.spread), precision) : nuv;
-				var tmo:Object = {target:$target, property:$property, value:nv, ease:np.ease, duration:calculateDuration($duration, this[pa[i-1]].position, np.position), delay:0};
+				var tmo:Object = {property:$property, value:nv, ease:np.ease, duration:calculateDuration($duration, this[pa[i-1]].position, np.position), delay:0};
 				for (var h:String in np.extras) {
 					tmo[h] = np.extras[h];
 				}

@@ -167,7 +167,7 @@ package com.desuade.motion.controllers {
 		 *	
 		 *	@return		The MultiController (for chaining)
 		 */
-		public function start($keyframe:String = null):* {
+		public function start($keyframe:String = 'begin'):* {
 			for (var p:String in this){
 				this[p].start($keyframe);
 			}
