@@ -13,6 +13,7 @@ Motion Package 1.0 & Partigen 2.0 Final (2009/11/15)
 		-fix: makeEase function
 	
 	Partigen:
+		-added: emitter.killParticles()
 		-fix: emitters won't error out on stop() when they're not active
 		-examples: typos and doc updates
 	
