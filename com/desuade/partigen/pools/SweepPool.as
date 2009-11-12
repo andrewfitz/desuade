@@ -41,7 +41,7 @@ package com.desuade.partigen.pools {
 	 *  @author Andrew Fitzgerald
 	 *  @since  07.22.2009
 	 */
-	public class SweepPool extends Pool {
+	public class SweepPool extends NullPool {
 		
 		/**
 		 *	@private
@@ -73,18 +73,6 @@ package com.desuade.partigen.pools {
 		 */
 		public function get interval():int{
 			return _interval;
-		}
-		
-		/**
-		 *	@inheritDoc
-		 */
-		public override function addParticle($particleClass:Class, $groupClass:Class, $emitter:BasicEmitter):BasicParticle {
-			super.addParticle($particleClass, $groupClass, $emitter);
-			if($emitter.groupAmount > 1){
-				return _particles[BasicParticle.count] = new $groupClass($particleClass, $emitter.groupAmount, $emitter.groupProximity);
-			} else {
-				return _particles[BasicParticle.count] = new $particleClass();
-			}
 		}
 		
 		/**

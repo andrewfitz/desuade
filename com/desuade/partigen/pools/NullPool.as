@@ -51,7 +51,7 @@ package com.desuade.partigen.pools {
 		 */
 		public override function addParticle($particleClass:Class, $groupClass:Class, $emitter:BasicEmitter):BasicParticle {
 			super.addParticle($particleClass, $groupClass, $emitter);
-			if($emitter.groupAmount > 1){
+			if($emitter.groupAmount > 0){
 				return _particles[BasicParticle.count] = new $groupClass($particleClass, $emitter.groupAmount, $emitter.groupProximity);
 			} else {
 				return _particles[BasicParticle.count] = new $particleClass();

@@ -82,9 +82,9 @@ package com.desuade.partigen.emitters {
 		/**
 		 *	<p>This controls how may particles are made in a "particle group". This allows you to have many particle act as a single particle.</p>
 		 *	<p>This lets there be exponentially more particles since the sam amount of controllers/tweens are used regardless of the groupAmount.</p>
-		 *	<p>If the number is greater than 1, it will create a group based on the <code>group</code> value, using the <code>particle</code>class. If this equals 1, it does not create a group.</p>
+		 *	<p>If the number is greater than 0, it will create a group based on the <code>group</code> value, using the <code>particle</code>class. If this equals 0, it does not create a group, if it equals 1, it creates a group with 1 particle offset by the proximity.</p>
 		 */
-		public var groupAmount:int = 1;
+		public var groupAmount:int = 0;
 		
 		/**
 		 *	This determines the maximum distance away from the center of the group to create new particles.
@@ -230,7 +230,7 @@ package com.desuade.partigen.emitters {
 			txml.@burst = burst;
 			txml.@life = life;
 			txml.@lifeSpread = XMLHelper.xmlize(lifeSpread);
-			if(groupAmount > 1){
+			if(groupAmount > 0){
 				txml.@group = XMLHelper.getSimpleClassName(group);
 				txml.@groupAmount = groupAmount;
 				txml.@groupProximity = groupProximity;
@@ -251,7 +251,7 @@ package com.desuade.partigen.emitters {
 			try {
 				particle = getDefinitionByName($xml.@particle) as Class;
 			} catch (e:ReferenceError) {
-				particle = DefaultParticle;
+				//particle = DefaultParticle;
 				Debug.output('partigen', 20008, [$xml.@particle]);
 			}
 			eps = Number($xml.@eps);
