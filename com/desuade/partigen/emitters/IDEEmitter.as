@@ -60,6 +60,11 @@ package com.desuade.partigen.emitters {
 		/**
 		 *	@private
 		 */
+		protected var _oldang:Array = ['n', 'n'];
+		
+		/**
+		 *	@private
+		 */
 		public var icon:MovieClip;
 		
 		/**
@@ -74,7 +79,7 @@ package com.desuade.partigen.emitters {
 		/**
 		 *	Getter/setter that uses XML methods to return (as XML) or set the configuration of the emitter from String/XML.
 		 */
-		[Inspectable(name = "Config XML", defaultValue = '<Emitter particle="DefaultParticle" eps="10" burst="1" life="1" lifeSpread="*0" angle="0" angleSpread="*0" />', variable = "config", type = "String")]
+		[Inspectable(name = "Config XML", defaultValue = '<Emitter particle="DefaultParticle" eps="10" burst="1" life="1" lifeSpread="*0" angle="0" angleSpread="*0">  <Controllers>    <EmitterController/>    <ParticleController/>  </Controllers></Emitter>', variable = "config", type = "String")]
 		public function get config():XML{
 			return toXML();
 		}
@@ -168,8 +173,13 @@ package com.desuade.partigen.emitters {
 		 */
 		public function updateAngleSlice($e:Object):void {
 			if(icon.visible){
-				icon.graphics.clear();
-				Drawing.drawSlice(icon, angle, (typeof angleSpread == 'string') ? angle + Number(angleSpread) : angleSpread, 9, '#dddddd');
+				if(_oldang[0] != angle || _oldang[1] != angleSpread){
+					_oldang[0] = angle;
+					_oldang[1] = angleSpread;
+					icon.graphics.clear();
+					var ags:Number = (typeof angleSpread == 'string') ? angle + Number(angleSpread) : angleSpread;
+					Drawing.drawSlice(icon, angle, ((angle-ags) == 0) ? angle+1 : ags, 9, '#cccccc', 0, 0, 10);
+				}
 			}
 		}
 	

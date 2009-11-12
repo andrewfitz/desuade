@@ -14,11 +14,13 @@ Motion Package 1.0 & Partigen 2.0 Final (2009/11/15)
 		-fix: primitiveTweens not calling update() when duration < 0, causing 0-duration tweens to fail
 	
 	Partigen:
+		-added: DefaultParticle class
 		-added: emitter.reset()
 		-added: emitter.killParticles()
 		-changed: emitter.fromXML(xml, reset = true) emitter now resets when XML is applied as default
 		-fix: emitter.eps defaults to 1 just so emitter doesn't throw an error
 		-fix: emitters won't error out on stop() when they're not active
+		-fix: emitter.fromXML no particle class -> now defaults to DefaultParticle and throws Debug error
 		-examples: typos and doc updates
 	
 	Debugging: none

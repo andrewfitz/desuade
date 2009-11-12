@@ -248,7 +248,12 @@ package com.desuade.partigen.emitters {
 		 */
 		public function fromXML($xml:XML, $reset:Boolean = true):* {
 			if($reset) reset();
-			particle = getDefinitionByName($xml.@particle) as Class;
+			try {
+				particle = getDefinitionByName($xml.@particle) as Class;
+			} catch (e:ReferenceError) {
+				particle = DefaultParticle;
+				Debug.output('partigen', 20008, [$xml.@particle]);
+			}
 			eps = Number($xml.@eps);
 			if($xml.@burst != undefined) burst = Number($xml.@burst);
 			if($xml.@group != undefined) group = getDefinitionByName("com.desuade.partigen.particles::" + $xml.@group) as Class;

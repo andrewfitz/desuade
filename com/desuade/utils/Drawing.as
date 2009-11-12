@@ -50,10 +50,12 @@ package com.desuade.utils {
 		 *	@param	color	 The color of the slice to draw - "#00ff00", 0x909090, etc.
 		 *	@param	x	 The x offset to draw to - defaults 0
 		 *	@param	y	 The y offset to draw to - defaults 0
+		 *	@param	precision	 How many segments to make
+		 *	
 		 */
-		public static function drawSlice($target:Object, $beginAngle:Number, $endAngle:Number, $radius:Number, $color:*, $x:Number = 0, $y:Number = 0):void {
+		public static function drawSlice($target:Object, $beginAngle:Number, $endAngle:Number, $radius:Number, $color:*, $x:Number = 0, $y:Number = 0, $precision:int = 20):void {
 			if ($endAngle < $beginAngle) $endAngle += 360;
-			var n:Number = (($endAngle-$beginAngle)/15);
+			var n:Number = (($endAngle-$beginAngle)/$precision);
 			var theta:Number = -1*(($endAngle-$beginAngle)/n)*degToRad;
 			var cr:Number = $radius/Math.cos(theta/2);
 			var angle:Number = -1*$beginAngle*degToRad;
