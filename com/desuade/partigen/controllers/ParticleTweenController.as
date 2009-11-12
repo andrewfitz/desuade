@@ -83,7 +83,7 @@ package com.desuade.partigen.controllers {
 			keyframes.begin.spread = $beginSpread;
 			keyframes.end.value = $end;
 			keyframes.end.spread = $endSpread;
-			keyframes.end.ease = $ease;
+			keyframes.end.ease = $ease || 'linear';
 			keyframes.end.extras = $extras || {};
 		}
 		

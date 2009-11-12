@@ -138,8 +138,8 @@ package com.desuade.partigen.emitters {
 		/**
 		 *	@inheritDoc
 		 */
-		public override function fromXML($xml:XML):* {
-			super.fromXML($xml);
+		public override function fromXML($xml:XML, $reset:Boolean = true):* {
+			super.fromXML($xml, $reset);
 			if($xml.@angle != undefined) angle = Number($xml.@angle);
 			if($xml.@angleSpread != undefined) angleSpread = XMLHelper.dexmlize($xml.@angleSpread);
 			if($xml.hasOwnProperty("Controllers")){
@@ -152,6 +152,17 @@ package com.desuade.partigen.emitters {
 				}
 			}
 			return this;
+		}
+		
+		/**
+		 *	@inheritDoc
+		 */
+		public override function reset():void {
+			super.reset();
+			angle = 0, angleSpread = '0', group = GroupParticle;
+			controllers = {};
+			controllers.particle = new ParticleController();
+			controllers.emitter = new EmitterController(this);
 		}
 		
 		/**

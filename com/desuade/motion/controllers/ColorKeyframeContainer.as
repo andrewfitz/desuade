@@ -55,6 +55,8 @@ package com.desuade.motion.controllers {
 			super(($tweenClass != null) ? $tweenClass : MotionController.colorTweenClass);
 			this['begin'].extras = {type:null, amount:null};
 			this['end'].extras = {type:null, amount:null};
+			this['begin'].value = 'none';
+			this['end'].value = 'none';
 		}
 		
 		/**

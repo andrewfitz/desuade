@@ -89,7 +89,7 @@ package com.desuade.partigen.emitters {
 		/**
 		 *	This determines the maximum distance away from the center of the group to create new particles.
 		 */
-		public var groupProximity:int;
+		public var groupProximity:int = 0;
 		
 		/**
 		 *	Enable particle BORN and DIED events. The default is false;
@@ -116,7 +116,7 @@ package com.desuade.partigen.emitters {
 		/**
 		 *	@private
 		 */
-		protected var _eps:Number = 0;
+		protected var _eps:Number = 1;
 		
 		/**
 		 *	@private
@@ -242,10 +242,12 @@ package com.desuade.partigen.emitters {
 		 *	This configures the emitter based on the XML, and adds any controllers (if available)
 		 *	
 		 *	@param	xml	 The XML object to use to configure the emitter
+		 *	@param	reset	 Resets the emitter before applying XML
 		 *	
 		 *	@return		The emitter object (for chaining)
 		 */
-		public function fromXML($xml:XML):* {
+		public function fromXML($xml:XML, $reset:Boolean = true):* {
+			if($reset) reset();
 			particle = getDefinitionByName($xml.@particle) as Class;
 			eps = Number($xml.@eps);
 			if($xml.@burst != undefined) burst = Number($xml.@burst);
@@ -255,6 +257,15 @@ package com.desuade.partigen.emitters {
 			life = Number($xml.@life);
 			if($xml.@lifeSpread != undefined) lifeSpread = XMLHelper.dexmlize($xml.@lifeSpread);
 			return this;
+		}
+		
+		/**
+		 *	This resets the emitter to the defaults
+		 */
+		public function reset():void {
+			particle = BasicParticle, eps = 1, burst = 1;
+			group = BasicGroupParticle;
+			groupAmount = 1, groupProximity = 0, life = 0, lifeSpread = "0";
 		}
 		
 		/**

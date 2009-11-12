@@ -67,13 +67,14 @@ package com.desuade.partigen.emitters {
 		 */
 		public function IDEEmitter() {
 			super();
+			BaseTicker.start();
 			BaseTicker.addEventListener(MotionEvent.UPDATED, updateAngleSlice);
 		}
 		
 		/**
 		 *	Getter/setter that uses XML methods to return (as XML) or set the configuration of the emitter from String/XML.
 		 */
-		[Inspectable(name = "Config XML", defaultValue = "", variable = "config", type = "String")]
+		[Inspectable(name = "Config XML", defaultValue = '<Emitter particle="DefaultParticle" eps="10" burst="1" life="1" lifeSpread="*0" angle="0" angleSpread="*0" />', variable = "config", type = "String")]
 		public function get config():XML{
 			return toXML();
 		}
@@ -168,7 +169,7 @@ package com.desuade.partigen.emitters {
 		public function updateAngleSlice($e:Object):void {
 			if(icon.visible){
 				icon.graphics.clear();
-				//Drawing.drawSlice(icon, 0, 0, 100, 200);
+				Drawing.drawSlice(icon, angle, (typeof angleSpread == 'string') ? angle + Number(angleSpread) : angleSpread, 9, '#dddddd');
 			}
 		}
 	

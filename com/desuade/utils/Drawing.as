@@ -53,7 +53,7 @@ package com.desuade.utils {
 		 */
 		public static function drawSlice($target:Object, $beginAngle:Number, $endAngle:Number, $radius:Number, $color:*, $x:Number = 0, $y:Number = 0):void {
 			if ($endAngle < $beginAngle) $endAngle += 360;
-			var n:Number = (($endAngle-$beginAngle)/45);
+			var n:Number = (($endAngle-$beginAngle)/15);
 			var theta:Number = -1*(($endAngle-$beginAngle)/n)*degToRad;
 			var cr:Number = $radius/Math.cos(theta/2);
 			var angle:Number = -1*$beginAngle*degToRad;
