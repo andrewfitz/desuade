@@ -95,6 +95,7 @@ package com.desuade.motion.tweens {
 				for (var i:int = 0; i < arrayObject.props.length; i++) {
 					target[arrayObject.props[i]] = arrayObject.values[i];
 				}
+				updateFunc(this);
 				end();
 			} else {
 				for (var k:int = 0; k < arrayObject.props.length; k++) {

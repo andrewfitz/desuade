@@ -25,7 +25,11 @@ THE SOFTWARE.
 package com.desuade.partigen.emitters {
 	
 	import flash.events.MouseEvent;
+	import flash.display.MovieClip;
 	import com.desuade.partigen.renderers.*;
+	import com.desuade.motion.events.*;
+	import com.desuade.utils.Drawing;
+	import com.desuade.motion.bases.BaseTicker;
 	
 	/**
 	 *  This is the class used for Partigen Emitter components for the Flash IDE.
@@ -54,10 +58,16 @@ package com.desuade.partigen.emitters {
 		protected var _renderToParent:Boolean = true;
 		
 		/**
+		 *	@private
+		 */
+		public var icon:MovieClip;
+		
+		/**
 		 *	Creates a new IDEEmitter (usually from a component)
 		 */
 		public function IDEEmitter() {
 			super();
+			BaseTicker.addEventListener(MotionEvent.UPDATED, updateAngleSlice);
 		}
 		
 		/**
@@ -78,7 +88,7 @@ package com.desuade.partigen.emitters {
 		/**
 		 *	Start the emitter automatically.
 		 */
-		[Inspectable(name = "Will Auto Start", defaultValue = false, variable = "autoStart", type = "Boolean")]
+		[Inspectable(name = "Start Automatically", defaultValue = false, variable = "autoStart", type = "Boolean")]
 		public function get autoStart():Boolean{
 			return _autoStart;
 		}
@@ -97,6 +107,21 @@ package com.desuade.partigen.emitters {
 		[Inspectable(name = "Follow Mouse", defaultValue = false, variable = "followMouse", type = "Boolean")]
 		public function get followMouse():Boolean{
 			return _followMouse;
+		}
+		
+		/**
+		 *	If the emitter icon should be shown, marking it's position on the stage.
+		 */
+		[Inspectable(name = "Show Icon", defaultValue = true, variable = "showIcon", type = "Boolean")]
+		public function get showIcon():Boolean{
+			return icon.visible;
+		}
+		
+		/**
+		 *	@private
+		 */
+		public function set showIcon($value:Boolean):void {
+			icon.visible = $value;
 		}
 		
 		/**
@@ -135,6 +160,16 @@ package com.desuade.partigen.emitters {
 		protected function fmouse($o:Object):void {
 			x = root.stage.mouseX;
 			y = root.stage.mouseY;
+		}
+		
+		/**
+		 *	@private
+		 */
+		public function updateAngleSlice($e:Object):void {
+			if(icon.visible){
+				icon.graphics.clear();
+				//Drawing.drawSlice(icon, 0, 0, 100, 200);
+			}
 		}
 	
 	}

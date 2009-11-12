@@ -95,6 +95,7 @@ package com.desuade.motion.tweens {
 			$time -= starttime;
 			if($time >= duration){
 				target[property] = value;
+				updateFunc(this);
 				end();
 			} else {
 				target[property] = ease($time, startvalue, difvalue, duration);

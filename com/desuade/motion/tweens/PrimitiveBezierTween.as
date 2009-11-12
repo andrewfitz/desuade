@@ -82,6 +82,7 @@ package com.desuade.motion.tweens {
 			$time -= starttime;
 			if($time >= duration){
 				target[property] = value;
+				updateFunc(this);
 				end();
 			} else {
 				var nres:Number;

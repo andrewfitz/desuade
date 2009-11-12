@@ -11,6 +11,7 @@ Motion Package 1.0 & Partigen 2.0 Final (2009/11/15)
 		-examples: added new MotionController example and starting at custom keyframe example
 		-fix: starting a controller at a keyframe will now start at the correct value
 		-fix: makeEase function
+		-fix: primitiveTweens not calling update() when duration < 0, causing 0-duration tweens to fail
 	
 	Partigen:
 		-added: emitter.killParticles()
