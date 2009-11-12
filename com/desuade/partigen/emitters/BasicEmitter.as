@@ -230,11 +230,9 @@ package com.desuade.partigen.emitters {
 			txml.@burst = burst;
 			txml.@life = life;
 			txml.@lifeSpread = XMLHelper.xmlize(lifeSpread);
-			if(groupAmount > 0){
-				txml.@group = XMLHelper.getSimpleClassName(group);
-				txml.@groupAmount = groupAmount;
-				txml.@groupProximity = groupProximity;
-			}
+			txml.@group = XMLHelper.getSimpleClassName(group);
+			txml.@groupAmount = groupAmount;
+			txml.@groupProximity = groupProximity;
 			return txml;
 		}
 		
@@ -249,17 +247,17 @@ package com.desuade.partigen.emitters {
 		public function fromXML($xml:XML, $reset:Boolean = true):* {
 			if($reset) reset();
 			try {
-				particle = getDefinitionByName($xml.@particle) as Class;
+				if($xml.@particle != undefined) particle = getDefinitionByName($xml.@particle) as Class;
 			} catch (e:ReferenceError) {
 				//particle = DefaultParticle;
 				Debug.output('partigen', 20008, [$xml.@particle]);
 			}
-			eps = Number($xml.@eps);
+			if($xml.@eps != undefined) eps = Number($xml.@eps);
 			if($xml.@burst != undefined) burst = Number($xml.@burst);
 			if($xml.@group != undefined) group = getDefinitionByName("com.desuade.partigen.particles::" + $xml.@group) as Class;
 			if($xml.@groupAmount != undefined) groupAmount = Number($xml.@groupAmount);
 			if($xml.@groupProximity != undefined) groupProximity = Number($xml.@groupProximity);
-			life = Number($xml.@life);
+			if($xml.@life != undefined) life = Number($xml.@life);
 			if($xml.@lifeSpread != undefined) lifeSpread = XMLHelper.dexmlize($xml.@lifeSpread);
 			return this;
 		}
@@ -270,7 +268,7 @@ package com.desuade.partigen.emitters {
 		public function reset():void {
 			particle = BasicParticle, eps = 1, burst = 1;
 			group = BasicGroupParticle;
-			groupAmount = 1, groupProximity = 0, life = 0, lifeSpread = "0";
+			groupAmount = 0, groupProximity = 0, life = 0, lifeSpread = "0";
 		}
 		
 		/**

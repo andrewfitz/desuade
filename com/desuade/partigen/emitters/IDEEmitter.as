@@ -65,7 +65,7 @@ package com.desuade.partigen.emitters {
 		/**
 		 *	@private
 		 */
-		public var icon:MovieClip;
+		public var indicator:MovieClip;
 		
 		/**
 		 *	Creates a new IDEEmitter (usually from a component)
@@ -116,18 +116,18 @@ package com.desuade.partigen.emitters {
 		}
 		
 		/**
-		 *	If the emitter icon should be shown, marking it's position on the stage.
+		 *	If the emitter indicator should be shown, marking it's position on the stage.
 		 */
-		[Inspectable(name = "Show Icon", defaultValue = true, variable = "showIcon", type = "Boolean")]
-		public function get showIcon():Boolean{
-			return icon.visible;
+		[Inspectable(name = "Show Indicator", defaultValue = true, variable = "showIndicator", type = "Boolean")]
+		public function get showIndicator():Boolean{
+			return indicator.visible;
 		}
 		
 		/**
 		 *	@private
 		 */
 		public function set showIcon($value:Boolean):void {
-			icon.visible = $value;
+			indicator.visible = $value;
 		}
 		
 		/**
@@ -172,13 +172,13 @@ package com.desuade.partigen.emitters {
 		 *	@private
 		 */
 		public function updateAngleSlice($e:Object):void {
-			if(icon.visible){
+			if(indicator.visible){
 				if(_oldang[0] != angle || _oldang[1] != angleSpread){
 					_oldang[0] = angle;
 					_oldang[1] = angleSpread;
-					icon.graphics.clear();
+					indicator.graphics.clear();
 					var ags:Number = (typeof angleSpread == 'string') ? angle + Number(angleSpread) : angleSpread;
-					Drawing.drawSlice(icon, angle, ((angle-ags) == 0) ? angle+1 : ags, 9, '#cccccc', 0, 0, 10);
+					Drawing.drawSlice(indicator, angle, ((angle-ags) == 0) ? angle+1 : ags, 9, '#cccccc', 0, 0, 10);
 				}
 			}
 		}

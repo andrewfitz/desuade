@@ -21,9 +21,11 @@ Motion Package 1.0 & Partigen 2.0 Final (2009/11/15)
 		-changed: NullPool and BasicEmitter - groupAmount 0 will create standard particle, >0 will create a group
 		-changed: SweepPool inherits NullPool (for inheritance)
 		-changed: emitter.fromXML(xml, reset = true) emitter now resets when XML is applied as default
+		-changed: emitter group info always gets output to XML
 		-fix: emitter.eps defaults to 1 just so emitter doesn't throw an error
 		-fix: emitters won't error out on stop() when they're not active
 		-fix: emitter.fromXML no particle class -> now throws Debug error
+		-fix: emitter.fromXML now has undefined checks for all variables
 		-examples: typos and doc updates
 	
 	Debugging: none
