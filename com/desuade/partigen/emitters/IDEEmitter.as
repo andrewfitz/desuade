@@ -126,7 +126,7 @@ package com.desuade.partigen.emitters {
 		/**
 		 *	@private
 		 */
-		public function set showIcon($value:Boolean):void {
+		public function set showIndicator($value:Boolean):void {
 			indicator.visible = $value;
 		}
 		

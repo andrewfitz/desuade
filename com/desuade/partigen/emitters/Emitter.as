@@ -139,19 +139,27 @@ package com.desuade.partigen.emitters {
 		 *	@inheritDoc
 		 */
 		public override function fromXML($xml:XML, $reset:Boolean = true):* {
-			super.fromXML($xml, $reset);
-			if($xml.@angle != undefined) angle = Number($xml.@angle);
-			if($xml.@angleSpread != undefined) angleSpread = XMLHelper.dexmlize($xml.@angleSpread);
-			if($xml.hasOwnProperty("Controllers")){
-				for (var i:int = 0; i < $xml.Controllers.children().length(); i++) {
-					if($xml.Controllers.children()[i].name() == "ParticleController"){
-						controllers.particle.fromXML($xml.Controllers.children()[i]);
-					} else if($xml.Controllers.children()[i].name() == "EmitterController"){
-						controllers.emitter.fromXML($xml.Controllers.children()[i]);
+			if(super.fromXML($xml, $reset) != false){
+				try {
+					if($xml.@angle != undefined) angle = Number($xml.@angle);
+					if($xml.@angleSpread != undefined) angleSpread = XMLHelper.dexmlize($xml.@angleSpread);
+					if($xml.hasOwnProperty("Controllers")){
+						for (var i:int = 0; i < $xml.Controllers.children().length(); i++) {
+							if($xml.Controllers.children()[i].name() == "ParticleController"){
+								controllers.particle.fromXML($xml.Controllers.children()[i]);
+							} else if($xml.Controllers.children()[i].name() == "EmitterController"){
+								controllers.emitter.fromXML($xml.Controllers.children()[i]);
+							}
+						}
 					}
+					return this;
+				} catch (e:Error){
+					Debug.output('partigen', 20009, [e]);
+					return false;
 				}
+			} else {
+				return false;
 			}
-			return this;
 		}
 		
 		/**

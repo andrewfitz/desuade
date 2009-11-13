@@ -56,6 +56,7 @@ package com.desuade.partigen {
 				20006: "[Pool] (time: %) sweeping % particles...",
 				20007: "[Pool] (time: %) sweep completed!",
 				20008: "[Emitter] fromXML: particle class % not found – using DefaultParticle",
+				20009: "[Emitter] fromXML: error parsing XML:\n%",
 				
 				//
 				40001: "[Emitter] running update on emitter: %",
