@@ -54,11 +54,16 @@ package com.desuade.utils {
 		 *	
 		 */
 		public static function drawSlice($target:Object, $beginAngle:Number, $endAngle:Number, $radius:Number, $color:*, $x:Number = 0, $y:Number = 0, $precision:int = 20):void {
-			if ($endAngle < $beginAngle) $endAngle += 360;
-			var n:Number = (($endAngle-$beginAngle)/$precision);
-			var theta:Number = -1*(($endAngle-$beginAngle)/n)*degToRad;
+			var ba:Number = $beginAngle;
+			var ea:Number = $endAngle;
+			if ($endAngle < $beginAngle) {
+				ba = $endAngle;
+				ea = $beginAngle;
+			}
+			var n:Number = ((ea-ba)/$precision);
+			var theta:Number = -1*((ea-ba)/n)*degToRad;
 			var cr:Number = $radius/Math.cos(theta/2);
-			var angle:Number = -1*$beginAngle*degToRad;
+			var angle:Number = -1*ba*degToRad;
 			var cangle:Number = angle-theta/2;
 			$target.graphics.moveTo($x, $y);
 			$target.graphics.beginFill(ColorHelper.cleanColorValue($color));

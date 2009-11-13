@@ -178,7 +178,7 @@ package com.desuade.partigen.emitters {
 					_oldang[1] = angleSpread;
 					indicator.graphics.clear();
 					var ags:Number = (typeof angleSpread == 'string') ? angle + Number(angleSpread) : angleSpread;
-					Drawing.drawSlice(indicator, angle, ((angle-ags) == 0) ? angle+1 : ags, 9, '#cccccc', 0, 0, 10);
+					Drawing.drawSlice(indicator, angle, ((angle-ags) < 10 && (angle-ags) > -10) ? angle+10 : ags, 9, '#cccccc', 0, 0, 2);
 				}
 			}
 		}
