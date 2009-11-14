@@ -4,11 +4,13 @@ Desuade Library Changelog
 Motion Package 1.0 & Partigen 2.0 Final (2009/11/15)
 
 	Motion:
+		-added: KeyframeContainers now have a length property
 		-changed: ease function/string/null conversions done in tween classes > BasicTween
 		-changed: primitiveTweens now strictly require ease functions, doesn't require Easing class
 		-changed: moved sequence building in start() for MotionControllers, no need to rebuild sequence
 		-changed: controllers.start(keyframe = 'begin')
 		-examples: added new MotionController example and starting at custom keyframe example
+		-fix: rare bug with KeyframeContainers internal count - now uses new length prop
 		-fix: starting a controller at a keyframe will now start at the correct value
 		-fix: makeEase function
 		-fix: primitiveTweens not calling update() when duration < 0, causing 0-duration tweens to fail
@@ -17,6 +19,7 @@ Motion Package 1.0 & Partigen 2.0 Final (2009/11/15)
 		-added: DefaultParticle class
 		-added: emitter.reset()
 		-added: emitter.killParticles()
+		-added: error catching when parsing emitter XML
 		-changed: groupAmount = 0 now default
 		-changed: NullPool and BasicEmitter - groupAmount 0 will create standard particle, >0 will create a group
 		-changed: SweepPool inherits NullPool (for inheritance)

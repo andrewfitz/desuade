@@ -24,6 +24,9 @@ THE SOFTWARE.
 
 package com.desuade.utils {
 
+	import flash.geom.Point;
+	import com.desuade.motion.eases.*;
+
 	/**
 	 *  Class with static methods for drawing
 	 *    
@@ -78,6 +81,26 @@ package com.desuade.utils {
 				$target.graphics.curveTo($x+cX,$y+cY, $x+endX,$y+endY);
 			}
 			$target.graphics.lineTo($x, $y);
+		}
+		
+		public static function drawEase($target:Object, $start:Point, $end:Point, $easeX:String, $easeY:String, $segments:int = 100):void {
+			$target.graphics.moveTo($start.x, $start.y);
+			$target.graphics.lineStyle(1, 0xeeeeee);
+			var curX:Number = $start.x;
+			var curY:Number = $start.y;
+			var difX:Number = ($start.x > $end.x) ? ($end.x-$start.x) : -($start.x-$end.x);
+			var difY:Number = ($start.y > $end.y) ? ($end.y-$start.y) : -($start.y-$end.y);
+			if($easeX == 'linear' && $easeY == 'linear'){
+				//nothing
+			}
+			else {
+				for (var i:int = 0; i < $segments; i++) {
+					curX = Easing[$easeX](i, $start.x, difX, $segments);
+					curY = Easing[$easeY](i, $start.y, difY, $segments);
+					$target.graphics.lineTo(curX, curY);
+				}
+			}
+			$target.graphics.lineTo($end.x, $end.y);
 		}
 
 	}

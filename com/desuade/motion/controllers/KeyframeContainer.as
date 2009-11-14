@@ -45,11 +45,6 @@ package com.desuade.motion.controllers {
 		/**
 		 *	@private
 		 */
-		protected var _keyframecount:Number = 0;
-		
-		/**
-		 *	@private
-		 */
 		protected var _tweenClass:Class;
 	
 		/**
@@ -84,6 +79,15 @@ package com.desuade.motion.controllers {
 		}
 		
 		/**
+		 *	How many keyframes are in the container.
+		 */
+		public function get length():int{
+			var c:int = 0;
+			for (var p:String in this) c++;
+			return c;
+		}
+		
+		/**
 		 *	Which tween class to use for creating the tweens. - ie: BasicTween, Tween, etc.
 		 */
 		public function get tweenClass():Class{
@@ -102,7 +106,7 @@ package com.desuade.motion.controllers {
 		 *	@see	Keyframe
 		 */
 		public function add($keyframe:Keyframe, $label:String = null):Object {
-			$label = ($label == null) ? 'keyframe_' + ++_keyframecount : $label;
+			$label = ($label == null) ? 'keyframe_' + (length+1) : $label;
 			return this[$label] = $keyframe;
 		}
 		
