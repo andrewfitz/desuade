@@ -102,12 +102,14 @@ package com.desuade.motion.controllers {
 		 *	
 		 *	@param	keyframe	 A Keyframe object to add
 		 *	@param	label	 A label to give the keyframe. An auto-incremented label is created if none is provided.
+		 *	@return		The keyframe's label
 		 *	
 		 *	@see	Keyframe
 		 */
-		public function add($keyframe:Keyframe, $label:String = null):Object {
+		public function add($keyframe:Keyframe, $label:String = null):String {
 			$label = ($label == null) ? 'keyframe_' + (length+1) : $label;
-			return this[$label] = $keyframe;
+			this[$label] = $keyframe;
+			return $label;
 		}
 		
 		/**

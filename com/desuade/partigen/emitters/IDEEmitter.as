@@ -29,7 +29,7 @@ package com.desuade.partigen.emitters {
 	import com.desuade.partigen.renderers.*;
 	import com.desuade.motion.events.*;
 	import com.desuade.utils.Drawing;
-	import com.desuade.motion.bases.BaseTicker;
+	import flash.events.Event;
 	
 	/**
 	 *  This is the class used for Partigen Emitter components for the Flash IDE.
@@ -72,8 +72,7 @@ package com.desuade.partigen.emitters {
 		 */
 		public function IDEEmitter() {
 			super();
-			BaseTicker.start();
-			BaseTicker.addEventListener(MotionEvent.UPDATED, updateAngleSlice);
+			addEventListener(Event.ENTER_FRAME, updateAngleSlice, false, 0, false);
 		}
 		
 		/**

@@ -9,6 +9,7 @@ Motion Package 1.0 & Partigen 2.0 Final (2009/11/15)
 		-changed: primitiveTweens now strictly require ease functions, doesn't require Easing class
 		-changed: moved sequence building in start() for MotionControllers, no need to rebuild sequence
 		-changed: controllers.start(keyframe = 'begin')
+		-changed: KeyframeContainer.add now returns the Keyframe's label
 		-examples: added new MotionController example and starting at custom keyframe example
 		-fix: rare bug with KeyframeContainers internal count - now uses new length prop
 		-fix: starting a controller at a keyframe will now start at the correct value
