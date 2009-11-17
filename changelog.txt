@@ -5,6 +5,7 @@ Motion Package 1.0 & Partigen 2.0 Final (2009/11/20)
 
 	Motion:
 		-added: KeyframeContainers now have a length property
+		-changed: PhysicsMultiController precision values changed to v-1,a-2,f-2
 		-changed: ease function/string/null conversions done in tween classes > BasicTween
 		-changed: primitiveTweens now strictly require ease functions, doesn't require Easing class
 		-changed: moved sequence building in start() for MotionControllers, no need to rebuild sequence
@@ -22,6 +23,7 @@ Motion Package 1.0 & Partigen 2.0 Final (2009/11/20)
 		-added: emitter.reset()
 		-added: emitter.killParticles()
 		-added: error catching when parsing emitter XML
+		-changed: ParticleTweenControllers now set the precision based on known special props, like alpha and scale
 		-changed: groupAmount = 0 now default
 		-changed: NullPool and BasicEmitter - groupAmount 0 will create standard particle, >0 will create a group
 		-changed: SweepPool inherits NullPool (for inheritance)

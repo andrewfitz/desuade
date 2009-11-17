@@ -86,7 +86,9 @@ package com.desuade.partigen.controllers {
 		 *	@param	duration	 The entire duration for the controller. If this is 0 (default), the duration will be set to the particle's life.
 		 */
 		public function addTween($property:String, $duration:Number = 0):ParticleTweenController {
-			return this[$property] = new ParticleTweenController($duration);
+			this[$property] = new ParticleTweenController($duration);
+			this[$property].setSmartPrecision($property);
+			return this[$property];
 		}
 		
 		/**

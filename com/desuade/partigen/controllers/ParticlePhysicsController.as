@@ -74,9 +74,9 @@ package com.desuade.partigen.controllers {
 			this.velocity = new ParticleTweenController($duration, $containerClass, $tweenClass);
 			this.acceleration = new ParticleTweenController($duration, $containerClass, $tweenClass);
 			this.friction = new ParticleTweenController($duration, $containerClass, $tweenClass);
-			this.velocity.keyframes.precision = 3;
-			this.acceleration.keyframes.precision = 3;
-			this.friction.keyframes.precision = 3;
+			this.velocity.keyframes.precision = 1;
+			this.acceleration.keyframes.precision = 2;
+			this.friction.keyframes.precision = 2;
 		}
 		
 		/**

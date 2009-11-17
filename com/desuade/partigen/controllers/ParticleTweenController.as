@@ -115,6 +115,14 @@ package com.desuade.partigen.controllers {
 			return this;
 		}
 		
+		/**
+		 *	@private
+		 */
+		internal function setSmartPrecision($prop:String):int {
+			if($prop == 'alpha' || $prop == 'scale' || $prop == 'scaleX' || $prop == 'scaleY') return keyframes.precision = 2;
+			else return keyframes.precision = 0;
+		}
+		
 	}
 
 }

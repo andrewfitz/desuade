@@ -93,9 +93,9 @@ package com.desuade.motion.controllers {
 			this.velocity = new MotionController(_physics, 'velocity', $duration, $containerClass, $tweenClass);
 			this.acceleration = new MotionController(_physics, 'acceleration', $duration, $containerClass, $tweenClass);
 			this.friction = new MotionController(_physics, 'friction', $duration, $containerClass, $tweenClass);
-			this.velocity.keyframes.precision = 3;
-			this.acceleration.keyframes.precision = 3;
-			this.friction.keyframes.precision = 3;
+			this.velocity.keyframes.precision = 1;
+			this.acceleration.keyframes.precision = 2;
+			this.friction.keyframes.precision = 2;
 		}
 		
 		/**
