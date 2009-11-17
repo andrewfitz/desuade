@@ -207,7 +207,7 @@ package com.desuade.motion.controllers {
 		 *	@return		The MultiController object (for chaining)
 		 */
 		public function fromXML($xml:XML, $usealldurations:Boolean = true):MultiController {
-			duration = $xml.@duration;
+			duration = Number($xml.@duration);
 			var cd:XMLList = $xml.children();
 			for (var i:int = 0; i < cd.length(); i++) {
 				this[cd[i].@property] = new MotionController(_target, cd[i].@property, duration).fromXML(cd[i], false, $usealldurations);

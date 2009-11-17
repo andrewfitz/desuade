@@ -124,7 +124,7 @@ package com.desuade.partigen.controllers {
 		 *	@return		The ParticlePhysicsController object (for chaining)
 		 */
 		public function fromXML($xml:XML):ParticlePhysicsController {
-			duration = $xml.@duration;
+			duration = Number($xml.@duration);
 			if($xml.@flip != undefined) flip = XMLHelper.dexmlize($xml.@flip);
 			if($xml.@useAngle != undefined) useAngle = XMLHelper.dexmlize($xml.@useAngle);
 			var cd:XMLList = $xml.children();

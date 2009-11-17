@@ -1,7 +1,7 @@
 Desuade Library Changelog
 -------------------------
 
-Motion Package 1.0 & Partigen 2.0 Final (2009/11/15)
+Motion Package 1.0 & Partigen 2.0 Final (2009/11/20)
 
 	Motion:
 		-added: KeyframeContainers now have a length property
@@ -15,6 +15,7 @@ Motion Package 1.0 & Partigen 2.0 Final (2009/11/15)
 		-fix: starting a controller at a keyframe will now start at the correct value
 		-fix: makeEase function
 		-fix: primitiveTweens not calling update() when duration < 0, causing 0-duration tweens to fail
+		-fix: MultiController.fromXML duration not converted to Number
 	
 	Partigen:
 		-added: DefaultParticle class
@@ -30,6 +31,7 @@ Motion Package 1.0 & Partigen 2.0 Final (2009/11/15)
 		-fix: emitters won't error out on stop() when they're not active
 		-fix: emitter.fromXML no particle class -> now throws Debug error
 		-fix: emitter.fromXML now has undefined checks for all variables
+		-fix: ParticlePhysicsController.fromXML duration not converted to Number
 		-examples: typos and doc updates
 	
 	Debugging: none

@@ -146,9 +146,19 @@ package com.desuade.partigen.emitters {
 					if($xml.hasOwnProperty("Controllers")){
 						for (var i:int = 0; i < $xml.Controllers.children().length(); i++) {
 							if($xml.Controllers.children()[i].name() == "ParticleController"){
-								controllers.particle.fromXML($xml.Controllers.children()[i]);
+								try {
+									controllers.particle.fromXML($xml.Controllers.children()[i]);
+								} catch (e:Error){
+									Debug.output('partigen', 20009, [e]);
+									return false;
+								}
 							} else if($xml.Controllers.children()[i].name() == "EmitterController"){
-								controllers.emitter.fromXML($xml.Controllers.children()[i]);
+								try {
+									controllers.emitter.fromXML($xml.Controllers.children()[i]);
+								} catch (e:Error){
+									Debug.output('partigen', 20009, [e]);
+									return false;
+								}
 							}
 						}
 					}

@@ -78,7 +78,7 @@ package com.desuade.partigen.emitters {
 		/**
 		 *	Getter/setter that uses XML methods to return (as XML) or set the configuration of the emitter from String/XML.
 		 */
-		[Inspectable(name = "Config XML", defaultValue = '<Emitter particle="DefaultParticle" eps="10" burst="1" life="1" lifeSpread="*0" angle="0" angleSpread="*0">  <Controllers>    <EmitterController/>    <ParticleController/>  </Controllers></Emitter>', variable = "config", type = "String")]
+		[Inspectable(name = "Config XML", defaultValue = '<IDEEmitter particle="DefaultParticle" eps="1" burst="1" life="1" lifeSpread="*0" angle="0" angleSpread="*0">  <Controllers>    <EmitterController/>    <ParticleController/>  </Controllers></IDEEmitter>', variable = "config", type = "String")]
 		public function get config():XML{
 			return toXML();
 		}
