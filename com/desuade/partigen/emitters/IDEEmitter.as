@@ -76,55 +76,40 @@ package com.desuade.partigen.emitters {
 		}
 		
 		/**
-		 *	Getter/setter that uses XML methods to return (as XML) or set the configuration of the emitter from String/XML.
+		 *	Getter/setter that uses XML methods to return (as String) or set the configuration of the emitter from String/XML.
 		 */
-		[Inspectable(name = "Config XML", defaultValue = '<IDEEmitter particle="DefaultParticle" eps="1" burst="1" life="1" lifeSpread="*0" angle="0" angleSpread="*0">  <Controllers>    <EmitterController/>    <ParticleController/>  </Controllers></IDEEmitter>', variable = "config", type = "String")]
-		public function get config():XML{
-			return toXML();
+		[Inspectable(name = "Config XML", defaultValue = '', variable = "config", type = "String")]
+		public function set config($value:String):void {
+			if($value != "") fromXML(new XML($value));
 		}
 		
 		/**
 		 *	@private
 		 */
-		public function set config($value:*):void {
-			if($value != "") fromXML((typeof $value == 'string') ? new XML($value) : $value);
+		public function get config():String{
+			return toXML().toXMLString();
 		}
 		
 		/**
 		 *	Start the emitter automatically.
 		 */
 		[Inspectable(name = "Start Automatically", defaultValue = false, variable = "autoStart", type = "Boolean")]
-		public function get autoStart():Boolean{
-			return _autoStart;
-		}
-		
-		/**
-		 *	@private
-		 */
 		public function set autoStart($value:Boolean):void {
 			_autoStart = $value;
 			if($value) start();
 		}
 		
 		/**
-		 *	If the emitter follows the mouse.
+		 *	@private
 		 */
-		[Inspectable(name = "Follow Mouse", defaultValue = false, variable = "followMouse", type = "Boolean")]
-		public function get followMouse():Boolean{
-			return _followMouse;
+		public function get autoStart():Boolean{
+			return _autoStart;
 		}
 		
 		/**
 		 *	If the emitter indicator should be shown, marking it's position on the stage.
 		 */
 		[Inspectable(name = "Show Indicator", defaultValue = true, variable = "showIndicator", type = "Boolean")]
-		public function get showIndicator():Boolean{
-			return indicator.visible;
-		}
-		
-		/**
-		 *	@private
-		 */
 		public function set showIndicator($value:Boolean):void {
 			indicator.visible = $value;
 		}
@@ -132,6 +117,14 @@ package com.desuade.partigen.emitters {
 		/**
 		 *	@private
 		 */
+		public function get showIndicator():Boolean{
+			return indicator.visible;
+		}
+		
+		/**
+		 *	If the emitter follows the mouse.
+		 */
+		[Inspectable(name = "Follow Mouse", defaultValue = false, variable = "followMouse", type = "Boolean")]
 		public function set followMouse($value:Boolean):void {
 			_followMouse = $value;
 			if(_followMouse){
@@ -142,21 +135,28 @@ package com.desuade.partigen.emitters {
 		}
 		
 		/**
-		 *	This automatically creates a StandardRenderer targeting the emitter's parent.
+		 *	@private
 		 */
-		[Inspectable(name = "Render to Parent", defaultValue = true, variable = "renderToParent", type = "Boolean")]
-		public function get renderToParent():Boolean{
-			return _renderToParent;
+		public function get followMouse():Boolean{
+			return _followMouse;
 		}
 		
 		/**
-		 *	@private
+		 *	This automatically creates a StandardRenderer targeting the emitter's parent.
 		 */
+		[Inspectable(name = "Render to Parent", defaultValue = true, variable = "renderToParent", type = "Boolean")]
 		public function set renderToParent($value:Boolean):void {
 			_renderToParent = $value;
 			if(_renderToParent){
 				renderer = new StandardRenderer(this.parent);
 			}
+		}
+		
+		/**
+		 *	@private
+		 */
+		public function get renderToParent():Boolean{
+			return _renderToParent;
 		}
 		
 		/**

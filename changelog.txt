@@ -38,7 +38,8 @@ Motion Package 1.0 & Partigen 2.0 Final (2009/11/20)
 	
 	Debugging: none
 	
-	Utils: none
+	Utils:
+		-added: SWC class (for pel and the library)
 
 Release Candidate 2 (2009/8/24)
 
