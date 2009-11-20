@@ -33,6 +33,7 @@ package com.desuade.partigen.libraries {
 	import flash.net.*;
 	import flash.display.*;
 	import flash.system.ApplicationDomain;
+	import adobe.utils.*;
 	
 	/**
 	 *  This provides methods to work with Partigen Emitter Library 2 (pel) files
@@ -49,6 +50,8 @@ package com.desuade.partigen.libraries {
 		 *	Version of the Partigen Emitter Library format this was made for
 		 */
 		public static const VERSION:Number = 2.0;
+		
+		public static const PELPATH:String = "Partigen 2 Library/";
 		
 		/**
 		 *	Method to be called after the SWC file is loaded
@@ -106,6 +109,11 @@ package com.desuade.partigen.libraries {
 		private var _swcLoaded:int = 0;
 		
 		/**
+		 *	@private
+		 */
+		private var _path:String;
+		
+		/**
 		 *	This creates a PELFile that can be used to load preset emitter settings dynamicly at runtime.
 		 */
 		public function PELFile() {
@@ -120,6 +128,7 @@ package com.desuade.partigen.libraries {
 		 *	@param	pel	 A string to the location of the PEL file
 		 */
 		public function load($pel:String):void {
+			_path = $pel;
 			var request:URLRequest= new URLRequest($pel);
 			_urlLoader.load(request);
 		}
@@ -128,6 +137,7 @@ package com.desuade.partigen.libraries {
 		 *	This returns the direct class from the passed string
 		 *	
 		 *	@param	className	 The name of the class to get
+		 *	@return		The Class, or null if it's not found
 		 */
 		public function getClass($className:String):Class {
 			for (var p:String in swcs) {
@@ -202,7 +212,80 @@ package com.desuade.partigen.libraries {
 			//check for the main attributes
 			//also check the particle classes in the library are found in the swcs
 		}
-	
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		//do more checks and trys, boolean works, file exists
+		//make the uris work for win and mac
+		//test
+		//FLfile.exists()
+		
+		
+		
+		public function makeSWCFiles():void {
+			var platform:String = getPlatform();
+			var ca:Array = [];
+			var cs:String;
+			var command:String;
+			var uri:String = PELFile.getLibURI();
+			var filename:String = name.split(" ").join('_') + ".log";
+			var path:String = uri + filename;
+			for (var p:String in swcs) {
+				ca.push(p);
+			}
+			cs = ca.join(",");
+			//write the log file out
+			MMExecute('FLfile.write("' + path + '", "' + cs + '");');
+			if(platform == "MAC"){
+				///this is os x command
+				command = 'cd "' + uri.slice(7) + '" ; unzip ' + name.split(" ").join('_') + '.pel *.swc';
+			} else if(platform == 'WIN'){
+				//need dos command, packacge unzip and .batfile
+				command = 'cd "' + uri.slice(7) + '" & unzip.exe ' + name.split(" ").join('_') + '.pel *.swc';
+			}
+			MMExecute("fl.trace('" + command + "');");
+			//this runs the command to extract the swcs
+			MMExecute("FLfile.runCommandLine('" + command + "');")
+		}
+		
+		public function removeSWCFiles():void {
+			var uri:String = getLibURI();
+			var logfilename:String = name.split(" ").join('_') + ".log";
+			var logpath:String = uri + logfilename;
+			var flist:String = MMExecute('FLfile.read("' + logpath + '");');
+			var swcarr:Array = flist.split(',');
+			//loop through and delete all swc files
+			for (var i:int = 0; i < swcarr.length; i++) {
+				var sn:String = swcarr[i] + ".swc";
+				MMExecute('FLfile.remove("' + uri + sn + '");');
+			}
+			//remove log file
+			MMExecute('FLfile.remove("' + logpath + '");');
+		}
+		
+		
+		public static function getLibURI():String {
+			MMExecute('var popo = (escape(fl.configDirectory));');
+			MMExecute('var popi = popo.split("%5C");');
+			MMExecute('var jono = unescape(popi.join("/")) + "Components/";');
+			var uri:String = MMExecute('"file:///" + jono;');
+			return uri + PELFile.PELPATH;
+		}
+		
+		/**
+		 *	@private
+		 */
+		public function getPlatform():String {
+			return String(MMExecute("fl.version")).split(" ")[0];
+		}
 	}
 
 }

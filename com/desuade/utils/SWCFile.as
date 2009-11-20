@@ -72,6 +72,11 @@ package com.desuade.utils {
 		 *	The actual MovieClip from the library.swf file
 		 */
 		public var libraryMC:MovieClip;
+		
+		/**
+		 *	Raw data of the SWF
+		 */
+		public var libraryMCData:ByteArray;
 	
 		/**
 		 *	@private
@@ -119,6 +124,7 @@ package com.desuade.utils {
 				} else if (entry.name == "library.swf") {
 					// load the library
 					_libLoader.loadBytes(data);
+					libraryMCData = data;
 				}
 			}
 		}
@@ -127,6 +133,7 @@ package com.desuade.utils {
 		 *	This returns the direct class from the passed string
 		 *	
 		 *	@param	className	 The name of the class to get
+		 *	@return		The Class, or null if it's not found
 		 */
 		public function getClass($className:String):Class {
 			for (var e:String in sc) {
