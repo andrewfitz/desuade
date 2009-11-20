@@ -20,7 +20,6 @@ Motion Package 1.0 & Partigen 2.0 Final (2009/11/20)
 	
 	Partigen:
 		-added: libraries package and PELFile class
-		-added: DefaultParticle class
 		-added: emitter.reset()
 		-added: emitter.killParticles()
 		-added: error catching when parsing emitter XML
@@ -41,6 +40,7 @@ Motion Package 1.0 & Partigen 2.0 Final (2009/11/20)
 	
 	Utils:
 		-added: SWCFile class (for PEL)
+		-added: zip package from nochump
 
 Release Candidate 2 (2009/8/24)
 

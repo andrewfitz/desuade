@@ -22,8 +22,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-//IMPORTANT: This requires the nochump zip library: http://nochump.com/blog/?p=15
-
 package com.desuade.utils {
 	
 	import flash.utils.IDataInput;
@@ -32,10 +30,10 @@ package com.desuade.utils {
 	import flash.net.*;
 	import flash.display.*;
 	import flash.system.ApplicationDomain;
-	import nochump.util.zip.*;
+	import com.desuade.thirdparty.zip.*;
 	
 	/**
-	 *  A class that makes loading resources from a SWC file easy
+	 *  A class that makes loading and using resources from a SWC file easy
 	 *    
 	 *  @langversion ActionScript 3
 	 *  @playerversion Flash 9.0.0
@@ -69,6 +67,11 @@ package com.desuade.utils {
 		 *	This is an object containing the classes, but by the shorthand name. If there are conflicts with multiple classes using the same name, they will be overritten.
 		 */
 		public var sc:Object = {};
+		
+		/**
+		 *	The actual MovieClip from the library.swf file
+		 */
+		public var libraryMC:MovieClip;
 	
 		/**
 		 *	@private
@@ -81,24 +84,58 @@ package com.desuade.utils {
 		private var _urlLoader:URLLoader = new URLLoader()
 		
 		/**
-		 *	SWC is an object that represents information and data from a loaded SWC file. It provides a simple way to call resources from the SWC file.
+		 *	SWCFile is an object that represents information and data from a loaded SWC file. It provides a simple way to call resources from the SWC file.
 		 */
-		public function SWC() {
+		public function SWCFile() {
 			super();
 			//add listener for the loader
 			_libLoader.contentLoaderInfo.addEventListener(Event.COMPLETE, libLoadComplete);
-			// load the swc
-			_urlLoader.dataFormat = URLLoaderDataFormat.BINARY;
-			_urlLoader.addEventListener(Event.COMPLETE, swcLoadComplete);
 		}
 		
 		/**
-		 *	This loads the specified swc file.
+		 *	This loads the specified SWC file.
 		 *	@param	swc	 A string to the location of the SWC file
 		 */
 		public function load($swc:String):void {
+			// load the swc
+			_urlLoader.dataFormat = URLLoaderDataFormat.BINARY;
+			_urlLoader.addEventListener(Event.COMPLETE, swcLoadComplete);
 			var request:URLRequest= new URLRequest($swc);
 			_urlLoader.load(request);
+		}
+		
+		/**
+		 *	This will load the SWC from an IDataInput
+		 *	
+		 *	@param	data	 The data to load the SWC from
+		 */
+		public function loadData($data:IDataInput):void {
+			var zipFile:ZipFile = new ZipFile($data);
+			for (var i:int = 0; i < zipFile.entries.length; i++) {
+				var entry:ZipEntry = zipFile.entries[i];
+				var data:ByteArray = zipFile.getInput(entry);
+				if (entry.name == "catalog.xml") {
+					catalog = XML(data.readUTFBytes(data.length));
+				} else if (entry.name == "library.swf") {
+					// load the library
+					_libLoader.loadBytes(data);
+				}
+			}
+		}
+		
+		/**
+		 *	This returns the direct class from the passed string
+		 *	
+		 *	@param	className	 The name of the class to get
+		 */
+		public function getClass($className:String):Class {
+			for (var e:String in sc) {
+				if($className == e) return sc[e] as Class;
+			}
+			for (var r:String in classes) {
+				if($className == r) return classes[r] as Class;
+			}
+			return null;
 		}
 		
 		/**
@@ -127,37 +164,32 @@ package com.desuade.utils {
 					//trace('files are here');
 				}
 			}
-		}
-		
-		/**
-		 *	@private
-		 */
-		private function swcLoadComplete(event:Event) {
-			var loadedData:IDataInput = event.target.data as IDataInput;
-			var zipFile:ZipFile = new ZipFile(loadedData);
-			for (var i:int = 0; i < zipFile.entries.length; i++) {
-				var entry:ZipEntry = zipFile.entries[i];
-				var data:ByteArray = zipFile.getInput(entry);
-				if (entry.name == "catalog.xml") {
-					catalog = XML(data.readUTFBytes(data.length));
-				}
-				if (entry.name == "library.swf") {
-					// load the library
-					_libLoader.loadBytes(data);
-				}
+			//remove the livepreview classes
+			if(classes['fl.livepreview::LivePreviewParent'] != undefined){
+				delete classes['fl.livepreview::LivePreviewParent'];
+				delete sc['LivePreviewParent'];
 			}
 		}
 		
 		/**
 		 *	@private
 		 */
+		private function swcLoadComplete(event:Event):void {
+			var loadedData:IDataInput = event.target.data as IDataInput;
+			loadData(loadedData);
+		}
+		
+		/**
+		 *	@private
+		 */
 		private function libLoadComplete(event:Event):void {
+			libraryMC = _libLoader.content as MovieClip;
 			dom = _libLoader.contentLoaderInfo.applicationDomain;
 			//let's go through the xml and gather resources
 			readCatalog();
-			onLoad();
+			onLoad(this);
 		}
-	
+		
 	}
 
 }

@@ -1,7 +1,11 @@
 /*
-This software is distributed under the MIT License.
-
-Copyright (c) 2009 Desuade (http://desuade.com/)
+This zip compression class is provided in the Desuade Library for convenience purposes only.
+Desuade clains no ownership and is distributed under the MIT License.
+You can find the original files here: http://nochump.com/blog/?p=15
+*/
+/*
+nochump.util.zip.ZipError
+Copyright (c) 2008 David Chang (dchang@nochump.com)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -21,26 +25,19 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
-
-package com.desuade.partigen.particles {
-
+package com.desuade.thirdparty.zip {
+	
+	import flash.errors.IOError;
+	
 	/**
-	 *  Default particle class - a simple grey circle.
-	 *    
-	 *  @langversion ActionScript 3
-	 *  @playerversion Flash 9.0.0
-	 *
-	 *  @author Andrew Fitzgerald
-	 *  @since  12.11.2009
+	 * Thrown during the creation or input of a zip file.
 	 */
-	public dynamic class DefaultParticle extends Particle {
-	
-		public function DefaultParticle() {
-			super();
-			this.graphics.beginFill(0x999999);
-			this.graphics.drawCircle(0,0,5);
+	public class ZipError extends IOError {
+		
+		public function ZipError(message:String = "", id:int = 0) {
+			super(message, id);
 		}
-	
+		
 	}
-
+	
 }
