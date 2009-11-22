@@ -25,6 +25,7 @@ THE SOFTWARE.
 package com.desuade.utils {
 
 	import flash.geom.Point;
+	import flash.display.*;
 	import com.desuade.motion.eases.*;
 
 	/**
@@ -83,7 +84,17 @@ package com.desuade.utils {
 			$target.graphics.lineTo($x, $y);
 		}
 		
-		public static function drawEase($target:Object, $start:Point, $end:Point, $easeX:String, $easeY:String, $segments:int = 100):void {
+		/**
+		 *	This draws a line showing a visual representation of an easing equation, often used with Tweens.
+		 *	
+		 *	@param	target	 The target DisplayObject to draw to
+		 *	@param	start	 A Point to start at (the beginning value of a tween)
+		 *	@param	end	 A Point to end at (the final value of a tween)
+		 *	@param	easeX	 The easing equation for the x value (linear if drawing horizontal)
+		 *	@param	easeX	 The easing equation for the y value (linear if drawing vertical)
+		 *	@param	segments	 How many segments to divide the line in (higher is more exact detailed)
+		 */
+		public static function drawEase($target:Sprite, $start:Point, $end:Point, $easeX:String, $easeY:String, $segments:int = 100):void {
 			$target.graphics.moveTo($start.x, $start.y);
 			$target.graphics.lineStyle(1, 0xeeeeee);
 			var curX:Number = $start.x;

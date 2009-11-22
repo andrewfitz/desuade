@@ -39,6 +39,8 @@ Motion Package 1.0 & Partigen 2.0 Final (2009/11/20)
 	Debugging: none
 	
 	Utils:
+		-added: ArrayHelper class
+		-added: Shortcuts class
 		-added: SWCFile class (for PEL)
 		-added: zip package from nochump
 

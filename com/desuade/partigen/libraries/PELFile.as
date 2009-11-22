@@ -82,6 +82,11 @@ package com.desuade.partigen.libraries {
 		public var xmlLibrary:XML;
 		
 		/**
+		 *	This is the library object that contains all the groups of presets
+		 */
+		public var library:Object = {};
+		
+		/**
 		 *	An Object containing all the loaded SWC objects
 		 */
 		public var swcs:Object = {};
@@ -132,7 +137,7 @@ package com.desuade.partigen.libraries {
 		}
 		
 		/**
-		 *	This returns the direct class from the passed string
+		 *	This returns the direct Class from the passed string
 		 *	
 		 *	@param	className	 The name of the class to get
 		 *	@return		The Class, or null if it's not found
@@ -160,7 +165,6 @@ package com.desuade.partigen.libraries {
 				//ignore osx files and "." files
 				if(ename.charAt(0) == '.' || ename.charAt(0) == "_"){
 					//ignore these files
-					//trace('ignored: ' + ename);
 				} else if (ename == "library.xml") {
 					var zl:XML = XML(data.readUTFBytes(data.length));
 					var cc = zl.children();
@@ -174,9 +178,22 @@ package com.desuade.partigen.libraries {
 							name = cc[r].@name;
 							require = Number(cc[r].@require);
 							author = cc[r].@author;
-							
-							//do stuff for making XML presets
-							
+							//find all presets
+							var lc = cc[r].children();
+							for (var a:int = 0; a < lc.length(); a++) {
+								var lcn:String = lc[a].localName();
+								if(lcn == 'Group'){
+									var gname:String = lc[a].@name;
+									library[gname] = {};
+									var gp = lc[a].children();
+									for (var e:int = 0; e < gp.length(); e++) {
+										library[gname][gp[e].@name] = gp[e];
+										delete library[gname][gp[e].@name].@name;
+									}
+								} else {
+									//do something if it's not a group
+								}
+							}
 						} else {
 							//do stuff when it's other
 						}
@@ -199,16 +216,6 @@ package com.desuade.partigen.libraries {
 		 */
 		private function checkSWCLoaded():void {
 			if(++_swcLoaded == _swcTotal) onLoad();
-		}
-		
-		/**
-		 *	@private
-		 */
-		private function verify():void {
-			//this will verify the PEL/ZIP has the proper contents and library.xml is formated right
-			//in the future, also check against the pel2 namespace?
-			//check for the main attributes
-			//also check the particle classes in the library are found in the swcs
 		}
 		
 	}
