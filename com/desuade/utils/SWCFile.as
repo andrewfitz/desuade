@@ -189,12 +189,12 @@ package com.desuade.utils {
 		/**
 		 *	@private
 		 */
-		private function libLoadComplete(event:Event):void {
+		private function libLoadComplete(event:Event = null):void {
 			libraryMC = _libLoader.content as MovieClip;
 			dom = _libLoader.contentLoaderInfo.applicationDomain;
 			//let's go through the xml and gather resources
 			readCatalog();
-			onLoad(this);
+			if(onLoad != null) onLoad(this);
 		}
 		
 	}

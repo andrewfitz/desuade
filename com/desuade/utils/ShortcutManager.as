@@ -223,13 +223,13 @@ package com.desuade.utils {
 		 *	@private
 		 */
 		protected function resetCH(e:Object = null):void {
-			currentCombo.method();
-			currentCombo = null;
 			if(_ctimer != null) {
 				_ctimer.removeEventListener(TimerEvent.TIMER, resetCH);
 				_ctimer.stop();
 				_ctimer = null;
 			}
+			currentCombo.method();
+			currentCombo = null;
 		}
 		
 	}

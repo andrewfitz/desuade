@@ -52,9 +52,14 @@ package com.desuade.partigen.libraries {
 		public static const VERSION:Number = 2.0;
 		
 		/**
-		 *	Method to be called after the SWC file is loaded
+		 *	Method to be called after the PEL file is loaded
 		 */
 		public var onLoad:Function;
+		
+		/**
+		 *	Method to be called if there's an error loading the PEL
+		 */
+		public var onError:Function = null;
 		
 		/**
 		 *	The version of the library
@@ -123,16 +128,17 @@ package com.desuade.partigen.libraries {
 			super();
 			_urlLoader.dataFormat = URLLoaderDataFormat.BINARY;
 			_urlLoader.addEventListener(Event.COMPLETE, pelLoadComplete);
+			_urlLoader.addEventListener(IOErrorEvent.IO_ERROR, loadErrorFunc);
 		}
 		
 		/**
 		 *	This loads the specified PEL file.
 		 *	
-		 *	@param	pel	 A string to the location of the PEL file
+		 *	@param	file	 A string to the location of the PEL file
 		 */
-		public function load($pel:String):void {
-			path = $pel;
-			var request:URLRequest= new URLRequest($pel);
+		public function load($file:String):void {
+			path = $file;
+			var request:URLRequest= new URLRequest($file);
 			_urlLoader.load(request);
 		}
 		
@@ -215,7 +221,17 @@ package com.desuade.partigen.libraries {
 		 *	@private
 		 */
 		private function checkSWCLoaded():void {
-			if(++_swcLoaded == _swcTotal) onLoad();
+			if(++_swcLoaded == _swcTotal) {
+				if(onLoad != null) onLoad(this);
+				_swcLoaded = 0;
+			}
+		}
+		
+		/**
+		 *	@private
+		 */
+		private function loadErrorFunc(e:Event = null):void {
+			if(onError != null) onError();
 		}
 		
 	}
