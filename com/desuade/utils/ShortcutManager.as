@@ -25,7 +25,6 @@ THE SOFTWARE.
 package com.desuade.utils {
 	
 	import flash.events.KeyboardEvent;
-	import flash.net.SharedObject;
 	import flash.utils.Timer;
     import flash.events.TimerEvent;
 	
@@ -38,7 +37,7 @@ package com.desuade.utils {
 	 *  @author Andrew Fitzgerald
 	 *  @since  22.11.2009
 	 */
-	public class Shortcuts {
+	public class ShortcutManager {
 		
 		/**
 		 *	The current keys (keyCodes) that are being pressed
@@ -68,7 +67,7 @@ package com.desuade.utils {
 		/**
 		 *	Time in ms to wait to expire key presses for keySequences
 		 */
-		public var expireTime:int = 1500;
+		public var expireTime:int = 3000;
 		
 		/**
 		 *	The current combo being pressed at the moment (null if no a combo isn't being pressed)
@@ -88,9 +87,9 @@ package com.desuade.utils {
 		/**
 		 *	This creates a new Shortcut object that will listen for keys pressed to perform a given method.
 		 *	
-		 *	@param	target	 The target to listen to key presses from, usually the stage
+		 *	@param	target	 The target to listen to key presses from, usually: stage
 		 */
-		public function Shortcuts($target:Object){
+		public function ShortcutManager($target:Object){
 			super();
 			$target.addEventListener( KeyboardEvent.KEY_DOWN, keyDownHandler );
 			$target.addEventListener( KeyboardEvent.KEY_UP, keyUpHandler );
@@ -125,7 +124,7 @@ package com.desuade.utils {
 		protected function keyDownHandler( e:KeyboardEvent ):void {
 		    if( currentKeys[ e.keyCode ] ) return;
 		    currentKeys[ e.keyCode ] = true;
-			ArrayHelper.unsqueeze(pressedKeys, e.keyCode, 20);
+			ArrayHelper.squeeze(pressedKeys, e.keyCode, 20);
 			var spp:String = isComboPressed();
 			if(spp != 'none') {
 				if(keyCombos[spp].hold > 0) setComboHold(keyCombos[spp]);
