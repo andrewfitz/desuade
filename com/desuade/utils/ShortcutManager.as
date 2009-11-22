@@ -26,7 +26,7 @@ package com.desuade.utils {
 	
 	import flash.events.KeyboardEvent;
 	import flash.utils.Timer;
-    import flash.events.TimerEvent;
+	import flash.events.TimerEvent;
 	
 	/**
 	 *  Simple management of common key-based shortcuts
@@ -162,7 +162,6 @@ package com.desuade.utils {
 					}
 				}
 				if(pc == ss.keys.length) return p;
-				else return 'none';
 			}
 			return 'none';
 		}
