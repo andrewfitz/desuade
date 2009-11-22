@@ -26,6 +26,8 @@ package com.desuade.utils {
 	
 	import flash.events.KeyboardEvent;
 	import flash.net.SharedObject;
+	import flash.utils.Timer;
+    import flash.events.TimerEvent;
 	
 	/**
 	 *  Simple management of common key-based shortcuts
@@ -59,9 +61,19 @@ package com.desuade.utils {
 		public var keySequences:Object = {};
 		
 		/**
-		 *	Traces the keyCode everytime a key is pressed. For debuging or learning the keyCode for keys.
+		 *	Traces the keyCode everytime a key is pressed. For debuging or learning the keyCode for keys
 		 */
 		public var traceKeys:Boolean = false;
+		
+		/**
+		 *	Time in ms to wait to expire key presses for keySequences
+		 */
+		public var expireTime:int = 1500;
+		
+		/**
+		 *	@private
+		 */
+		protected var _ptimer:Timer = null;
 		
 		/**
 		 *	This creates a new Shortcut object that will listen for keys pressed to perform a given method.
@@ -106,12 +118,12 @@ package com.desuade.utils {
 			var spp:String = isComboPressed();
 			if(spp != 'none') {
 				keyCombos[spp].method();
-				pressedKeys = []; //reset the pressed keys so it doesn't fire another
+				resetPK();
 			} else {
 				var spps:String = isSequencePressed();
 				if(spps != 'none') {
 					keySequences[spps].method();
-					pressedKeys = []; //reset the pressed keys so it doesn't fire another
+					resetPK();
 				}
 			}
 			if(traceKeys) trace("Pressed: " + e.keyCode);
@@ -123,6 +135,7 @@ package com.desuade.utils {
 		protected function keyUpHandler( e:KeyboardEvent ):void {
 		    delete currentKeys[ e.keyCode ];
 			if(traceKeys) trace("Released: " + e.keyCode);
+			setPressExpire();
 		}
 		
 		/**
@@ -155,6 +168,31 @@ package com.desuade.utils {
 				else return 'none';
 			}
 			return 'none';
+		}
+		
+		/**
+		 *	@private
+		 */
+		protected function setPressExpire():void {
+			if(_ptimer != null){
+				_ptimer.removeEventListener(TimerEvent.TIMER, resetPK);
+				_ptimer.stop();
+			}
+			_ptimer = new Timer(expireTime);
+			_ptimer.addEventListener(TimerEvent.TIMER, resetPK);
+			_ptimer.start();
+		}
+		
+		/**
+		 *	@private
+		 */
+		protected function resetPK(e:Object = null):void {
+			pressedKeys = []; //reset the pressed keys so it doesn't fire another
+			if(_ptimer != null) {
+				_ptimer.removeEventListener(TimerEvent.TIMER, resetPK);
+				_ptimer.stop();
+				_ptimer = null;
+			}
 		}
 		
 	}
