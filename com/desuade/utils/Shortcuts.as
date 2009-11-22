@@ -71,9 +71,19 @@ package com.desuade.utils {
 		public var expireTime:int = 1500;
 		
 		/**
+		 *	The current combo being pressed at the moment (null if no a combo isn't being pressed)
+		 */
+		public var currentCombo:Object = null;
+		
+		/**
 		 *	@private
 		 */
 		protected var _ptimer:Timer = null;
+		
+		/**
+		 *	@private
+		 */
+		protected var _ctimer:Timer = null;
 		
 		/**
 		 *	This creates a new Shortcut object that will listen for keys pressed to perform a given method.
@@ -92,9 +102,10 @@ package com.desuade.utils {
 		 *	@param	label	 The name of the shortcut
 		 *	@param	keys	 An Array of keyCodes to listen for
 		 *	@param	method	 The function to call when the shortcut is fired
+		 *	@param	hold	 How long to hold keys down before it's registered
 		 */
-		public function addKeyCombo($label:String, $keys:Array, $method:Function):void {
-			keyCombos[$label] = {keys:$keys, method:$method};
+		public function addKeyCombo($label:String, $keys:Array, $method:Function, $hold:int = 0):void {
+			keyCombos[$label] = {keys:$keys, method:$method, hold:$hold};
 		}
 		
 		/**
@@ -117,7 +128,8 @@ package com.desuade.utils {
 			ArrayHelper.unsqueeze(pressedKeys, e.keyCode, 20);
 			var spp:String = isComboPressed();
 			if(spp != 'none') {
-				keyCombos[spp].method();
+				if(keyCombos[spp].hold > 0) setComboHold(keyCombos[spp]);
+				else keyCombos[spp].method();
 				resetPK();
 			} else {
 				var spps:String = isSequencePressed();
@@ -192,6 +204,33 @@ package com.desuade.utils {
 				_ptimer.removeEventListener(TimerEvent.TIMER, resetPK);
 				_ptimer.stop();
 				_ptimer = null;
+			}
+		}
+		
+		/**
+		 *	@private
+		 */
+		protected function setComboHold($combo:Object):void {
+			currentCombo = $combo;
+			if(_ctimer != null){
+				_ctimer.removeEventListener(TimerEvent.TIMER, resetCH);
+				_ctimer.stop();
+			}
+			_ctimer = new Timer(currentCombo.hold);
+			_ctimer.addEventListener(TimerEvent.TIMER, resetCH);
+			_ctimer.start();
+		}
+		
+		/**
+		 *	@private
+		 */
+		protected function resetCH(e:Object = null):void {
+			currentCombo.method();
+			currentCombo = null;
+			if(_ctimer != null) {
+				_ctimer.removeEventListener(TimerEvent.TIMER, resetCH);
+				_ctimer.stop();
+				_ctimer = null;
 			}
 		}
 		
