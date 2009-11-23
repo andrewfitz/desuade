@@ -150,7 +150,8 @@ package com.desuade.partigen.libraries {
 		 */
 		public function getClass($className:String):Class {
 			for (var p:String in swcs) {
-				return swcs[p].getClass($className);
+				var c = swcs[p].getClass($className);
+				if(c != null) return c;
 			}
 			return null;
 		}
