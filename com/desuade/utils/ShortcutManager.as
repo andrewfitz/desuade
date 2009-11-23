@@ -147,6 +147,7 @@ package com.desuade.utils {
 		    delete currentKeys[ e.keyCode ];
 			if(traceKeys) trace("Released: " + e.keyCode);
 			setPressExpire();
+			resetCH();
 		}
 		
 		/**
@@ -210,12 +211,9 @@ package com.desuade.utils {
 		 */
 		protected function setComboHold($combo:Object):void {
 			currentCombo = $combo;
-			if(_ctimer != null){
-				_ctimer.removeEventListener(TimerEvent.TIMER, resetCH);
-				_ctimer.stop();
-			}
+			if(_ctimer != null) resetCH();
 			_ctimer = new Timer(currentCombo.hold);
-			_ctimer.addEventListener(TimerEvent.TIMER, resetCH);
+			_ctimer.addEventListener(TimerEvent.TIMER, goCH);
 			_ctimer.start();
 		}
 		
@@ -224,12 +222,16 @@ package com.desuade.utils {
 		 */
 		protected function resetCH(e:Object = null):void {
 			if(_ctimer != null) {
-				_ctimer.removeEventListener(TimerEvent.TIMER, resetCH);
+				_ctimer.removeEventListener(TimerEvent.TIMER, goCH);
 				_ctimer.stop();
 				_ctimer = null;
 			}
-			currentCombo.method();
 			currentCombo = null;
+		}
+		
+		protected function goCH(e:Object = null):void {
+			currentCombo.method();
+			resetCH();
 		}
 		
 	}
