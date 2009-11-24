@@ -81,7 +81,7 @@ package com.desuade.utils {
 		/**
 		 *	If the loaded SWC files should share their Classes or keep them in their own ApplicationDomain
 		 */
-		public var shared:Boolean;
+		public var shared:Boolean = true;
 	
 		/**
 		 *	@private
@@ -131,10 +131,8 @@ package com.desuade.utils {
 					catalog = XML(data.readUTFBytes(data.length));
 				} else if (entry.name == "library.swf") {
 					// load the library
-					if($shared) {
-						var lc:LoaderContext = new LoaderContext(false, ApplicationDomain.currentDomain);
-						_libLoader.loadBytes(data, lc);
-					} else _libLoader.loadBytes(data);
+					if($shared) _libLoader.loadBytes(data, new LoaderContext(false, ApplicationDomain.currentDomain));
+					else _libLoader.loadBytes(data);
 					libraryMCData = data;
 				}
 			}

@@ -104,7 +104,7 @@ package com.desuade.partigen.libraries {
 		/**
 		 *	If the loaded SWC files should share their Classes or keep them in their own ApplicationDomain
 		 */
-		public var shared:Boolean;
+		public var shared:Boolean = true;
 	
 		/**
 		 *	@private
