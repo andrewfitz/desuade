@@ -100,6 +100,11 @@ package com.desuade.partigen.libraries {
 		 *	The original path of the .pel file
 		 */
 		public var path:String;
+		
+		/**
+		 *	If the loaded SWC files should share their Classes or keep them in their own ApplicationDomain
+		 */
+		public var shared:Boolean;
 	
 		/**
 		 *	@private
@@ -136,8 +141,9 @@ package com.desuade.partigen.libraries {
 		 *	
 		 *	@param	file	 A string to the location of the PEL file
 		 */
-		public function load($file:String):void {
+		public function load($file:String, $shared:Boolean = true):void {
 			path = $file;
+			shared = $shared;
 			var request:URLRequest= new URLRequest($file);
 			_urlLoader.load(request);
 		}
@@ -211,7 +217,7 @@ package com.desuade.partigen.libraries {
 					swcs[namey].onLoad = function(t) {
 						checkSWCLoaded();
 					}
-					swcs[namey].loadData(data);
+					swcs[namey].loadData(data, shared);
 				} else {
 					//do when it's not a swc or xml
 				}

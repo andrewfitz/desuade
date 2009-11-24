@@ -29,7 +29,7 @@ package com.desuade.utils {
 	import flash.utils.ByteArray;
 	import flash.net.*;
 	import flash.display.*;
-	import flash.system.ApplicationDomain;
+	import flash.system.*;
 	import com.desuade.thirdparty.zip.*;
 	
 	/**
@@ -77,6 +77,11 @@ package com.desuade.utils {
 		 *	Raw data of the SWF
 		 */
 		public var libraryMCData:ByteArray;
+		
+		/**
+		 *	If the loaded SWC files should share their Classes or keep them in their own ApplicationDomain
+		 */
+		public var shared:Boolean;
 	
 		/**
 		 *	@private
@@ -100,9 +105,11 @@ package com.desuade.utils {
 		/**
 		 *	This loads the specified SWC file.
 		 *	@param	swc	 A string to the location of the SWC file
+		 *	@param	shared	 This determines if the loaded classes will be shared or stay in their ApplicationDomain.
 		 */
-		public function load($swc:String):void {
+		public function load($swc:String, $shared:Boolean = true):void {
 			// load the swc
+			shared = $shared;
 			_urlLoader.dataFormat = URLLoaderDataFormat.BINARY;
 			_urlLoader.addEventListener(Event.COMPLETE, swcLoadComplete);
 			var request:URLRequest= new URLRequest($swc);
@@ -110,11 +117,12 @@ package com.desuade.utils {
 		}
 		
 		/**
-		 *	This will load the SWC from an IDataInput
+		 *	This will load the SWC from an IDataInput source
 		 *	
 		 *	@param	data	 The data to load the SWC from
+		 *	@param	shared	 This determines if the loaded classes will be shared or stay in their ApplicationDomain.
 		 */
-		public function loadData($data:IDataInput):void {
+		public function loadData($data:IDataInput, $shared:Boolean = true):void {
 			var zipFile:ZipFile = new ZipFile($data);
 			for (var i:int = 0; i < zipFile.entries.length; i++) {
 				var entry:ZipEntry = zipFile.entries[i];
@@ -123,14 +131,17 @@ package com.desuade.utils {
 					catalog = XML(data.readUTFBytes(data.length));
 				} else if (entry.name == "library.swf") {
 					// load the library
-					_libLoader.loadBytes(data);
+					if($shared) {
+						var lc:LoaderContext = new LoaderContext(false, ApplicationDomain.currentDomain);
+						_libLoader.loadBytes(data, lc);
+					} else _libLoader.loadBytes(data);
 					libraryMCData = data;
 				}
 			}
 		}
 		
 		/**
-		 *	This returns the direct class from the passed string
+		 *	This returns the direct Class from the passed string
 		 *	
 		 *	@param	className	 The name of the class to get
 		 *	@return		The Class, or null if it's not found
@@ -189,7 +200,7 @@ package com.desuade.utils {
 		 */
 		private function swcLoadComplete(event:Event):void {
 			var loadedData:IDataInput = event.target.data as IDataInput;
-			loadData(loadedData);
+			loadData(loadedData, shared);
 		}
 		
 		/**
