@@ -159,9 +159,15 @@ package com.desuade.utils {
 						var ll = libc[i].children();
 						for (var t:int = 0; t < ll.length(); t++) {
 							var cst:String = ll[t].children()[0].@id;
-							var classname:String = cst.split(':').join('::');
+							var classname:String;
+							if(cst.search(":") != -1){
+								classname = cst.split(':').join('::');
+								sc[cst.split(':')[1]] = dom.getDefinition(classname) as Class;
+							} else {
+								classname = cst;
+								sc[classname] = dom.getDefinition(classname) as Class;
+							}
 							classes[classname] = dom.getDefinition(classname) as Class;
-							sc[cst.split(':')[1]] = dom.getDefinition(classname) as Class;
 						}
 					}
 				} else if(nn == 'components'){
@@ -192,6 +198,7 @@ package com.desuade.utils {
 		private function libLoadComplete(event:Event = null):void {
 			libraryMC = _libLoader.content as MovieClip;
 			dom = _libLoader.contentLoaderInfo.applicationDomain;
+			_libLoader.contentLoaderInfo.removeEventListener(Event.COMPLETE, libLoadComplete);
 			//let's go through the xml and gather resources
 			readCatalog();
 			if(onLoad != null) onLoad(this);
