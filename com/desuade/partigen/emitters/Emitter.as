@@ -113,7 +113,7 @@ package com.desuade.partigen.emitters {
 				np.init(this);
 				np.x = this.x;
 				np.y = this.y;
-				np.z = this.z;
+				//np.z = this.z; //this makes everything bitmaps so let's disable it FP10
 				if(life > 0) np.addLife(randomLife());
 				controllers.particle.attachAll(np, this);
 				if(enableEvents) dispatchEvent(new ParticleEvent(ParticleEvent.BORN, {particle:np}));
