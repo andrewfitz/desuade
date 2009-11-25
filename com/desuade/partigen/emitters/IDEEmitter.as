@@ -30,6 +30,7 @@ package com.desuade.partigen.emitters {
 	import com.desuade.motion.events.*;
 	import com.desuade.utils.Drawing;
 	import flash.events.Event;
+	import flash.utils.*;
 	
 	/**
 	 *  This is the class used for Partigen Emitter components for the Flash IDE.
@@ -68,10 +69,16 @@ package com.desuade.partigen.emitters {
 		public var indicator:MovieClip;
 		
 		/**
+		 *	@private
+		 */
+		protected var _isLivePreview:Boolean;
+		
+		/**
 		 *	Creates a new IDEEmitter (usually from a component)
 		 */
 		public function IDEEmitter() {
 			super();
+			_isLivePreview = (parent != null && getQualifiedClassName(parent) == "fl.livepreview::LivePreviewParent");
 			addEventListener(Event.ENTER_FRAME, updateAngleSlice, false, 0, false);
 		}
 		
@@ -96,7 +103,7 @@ package com.desuade.partigen.emitters {
 		[Inspectable(name = "Start Automatically", defaultValue = false, variable = "autoStart", type = "Boolean")]
 		public function set autoStart($value:Boolean):void {
 			_autoStart = $value;
-			if($value) start();
+			if($value && !_isLivePreview) start();
 		}
 		
 		/**
