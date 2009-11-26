@@ -36,14 +36,14 @@ package com.desuade.motion {
 	public class Motion {
 		
 		/**
-		 *	The numeric version of the package. Used for version comparisions.
+		 *	The numeric version of the package. Used for version comparisons.
 		 */
-		public static const VERSION:Number = 1.008;
+		public static const VERSION:Number = 1.009;
 		
 		/**
 		 *	The "official" release version.
 		 */
-		public static const VERSIONLABEL:String = '1.0 RC2';
+		public static const VERSIONLABEL:String = '1.0';
 		
 		/**
 		 *	Company that owns the source code

@@ -27,6 +27,7 @@ package com.desuade.partigen.libraries {
 	import com.desuade.utils.SWCFile;
 	import com.desuade.partigen.Partigen;
 	import com.desuade.thirdparty.zip.*;
+	import com.desuade.debugging.*;
 	import flash.utils.IDataInput;
 	import flash.events.*;
 	import flash.utils.ByteArray;
@@ -47,17 +48,35 @@ package com.desuade.partigen.libraries {
 	public class PELFile {
 		
 		/**
-		 *	Version of the Partigen Emitter Library format this was made for
+		 *	<p>Version of the Partigen Emitter Library (PEL) spec this class was designed for.</p>
+		 *	<p>If the a pel file is loaded with a future spec, the details will be traced through the debug class, but will still load. If the new spec is too different, there will be errors.</p>
 		 */
 		public static const VERSION:Number = 2.0;
 		
 		/**
-		 *	Method to be called after the PEL file is loaded
+		 *	This error is sent to the onError method when there's an error loading the actual pel file
+		 */
+		public static const ERROR_LOAD_FILELOAD:String = "Error loading PEL file";
+		
+		/**
+		 *	This error is sent to the onError method when there's no library.xml file found
+		 */
+		public static const ERROR_LOAD_MISSINGXML:String = "No library XML definition found";
+		
+		/**
+		 *	This error is sent to the onError method when the current version of Partigen does not meet the libraries required version
+		 */
+		public static const ERROR_LOAD_REQUIRED:String = "Version does not meet requirments";
+		
+		/**
+		 *	<p>Method to be called after the PEL file is loaded</p>
+		 *	<p>1 arg is passed: PELFile</p>
 		 */
 		public var onLoad:Function;
 		
 		/**
-		 *	Method to be called if there's an error loading the PEL
+		 *	<p>Method to be called if there's an error loading the PEL</p>
+		 *	<p>2 args are passed: PELFile, error</p>
 		 */
 		public var onError:Function = null;
 		
@@ -165,9 +184,62 @@ package com.desuade.partigen.libraries {
 		/**
 		 *	@private
 		 */
-		private function pelLoadComplete(event:Event) {
+		private function pelLoadComplete(event:Event):void {
 			var loadedData:IDataInput = event.target.data as IDataInput;
 			_zipFile = new ZipFile(loadedData);
+			//check for the library.xml file because it's needed
+			var libentry:ZipEntry = _zipFile.getEntry("library.xml");
+			if(libentry == null){
+				//report error here and exit and return
+				if(onError != null) onError(this, ERROR_LOAD_MISSINGXML);
+				return;
+			} else {
+				//load lib file
+				var libdata:ByteArray = _zipFile.getInput(libentry);
+				var zl:XML = XML(libdata.readUTFBytes(libdata.length));
+				if(VERSION < zl.@version){
+					//this means the current PELFile may not be able to parse the newer version
+					Debug.output('partigen', 10002, [VERSION, zl.@version, zl.@version]);
+				}
+				var cc = zl.children();
+				for (var r:int = 0; r < cc.length(); r++) {
+					//check for the library
+					var nn:String = cc[r].localName();
+					if(nn == 'Library'){
+						//do stuff when we find a library
+						xmlLibrary = cc[r];
+						version = Number(cc[r].@version);
+						name = cc[r].@name;
+						require = Number(cc[r].@require);
+						author = cc[r].@author;
+						//find all presets
+						var lc = cc[r].children();
+						for (var a:int = 0; a < lc.length(); a++) {
+							var lcn:String = lc[a].localName();
+							if(lcn == 'Group'){
+								var gname:String = lc[a].@name;
+								library[gname] = {};
+								var gp = lc[a].children();
+								for (var e:int = 0; e < gp.length(); e++) {
+									library[gname][gp[e].@name] = gp[e];
+									delete library[gname][gp[e].@name].@name;
+								}
+							} else {
+								//do something if it's not a group
+							}
+						}
+					} else {
+						//do stuff when it's other
+					}
+				}
+				//do checks and things if the required is off or whatever
+				if(Partigen.VERSION < require){
+					//it doesn't meet partigen requirements, so don't load it
+					if(onError != null) onError(this, ERROR_LOAD_REQUIRED);
+					return;
+				}
+			}
+			//continue on if everything is good and load the resources
 			for (var i:int = 0; i < _zipFile.entries.length; i++) {
 				var entry:ZipEntry = _zipFile.entries[i];
 				var data:ByteArray = _zipFile.getInput(entry);
@@ -179,38 +251,7 @@ package com.desuade.partigen.libraries {
 				if(ename.charAt(0) == '.' || ename.charAt(0) == "_"){
 					//ignore these files
 				} else if (ename == "library.xml") {
-					var zl:XML = XML(data.readUTFBytes(data.length));
-					var cc = zl.children();
-					for (var r:int = 0; r < cc.length(); r++) {
-						//check for the library
-						var nn:String = cc[r].localName();
-						if(nn == 'Library'){
-							//do stuff when we find a library
-							xmlLibrary = cc[r];
-							version = Number(cc[r].@version);
-							name = cc[r].@name;
-							require = Number(cc[r].@require);
-							author = cc[r].@author;
-							//find all presets
-							var lc = cc[r].children();
-							for (var a:int = 0; a < lc.length(); a++) {
-								var lcn:String = lc[a].localName();
-								if(lcn == 'Group'){
-									var gname:String = lc[a].@name;
-									library[gname] = {};
-									var gp = lc[a].children();
-									for (var e:int = 0; e < gp.length(); e++) {
-										library[gname][gp[e].@name] = gp[e];
-										delete library[gname][gp[e].@name].@name;
-									}
-								} else {
-									//do something if it's not a group
-								}
-							}
-						} else {
-							//do stuff when it's other
-						}
-					}
+					//ignore it we already loaded it
 				} else if (format == 'swc') {
 					_swcTotal++;
 					swcs[namey] = new SWCFile();
@@ -238,7 +279,7 @@ package com.desuade.partigen.libraries {
 		 *	@private
 		 */
 		private function loadErrorFunc(e:Event = null):void {
-			if(onError != null) onError();
+			if(onError != null) onError(this, ERROR_LOAD_FILELOAD);
 		}
 		
 	}

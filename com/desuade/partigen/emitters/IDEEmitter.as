@@ -85,7 +85,7 @@ package com.desuade.partigen.emitters {
 		/**
 		 *	Getter/setter that uses XML methods to return (as String) or set the configuration of the emitter from String/XML.
 		 */
-		[Inspectable(name = "Config XML", defaultValue = '', variable = "config", type = "String")]
+		[Inspectable(name = "Config XML", defaultValue = "", variable = "config", type = "String")]
 		public function set config($value:String):void {
 			if($value != "") fromXML(new XML($value));
 		}

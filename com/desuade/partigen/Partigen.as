@@ -36,14 +36,14 @@ package com.desuade.partigen {
 	public class Partigen {
 		
 		/**
-		 *	The numeric version of the package. Used for version comparisions.
+		 *	The numeric version of the package. Used for version comparisons.
 		 */
-		public static const VERSION:Number = 2.007;
+		public static const VERSION:Number = 2.008;
 		
 		/**
 		 *	The "official" release version.
 		 */
-		public static const VERSIONLABEL:String = '2.0 RC2';
+		public static const VERSIONLABEL:String = '2.0';
 		
 		/**
 		 *	Company that owns the source code

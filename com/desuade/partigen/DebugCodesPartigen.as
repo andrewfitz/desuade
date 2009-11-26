@@ -46,6 +46,7 @@ package com.desuade.partigen {
 			codes = {
 				10000: "Partigen debug codes for aiding in development.",
 				10001: "Test code for % and %",
+				10002: "The loaded .pel file was designed with a newer PEL% spec (you have %), and may not degrade gracefully. See http://api.desuade.com/pel/spec/% for details.",
 				
 				//
 				20001: "[Emitter] new emitter created",
