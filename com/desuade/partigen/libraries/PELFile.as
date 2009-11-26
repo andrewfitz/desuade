@@ -49,7 +49,7 @@ package com.desuade.partigen.libraries {
 		
 		/**
 		 *	<p>Version of the Partigen Emitter Library (PEL) spec this class was designed for.</p>
-		 *	<p>If the a pel file is loaded with a future spec, the details will be traced through the debug class, but will still load. If the new spec is too different, there will be errors.</p>
+		 *	<p>If the a pel file is loaded with a future spec, the details will be traced through the debug class, but will still load. If the new spec is too different, there can be issues.</p>
 		 */
 		public static const VERSION:Number = 2.0;
 		
