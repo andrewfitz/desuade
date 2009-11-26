@@ -19,6 +19,7 @@ Motion Package 1.0 & Partigen 2.0 Final (2009/11/20)
 		-fix: MultiController.fromXML duration not converted to Number
 	
 	Partigen:
+		-added: 'random' ordering for Render classes
 		-added: libraries package and PELFile class
 		-added: emitter.reset()
 		-added: emitter.killParticles()

@@ -83,7 +83,7 @@ package com.desuade.partigen.renderers {
 		 *	Creates a new BitmapRenderer. This will use BitmapData to render particles.
 		 *	
 		 *	@param	bitmapdata	 The BitmapData object to render to.
-		 *	@param	order	 The visual order of a new particle to be created - either 'top' or 'bottom'.
+		 *	@param	order	 The visual stacking order for new particles to be created – 'top', 'bottom', or 'random'.
 		 */
 		public function BitmapRenderer($bitmapdata:BitmapData, $order:String = 'top') {
 			super(new Sprite(), $order);

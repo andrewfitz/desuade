@@ -26,6 +26,7 @@ package com.desuade.partigen.renderers {
 	
 	import flash.display.*;
 	
+	import com.desuade.utils.Random;
 	import com.desuade.partigen.particles.BasicParticle;
 	import com.desuade.debugging.*;
 	
@@ -54,7 +55,7 @@ package com.desuade.partigen.renderers {
 		 *	Creates a new StandardRenderer. This will use a DisplayObject and the standard Flash way to show particles on screen. Particles will be created "inside" the object via <code>addChild()</code>.
 		 *	
 		 *	@param	target	 The target parent DisplayObject to create child particles in.
-		 *	@param	order	 The visual order of a new particle to be created - either 'top' or 'bottom'.
+		 *	@param	order	 The visual stacking order for new particles to be created – 'top', 'bottom', or 'random'.
 		 */
 		public function StandardRenderer($target:DisplayObjectContainer, $order:String = 'top') {
 			super();
@@ -72,6 +73,9 @@ package com.desuade.partigen.renderers {
 				break;
 				case 'bottom' :
 					target.addChildAt($p, 0);
+				break;
+				case 'random' :
+					target.addChildAt($p, Random.fromRange(0, target.numChildren, 0));
 				break;
 			}
 			super.addParticle($p);
