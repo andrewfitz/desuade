@@ -68,7 +68,7 @@ package com.desuade.partigen {
 		/**
 		 *	Official name of the package
 		 */
-		public static const NAME:String = 'Partigen';
+		public static const NAME:String = 'Desuade Partigen';
 	
 	}
 

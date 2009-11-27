@@ -24,7 +24,7 @@ THE SOFTWARE.
 
 package com.desuade.partigen.libraries {
 	
-	import com.desuade.utils.SWCFile;
+	import com.desuade.utils.*;
 	import com.desuade.partigen.Partigen;
 	import com.desuade.thirdparty.zip.*;
 	import com.desuade.debugging.*;
@@ -179,6 +179,23 @@ package com.desuade.partigen.libraries {
 				if(c != null) return c;
 			}
 			return null;
+		}
+		
+		/**
+		 *	This returns an Array of Strings listing all available loaded classes
+		 *	
+		 *	@param	fullname	 To return the full qualified class name if true, false returns the short class name.
+		 *	@param	duplicates	 Include duplicates in the result. Defaults to false.
+		 *	@return		Array of class names
+		 */
+		public function getAllClasses($fullname:Boolean = true, $duplicates:Boolean = false):Array {
+			var ca:Array = [];
+			for (var p:String in swcs) {
+				for (var t:String in (($fullname) ? swcs[p].classes : swcs[p].sc)) {
+					ca.push(t);
+				}
+			}
+			return ($duplicates) ? ca : ArrayHelper.removeDuplicates(ca);
 		}
 		
 		/**

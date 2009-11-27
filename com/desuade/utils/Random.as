@@ -56,7 +56,7 @@ package com.desuade.utils {
 		 *	This creates a Random object than can be used over again for creating new random values from the same range. Can be used with the Tween classes.
 		 *	
 		 *	@param	min	 The first value in the range
-		 *	@param	max	 The second value in the range
+		 *	@param	max	 The second value in the range, up to but not including
 		 *	@param	precision	 This determines how many decimal places the random value should be in
 		 *	@see	#min
 		 *	@see	#max
@@ -79,7 +79,7 @@ package com.desuade.utils {
 		 *	This static function is used to return a random value from a given range.
 		 *	
 		 *	@param	min	 The first value in the range
-		 *	@param	max	 The second value in the range
+		 *	@param	max	 The second value in the range, up to but not including
 		 *	@param	precision	 This determines how many decimal places the random value should be in
 		 *	@see	#min
 		 *	@see	#max

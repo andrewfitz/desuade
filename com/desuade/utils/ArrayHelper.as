@@ -60,6 +60,57 @@ package com.desuade.utils {
 			$length = ($length == 0) ? $array.length : $length;
 			if($array.length > $length) $array.pop();
 		}
+		
+		/**
+		 *	This returns an Array that's cleaned of duplicates from the given Array. This does not modify the original Array.
+		 *	
+		 *	@param	array	 The Array to use
+		 *	@param	duplicates	 To return the duplicates instead
+		 *	@return		A new Array with no duplicates from the original
+		 */
+		public static function removeDuplicates($array:Array, $duplicates:Boolean = false):Array {
+			var so:Array = [];
+			var iu:Function = function (item:*, index:int, array:Array):Boolean {
+				if(array.indexOf(item, index + 1) == -1){
+					return true;
+				} else {
+					so.push(array[index]);
+					return false;
+				}
+			};
+			var na:Array = $array.filter(iu);
+			return ($duplicates) ? so : na;
+		}
+		
+		/**
+		 *	Finds what values in array a are not in array b.
+		 *	
+		 *	@param	a	 The first array
+		 *	@param	b	 The second array
+		 *	@return		An array of values that a has, which are not found in b
+		 */
+		public static function aNotInB(a:Array, b:Array):Array {
+			var na:Array = [];
+			for each( var oa:Object in a) {
+				if(b.indexOf(oa) == -1) na.push(oa);
+			}
+			return na;
+		}
+		
+		/**
+		 *	Finds what values in array a that are in array b.
+		 *	
+		 *	@param	a	 The first array
+		 *	@param	b	 The second array
+		 *	@return		An array of values that a has, which is also found somewhere in b
+		 */
+		public static function aInB(a:Array, b:Array):Array {
+			var na:Array = [];
+			for each( var oa:Object in a) {
+				if(b.indexOf(oa) != -1) na.push(oa);
+			}
+			return na;
+		}
 	
 	}
 
