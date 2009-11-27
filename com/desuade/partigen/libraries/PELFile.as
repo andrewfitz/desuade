@@ -175,7 +175,7 @@ package com.desuade.partigen.libraries {
 		 */
 		public function getClass($className:String):Class {
 			for (var p:String in swcs) {
-				var c = swcs[p].getClass($className);
+				var c:Class = swcs[p].getClass($className);
 				if(c != null) return c;
 			}
 			return null;
@@ -218,7 +218,7 @@ package com.desuade.partigen.libraries {
 					//this means the current PELFile may not be able to parse the newer version
 					Debug.output('partigen', 10002, [VERSION, zl.@version, zl.@version]);
 				}
-				var cc = zl.children();
+				var cc:XML = zl.children();
 				for (var r:int = 0; r < cc.length(); r++) {
 					//check for the library
 					var nn:String = cc[r].localName();
@@ -230,13 +230,13 @@ package com.desuade.partigen.libraries {
 						require = Number(cc[r].@require);
 						author = cc[r].@author;
 						//find all presets
-						var lc = cc[r].children();
+						var lc:XML = cc[r].children();
 						for (var a:int = 0; a < lc.length(); a++) {
 							var lcn:String = lc[a].localName();
 							if(lcn == 'Group'){
 								var gname:String = lc[a].@name;
 								library[gname] = {};
-								var gp = lc[a].children();
+								var gp:XML = lc[a].children();
 								for (var e:int = 0; e < gp.length(); e++) {
 									library[gname][gp[e].@name] = gp[e];
 									delete library[gname][gp[e].@name].@name;
@@ -272,7 +272,7 @@ package com.desuade.partigen.libraries {
 				} else if (format == 'swc') {
 					_swcTotal++;
 					swcs[namey] = new SWCFile();
-					swcs[namey].onLoad = function(t) {
+					swcs[namey].onLoad = function(t:SWCFile):void {
 						checkSWCLoaded();
 					}
 					swcs[namey].loadData(data, shared);

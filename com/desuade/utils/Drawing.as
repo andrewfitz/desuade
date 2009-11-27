@@ -75,10 +75,10 @@ package com.desuade.utils {
 			for (var i:int = 0; i < n; i++)	{
 				angle += theta;
 				cangle += theta;
-				var endX = $radius*Math.cos (angle);
-				var endY = $radius*Math.sin (angle);
-				var cX = cr*Math.cos (cangle);
-				var cY = cr*Math.sin (cangle);
+				var endX:Number = $radius*Math.cos (angle);
+				var endY:Number = $radius*Math.sin (angle);
+				var cX:Number = cr*Math.cos (cangle);
+				var cY:Number = cr*Math.sin (cangle);
 				$target.graphics.curveTo($x+cX,$y+cY, $x+endX,$y+endY);
 			}
 			$target.graphics.lineTo($x, $y);

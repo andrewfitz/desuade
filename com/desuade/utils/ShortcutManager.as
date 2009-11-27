@@ -155,7 +155,7 @@ package com.desuade.utils {
 		 */
 		protected function isComboPressed():String {
 			for (var p:String in keyCombos) {
-				var ss = keyCombos[p];
+				var ss:Object = keyCombos[p];
 				var pc:int = 0;
 				for (var i:int = 0; i < ss.keys.length; i++) {
 					for (var c:String in currentKeys) {
@@ -172,7 +172,7 @@ package com.desuade.utils {
 		 */
 		protected function isSequencePressed():String {
 			for (var p:String in keySequences) {
-				var ss = keySequences[p];
+				var ss:Object = keySequences[p];
 				var ks:String = ss.keys.join(':');
 				var pk:String = pressedKeys.join(':');
 				if(pk.search(ks) == 0) return p;

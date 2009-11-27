@@ -158,14 +158,14 @@ package com.desuade.utils {
 		 *	@private
 		 */
 		private function readCatalog():void {
-			var cc = catalog.children();
+			var cc:XML = catalog.children();
 			for (var r:int = 0; r < cc.length(); r++) {
 				//check for the library
 				var nn:String = cc[r].localName();
 				if(nn == 'libraries'){
-					var libc = cc[r].children();
+					var libc:XML = cc[r].children();
 					for (var i:int = 0; i < libc.length(); i++) {
-						var ll = libc[i].children();
+						var ll:XML = libc[i].children();
 						for (var t:int = 0; t < ll.length(); t++) {
 							var cst:String = ll[t].children()[0].@id;
 							var classname:String;
