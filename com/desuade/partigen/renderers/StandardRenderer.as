@@ -47,7 +47,7 @@ package com.desuade.partigen.renderers {
 		public var target:DisplayObjectContainer;
 		
 		/**
-		 *	The visual order of a new particle to be created - either 'top' or 'bottom'.
+		 *	The visual stacking order for new particles to be created – 'top', 'bottom', or 'random'.
 		 */
 		public var order:String;
 		

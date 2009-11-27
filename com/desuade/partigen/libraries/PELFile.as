@@ -37,7 +37,7 @@ package com.desuade.partigen.libraries {
 	import adobe.utils.*;
 	
 	/**
-	 *  This provides methods to work with Partigen Emitter Library 2 (pel) files
+	 *  Loads and provides methods for PEL (Partigen Emitter Library) files.
 	 *    
 	 *  @langversion ActionScript 3
 	 *  @playerversion Flash 9.0.0

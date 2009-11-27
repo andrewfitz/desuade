@@ -33,7 +33,7 @@ package com.desuade.utils {
 	import com.desuade.thirdparty.zip.*;
 	
 	/**
-	 *  A class that makes loading and using resources from a SWC file easy
+	 *  Loads and represents a SWC file in AS3, providing access to it's classes and resources.
 	 *    
 	 *  @langversion ActionScript 3
 	 *  @playerversion Flash 9.0.0

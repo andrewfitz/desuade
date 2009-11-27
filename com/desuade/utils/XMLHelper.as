@@ -27,7 +27,7 @@ package com.desuade.utils {
 	import flash.utils.*;
 	
 	/**
-	 *  Helps with XML parsing.
+	 *  Helps with XML parsing in the Motion and Partigen packages.
 	 *    
 	 *  @langversion ActionScript 3
 	 *  @playerversion Flash 9.0.0

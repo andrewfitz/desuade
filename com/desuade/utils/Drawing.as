@@ -29,7 +29,7 @@ package com.desuade.utils {
 	import com.desuade.motion.eases.*;
 
 	/**
-	 *  Class with static methods for drawing
+	 *  Provides basic static methods for drawing.
 	 *    
 	 *  @langversion ActionScript 3
 	 *  @playerversion Flash 9.0.0
@@ -90,9 +90,9 @@ package com.desuade.utils {
 		 *	@param	target	 The target DisplayObject to draw to
 		 *	@param	start	 A Point to start at (the beginning value of a tween)
 		 *	@param	end	 A Point to end at (the final value of a tween)
-		 *	@param	easeX	 The easing equation for the x value (linear if drawing horizontal)
-		 *	@param	easeX	 The easing equation for the y value (linear if drawing vertical)
-		 *	@param	segments	 How many segments to divide the line in (higher is more exact detailed)
+		 *	@param	easeX	 The easing equation for the x value ('linear' if drawing horizontal)
+		 *	@param	easeX	 The easing equation for the y value ('linear' if drawing vertical)
+		 *	@param	segments	 How many segments to divide the line in (higher is more detailed)
 		 */
 		public static function drawEase($target:Sprite, $start:Point, $end:Point, $easeX:String, $easeY:String, $segments:int = 100):void {
 			$target.graphics.moveTo($start.x, $start.y);
