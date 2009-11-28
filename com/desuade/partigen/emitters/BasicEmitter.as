@@ -247,18 +247,10 @@ package com.desuade.partigen.emitters {
 		public function fromXML($xml:XML, $reset:Boolean = true):* {
 			if($reset) reset();
 			try {
-				try {
-					if($xml.@particle != undefined) particle = getDefinitionByName($xml.@particle) as Class;
-				} catch (e:ReferenceError) {
-					Debug.output('partigen', 20008, [$xml.@particle]);
-				}
+				if($xml.@particle != undefined) particle = getDefinitionByName($xml.@particle) as Class;
 				if($xml.@eps != undefined) eps = Number($xml.@eps);
 				if($xml.@burst != undefined) burst = Number($xml.@burst);
-				try {
-					if($xml.@group != undefined) group = getDefinitionByName("com.desuade.partigen.particles::" + $xml.@group) as Class;
-				} catch (e:ReferenceError) {
-					Debug.output('partigen', 20008, [$xml.@group]);
-				}
+				if($xml.@group != undefined) group = getDefinitionByName("com.desuade.partigen.particles::" + $xml.@group) as Class;
 				if($xml.@groupAmount != undefined) groupAmount = Number($xml.@groupAmount);
 				if($xml.@groupProximity != undefined) groupProximity = Number($xml.@groupProximity);
 				if($xml.@life != undefined) life = Number($xml.@life);
