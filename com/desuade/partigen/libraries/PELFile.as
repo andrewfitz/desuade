@@ -54,6 +54,11 @@ package com.desuade.partigen.libraries {
 		public static const VERSION:Number = 2.0;
 		
 		/**
+		 *	Namespace for version 2.0 of the PEL spec.
+		 */
+		public static const PEL2:Namespace = new Namespace("http://api.desuade.com/pel/spec/2");
+		
+		/**
 		 *	This error is sent to the onError method when there's an error loading the actual pel file
 		 */
 		public static const ERROR_LOAD_FILELOAD:String = "Error loading PEL file";
@@ -222,7 +227,7 @@ package com.desuade.partigen.libraries {
 				for (var r:int = 0; r < cc.length(); r++) {
 					//check for the library
 					var nn:String = cc[r].localName();
-					if(nn == 'Library'){
+					if(nn == 'library'){
 						//do stuff when we find a library
 						xmlLibrary = cc[r];
 						version = Number(cc[r].@version);
@@ -233,13 +238,12 @@ package com.desuade.partigen.libraries {
 						var lc:XMLList = cc[r].children();
 						for (var a:int = 0; a < lc.length(); a++) {
 							var lcn:String = lc[a].localName();
-							if(lcn == 'Group'){
+							if(lcn == 'group'){
 								var gname:String = lc[a].@name;
 								library[gname] = {};
 								var gp:XMLList = lc[a].children();
 								for (var e:int = 0; e < gp.length(); e++) {
-									library[gname][gp[e].@name] = new XML(gp[e].toXMLString());
-									delete library[gname][gp[e].@name].@name;
+									library[gname][gp[e].@PEL2::name] = gp[e];
 								}
 							} else {
 								//do something if it's not a group

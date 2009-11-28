@@ -56,6 +56,11 @@ package com.desuade.debugging {
 		public static var level:int = 90000;
 		
 		/**
+		 *	This is the method to use to output the debugging, useful if you're not in the IDE for traces.
+		 */
+		public static var outputMethod:Function = trace;
+		
+		/**
 		 *	This loads a given CodeSet into the Debugger. Used to save file size and provide modularity.
 		 *	@param	codeset	 This is the CodeSet to load - ie: <code>new DebugCodesMotion()</code> or <code>new DebugCodesPartigen()</code>
 		 *	@see	CodeSet
@@ -76,9 +81,9 @@ package com.desuade.debugging {
 			if (enabled) {
 				if($code < level) {
 					if(_codes[$codeset] != undefined) {
-						if(onlyCodes) trace("Debug: " + $codeset + " #" + $code);
-						else trace(r(_codes[$codeset][$code], $props || []));
-					} else trace("Debug: " + $codeset + "(missing) #" + $code);
+						if(onlyCodes) outputMethod("Debug: " + $codeset + " #" + $code);
+						else outputMethod(r(_codes[$codeset][$code], $props || []));
+					} else outputMethod("Debug: " + $codeset + "(missing) #" + $code);
 				}
 			}
 		}

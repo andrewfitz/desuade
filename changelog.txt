@@ -7,7 +7,7 @@ Motion Package 1.0 & Partigen 2.0 Final (2009/12/01)
 		-added: KeyframeContainers now have a length property
 		-changed: PhysicsMultiController precision values changed to v-1,a-2,f-2
 		-changed: ease function/string/null conversions done in tween classes > BasicTween
-		-changed: primitiveTweens now strictly require ease functions, doesn't require Easing class
+		-changed: primitiveTweens now strictly require ease Functions, doesn't require Easing class
 		-changed: moved sequence building in start() for MotionControllers, no need to rebuild sequence
 		-changed: controllers.start(keyframe = 'begin')
 		-changed: KeyframeContainer.add now returns the Keyframe's label
@@ -38,7 +38,8 @@ Motion Package 1.0 & Partigen 2.0 Final (2009/12/01)
 		-fix: ParticlePhysicsController.fromXML duration not converted to Number
 		-examples: typos and doc updates
 	
-	Debugging: none
+	Debugging:
+		-added: outputMethod for sending debug info to other methods besides trace
 	
 	Utils:
 		-added: ArrayHelper class
