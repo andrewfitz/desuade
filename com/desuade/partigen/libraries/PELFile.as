@@ -218,7 +218,7 @@ package com.desuade.partigen.libraries {
 					//this means the current PELFile may not be able to parse the newer version
 					Debug.output('partigen', 10002, [VERSION, zl.@version, zl.@version]);
 				}
-				var cc:XML = zl.children();
+				var cc:XMLList = zl.children();
 				for (var r:int = 0; r < cc.length(); r++) {
 					//check for the library
 					var nn:String = cc[r].localName();
@@ -230,15 +230,15 @@ package com.desuade.partigen.libraries {
 						require = Number(cc[r].@require);
 						author = cc[r].@author;
 						//find all presets
-						var lc:XML = cc[r].children();
+						var lc:XMLList = cc[r].children();
 						for (var a:int = 0; a < lc.length(); a++) {
 							var lcn:String = lc[a].localName();
 							if(lcn == 'Group'){
 								var gname:String = lc[a].@name;
 								library[gname] = {};
-								var gp:XML = lc[a].children();
+								var gp:XMLList = lc[a].children();
 								for (var e:int = 0; e < gp.length(); e++) {
-									library[gname][gp[e].@name] = gp[e];
+									library[gname][gp[e].@name] = new XML(gp[e].toXMLString());
 									delete library[gname][gp[e].@name].@name;
 								}
 							} else {
