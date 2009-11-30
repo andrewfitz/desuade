@@ -30,6 +30,7 @@ package com.desuade.partigen.libraries {
 	import com.desuade.debugging.*;
 	import flash.utils.IDataInput;
 	import flash.events.*;
+	import flash.errors.*;
 	import flash.utils.ByteArray;
 	import flash.net.*;
 	import flash.display.*;
@@ -72,6 +73,11 @@ package com.desuade.partigen.libraries {
 		 *	This error is sent to the onError method when the current version of Partigen does not meet the libraries required version
 		 */
 		public static const ERROR_LOAD_REQUIRED:String = "Version does not meet requirments";
+		
+		/**
+		 *	This error is sent to the onError method if there's an error parsing the XML file
+		 */
+		public static const ERROR_PARSINGXML:String = "Error parsing the XML file";
 		
 		/**
 		 *	<p>Method to be called after the PEL file is loaded</p>
@@ -217,8 +223,13 @@ package com.desuade.partigen.libraries {
 				return;
 			} else {
 				//load lib file
-				var libdata:ByteArray = _zipFile.getInput(libentry);
-				var zl:XML = XML(libdata.readUTFBytes(libdata.length));
+				try {
+					var libdata:ByteArray = _zipFile.getInput(libentry);
+					var zl:XML = XML(libdata.readUTFBytes(libdata.length));
+				} catch(e:Error){
+					if(onError != null) onError(this, ERROR_PARSINGXML);
+					return;
+				}
 				if(VERSION < zl.@version){
 					//this means the current PELFile may not be able to parse the newer version
 					Debug.output('partigen', 10002, [VERSION, zl.@version, zl.@version]);

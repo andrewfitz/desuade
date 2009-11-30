@@ -46,7 +46,7 @@ package com.desuade.partigen.emitters {
 		/**
 		 *	@private
 		 */
-		protected var _autoStart:Boolean = false;
+		protected var _autoStart:Boolean = true;
 		
 		/**
 		 *	@private
@@ -100,7 +100,7 @@ package com.desuade.partigen.emitters {
 		/**
 		 *	Start the emitter automatically.
 		 */
-		[Inspectable(name = "Start Automatically", defaultValue = false, variable = "autoStart", type = "Boolean")]
+		[Inspectable(name = "Start Automatically", defaultValue = true, variable = "autoStart", type = "Boolean")]
 		public function set autoStart($value:Boolean):void {
 			_autoStart = $value;
 			if($value && !_isLivePreview) start();

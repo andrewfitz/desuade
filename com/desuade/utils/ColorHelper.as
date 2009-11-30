@@ -107,7 +107,7 @@ package com.desuade.utils {
 		 *	<code>clear</code>: clears and clears the object<br /><br />
 		 *	
 		 *	@param	type	 What type of color transformation to perform. See above for a list of available types.
-		 *	@param	amount	 How much of the transformation to perform. This varies for each type.
+		 *	@param	amount	 How much of the transformation to perform (0-1). This varies for each type.
 		 *	@param	rgb	 A color value - ie: "#FF00AA"
 		 *	@param	cco	 This is the base (current) transformation object to use. For example, the current ColorTransformation of a MovieClip.
 		 *	@return		A color transformation object.
