@@ -37,7 +37,6 @@ Motion Package 1.0 & Partigen 2.0 Final (2009/12/01)
 		-fix: emitter.fromXML no particle class -> now throws Debug error
 		-fix: emitter.fromXML now has undefined checks for all variables
 		-fix: ParticlePhysicsController.fromXML duration not converted to Number
-		-examples: typos and doc updates
 	
 	Debugging:
 		-added: outputMethod for sending debug info to other methods besides trace
@@ -47,6 +46,10 @@ Motion Package 1.0 & Partigen 2.0 Final (2009/12/01)
 		-added: Shortcuts class
 		-added: SWCFile class
 		-added: zip package (from nochump) in thirdparty package
+		
+	Examples:
+		-added: utils example for ShortcutManager
+		-changed: ActionScript from examples are now in .as files
 
 Release Candidate 2 (2009/8/24)
 
