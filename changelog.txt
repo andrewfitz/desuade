@@ -5,6 +5,7 @@ Motion Package 1.0 & Partigen 2.0 Final (2009/12/01)
 
 	Motion:
 		-added: KeyframeContainers now have a length property
+		-changed: BasicPhysics made getVelocityWithAngle public and static
 		-changed: PhysicsMultiController precision values changed to v-1,a-2,f-2
 		-changed: ease function/string/null conversions done in tween classes > BasicTween
 		-changed: primitiveTweens now strictly require ease Functions, doesn't require Easing class

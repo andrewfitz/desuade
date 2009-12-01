@@ -83,7 +83,21 @@ package com.desuade.motion.physics {
 			super($target, $configObject);
 			_eventClass = PhysicsEvent;
 			Debug.output('motion', 40009);
-		}		
+		}
+		
+		/**
+		 *	Gets the velocity that's calculated with a given angle.
+		 *	
+		 *	@param	velocity	 The velocity to use
+		 *	@param	angle	 The angle used to determine the new velocity
+		 *	@param	flip	 Negate (or flip) the velocity.
+		 *	
+		 *	@return		Number representing the new angle-velocity
+		 */
+		public static function getVelocityWithAngle($velocity:Number, $angle:Number, $flip:Boolean):Number {
+			var calcangle:Number = ($flip) ? Math.sin($angle * Math.PI / 180) : Math.cos($angle * Math.PI / 180);
+			return $velocity * calcangle;
+		}
 		
 		/**
 		 *	Sets/gets the velocity of the config and PrimitivePhysics object
@@ -134,19 +148,11 @@ package com.desuade.motion.physics {
 		 *	@private
 		 */
 		protected override function createPrimitive($to:Object):int {
-			var nv:Number = ($to.angle != null) ? setAngle($to.velocity, $to.angle, $to.flip) : $to.velocity;
+			var nv:Number = ($to.angle != null) ? getVelocityWithAngle($to.velocity, $to.angle, $to.flip) : $to.velocity;
 			var pt:PrimitivePhysics = BaseTicker.addItem(new PrimitivePhysics(target, $to.property, nv, $to.acceleration, $to.friction, $to.flip));
 			pt.endFunc = endFunc;
 			pt.updateFunc = updateListener;
 			return pt.id;
-		}
-		
-		/**
-		 *	@private
-		 */
-		protected static function setAngle($velocity:Number, $angle:Number, $flip:Boolean):Number {
-			var calcangle:Number = ($flip) ? Math.sin($angle * Math.PI / 180) : Math.cos($angle * Math.PI / 180);
-			return $velocity * calcangle;
 		}
 		
 	}
