@@ -1,7 +1,7 @@
-Desuade Library Change Log – http://desuade.com/
+Desuade Library Change Log - http://desuade.com/
 ------------------------------------------------
 
-Motion Package 1.0 & Partigen 2.0 Final (2009/12/01)
+Motion Package 1.0 & Partigen 2.0 Master Release (2009/12/01)
 
 	Motion:
 		-added: KeyframeContainers now have a length property
