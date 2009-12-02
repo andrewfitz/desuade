@@ -249,10 +249,10 @@ package com.desuade.partigen.emitters {
 			try {
 				if($xml.@particle != undefined) particle = getDefinitionByName($xml.@particle) as Class;
 				if($xml.@eps != undefined) eps = Number($xml.@eps);
-				if($xml.@burst != undefined) burst = Number($xml.@burst);
+				if($xml.@burst != undefined) burst = int($xml.@burst);
 				if($xml.@group != undefined) group = getDefinitionByName("com.desuade.partigen.particles::" + $xml.@group) as Class;
-				if($xml.@groupAmount != undefined) groupAmount = Number($xml.@groupAmount);
-				if($xml.@groupProximity != undefined) groupProximity = Number($xml.@groupProximity);
+				if($xml.@groupAmount != undefined) groupAmount = int($xml.@groupAmount);
+				if($xml.@groupProximity != undefined) groupProximity = int($xml.@groupProximity);
 				if($xml.@life != undefined) life = Number($xml.@life);
 				if($xml.@lifeSpread != undefined) lifeSpread = XMLHelper.dexmlize($xml.@lifeSpread);
 				return this;

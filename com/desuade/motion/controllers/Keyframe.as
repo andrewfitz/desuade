@@ -126,7 +126,7 @@ package com.desuade.motion.controllers {
 		public function fromXML($xml:XML, $useposition:Boolean = true):Keyframe {
 			if($xml.@label != undefined) delete $xml.@label;
 			if($useposition) position = XMLHelper.dexmlize($xml.@position);
-			ease = ($xml.@ease == 'null') ? 'linear' : $xml.@ease;
+			ease = ($xml.@ease == 'null') ? 'linear' : String($xml.@ease);
 			if($xml.@value != undefined) value = XMLHelper.dexmlize($xml.@value);
 			spread = XMLHelper.dexmlize($xml.@spread);
 			delete $xml.@ease;

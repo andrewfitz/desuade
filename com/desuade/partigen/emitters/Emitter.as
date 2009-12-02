@@ -59,7 +59,7 @@ package com.desuade.partigen.emitters {
 		 *	<p>This is the angle used by ParticlePhysicsControllers on new particles. This only effects properties that are using physics, NOT ParticleTweenControllers.</p>
 		 *	<p>The default value is 0, which is pointing "right". 90 is "up", 180 is "left", and 270 is "down".</p>
 		 */
-		public var angle:Number = 0;
+		public var angle:int = 0;
 		
 		/**
 		 *	This is the spread for the angle, to create a random range for ParticlePhysicsControllers.
@@ -141,7 +141,7 @@ package com.desuade.partigen.emitters {
 		public override function fromXML($xml:XML, $reset:Boolean = true):* {
 			if(super.fromXML($xml, $reset) != false){
 				try {
-					if($xml.@angle != undefined) angle = Number($xml.@angle);
+					if($xml.@angle != undefined) angle = int($xml.@angle);
 					if($xml.@angleSpread != undefined) angleSpread = XMLHelper.dexmlize($xml.@angleSpread);
 					if($xml.hasOwnProperty("Controllers")){
 						for (var i:int = 0; i < $xml.Controllers.children().length(); i++) {

@@ -13,6 +13,7 @@ Motion Package 1.0 & Partigen 2.0 Master Release (2009/12/01)
 		-changed: controllers.start(keyframe = 'begin')
 		-changed: KeyframeContainer.add now returns the Keyframe's label
 		-examples: added new MotionController example and starting at custom keyframe example
+		-fix: bug when loading eases from XML
 		-fix: rare bug with KeyframeContainers internal count - now uses new length prop
 		-fix: starting a controller at a keyframe will now start at the correct value
 		-fix: makeEase function
@@ -31,6 +32,7 @@ Motion Package 1.0 & Partigen 2.0 Master Release (2009/12/01)
 		-changed: SweepPool inherits NullPool (for inheritance)
 		-changed: emitter.fromXML(xml, reset = true) emitter now resets when XML is applied as default
 		-changed: emitter group info always gets output to XML
+		-fix: bug when loading eases from XML
 		-fix: vector particles no longer bitmaps in FP10
 		-fix: emitter.eps defaults to 1 just so emitter doesn't throw an error
 		-fix: emitters won't error out on stop() when they're not active

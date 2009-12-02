@@ -230,7 +230,7 @@ package com.desuade.motion.controllers {
 		 */
 		public function fromXML($xml:XML):KeyframeContainer {
 			_tweenClass = getDefinitionByName("com.desuade.motion.tweens::" + $xml.@tweenClass) as Class;
-			_precision = $xml.@precision;
+			_precision = int($xml.@precision);
 			var cd:XMLList = $xml.children();
 			for (var i:int = 0; i < cd.length(); i++) {
 				this[cd[i].@label] = new Keyframe(0).fromXML(cd[i]);
