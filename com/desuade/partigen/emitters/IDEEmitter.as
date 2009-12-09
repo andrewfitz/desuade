@@ -133,11 +133,13 @@ package com.desuade.partigen.emitters {
 		 */
 		[Inspectable(name = "Follow Mouse", defaultValue = false, variable = "followMouse", type = "Boolean")]
 		public function set followMouse($value:Boolean):void {
-			_followMouse = $value;
-			if(_followMouse){
-				stage.addEventListener(MouseEvent.MOUSE_MOVE, fmouse);
-			} else {
-				stage.removeEventListener(MouseEvent.MOUSE_MOVE, fmouse);
+			if(_followMouse != $value){
+				_followMouse = $value;
+				if(_followMouse){
+					stage.addEventListener(MouseEvent.MOUSE_MOVE, fmouse);
+				} else {
+					stage.removeEventListener(MouseEvent.MOUSE_MOVE, fmouse);
+				}
 			}
 		}
 		
