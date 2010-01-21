@@ -1,6 +1,10 @@
 Desuade Library Change Log - http://desuade.com/
 ------------------------------------------------
 
+Motion 1.1
+	-added: Tween/BasicTween run method for simple unmanaged tweening
+	-changed: tweenObject -> configObject
+
 Motion Package 1.0 & Partigen 2.0 Master Release (2009/12/01)
 
 	Motion:

@@ -74,6 +74,33 @@ package com.desuade.motion.tweens {
 		}
 		
 		/**
+		 *	<p>This let's you run a tween that's unmanaged and bypasses events, using just a callback function on end.</p>
+		 *	<p>The syntax is just a strict function call, so there's no configObject.</p>
+		 *	<p>While there's little speed improvement with this over creating an tween object, it does use about half the memory.</p>
+		 *	
+		 *	@param	target	 The target object to have it's property tweened
+		 *	@param	property	The property to tween
+		 *	@param	value	The new (end) value. Passing a Number will tween it to that absolute value, passing a String will use a relative value (target.property + value) - ie: <code>{value: 100}</code> or <code>{value:"200"}</code>
+		 *	@param	duration	How long in seconds for the tween to last
+		 *	@param	ease	The easing to use. Default is 'linear'. Can pass a Function, but will not work with XML
+		 *	@param	endfunc	A function to call when the tween ends
+		 *	
+		 *	@return		The id of the PrimitiveTween
+		 *	 
+		 */
+		public static function run($target:Object, $property:String, $value:*, $duration:Number, $ease:* = 'linear', $endfunc:Function = null):int {
+			var newval:Number = (typeof $value == 'string') ? $target[$property] + Number($value) : $value;
+			var pt:PrimitiveTween = BaseTicker.addItem(new PrimitiveTween($target, $property, newval, $duration*1000, makeEase($ease)));
+			pt.endFunc = function() {
+				$endfunc();
+				BaseTicker.removeItem(pt.id);
+			}
+			BaseTicker.start();
+			return pt.id;
+			//if the target object isn't found, we should kill the tween... catch?
+		}
+		
+		/**
 		 *	@private
 		 */
 		protected override function createPrimitive($to:Object):int {
@@ -87,7 +114,7 @@ package com.desuade.motion.tweens {
 		/**
 		 *	@private
 		 */
-		protected function makeEase($ease:*):Function {
+		protected static function makeEase($ease:*):Function {
 			if(typeof $ease == 'string') return Easing[$ease];
 			else if(typeof $ease == 'function') return $ease;
 			else return Easing.linear;

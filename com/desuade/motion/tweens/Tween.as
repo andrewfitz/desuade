@@ -95,7 +95,7 @@ package com.desuade.motion.tweens {
 		 *	<p>Example: <code>var mt:Tween = new Tween(myobj, {property:'x', value:50, duration:2, ease:'easeInBounce', delay:2, position:0, round:false, relative:true, bezier:[60, '200, -10]})</code></p>
 		 *	
 		 *	@param	target	 The target object to have it's property tweened
-		 *	@param	tweenObject	 The config object that has all the values for the tween
+		 *	@param	configObject	 The config object that has all the values for the tween
 		 *	
 		 *	@see	PrimitiveTween#target
 		 *	@see	PrimitiveTween#property
@@ -104,8 +104,27 @@ package com.desuade.motion.tweens {
 		 *	@see	PrimitiveTween#ease
 		 *	
 		 */
-		public function Tween($target:Object, $tweenObject:Object = null) {
-			super($target, $tweenObject);
+		public function Tween($target:Object, $configObject:Object = null) {
+			super($target, $configObject);
+		}
+		
+		/**
+		 *	<p>This let's you run a tween that's unmanaged and bypasses events, using just a callback function on end.</p>
+		 *	<p>The syntax is just a strict function call, so there's no configObject.</p>
+		 *	<p>While there's little speed improvement with this over creating an tween object, it does use about half the memory.</p>
+		 *	
+		 *	@param	target	 The target object to have it's property tweened
+		 *	@param	property	The property to tween
+		 *	@param	value	The new (end) value. Passing a Number will tween it to that absolute value, passing a String will use a relative value (target.property + value) - ie: <code>{value: 100}</code> or <code>{value:"200"}</code>
+		 *	@param	duration	How long in seconds for the tween to last
+		 *	@param	ease	The easing to use. Default is 'linear'. Can pass a Function, but will not work with XML
+		 *	@param	endfunc	A function to call when the tween ends
+		 *	
+		 *	@return		The id of the PrimitiveTween
+		 *	 
+		 */
+		public static function run($target:Object, $property:String, $value:*, $duration:Number, $ease:* = 'linear', $endfunc:Function = null):int {
+			return BasicTween.run($target, $property, $value, $duration, $ease, $endfunc);
 		}
 		
 		/**

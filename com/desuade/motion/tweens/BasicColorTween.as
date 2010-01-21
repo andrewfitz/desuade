@@ -65,7 +65,7 @@ package com.desuade.motion.tweens {
 		 *	<p>Example: <code>var mt:BasicColorTween = new BasicColorTween(myobj, {value:0xff77d5, amount:0.8, duration:2})</code></p>
 		 *	
 		 *	@param	target	 The target object to have it's property tweened
-		 *	@param	tweenObject	 The config object that has all the values for the tween
+		 *	@param	configObject	 The config object that has all the values for the tween
 		 *	
 		 *	@see	PrimitiveTween#target
 		 *	@see	PrimitiveTween#duration
@@ -73,8 +73,8 @@ package com.desuade.motion.tweens {
 		 *	@see	com.desuade.utils.ColorHelper#getColorObject()
 		 *	
 		 */
-		public function BasicColorTween($target:Object, $tweenObject:Object = null) {
-			super($target, $tweenObject);
+		public function BasicColorTween($target:Object, $configObject:Object = null) {
+			super($target, $configObject);
 		}
 		
 		/**

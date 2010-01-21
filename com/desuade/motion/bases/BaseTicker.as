@@ -142,6 +142,7 @@ package com.desuade.motion.bases {
 			for each (var item:BasePrimitive in _holder) {
 				item.render(times);
 			}
+			//trace("Loop time: " + String(getTimer()-times));
 			dispatchEvent(new MotionEvent(MotionEvent.UPDATED));
 		}
 		

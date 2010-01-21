@@ -57,15 +57,15 @@ package com.desuade.motion.tweens {
 		 *	<p>Example: <code>var mt:BasicMultiTween = new BasicMultiTween(myobj, {properties:{x:200, y:'50', alpha:0.5}, duration:2, ease:'easeInBounce'})</code></p>
 		 *	
 		 *	@param	target	 The target object to have it's property tweened
-		 *	@param	tweenObject	 The config object that has all the values for the tween
+		 *	@param	configObject	 The config object that has all the values for the tween
 		 *	
 		 *	@see	PrimitiveTween#target
 		 *	@see	PrimitiveTween#duration
 		 *	@see	PrimitiveTween#ease
 		 *	
 		 */
-		public function BasicMultiTween($target:Object, $tweenObject:Object = null) {
-			super($target, $tweenObject);
+		public function BasicMultiTween($target:Object, $configObject:Object = null) {
+			super($target, $configObject);
 		}
 		
 		/**

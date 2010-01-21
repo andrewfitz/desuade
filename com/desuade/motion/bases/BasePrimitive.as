@@ -38,7 +38,7 @@ package com.desuade.motion.bases {
 	 *  @author Andrew Fitzgerald
 	 *  @since  29.07.2009
 	 */
-	public class BasePrimitive extends Object {
+	public class BasePrimitive {
 		
 		/**
 		 *	This is the unique internal id of the item.
