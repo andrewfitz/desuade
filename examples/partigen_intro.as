@@ -115,6 +115,7 @@ Consult the official API docs for more details http://api.desuade.com/. The exam
 package {
 
 	import flash.display.*;
+	import CircleParticle;
 	
 	public class partigen_intro extends MovieClip {
 	
@@ -163,6 +164,8 @@ package {
 			import com.desuade.motion.controllers.*
 			import com.desuade.motion.events.*
 			import com.desuade.utils.*
+			
+			import CircleParticle;
 
 			var t1:MovieClip = new MovieClip(); //make a container for particles for the renderer
 			addChild(t1);
@@ -263,7 +266,7 @@ package {
 			e5pc.alpha.keyframes.add(new Keyframe(.8, 1));
 			e5pc.addTween('x', 2).setSingleTween('0', '0', 200, '0', 'easeOutBounce');
 			e5pc.x.keyframes.add(new Keyframe(.5, 400, null, '50'));
-			e5pc.x.keyframes.keyframe_1.ease = 'easeOutElastic';
+			e5pc.x.keyframes.keyframe_3.ease = 'easeOutElastic';
 			e5pc.addTween('y').setSingleTween('0', '0', '200', '100');
 			e5pc.addColorTween();
 			e5pc.color.keyframes.begin.value = 'ff4444';
@@ -382,18 +385,6 @@ package {
 			
 		}
 	
-	}
-
-}
-
-import com.desuade.partigen.particles.*;
-
-dynamic class CircleParticle extends Particle {
-
-	public function CircleParticle() {
-		super();
-		this.graphics.beginFill(0x999999);
-		this.graphics.drawCircle(0,0,5);
 	}
 
 }
