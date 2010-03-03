@@ -1,8 +1,15 @@
 Desuade Library Change Log - http://desuade.com/
 ------------------------------------------------
 
+Partigen 2.1
+	-changed: emitter.particle can now be any class, and does not have to inherit from BasicParticle
+	-changed: BasicParticle and Particle classes inherently use groups
+	-changed: Pools now reflect the new particle group system, and are simplified
+	-removed: BasicGroupParticle, GroupParticle
+
 Motion 1.1
 	-added: Tween/BasicTween run method for simple unmanaged tweening
+	-changed: buildSequence is now public
 	-changed: tweenObject -> configObject
 
 Motion Package 1.0 & Partigen 2.0 Master Release (2009/12/01)
