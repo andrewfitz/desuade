@@ -80,14 +80,15 @@ package com.desuade.partigen.renderers {
 		public var _blur:BlurFilter = new BlurFilter(0,0,1);
 		
 		/**
-		 *	Creates a new BitmapRenderer. This will use BitmapData to render particles.
+		 *	Creates a new BitmapRenderer. Use a BitmapCanvas object to display the particle bitmap.
 		 *	
-		 *	@param	bitmapdata	 The BitmapData object to render to.
-		 *	@param	order	 The visual stacking order for new particles to be created – 'top', 'bottom', or 'random'.
+		 *	@param	width	The width of the Bitmap.
+		 *	@param	height	The height of the Bitmap.
+		 *	@param	order	The visual stacking order for new particles to be created – 'top', 'bottom', or 'random'.
 		 */
-		public function BitmapRenderer($bitmapdata:BitmapData, $order:String = 'top') {
+		public function BitmapRenderer($width:int, $height:int, $order:String = 'top') {
 			super(new Sprite(), $order);
-			bitmapdata = $bitmapdata;
+			bitmapdata = new BitmapData($width, $height, true, 0);;
 			_zeroPoint = new Point(0, 0);
 		}
 		

@@ -111,6 +111,7 @@ package com.desuade.partigen.emitters {
 			for (var i:int = 0; i < $burst; i++) {
 				var np:BasicParticle = pool.addParticle(_particleClass);
 				np.init(this);
+				np.blendMode = particleBlendMode;
 				if(groupBitmap) np.makeGroupBitmap(_particlebitmap, groupAmount, groupProximity);
 				else np.makeGroup(particle, groupAmount, groupProximity);
 				np.x = this.x;

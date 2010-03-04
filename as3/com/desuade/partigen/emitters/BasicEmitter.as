@@ -74,6 +74,12 @@ package com.desuade.partigen.emitters {
 		 *	<p>As of v2.1, this can be any class, and does NOT have to inherit BasicParticle.</p>
 		 */
 		public var particle:Class;
+		
+		/**
+		 *	<p>This defines the blendmode for each particle created.</p>
+		 *	<p>Choices: "add", "alpha", "darken", "difference", "erase", "hardlight", "invert", "layer", "lighten", "multiply", "normal", "overlay", "screen", "subtract"</p>
+		 */
+		public var particleBlendMode:String = "normal";
 				
 		/**
 		 *	<p>This controls how may particles are made in a "particle group". This allows you to have many particle act as a single particle.</p>
@@ -219,6 +225,7 @@ package com.desuade.partigen.emitters {
 			for (var i:int = 0; i < $burst; i++) {
 				var np:BasicParticle = pool.addParticle(_particleClass);
 				np.init(this);
+				np.blendMode = particleBlendMode;
 				if(groupBitmap) np.makeGroupBitmap(_particlebitmap, groupAmount, groupProximity);
 				else np.makeGroup(particle, groupAmount, groupProximity);
 				np.x = this.x;
@@ -231,15 +238,17 @@ package com.desuade.partigen.emitters {
 		}
 		
 		/**
-		 *	@private
+		 *	This creates the main bitmapdata object used when groupBitmap == true.
+		 *	
+		 *	@param	padding	 Padding around the image (to compensate for filters).
 		 */
-		protected function createParticleBitmap():void {
+		public function createParticleBitmap($padding:int = 0):void {
 			var psource:DisplayObject = new particle();
 			var smatx = psource.transform.concatenatedMatrix;
 			var srect = psource.transform.pixelBounds;
 			var smx:Matrix = new Matrix();
-			smx.translate(-(srect.x/smatx.a), -(srect.y/smatx.a));
-			_particlebitmap = new BitmapData(psource.width, psource.height, true, 0);
+			smx.translate(-((srect.x/smatx.a)-$padding), -((srect.y/smatx.a)-$padding));
+			_particlebitmap = new BitmapData(psource.width+($padding*2), psource.height+($padding*2), true, 0);
 			_particlebitmap.draw(psource, smx);
 			psource = null;
 		}
@@ -253,13 +262,14 @@ package com.desuade.partigen.emitters {
 			var txml:XML = <emitter />;
 			txml.setLocalName(XMLHelper.getSimpleClassName(this));
 			txml.@particle = getQualifiedClassName(particle);
+			txml.@particleBlendMode = particleBlendMode;
 			txml.@eps = eps;
 			txml.@burst = burst;
 			txml.@life = life;
 			txml.@lifeSpread = XMLHelper.xmlize(lifeSpread);
+			txml.@groupBitmap = XMLHelper.xmlize(groupBitmap);
 			txml.@groupAmount = groupAmount;
 			txml.@groupProximity = groupProximity;
-			txml.@groupBitmap = XMLHelper.xmlize(groupBitmap);
 			return txml;
 		}
 		
@@ -275,11 +285,12 @@ package com.desuade.partigen.emitters {
 			if($reset) reset();
 			try {
 				if($xml.@particle != undefined) particle = getDefinitionByName($xml.@particle) as Class;
+				if($xml.@particleBlendMode != undefined) particleBlendMode = String($xml.@particleBlendMode);
 				if($xml.@eps != undefined) eps = Number($xml.@eps);
 				if($xml.@burst != undefined) burst = int($xml.@burst);
+				if($xml.@groupBitmap != undefined) groupBitmap = XMLHelper.dexmlize($xml.@groupBitmap);
 				if($xml.@groupAmount != undefined) groupAmount = int($xml.@groupAmount);
 				if($xml.@groupProximity != undefined) groupProximity = int($xml.@groupProximity);
-				if($xml.@groupBitmap != undefined) groupBitmap = XMLHelper.dexmlize($xml.@groupBitmap);
 				if($xml.@life != undefined) life = Number($xml.@life);
 				if($xml.@lifeSpread != undefined) lifeSpread = XMLHelper.dexmlize($xml.@lifeSpread);
 				return this;
