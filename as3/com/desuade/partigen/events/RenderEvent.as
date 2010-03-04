@@ -22,16 +22,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-package com.desuade.partigen.renderers {
-	
-	import com.desuade.partigen.particles.BasicParticle;
-	import com.desuade.debugging.*;
-	
+package com.desuade.partigen.events {
+
 	import flash.events.Event;
-	import flash.events.EventDispatcher;
 	
 	/**
-	 *  This controls how the particles are displayed (rendered). This is controlled internally.
+	 *  Events for Renderers. Events are broadcasted from the Renderer.
 	 *    
 	 *  @langversion ActionScript 3
 	 *  @playerversion Flash 9.0.0
@@ -39,48 +35,33 @@ package com.desuade.partigen.renderers {
 	 *  @author Andrew Fitzgerald
 	 *  @since  07.05.2009
 	 */
-	public class Renderer extends EventDispatcher {
-	
+	public class RenderEvent extends Event {
+		
 		/**
-		 *	This creates a new Renderer. This base class should not be created, as it offers no direct functionality.
+		 *	This gets fired everytime a BitmapRenderer gets resized.
 		 */
-		public function Renderer() {
-			super();
-			Debug.output('partigen', 20002);
+		public static const RESIZED:String = "resized";
+		
+		/**
+		 *	This is the info object that's gets passed to the function.
+		 */
+		public var data:Object;
+
+		/**
+		 *	Creates a new ParticleEvent. Events get dispatched internally, manual creation isn't necessary.
+		 */
+		public function RenderEvent($type:String, $data:Object = null, $bubbles:Boolean = false, $cancelable:Boolean = false){
+			super($type, $bubbles, $cancelable);
+			this.data = $data;
 		}
 		
 		/**
-		 *	This adds a particle to the display.
-		 *	
-		 *	@param	p	 The particle to add.
+		 *	@inheritDoc
 		 */
-		public function addParticle($p:BasicParticle):void {
-			Debug.output('partigen', 40002, [$p.id]);
+		public override function clone():Event{
+			return new RenderEvent(this.type, this.data, this.bubbles, this.cancelable);
 		}
 		
-		/**
-		 *	This removes a particle from the display.
-		 *	
-		 *	@param	p	 The particle to remove.
-		 */
-		public function removeParticle($p:BasicParticle):void {
-			Debug.output('partigen', 40004, [$p.id]);
-		}
-		
-		/**
-		 *	Starts the renderer (if needed).
-		 */
-		public function start():void {
-			//
-		}
-		
-		/**
-		 *	Stops the renderer (if needed).
-		 */
-		public function stop():void {
-			//
-		}
-	
 	}
 
 }

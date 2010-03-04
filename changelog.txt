@@ -12,7 +12,7 @@ Partigen 2.1 (2010/03/03)
 	-removed: BasicGroupParticle, GroupParticle
 
 Motion 1.1
-	-added: Tween/BasicTween run method for simple unmanaged tweening
+	-added: Tween/BasicTween run method for simple, strict-typed unmanaged tweening
 	-changed: buildSequence is now public
 	-changed: tweenObject -> configObject
 	

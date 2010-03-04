@@ -32,6 +32,7 @@ package com.desuade.partigen.renderers {
 	import flash.utils.ByteArray;
 	
 	import com.desuade.partigen.particles.BasicParticle;
+	import com.desuade.partigen.events.RenderEvent;
 	import com.desuade.debugging.*;
 	import com.desuade.motion.bases.*;
 	import com.desuade.motion.events.*;
@@ -88,7 +89,8 @@ package com.desuade.partigen.renderers {
 		 */
 		public function BitmapRenderer($width:int, $height:int, $order:String = 'top') {
 			super(new Sprite(), $order);
-			bitmapdata = new BitmapData($width, $height, true, 0);;
+			bitmapdata = new BitmapData($width, $height, true, 0);
+			_offbitmap = new BitmapData(bitmapdata.width, bitmapdata.height, true, 0);
 			_zeroPoint = new Point(0, 0);
 		}
 		
@@ -107,6 +109,18 @@ package com.desuade.partigen.renderers {
 		public override function stop():void {
 			_offbitmap.dispose();
 			BaseTicker.removeEventListener(MotionEvent.UPDATED, render);
+		}
+		
+		/**
+		 *	This "resizes" the BitmapData for the renderer. Dispatches resize event to listening BitmapCanvases.
+		 *	
+		 *	@param	width	 The new width
+		 *	@param	height	 The new height
+		 */
+		public function resize($width:int, $height:int):void {
+			bitmapdata = new BitmapData($width, $height, true, 0);
+			_offbitmap = new BitmapData(bitmapdata.width, bitmapdata.height, true, 0);
+			dispatchEvent(new RenderEvent(RenderEvent.RESIZED, {renderer:this}));
 		}
 		
 		/**

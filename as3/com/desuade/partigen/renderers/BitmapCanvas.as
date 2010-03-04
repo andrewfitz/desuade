@@ -27,6 +27,8 @@ package com.desuade.partigen.renderers {
 	import flash.display.*;
 	import flash.utils.*;
 	
+	import com.desuade.partigen.events.RenderEvent;
+	
 	/**
 	 *  Displays particles on the screen from a BitmapRenderer
 	 *    
@@ -76,6 +78,12 @@ package com.desuade.partigen.renderers {
 		 */
 		public function setRenderer($renderer:BitmapRenderer):void {
 			renderer = $renderer;
+			setBitmap();
+			renderer.addEventListener(RenderEvent.RESIZED, setBitmap, false, 0, false);
+		}
+		
+		protected function setBitmap(o:Object = null):void {
+			if(bitmap != null) this.removeChild(bitmap);
 			bitmap = new Bitmap(renderer.bitmapdata);
 			this.addChild(bitmap);
 		}
