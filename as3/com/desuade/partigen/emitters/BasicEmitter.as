@@ -194,12 +194,14 @@ package com.desuade.partigen.emitters {
 		/**
 		 *	Starts the emitter.
 		 *	
+		 *	@param	prefetch	 Starts the emitter as if it's already been running for this duration in seconds
 		 *	@param	runcontrollers	 This does nothing for BasicEmitters, and is only used for emitter classes with controllers.
 		 */
-		public function start($runcontrollers:Boolean = true):void {
+		public function start($prefetch:Number = 0, $runcontrollers:Boolean = true):void {
 			if(!_active){
 				if(groupBitmap) createParticleBitmap();
 				_active = true;
+				if($prefetch > 0) prefetch($prefetch);
 				setTimer(true);
 			}
 		}
@@ -217,24 +219,95 @@ package com.desuade.partigen.emitters {
 		}
 		
 		/**
+		 *	This prefetches the particles that would have existed if the emitter was running for the given time.
+		 *	
+		 *	@param	time	 The amount of time that should have passed since the emitter started.
+		 */
+		public function prefetch($time:Number):void {
+			var lives:Array = getPrefetchLifeArray($time);
+			for (var i:int = 0; i < lives.length; i++) {
+				var np:BasicParticle = createParticle(lives[i][1], lives[i][0]);
+				trace("particle " + i + ": " + lives[i]);
+				//need to figure the position for controllers/sequences
+				
+			}
+			
+		}
+		
+		/**
+		 *	This creates an array of particle's life values, both original and current, based on the eps/burst and supplied time value as it would if the emitter was running for the time duration.
+		 *	
+		 *	@param	time	 The amount of time that should have passed since the emitter started.
+		 *	
+		 *	@return		An Array with Arrays that contain the original life and current life [[1, .8], [1, .5], [1, .2]]
+		 */
+		public function getPrefetchLifeArray($time:Number):Array {
+			//get the amount of particles in 1 second
+			var onesec:Number = eps * burst;
+			//total emissions
+			var totalems:int = int(eps * $time);
+			//the total amount of particles made so far
+			var tpm:Number = $time * onesec;
+			//length of time between emissions
+			var ei:Number = 1/eps;
+			//array of lives that have started to die
+			var newlifes:Array = [];
+			//the final array of lifes to use
+			var finalifes:Array = [];
+			//crate an array of total possible particles lives
+			var lifearray:Array = [];
+			for (var i:int = 0; i < tpm; i++) {
+				//get some new lifes, make double array to store original life and current life
+				var nl:Number = randomLife();
+				lifearray.push([nl, nl]);
+			}
+			//loop through lifearray
+			for (var r:int = 0; r < totalems; r++) {
+				//removes a burst of particles from each emission from the total array
+				//and then adds that array to the newlifes array
+				newlifes = newlifes.concat(lifearray.splice(0, burst));
+				//subtracts another interval of time
+				for (var g:int = 0; g < newlifes.length; g++) {
+					newlifes[g][1] -= ei;
+				}
+			}
+			//loop through newlifes and get the only living particles left
+			for (var e:int = 0; e < newlifes.length; e++) {
+				if(newlifes[e][1] > 0){
+					//push living ones into an array
+					finalifes.push(newlifes[e]);
+				}
+			}
+			return finalifes;
+		}
+		
+		/**
 		 *	This method creates new particles each time it's called. The amount of particles it creates is dependent on the burst amount passed.
 		 *	
 		 *	@param	burst	 The amount of particles to create at once.
 		 */
 		public function emit($burst:int = 1):void {
 			for (var i:int = 0; i < $burst; i++) {
-				var np:BasicParticle = pool.addParticle(_particleClass);
-				np.init(this);
-				np.blendMode = particleBlendMode;
-				if(groupBitmap) np.makeGroupBitmap(_particlebitmap, groupAmount, groupProximity);
-				else np.makeGroup(particle, groupAmount, groupProximity);
-				np.x = this.x;
-				np.y = this.y;
-				//np.z = this.z; //this makes everything bitmaps so let's disable it FP10
-				if(life > 0) np.addLife(randomLife());
-				if(enableEvents) dispatchEvent(new ParticleEvent(ParticleEvent.BORN, {particle:np}));
-				renderer.addParticle(np);
+				createParticle((life > 0) ? randomLife() : 0);
 			}
+		}
+		
+		/**
+		 *	@private
+		 */
+		protected function createParticle($life:Number = 0, $clife:Number = 0):BasicParticle {
+			var np:BasicParticle = pool.addParticle(_particleClass);
+			np.init(this);
+			np.blendMode = particleBlendMode;
+			if(groupBitmap) np.makeGroupBitmap(_particlebitmap, groupAmount, groupProximity);
+			else np.makeGroup(particle, groupAmount, groupProximity);
+			np.x = this.x;
+			np.y = this.y;
+			if($life > 0) np.addLife($life);
+			if($clife > 0) np.life = $clife;
+			if(enableEvents) dispatchEvent(new ParticleEvent(ParticleEvent.BORN, {particle:np}));
+			renderer.addParticle(np);
+			return np;
 		}
 		
 		/**

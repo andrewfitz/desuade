@@ -2,9 +2,12 @@ Desuade Library Change Log - http://desuade.com/
 ------------------------------------------------
 
 Partigen 2.1 (2010/03/03)
+	-added: prefetching - allows you to start an emitter as if it's already been running
 	-added: BitmapCanvas class for BitmapRenderer for easy management of BitmapRenderers
 	-added: emitter.particleBlendMode - blendmode for particles
 	-added: emitter.groupBitmap - lets particle groups be created as bitmaps
+	-changed: emitter.start() now accepts the 'prefetch' parameter first
+	-changed: re factored internal emit/createParticle methods
 	-changed: BitmapRenderer no longer asks for BitmapData (not backwards-compatible)
 	-changed: emitter.particle can now be any class, and does not have to inherit from BasicParticle
 	-changed: BasicParticle and Particle classes inherently use groups

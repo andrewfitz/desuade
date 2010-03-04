@@ -83,10 +83,11 @@ package com.desuade.partigen.emitters {
 		/**
 		 *	This starts the emitter. It also, by default, starts all the controllers managed by the EmitterController.
 		 *	
+		 *	@param	prefetch	 Starts the emitter as if it's already been running for this duration in seconds
 		 *	@param	startcontrollers	 This starts all MotionControllers managed by the EmitterController.
 		 */
-		public override function start($startcontrollers:Boolean = true):void {
-			super.start();
+		public override function start($prefetch:Number = 0, $startcontrollers:Boolean = true):void {
+			super.start($prefetch);
 			if($startcontrollers){
 				controllers.emitter.start();
 			}
@@ -107,22 +108,11 @@ package com.desuade.partigen.emitters {
 		/**
 		 *	@inheritDoc
 		 */
-		public override function emit($burst:int = 1):void {
-			for (var i:int = 0; i < $burst; i++) {
-				var np:BasicParticle = pool.addParticle(_particleClass);
-				np.init(this);
-				np.blendMode = particleBlendMode;
-				if(groupBitmap) np.makeGroupBitmap(_particlebitmap, groupAmount, groupProximity);
-				else np.makeGroup(particle, groupAmount, groupProximity);
-				np.x = this.x;
-				np.y = this.y;
-				//np.z = this.z; //this makes everything bitmaps so let's disable it FP10
-				if(life > 0) np.addLife(randomLife());
-				controllers.particle.attachAll(np, this);
-				if(enableEvents) dispatchEvent(new ParticleEvent(ParticleEvent.BORN, {particle:np}));
-				np.startControllers();
-				renderer.addParticle(np);
-			}
+		protected override function createParticle($life:Number = 0, $clife:Number = 0):BasicParticle {
+			var np:BasicParticle = super.createParticle($life, $clife);
+			controllers.particle.attachAll(np, this);
+			np.startControllers();
+			return np;
 		}
 		
 		/**
