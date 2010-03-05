@@ -118,13 +118,14 @@ package com.desuade.motion.tweens {
 		 *	@param	value	The new (end) value. Passing a Number will tween it to that absolute value, passing a String will use a relative value (target.property + value) - ie: <code>{value: 100}</code> or <code>{value:"200"}</code>
 		 *	@param	duration	How long in seconds for the tween to last
 		 *	@param	ease	The easing to use. Default is 'linear'. Can pass a Function, but will not work with XML
+		 *	@param	position	The position to start the tween at. Defaults 0.
 		 *	@param	endfunc	A function to call when the tween ends
 		 *	
 		 *	@return		The id of the PrimitiveTween
 		 *	 
 		 */
-		public static function run($target:Object, $property:String, $value:*, $duration:Number, $ease:* = 'linear', $endfunc:Function = null):int {
-			return BasicTween.run($target, $property, $value, $duration, $ease, $endfunc);
+		public static function run($target:Object, $property:String, $value:*, $duration:Number, $ease:* = 'linear', $position:Number = 0, $endfunc:Function = null):int {
+			return BasicTween.run($target, $property, $value, $duration, $ease, $position, $endfunc);
 		}
 		
 		/**
@@ -206,8 +207,8 @@ package com.desuade.motion.tweens {
 			if($to.position > 0) {
 				pt.starttime -= ($to.position*$to.duration)*1000;
 				if(!isNaN(_newval)) {
-					pt.startvalue = _startvalue;
-					pt.difvalue = _difvalue;
+					if(!isNaN(_startvalue)) pt.startvalue = _startvalue;
+					if(!isNaN(_difvalue)) pt.difvalue = _difvalue;
 				}
 				Debug.output('motion', 40007, [$to.position]);
 			}

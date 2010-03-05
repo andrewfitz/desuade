@@ -1,6 +1,6 @@
 /*
 
-Desuade Motion Package (DMP) 1.0 MotionController Example
+Desuade Motion Package (DMP) 1.1 MotionController Example
 http://desuade.com/
 
 This .fla goes over how controllers work with the package.
@@ -228,6 +228,7 @@ package {
 
 
 			//2 controllers with XML making random movement
+			//vc7 uses the startTime (v1.1) param to start the controller as if it's in the middle of running
 			var vc6:MotionController = new MotionController(target1, 'x', 10);
 			vc6.keyframes.end.value = 400;
 			vc6.keyframes.add(new Keyframe(.1, 0, 'easeOutQuad', 500));
@@ -241,7 +242,7 @@ package {
 			vc6.keyframes.add(new Keyframe(.9, 0, 'easeOutQuad', 500));
 			var vc7:MotionController = new MotionController(target1, 'y', 10);
 			vc7.keyframes.fromXML(vc6.keyframes.toXML());
-			//vc7.start();
+			//vc7.start('begin', 5.4);
 			//vc6.start();
 
 

@@ -135,25 +135,25 @@ package com.desuade.motion.controllers {
 		/**
 		 *	@inheritDoc
 		 */
-		public override function start($keyframe:String = 'begin'):* {
-			startPhysicsControllers($keyframe);
+		public override function start($keyframe:String = 'begin', $startTime:Number = 0):* {
+			startPhysicsControllers($keyframe, $startTime);
 		}
 		
 		/**
 	     *  @private
 	     */
-	    protected function startPhysicsControllers($keyframe:String):void {
+	    protected function startPhysicsControllers($keyframe:String, $startTime:Number = 0):void {
 		  //$keyframe = (keyframes[$keyframe] == undefined) ? 'begin' : $keyframe;			
 			if(this.velocity.keyframes.isFlat()){
 				this.velocity.setStartValue($keyframe);
 				if(this.acceleration.keyframes.isFlat()) this.acceleration.setStartValue($keyframe);
-				else this.acceleration.start($keyframe);
+				else this.acceleration.start($keyframe, $startTime);
 				if(this.friction.keyframes.isFlat()) this.friction.setStartValue($keyframe);
-				else this.friction.start($keyframe);
+				else this.friction.start($keyframe, $startTime);
 			} else {
 				this.acceleration.setStartValue($keyframe);
 				this.friction.setStartValue($keyframe);
-				this.velocity.start($keyframe);
+				this.velocity.start($keyframe, $startTime);
 			}
 		}
 	

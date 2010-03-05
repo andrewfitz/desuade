@@ -142,6 +142,20 @@ package com.desuade.motion.sequences {
 		}
 		
 		/**
+		 *	This gets the total duration if the Class ONLY if the motionClass is a tween.
+		 */
+		public function get duration():Number {
+			var totaldur:Number = 0;
+			for (var i:int = 0; i < length; i++) {
+				var ld:Number = (this[i].duration || 0) + (this[i].delay || 0);
+				if(ld > totaldur){
+					totaldur = ld;
+				}
+			}
+			return totaldur;
+		}
+		
+		/**
 		 *	@private
 		 */
 		protected function end():void {

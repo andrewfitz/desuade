@@ -1,7 +1,11 @@
 Desuade Library Change Log - http://desuade.com/
 ------------------------------------------------
 
-Partigen 2.1 (2010/03/03)
+
+//////////////////update tween, sequence, and partigen examples
+
+
+Partigen 2.1 (2010/03/05)
 	-added: prefetching - allows you to start an emitter as if it's already been running
 	-added: BitmapCanvas class for BitmapRenderer for easy management of BitmapRenderers
 	-added: emitter.particleBlendMode - blendmode for particles
@@ -15,9 +19,15 @@ Partigen 2.1 (2010/03/03)
 	-removed: BasicGroupParticle, GroupParticle
 
 Motion 1.1
+	-added: MotionController.start(keyframe, startTime) - startTime (from ClassSequence.startAtTime)
+	-added: ClassSequence: duration, startAtTime(), getPositionInTime() for Tween-based classes only
 	-added: Tween/BasicTween run method for simple, strict-typed unmanaged tweening
+	-added: position parameter to BasicTween
+	-added: MotionController.sequence getter
 	-changed: buildSequence is now public
 	-changed: tweenObject -> configObject
+	-fixed: motioncontroller/sequence bug
+	-fixed: Tween.position bug
 	
 
 Motion Package 1.0 & Partigen 2.0 Master Release (2009/12/01)

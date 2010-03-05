@@ -83,7 +83,7 @@ package com.desuade.partigen.emitters {
 		/**
 		 *	This starts the emitter. It also, by default, starts all the controllers managed by the EmitterController.
 		 *	
-		 *	@param	prefetch	 Starts the emitter as if it's already been running for this duration in seconds
+		 *	@param	prefetch	 Starts the emitter as if it's already been running for this duration (in seconds).
 		 *	@param	startcontrollers	 This starts all MotionControllers managed by the EmitterController.
 		 */
 		public override function start($prefetch:Number = 0, $startcontrollers:Boolean = true):void {
@@ -111,7 +111,8 @@ package com.desuade.partigen.emitters {
 		protected override function createParticle($life:Number = 0, $clife:Number = 0):BasicParticle {
 			var np:BasicParticle = super.createParticle($life, $clife);
 			controllers.particle.attachAll(np, this);
-			np.startControllers();
+			if($clife > 0) np.startControllers($clife-$life);
+			else np.startControllers();
 			return np;
 		}
 		

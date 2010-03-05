@@ -227,11 +227,7 @@ package com.desuade.partigen.emitters {
 			var lives:Array = getPrefetchLifeArray($time);
 			for (var i:int = 0; i < lives.length; i++) {
 				var np:BasicParticle = createParticle(lives[i][1], lives[i][0]);
-				trace("particle " + i + ": " + lives[i]);
-				//need to figure the position for controllers/sequences
-				
 			}
-			
 		}
 		
 		/**

@@ -74,13 +74,13 @@ package com.desuade.partigen.particles {
 		/**
 		 *	@private
 		 */
-		public function startControllers():void {
+		public function startControllers($startTime:Number = 0):void {
 			for (var p:String in controllers) {
 				if(controllers[p] is MotionController && controllers[p].keyframes.isFlat()){
 					controllers[p].setStartValue();
 				} else {
-					controllers[p].start();
-					if(controllers[p] is PhysicsMultiController) controllers[p].physics.start();
+					controllers[p].start('begin', $startTime);
+					if(controllers[p] is PhysicsMultiController) controllers[p].physics.start('begin', $startTime);
 				}
 			}
 		}

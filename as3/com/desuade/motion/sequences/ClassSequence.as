@@ -27,6 +27,9 @@ package com.desuade.motion.sequences {
 	import com.desuade.debugging.*;
 	import com.desuade.motion.events.*;
 	import com.desuade.motion.tweens.*;
+	import com.desuade.motion.bases.*;
+	
+	import flash.utils.getTimer;
 	
 	/**
 	 *  A Sequence that uses a single class and config objects to create a sequence.
@@ -113,6 +116,87 @@ package com.desuade.motion.sequences {
 		public function set overrides($value:Object):void {
 			_overrides = $value;
 		}
+		
+		/**
+		 *	This gets the current position in time out of the entire duration ONLY if the motionClass is a form of tween.
+		 */
+		public function getPositionInTime():Number {
+			var totaldur:Number = 0;
+			var durarr:Array = [];
+			for (var i:int = 0; i < length; i++) {
+				durarr.push((this[i].duration || 0) + (this[i].delay || 0));
+				totaldur += durarr[i];
+			}
+			var parttime:Number = 0;
+			for (var t:int = 0; t < position; t++) {
+				parttime += durarr[t];
+			}
+			var pt = BaseTicker.getItem(current.pid);
+			return parttime + (pt.duration - (getTimer()-pt.starttime)); 
+		}
+		
+		/**
+		 *	This allows you start at any point in time of the sequence ONLY if the motionClass is a form of tween.
+		 *	
+		 *	@param	time	 The time to position the sequence in.
+		 */
+		public function startAtTime($time:Number):void {
+			var totaldur:Number = 0;
+			var durarr:Array = [];
+			for (var i:int = 0; i < length; i++) {
+				durarr.push((this[i].duration || 0) + (this[i].delay || 0));
+				totaldur += durarr[i];
+			}
+			var fti:Number = 0;
+			for (var r:int = 0; r < durarr.length; r++) {
+				if($time < (fti + durarr[r])){
+					if(this[r] is SequenceGroup){
+						for (var p:int = 0; p < this[r].length; p++) {
+							var dr:Number = ((this[r][p].delay || 0) - ($time - fti));
+							if(dr >= 0){
+								this[r][p].delay = dr;
+								this[r][p].position = 0;
+							} else {
+								this[r][p].delay = 0;
+								this[r][p].position = (this[r][p].duration-(dr + this[r][p].duration))/this[r][p].duration;
+							}
+						}
+					} else {
+						var dr2:Number = ((this[r].delay || 0) - ($time - fti));
+						if(dr2 >= 0){
+							this[r].delay = dr2;
+							this[r].position = 0;
+						} else {
+							this[r].delay = 0;
+							this[r].position = (this[r].duration-(dr2 + this[r].duration))/this[r].duration;
+						}
+					}
+					start(r);
+					return;
+				} else {
+					var ni:* = itemCheck(this[r]);
+					if(ni is SequenceGroup){
+						for (var h:int = 0; h < ni.length; h++) {
+							var ni2:* = itemCheck(ni[h]);
+							ni2.target[ni2.config.property] = ni2.config.value;
+						}
+					} else ni.target[ni.config.property] = ni.config.value;
+				}
+				fti += durarr[r];
+			}
+		}
+		
+		/**
+		 *	This gets the total duration ONLY if the motionClass is a form of tween.
+		 */
+		public function get duration():Number {
+			var totaldur:Number = 0;
+			for (var i:int = 0; i < length; i++) {
+				totaldur += (this[i].duration || 0) + (this[i].delay || 0);
+			}
+			return totaldur;
+		}
+		
 
 	}
 }

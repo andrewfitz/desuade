@@ -178,7 +178,7 @@ package {
 			var my_mc:MotionController = new MotionController(target1, 'y', 4, KeyframeContainer);
 			//my_mc.keyframes.tweenclass = Tween;
 			my_mc.keyframes.end.value = null;
-			my_mc.keyframes.end.extras = {bezier:[50, "100", 45]};
+			//my_mc.keyframes.end.extras = {bezier:[50, "100", 45]};
 			//my_mc.keyframes.begin.value = 0;
 			my_mc.keyframes.poker = new Keyframe(.5, 150, 'easeOutBounce', 400);
 

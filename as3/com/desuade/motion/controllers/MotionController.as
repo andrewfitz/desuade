@@ -125,20 +125,29 @@ package com.desuade.motion.controllers {
 		}
 		
 		/**
+		 *	The internal sequence created from the keyframes.
+		 */
+		public function get sequence():Sequence { 
+			return _sequence; 
+		}
+		
+		/**
 		 *	Starts the controller. This will internally create a Sequence (of tweens) that will be ran to match the points in the controller's PointsContainer, running from 'begin' to 'end' points.
 		 *	
 		 *	@param	keyframe	 The label of the keyframe to start at.
+		 *	@param	startTime	This is like keyframe, but instead uses actual time to start at, as if it's already been running. This overrides the keyframe param.
 		 *	@param	rebuild		 Forces a rebuild of the internal sequence on start.
 		 *	@return		The MotionController (for chaining)
 		 */
-		public function start($keyframe:String = 'begin', $rebuild:Boolean = false):* {
-			//$keyframe = (keyframes[$keyframe] == undefined) ? 'begin' : $keyframe;
+		public function start($keyframe:String = 'begin', $startTime:Number = 0, $rebuild:Boolean = false):* {
+			$keyframe = ($keyframe == null) ? 'begin' : $keyframe;
 			setStartValue($keyframe);
 			_active = true;
 			if(_sequence == null || $rebuild) _sequence = buildSequence(target, property, duration);
 			_sequence.addEventListener(SequenceEvent.ENDED, tweenEnd, false, 0, false);
 			_sequence.addEventListener(SequenceEvent.ADVANCED, advance, false, 0, false);
 			if($keyframe != 'begin') _sequence.start(keyframes.getOrderedLabels().indexOf($keyframe));
+			else if($startTime > 0) _sequence.startAtTime($startTime);
 			else _sequence.start();
 			dispatchEvent(new ControllerEvent(ControllerEvent.STARTED, {controller:this}));
 			return this;

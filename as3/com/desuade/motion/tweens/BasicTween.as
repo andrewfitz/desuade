@@ -52,6 +52,7 @@ package com.desuade.motion.tweens {
 		 *	<li>value:* – the new (end) value. Passing a Number will tween it to that absolute value, passing a String will use a relative value (target.property + value) - ie: <code>{value: 100}</code> or <code>{value:"200"}</code></li>
 		 *	<li>ease:String – the easing to use. Default is 'linear'. Can pass a Function, but will not work with XML.</li>
 		 *	<li>duration:Number – how long in seconds for the tween to last</li>
+		 *	<li>position:Number – what position to start the tween at 0-1</li>
 		 *	<li>update:Boolean – enable broadcasting of UPDATED event (can lower performance)</li>
 		 *	</ul>
 		 *	
@@ -83,17 +84,22 @@ package com.desuade.motion.tweens {
 		 *	@param	value	The new (end) value. Passing a Number will tween it to that absolute value, passing a String will use a relative value (target.property + value) - ie: <code>{value: 100}</code> or <code>{value:"200"}</code>
 		 *	@param	duration	How long in seconds for the tween to last
 		 *	@param	ease	The easing to use. Default is 'linear'. Can pass a Function, but will not work with XML
+		 *	@param	position	The position to start the tween at. Defaults 0.
 		 *	@param	endfunc	A function to call when the tween ends
 		 *	
 		 *	@return		The id of the PrimitiveTween
 		 *	 
 		 */
-		public static function run($target:Object, $property:String, $value:*, $duration:Number, $ease:* = 'linear', $endfunc:Function = null):int {
+		public static function run($target:Object, $property:String, $value:*, $duration:Number, $ease:* = 'linear', $position:Number = 0, $endfunc:Function = null):int {
 			var newval:Number = (typeof $value == 'string') ? $target[$property] + Number($value) : $value;
 			var pt:PrimitiveTween = BaseTicker.addItem(new PrimitiveTween($target, $property, newval, $duration*1000, makeEase($ease)));
 			pt.endFunc = function() {
 				$endfunc();
 				BaseTicker.removeItem(pt.id);
+			}
+			if($position > 0) {
+				pt.starttime -= ($position*$duration)*1000;
+				Debug.output('motion', 40007, [$position]);
 			}
 			BaseTicker.start();
 			return pt.id;
@@ -108,6 +114,10 @@ package com.desuade.motion.tweens {
 			var pt:PrimitiveTween = BaseTicker.addItem(new PrimitiveTween(target, $to.property, newval, $to.duration*1000, makeEase($to.ease)));
 			pt.endFunc = endFunc;
 			pt.updateFunc = updateListener;
+			if($to.position > 0) {
+				pt.starttime -= ($to.position*$to.duration)*1000;
+				Debug.output('motion', 40007, [$to.position]);
+			}
 			return pt.id;
 		}
 		
