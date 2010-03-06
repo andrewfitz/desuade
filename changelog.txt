@@ -4,17 +4,17 @@ Desuade Library Change Log - http://desuade.com/
 Motion Package 1.1 & Partigen 2.1 (2010/03/06)
 	Partigen:
 		-added: prefetching - allows you to start an emitter as if it's already been running
-		-added: XML support for Renderers in Emitters, allowing bitmap effect presets
+		-added: XML support for Renderers in Emitters - allowing bitmap effect presets
 		-added: BitmapCanvas class for BitmapRenderer for easy management of BitmapRenderers
 		-added: emitter.particleBlendMode - blendmode for particles
 		-added: emitter.groupBitmap - lets particle groups be created as bitmaps
-		-changed: emitter.start() now accepts the 'prefetch' parameter first
-		-changed: re factored internal emit/createParticle methods
-		-changed: BitmapRenderer no longer asks for BitmapData (not backwards-compatible)
 		-changed: emitter.particle can now be any class, and does not have to inherit from BasicParticle
+		-changed: emitter.start() now accepts the 'prefetch' parameter first
+		-changed: re-factored internal emit/createParticle methods
+		-changed: BitmapRenderer no longer asks for BitmapData (not backwards-compatible)
 		-changed: BasicParticle and Particle classes inherently use groups
 		-changed: Pools now reflect the new particle group system, and are simplified
-		-removed: IDEEmitter renderToParent since new XML renderer feature does this automatically
+		-removed: IDEEmitter renderToParent - since new XML renderer feature does this automatically
 		-removed: BasicGroupParticle, GroupParticle
 
 	Motion:
@@ -23,7 +23,7 @@ Motion Package 1.1 & Partigen 2.1 (2010/03/06)
 		-added: Tween/BasicTween run method for simple, strict-typed unmanaged tweening
 		-added: position parameter to BasicTween
 		-added: MotionController.sequence getter
-		-changed: buildSequence is now public
+		-changed: MotionController.buildSequence is now public
 		-changed: tweenObject -> configObject
 		-fixed: motioncontroller/sequence bug
 		-fixed: Tween.position bug
