@@ -124,16 +124,16 @@ package com.desuade.partigen.emitters {
 			txml.@angle = angle;
 			txml.@angleSpread = XMLHelper.xmlize(angleSpread);
 			txml.appendChild(<Controllers />);
-			txml.children()[0].appendChild(controllers.emitter.toXML());
-			txml.children()[0].appendChild(controllers.particle.toXML());
+			txml.children()[1].appendChild(controllers.emitter.toXML());
+			txml.children()[1].appendChild(controllers.particle.toXML());
 			return txml;
 		}
 		
 		/**
 		 *	@inheritDoc
 		 */
-		public override function fromXML($xml:XML, $reset:Boolean = true):* {
-			if(super.fromXML($xml, $reset) != false){
+		public override function fromXML($xml:XML, $reset:Boolean = true, $renderer:Boolean = false):* {
+			if(super.fromXML($xml, $reset, $renderer) != false){
 				try {
 					if($xml.@angle != undefined) angle = int($xml.@angle);
 					if($xml.@angleSpread != undefined) angleSpread = XMLHelper.dexmlize($xml.@angleSpread);

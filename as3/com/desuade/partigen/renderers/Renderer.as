@@ -39,7 +39,7 @@ package com.desuade.partigen.renderers {
 	 *  @author Andrew Fitzgerald
 	 *  @since  07.05.2009
 	 */
-	public class Renderer extends EventDispatcher {
+	public dynamic class Renderer extends EventDispatcher {
 	
 		/**
 		 *	This creates a new Renderer. This base class should not be created, as it offers no direct functionality.

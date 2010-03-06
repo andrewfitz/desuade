@@ -1,35 +1,36 @@
 Desuade Library Change Log - http://desuade.com/
 ------------------------------------------------
 
+Motion Package 1.1 & Partigen 2.1 (2010/03/06)
+	Partigen:
+		-added: prefetching - allows you to start an emitter as if it's already been running
+		-added: XML support for Renderers in Emitters, allowing bitmap effect presets
+		-added: BitmapCanvas class for BitmapRenderer for easy management of BitmapRenderers
+		-added: emitter.particleBlendMode - blendmode for particles
+		-added: emitter.groupBitmap - lets particle groups be created as bitmaps
+		-changed: emitter.start() now accepts the 'prefetch' parameter first
+		-changed: re factored internal emit/createParticle methods
+		-changed: BitmapRenderer no longer asks for BitmapData (not backwards-compatible)
+		-changed: emitter.particle can now be any class, and does not have to inherit from BasicParticle
+		-changed: BasicParticle and Particle classes inherently use groups
+		-changed: Pools now reflect the new particle group system, and are simplified
+		-removed: IDEEmitter renderToParent since new XML renderer feature does this automatically
+		-removed: BasicGroupParticle, GroupParticle
 
-//////////////////update tween, sequence, and partigen examples
-
-
-Partigen 2.1 (2010/03/05)
-	-added: prefetching - allows you to start an emitter as if it's already been running
-	-added: BitmapCanvas class for BitmapRenderer for easy management of BitmapRenderers
-	-added: emitter.particleBlendMode - blendmode for particles
-	-added: emitter.groupBitmap - lets particle groups be created as bitmaps
-	-changed: emitter.start() now accepts the 'prefetch' parameter first
-	-changed: re factored internal emit/createParticle methods
-	-changed: BitmapRenderer no longer asks for BitmapData (not backwards-compatible)
-	-changed: emitter.particle can now be any class, and does not have to inherit from BasicParticle
-	-changed: BasicParticle and Particle classes inherently use groups
-	-changed: Pools now reflect the new particle group system, and are simplified
-	-removed: BasicGroupParticle, GroupParticle
-
-Motion 1.1
-	-added: MotionController.start(keyframe, startTime) - startTime (from ClassSequence.startAtTime)
-	-added: ClassSequence: duration, startAtTime(), getPositionInTime() for Tween-based classes only
-	-added: Tween/BasicTween run method for simple, strict-typed unmanaged tweening
-	-added: position parameter to BasicTween
-	-added: MotionController.sequence getter
-	-changed: buildSequence is now public
-	-changed: tweenObject -> configObject
-	-fixed: motioncontroller/sequence bug
-	-fixed: Tween.position bug
-	
-
+	Motion:
+		-added: MotionController.start(keyframe, startTime) - startTime (from ClassSequence.startAtTime)
+		-added: ClassSequence: duration, startAtTime(), getPositionInTime() for Tween-based classes only
+		-added: Tween/BasicTween run method for simple, strict-typed unmanaged tweening
+		-added: position parameter to BasicTween
+		-added: MotionController.sequence getter
+		-changed: buildSequence is now public
+		-changed: tweenObject -> configObject
+		-fixed: motioncontroller/sequence bug
+		-fixed: Tween.position bug
+		
+	Examples:
+		-fixed: lots of misc bugs from .fla->.as port
+		
 Motion Package 1.0 & Partigen 2.0 Master Release (2009/12/01)
 
 	Motion:
@@ -81,6 +82,7 @@ Motion Package 1.0 & Partigen 2.0 Master Release (2009/12/01)
 	Examples:
 		-added: utils example for ShortcutManager
 		-changed: ActionScript from examples are now in .as files
+
 
 Release Candidate 2 (2009/8/24)
 
@@ -172,6 +174,7 @@ Beta 3 (2009/7/23):
 	Debugging: none
 	
 	Utils: none
+	
 
 Beta 2 (2009/7/03):
 
@@ -201,5 +204,6 @@ Beta 2 (2009/7/03):
 		-changed the replace character to % (instead of $)
 
 	Utils: none
+	
 	
 Beta 1 (2009/6/22): initial release

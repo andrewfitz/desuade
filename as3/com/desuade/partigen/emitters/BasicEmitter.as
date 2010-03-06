@@ -339,6 +339,18 @@ package com.desuade.partigen.emitters {
 			txml.@groupBitmap = XMLHelper.xmlize(groupBitmap);
 			txml.@groupAmount = groupAmount;
 			txml.@groupProximity = groupProximity;
+			txml.appendChild(<Renderer />);
+			var rt:String = XMLHelper.getSimpleClassName(renderer);
+			txml.children()[0].@type = rt;
+			if(rt == "StandardRenderer" || rt == "BitmapRenderer"){
+				txml.children()[0].@order = renderer.order;
+			}
+			if(rt == "BitmapRenderer"){
+				txml.children()[0].@width = renderer.bitmapdata.width;
+				txml.children()[0].@height = renderer.bitmapdata.height;
+				txml.children()[0].@fade = renderer.fade;
+				txml.children()[0].@fadeBlur = renderer.fadeBlur;
+			}
 			return txml;
 		}
 		
@@ -347,10 +359,11 @@ package com.desuade.partigen.emitters {
 		 *	
 		 *	@param	xml	 The XML object to use to configure the emitter
 		 *	@param	reset	 Resets the emitter before applying XML
+		 *	@param	renderer	If true, this creates (and overwrites) the emitter's renderer with one from XML
 		 *	
 		 *	@return		The emitter object (for chaining)
 		 */
-		public function fromXML($xml:XML, $reset:Boolean = true):* {
+		public function fromXML($xml:XML, $reset:Boolean = true, $renderer:Boolean = false):* {
 			if($reset) reset();
 			try {
 				if($xml.@particle != undefined) particle = getDefinitionByName($xml.@particle) as Class;
@@ -362,6 +375,21 @@ package com.desuade.partigen.emitters {
 				if($xml.@groupProximity != undefined) groupProximity = int($xml.@groupProximity);
 				if($xml.@life != undefined) life = Number($xml.@life);
 				if($xml.@lifeSpread != undefined) lifeSpread = XMLHelper.dexmlize($xml.@lifeSpread);
+				if($renderer){
+					if($xml.hasOwnProperty("Renderer")){
+						var rt:String = $xml.Renderer.@type;
+						var contclass:Class = getDefinitionByName("com.desuade.partigen.renderers::" + rt) as Class;
+						if(rt == "NullRenderer"){
+							renderer = new contclass();
+						} else if(rt == "StandardRenderer"){
+							renderer = new contclass(this.parent, $xml.Renderer.@order);
+						} else if(rt == "BitmapRenderer"){
+							renderer = new contclass($xml.Renderer.@width, $xml.Renderer.@height, $xml.Renderer.@order);
+							renderer.fade = $xml.Renderer.@fade;
+							renderer.fadeBlur = $xml.Renderer.@fadeBlur;
+						}
+					}
+				}
 				return this;
 			} catch (e:Error){
 				Debug.output('partigen', 20009, [e]);

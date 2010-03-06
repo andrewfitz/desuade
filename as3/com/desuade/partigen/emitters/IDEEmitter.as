@@ -151,24 +151,6 @@ package com.desuade.partigen.emitters {
 		}
 		
 		/**
-		 *	This automatically creates a StandardRenderer targeting the emitter's parent.
-		 */
-		[Inspectable(name = "Render to Parent", defaultValue = true, variable = "renderToParent", type = "Boolean")]
-		public function set renderToParent($value:Boolean):void {
-			_renderToParent = $value;
-			if(_renderToParent){
-				renderer = new StandardRenderer(this.parent);
-			}
-		}
-		
-		/**
-		 *	@private
-		 */
-		public function get renderToParent():Boolean{
-			return _renderToParent;
-		}
-		
-		/**
 		 *	@private
 		 */
 		protected function fmouse($o:Object):void {

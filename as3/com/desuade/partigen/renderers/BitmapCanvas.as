@@ -43,7 +43,7 @@ package com.desuade.partigen.renderers {
 		/**
 		 *	The renderer used to get the bitmapdata from.
 		 */
-		public var renderer:BitmapRenderer;
+		public var renderer:Renderer;
 		
 		/**
 		 *	The internal bitmap.
@@ -66,7 +66,7 @@ package com.desuade.partigen.renderers {
 		 *	@param	renderer The BitmapRenderer to use.
 		 *	
 		 */
-		public function BitmapCanvas($renderer:BitmapRenderer = null) {
+		public function BitmapCanvas($renderer:Renderer = null) {
 			if($renderer != null) setRenderer($renderer);
 			_isLivePreview = (parent != null && getQualifiedClassName(parent) == "fl.livepreview::LivePreviewParent");
 		}
@@ -76,7 +76,7 @@ package com.desuade.partigen.renderers {
 		 *	
 		 *	@param	renderer The BitmapRenderer to use.
 		 */
-		public function setRenderer($renderer:BitmapRenderer):void {
+		public function setRenderer($renderer:Renderer):void {
 			renderer = $renderer;
 			setBitmap();
 			renderer.addEventListener(RenderEvent.RESIZED, setBitmap, false, 0, false);
