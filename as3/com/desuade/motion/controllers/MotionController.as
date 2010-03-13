@@ -167,13 +167,11 @@ package com.desuade.motion.controllers {
 		 *	@param	target	 The target object to use.
 		 *	@param	propert	 The property to use.
 		 *	@param	duration The duration of the sequence.
-		 *	@param	static	 If true, this fires the internal tweens from a static call, rather than creating a Tween object.
 		 *	
 		 *	@return		ClassSequence
 		 */
-		public function buildSequence($target:Object, $property:String, $duration:Number, $static:Boolean = true):ClassSequence {
+		public function buildSequence($target:Object, $property:String, $duration:Number):ClassSequence {
 			var ns:ClassSequence = new ClassSequence(keyframes.tweenClass);
-			ns.staticCall = $static;
 			ns.overrides = {target:$target};
 			ns.pushArray(keyframes.createTweens($target, $property, $duration));
 			return ns;

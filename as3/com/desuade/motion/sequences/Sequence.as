@@ -167,7 +167,7 @@ package com.desuade.motion.sequences {
 		 */
 		public function advance($i:Object = null):void {
 			if(active){
-				if(!_manualAdvance && !(current is int)) current.removeEventListener(MotionEvent.ENDED, advance);
+				if(!_manualAdvance) current.removeEventListener(MotionEvent.ENDED, advance);
 				if(_position < length-1){
 					play(++_position);
 					dispatchEvent(new SequenceEvent(SequenceEvent.ADVANCED, {position:_position, sequence:this}));

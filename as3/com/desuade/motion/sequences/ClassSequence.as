@@ -53,11 +53,6 @@ package com.desuade.motion.sequences {
 		protected var _overrides:Object;
 		
 		/**
-		 *	If true, this calls the internal static tween methods instead of creating Objects for memory improvement.
-		 */
-		public var staticCall:Boolean = false;
-		
-		/**
 		 *	<p>This is a Sequence that only uses one class to create sequence items.</p>
 		 *	<p>All Config Objects passed in after the motionClass parametere will be added to the sequence.</p>
 		 *	
@@ -67,32 +62,6 @@ package com.desuade.motion.sequences {
 			super();
 			pushArray(args);
 			_motionClass = $motionClass;
-		}
-		
-		/**
-		 *	@private
-		 */
-		protected override function play($position:int):void {
-			Debug.output('motion', 40004, [$position]);
-			_position = $position;
-			if(staticCall && (motionClass == Tween || motionClass == BasicTween)){
-				var tt:* = this[_position];
-				if(tt is SequenceGroup || tt is Array) {
-					_current = itemCheck(tt);
-					current.start(this);
-					if(!_manualAdvance) current.addEventListener(MotionEvent.ENDED, advance, false, 0, false);
-				} else {
-					for (var p:String in _overrides) {
-						tt[p] = _overrides[p];
-					}
-					_current = motionClass['run'](tt['target'], tt['property'], tt['value'], tt['duration'], tt['ease'] || 'linear', tt['position'] || 0, (!_manualAdvance) ? advance : null);
-				}
-			} else {
-				_current = itemCheck(this[_position]);
-				if(!_manualAdvance) current.addEventListener(MotionEvent.ENDED, advance, false, 0, false);
-				if(_current is SequenceGroup) current.start(this);
-				else current.start();
-			}
 		}
 		
 		/**
@@ -235,6 +204,5 @@ package com.desuade.motion.sequences {
 			return totaldur;
 		}
 		
-
 	}
 }
