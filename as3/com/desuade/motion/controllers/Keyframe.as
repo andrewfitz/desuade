@@ -37,7 +37,7 @@ package com.desuade.motion.controllers {
 	 *  @author Andrew Fitzgerald
 	 *  @since  02.07.2009
 	 */
-	public class Keyframe extends Object {
+	public class Keyframe {
 		
 		/**
 		 *	<p>The value for the given property at this keyframe.</p>

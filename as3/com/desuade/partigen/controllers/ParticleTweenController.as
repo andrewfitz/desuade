@@ -38,7 +38,7 @@ package com.desuade.partigen.controllers {
 	 *  @author Andrew Fitzgerald
 	 *  @since  02.07.2009
 	 */
-	public class ParticleTweenController extends Object {
+	public class ParticleTweenController {
 		
 		/**
 		 *	The duration of the entire controller to last. The length of individual tweens changes dependent on this.

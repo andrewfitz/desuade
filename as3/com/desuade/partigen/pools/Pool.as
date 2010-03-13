@@ -37,7 +37,7 @@ package com.desuade.partigen.pools {
 	 *  @author Andrew Fitzgerald
 	 *  @since  07.05.2009
 	 */
-	public class Pool extends Object {
+	public class Pool {
 		
 		/**
 		 *	@private

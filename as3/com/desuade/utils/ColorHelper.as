@@ -33,7 +33,7 @@ package com.desuade.utils {
 	 *  @author Andrew Fitzgerald
 	 *  @since  18.04.2009
 	 */
-	public class ColorHelper extends Object {
+	public class ColorHelper {
 		
 		/**
 		 *	Converts a String-based hex value into a decimal

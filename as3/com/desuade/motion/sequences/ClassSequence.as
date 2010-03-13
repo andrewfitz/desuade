@@ -53,6 +53,11 @@ package com.desuade.motion.sequences {
 		protected var _overrides:Object;
 		
 		/**
+		 *	If true, this calls the internal static tween methods instead of creating Objects for memory improvement.
+		 */
+		public var staticCall:Boolean = false;
+		
+		/**
 		 *	<p>This is a Sequence that only uses one class to create sequence items.</p>
 		 *	<p>All Config Objects passed in after the motionClass parametere will be added to the sequence.</p>
 		 *	
@@ -62,6 +67,32 @@ package com.desuade.motion.sequences {
 			super();
 			pushArray(args);
 			_motionClass = $motionClass;
+		}
+		
+		/**
+		 *	@private
+		 */
+		protected override function play($position:int):void {
+			Debug.output('motion', 40004, [$position]);
+			_position = $position;
+			if(staticCall && (motionClass == Tween || motionClass == BasicTween)){
+				var tt:* = this[_position];
+				if(tt is SequenceGroup || tt is Array) {
+					_current = itemCheck(tt);
+					current.start(this);
+					if(!_manualAdvance) current.addEventListener(MotionEvent.ENDED, advance, false, 0, false);
+				} else {
+					for (var p:String in _overrides) {
+						tt[p] = _overrides[p];
+					}
+					_current = motionClass['run'](tt['target'], tt['property'], tt['value'], tt['duration'], tt['ease'] || 'linear', tt['position'] || 0, (!_manualAdvance) ? advance : null);
+				}
+			} else {
+				_current = itemCheck(this[_position]);
+				if(!_manualAdvance) current.addEventListener(MotionEvent.ENDED, advance, false, 0, false);
+				if(_current is SequenceGroup) current.start(this);
+				else current.start();
+			}
 		}
 		
 		/**
@@ -174,13 +205,20 @@ package com.desuade.motion.sequences {
 					start(r);
 					return;
 				} else {
-					var ni:* = itemCheck(this[r]);
-					if(ni is SequenceGroup){
+					if(this[r] is SequenceGroup){
+						var ni:* = itemCheck(this[r]);
 						for (var h:int = 0; h < ni.length; h++) {
-							var ni2:* = itemCheck(ni[h]);
-							ni2.target[ni2.config.property] = ni2.config.value;
+							for (var t:String in _overrides) {
+								ni[h][t] = _overrides[t];
+							}
+							ni[h].target[ni[h].property] = ni[h].value;
 						}
-					} else ni.target[ni.config.property] = ni.config.value;
+					} else {
+						for (var g:String in _overrides) {
+							this[r][g] = _overrides[g];
+						}
+						this[r].target[this[r].property] = this[r].value;
+					}
 				}
 				fti += durarr[r];
 			}

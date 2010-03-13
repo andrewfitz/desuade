@@ -37,7 +37,7 @@ package com.desuade.partigen.controllers {
 	 *  @author Andrew Fitzgerald
 	 *  @since  02.07.2009
 	 */
-	public dynamic class ParticlePhysicsController extends Object {
+	public dynamic class ParticlePhysicsController {
 		
 		/**
 		 *	The boolean flip (for cartesian reversal) value to be passed to the internal 'physics' object.

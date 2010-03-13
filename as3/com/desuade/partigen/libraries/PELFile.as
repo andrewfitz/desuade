@@ -170,6 +170,7 @@ package com.desuade.partigen.libraries {
 		 *	This loads the specified PEL file.
 		 *	
 		 *	@param	file	 A string to the location of the PEL file
+		 *	@param	shared	If the loaded SWC files should share their Classes or keep them in their own ApplicationDomain
 		 */
 		public function load($file:String, $shared:Boolean = true):void {
 			path = $file;

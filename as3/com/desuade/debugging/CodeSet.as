@@ -35,7 +35,7 @@ package com.desuade.debugging {
 	 *  @author Andrew Fitzgerald
 	 *  @since  18.04.2009
 	 */
-	public class CodeSet extends Object {
+	public class CodeSet {
 		
 		/**
 		 *	The name of the code set.

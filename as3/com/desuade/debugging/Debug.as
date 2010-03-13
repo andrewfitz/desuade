@@ -33,7 +33,7 @@ package com.desuade.debugging {
 	 *  @author Andrew Fitzgerald
 	 *  @since  18.04.2009
 	 */
-	public class Debug extends Object {
+	public class Debug {
 		
 		/**
 		 *	@private

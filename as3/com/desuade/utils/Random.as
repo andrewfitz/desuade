@@ -33,7 +33,7 @@ package com.desuade.utils {
 	 *  @author Andrew Fitzgerald
 	 *  @since  18.04.2009
 	 */
-	public class Random extends Object {
+	public class Random {
 		
 		/**
 		 *	The Random object's minimum value for the random range.
