@@ -93,7 +93,7 @@ package com.desuade.motion.tweens {
 		public static function run($target:Object, $property:String, $value:*, $duration:Number, $ease:* = 'linear', $position:Number = 0, $endfunc:Function = null):int {
 			var newval:Number = (typeof $value == 'string') ? $target[$property] + Number($value) : $value;
 			var pt:PrimitiveTween = BaseTicker.addItem(new PrimitiveTween($target, $property, newval, $duration*1000, makeEase($ease)));
-			pt.endFunc = function() {
+			pt.endFunc = function():void {
 				$endfunc();
 				BaseTicker.removeItem(pt.id);
 			}

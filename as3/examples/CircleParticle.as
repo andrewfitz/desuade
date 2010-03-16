@@ -1,8 +1,8 @@
 package {
 
-	import com.desuade.partigen.particles.*;
-
-	public dynamic class CircleParticle extends Particle {
+	import flash.display.*;
+	
+	public dynamic class CircleParticle extends Sprite {
 
 		public function CircleParticle() {
 			super();

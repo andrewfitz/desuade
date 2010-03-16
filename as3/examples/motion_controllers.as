@@ -1,7 +1,7 @@
 /*
 
 Desuade Motion Package (DMP) 1.1 MotionController Example
-http://desuade.com/
+http://desuade.com/dmp
 
 This .fla goes over how controllers work with the package.
 Understanding of the tween, sequencing, and physics classes is highly recommended.
@@ -135,14 +135,22 @@ package {
 		{
 			super();
 			
-				
+			
+			
 			/////////////////////////////////////////////////
+			//
 			//
 			//How to use: each block of code is a seperate example, with the start method commented out.
 			//Uncommenting this will show the resulting example in the compiled SWF.
+			//Go through each example and uncomment the lines, test the movie,
+			//then recomment the line and continue to the next demo.
+			//
 			//Note: Everything here you can easily copy and run in an FLA
+			//code was provided in this .as file for users without the Flash IDE.
+			//
 			//
 			/////////////////////////////////////////////////
+			
 			
 			
 			//Fla setup
@@ -176,14 +184,19 @@ package {
 			import com.desuade.motion.eases.*;
 			import com.desuade.motion.events.*;
 
-
+			
+			
+			
+			////
 			//basic tween with controller
 			var vc1:MotionController = new MotionController(target1, 'y', 2);
 			vc1.keyframes.end.value = 300;
 			vc1.keyframes.end.ease = 'easeOutBounce';
 			//vc1.start();
 			
-
+			
+			
+			//////
 			//controller to set a random beginning and end value
 			var vc2:MotionController = new MotionController(target1, 'y', 2);
 			vc2.keyframes.end.value = 300;
@@ -192,14 +205,18 @@ package {
 			vc2.keyframes.begin.spread = 0;
 			//vc2.start();
 			
-
+			
+			
+			//////
 			//using controller to set a random value (re-export to see it different each time)
 			var vc3:MotionController = new MotionController(target1, 'y', 2);
 			vc3.keyframes.begin.value = 0;
 			vc3.keyframes.begin.spread = 200;
 			//vc3.setStartValue();
 
-
+			
+			
+			//////
 			//controller with custom keyframes and showing XML
 			var vc4:MotionController = new MotionController(target1, 'x', 5);
 			vc4.keyframes.end.value = 400;
@@ -211,9 +228,12 @@ package {
 			//vc4.start();
 			//trace(v4x);
 			//var vc42:MotionController = new MotionController(target1).fromXML(v4x).start(); //this creates and starts a controller from XML
-
-
+			
+			
+			
+			//////
 			//controller with event and start at different keyframe
+			//v1.1 start at a given time
 			var vc5:MotionController = new MotionController(target1, 'x', 5);
 			vc5.keyframes.end.value = 400;
 			vc5.keyframes.add(new Keyframe(.4, 200));
@@ -225,8 +245,11 @@ package {
 			}
 			//vc5.start(); //starts it normally
 			//vc5.start('myframe'); //starts it at the given keyframe
-
-
+			//vc5.start('begin', 2.3); //starts it 2.3 seconds into playing (overrides the keyframe param)
+			
+			
+			
+			//////
 			//2 controllers with XML making random movement
 			//vc7 uses the startTime (v1.1) param to start the controller as if it's in the middle of running
 			var vc6:MotionController = new MotionController(target1, 'x', 10);
@@ -244,10 +267,11 @@ package {
 			vc7.keyframes.fromXML(vc6.keyframes.toXML());
 			//vc7.start('begin', 5.4);
 			//vc6.start();
-
-
+			
+			
+			
+			//////
 			//////color controllers
-
 			var cvc:MotionController = new MotionController(target1, null, 3, ColorKeyframeContainer);
 			cvc.keyframes.add(new Keyframe(.3, 'ff4444'));
 			cvc.keyframes.add(new Keyframe(.5, null));
@@ -256,6 +280,7 @@ package {
 			cvc.keyframes.end.value = 0xff4444;
 			cvc.keyframes.begin.extras.type = 'tint';
 			//cvc.start();
+
 
 
 			///////physics

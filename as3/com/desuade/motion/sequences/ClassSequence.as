@@ -131,7 +131,7 @@ package com.desuade.motion.sequences {
 			for (var t:int = 0; t < position; t++) {
 				parttime += durarr[t];
 			}
-			var pt = BaseTicker.getItem(current.pid);
+			var pt:* = BaseTicker.getItem(current.pid);
 			return parttime + (pt.duration - (getTimer()-pt.starttime)); 
 		}
 		

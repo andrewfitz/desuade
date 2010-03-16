@@ -81,13 +81,15 @@ package com.desuade.partigen.emitters {
 		}
 		
 		/**
-		 *	This starts the emitter. It also, by default, starts all the controllers managed by the EmitterController.
+		 *	<p>Starts the emitter and optionally the renderer. If you only want to emit once, or at your own rate, use emit()</p>
+		 *	<p>It also, by default, starts all the controllers managed by the EmitterController.</p>
 		 *	
 		 *	@param	prefetch	 Starts the emitter as if it's already been running for this duration (in seconds).
+		 *	@param	startRenderer	 This starts the renderer along with the emitter. Set this to false if you're managing renderers on your own.
 		 *	@param	startcontrollers	 This starts all MotionControllers managed by the EmitterController.
 		 */
-		public override function start($prefetch:Number = 0, $startcontrollers:Boolean = true):void {
-			super.start($prefetch);
+		public override function start($prefetch:Number = 0, $startRenderer:Boolean = true, $startcontrollers:Boolean = true):void {
+			super.start($prefetch, $startRenderer);
 			if($startcontrollers){
 				controllers.emitter.start();
 			}

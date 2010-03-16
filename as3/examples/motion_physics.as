@@ -1,7 +1,7 @@
 /*
 
-Desuade Motion Package (DMP) 1.0 Physics Example
-http://desuade.com/
+Desuade Motion Package (DMP) 1.1 Physics Example
+http://desuade.com/dmp
 
 This .fla goes over how physics works with the package.
 
@@ -55,13 +55,24 @@ package {
 		{
 			super();
 			
+						
+			
 			/////////////////////////////////////////////////
+			//
 			//
 			//How to use: each block of code is a seperate example, with the start method commented out.
 			//Uncommenting this will show the resulting example in the compiled SWF.
+			//Go through each example and uncomment the lines, test the movie,
+			//then recomment the line and continue to the next demo.
+			//
 			//Note: Everything here you can easily copy and run in an FLA
+			//code was provided in this .as file for users without the Flash IDE.
+			//
 			//
 			/////////////////////////////////////////////////
+			
+			
+
 			
 			//Fla setup
 			stop();
@@ -92,11 +103,17 @@ package {
 			//import physics class
 			import com.desuade.motion.physics.*;
 			import com.desuade.motion.events.*;
-
+			
+			
+			
+			//////
 			//basic velocity
 			var bp1:BasicPhysics = new BasicPhysics(target1, {property:'x', velocity:1});
 			//bp1.start();
-
+			
+			
+			
+			//////
 			//adding acceleration
 			var bp2:BasicPhysics = new BasicPhysics(target1, {property:'x', velocity:1, acceleration:.1});
 			//bp2.start();
@@ -105,17 +122,26 @@ package {
 			//var b2x:XML = bp2.toXML();
 			//trace(b2x.toXMLString());
 			//var bp22:BasicPhysics = new BasicPhysics(target1).fromXML(b2x).start(); //create and start physics from XML
-
+			
+			
+			
+			//////
 			//friction
 			var bp3:BasicPhysics = new BasicPhysics(target1, {property:'x', velocity:10, friction:3});
 			//bp3.start();
-
+			
+			
+			
+			//////
 			//x&y
 			var bp4:BasicPhysics = new BasicPhysics(target1, {property:'x', velocity:1, friction:.3});
 			var bp5:BasicPhysics = new BasicPhysics(target1, {property:'y', velocity:2, acceleration:-.1, flip:true});
 			//bp4.start();
 			//bp5.start();
-
+			
+			
+			
+			//////
 			//x&y with angle and events
 			var bp6:BasicPhysics = new BasicPhysics(target1, {property:'x', velocity:5, angle:300});
 			var bp7:BasicPhysics = new BasicPhysics(target1, {property:'y', velocity:5, acceleration:.1, angle:300, flip:true});
@@ -126,8 +152,10 @@ package {
 			}
 			//bp6.start();
 			//bp7.start();
-
-
+			
+			
+			
+			//////
 			//3Dish animation for FP 10 CS4 only
 			var t1p:BasicPhysics = new BasicPhysics(target1, {property:'x', velocity:0.1, acceleration:0.01});
 			//t1p.start();

@@ -1,13 +1,14 @@
 Desuade Library Change Log - http://desuade.com/
 ------------------------------------------------
 
-Motion Package 1.1 & Partigen 2.1 (2010/03/06)
+Motion Package 1.1 & Partigen 2.1 (2010/03/16)
 	Partigen:
 		-added: prefetching - allows you to start an emitter as if it's already been running
 		-added: XML support for Renderers in Emitters - allowing bitmap effect presets
 		-added: BitmapCanvas class for BitmapRenderer for easy management of BitmapRenderers
 		-added: emitter.particleBlendMode - blendmode for particles
 		-added: emitter.groupBitmap - lets particle groups be created as bitmaps
+		-added: emitters now automatically start their renderers on start()
 		-changed: emitter.particle can now be any class, and does not have to inherit from BasicParticle
 		-changed: emitter.start() now accepts the 'prefetch' parameter first
 		-changed: re-factored internal emit/createParticle methods
@@ -29,6 +30,7 @@ Motion Package 1.1 & Partigen 2.1 (2010/03/06)
 		-fixed: Tween.position bug
 		
 	Examples:
+		-added: examples for DMP 1.1 and Partigen 2.1
 		-fixed: lots of misc bugs from .fla->.as port
 		
 Motion Package 1.0 & Partigen 2.0 Master Release (2009/12/01)

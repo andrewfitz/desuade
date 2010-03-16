@@ -64,10 +64,13 @@ package com.desuade.partigen.renderers {
 		 *	This creates a BitmapCanvas that actually displays the particles from the BitmapRenderer.
 		 *	
 		 *	@param	renderer The BitmapRenderer to use.
+		 *	@param	x	 The x coord for the canvas
+		 *	@param	y	 The y coord for the canvas
 		 *	
 		 */
-		public function BitmapCanvas($renderer:Renderer = null) {
+		public function BitmapCanvas($renderer:Renderer = null, $x:Number = 0, $y:Number = 0) {
 			if($renderer != null) setRenderer($renderer);
+			x = $x, y = $y;
 			_isLivePreview = (parent != null && getQualifiedClassName(parent) == "fl.livepreview::LivePreviewParent");
 		}
 		

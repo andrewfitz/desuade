@@ -1,7 +1,7 @@
 /*
 
-Desuade Motion Package (DMP) 1.0 Tween Example
-http://desuade.com/
+Desuade Motion Package (DMP) 1.1 Tween Example
+http://desuade.com/dmp
 
 This .fla goes over how basic tweening works with the package.
 
@@ -23,7 +23,6 @@ Multi: this lets you tween multiple properties on a single target at the same ti
 Color: this uses a multitween to change the color transformation object on DisplayObjects
 
 
-
 ////Events////
 
 There are 3 events that all tweens call: STARTED, UPDATED, ENDED.
@@ -33,18 +32,21 @@ UPDATED: this gets broadcasted each time the value gets updated
 ENDED: this gets broadcasted when the tween ends
 
 
-
 ////Syntax////
 
 The standard syntax is to pass an object with the desired parameters to a new Tween().
-
 ex: var nt:Tween = new Tween(myobj, {property:'x', value:200, duration:2, ease:'easeOutBounce', delay:1, round:false, position:0, update:false, bezier:[100]});
 
 Creating a tween object will not start unless .start() is called on it, where as a static call will start it right away.
 
 MultiTweens allow you to pass an object of properties and values instead:
-
 ex: var nt:MultiTween = new MultiTween(myobj, {properties:{x:100, y:'50', alpha:.5}, value:200, duration:2, ease:'easeOutBounce', delay:1, round:false, position:0, update:false, bezier:[100]});
+
+
+/////
+In v1.1, you can now call BasicTweens and Tweens with a static method using run() in a strict syntax:
+Tween.run(target:Object, property:String, value:*, duration:Number, ease:* = 'linear', position:Number = 0, endfunc:Function = null);
+
 
 For more information, consult the docs on properties and syntax guidelines: http://api.desuade.com/
 
@@ -60,13 +62,24 @@ package {
 		{
 			super();
 			
+						
+			
 			/////////////////////////////////////////////////
+			//
 			//
 			//How to use: each block of code is a seperate example, with the start method commented out.
 			//Uncommenting this will show the resulting example in the compiled SWF.
+			//Go through each example and uncomment the lines, test the movie,
+			//then recomment the line and continue to the next demo.
+			//
 			//Note: Everything here you can easily copy and run in an FLA
+			//code was provided in this .as file for users without the Flash IDE.
+			//
 			//
 			/////////////////////////////////////////////////
+			
+			
+
 
 			//Fla setup
 			stop();
@@ -98,32 +111,60 @@ package {
 			import com.desuade.motion.tweens.*;
 			import com.desuade.motion.eases.*;
 
+
+
+			////
 			//BasicTween
 			var mbt:BasicTween = new BasicTween(target1, {property:'x', value:400, duration:3});
 			//mbt.start();
 
+
+
+			////
 			//Tween with delay and relative value
 			var mt:Tween = new Tween(target1, {property:'y', value:'-100', duration:2, delay:1, ease:'easeInBounce'});
 			//mt.start();
+			
 
+
+			////
+			//Tween as a static call with run()
+			function completecall(){
+				trace("Static tweens!");
+			}
+			//Tween.run(target1, 'x', '300',  2, 'easeOutSine', 0, completecall);
+			
+
+
+			////
 			//uses the previous tween to load it's XML (cloning the tween)
 			var mtx:XML = mt.toXML();
 			//trace(mtx.toXMLString());
 			//var mt2:Tween = new Tween(target1).fromXML(mtx).start();
+			
 
 
+			////
 			//Bezier tweens
 			var mtb1:Tween = new Tween(target1, {property:'x', value:'150', duration:3, bezier:[50, '-200'], ease:'easeOutQuint'});
 			//var mtb2:Tween = new Tween(target1, {property:'y', value:'-130', duration:3, bezier:[-100, 0,'150'], ease:'easeInOutSine'}).start(); //start it in the same line, start() returns the tween
 			//mtb1.start();
 
+
+
+			////
 			//MultiTween
 			var mmt:MultiTween = new MultiTween(target1, {properties:{x:'200', y:'-100', alpha:.5}, value:'50', duration:2, ease:'easeInQuad'});
 			//mmt.start();
 
+
+
+			////
 			//ColorTween
 			var mct:ColorTween = new ColorTween(target1, {value:'#FF0034', duration:2, amount:.8 });
 			//mct.start();
+
+
 
 			///////
 			//////Event demo

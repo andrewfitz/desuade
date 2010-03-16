@@ -1,6 +1,8 @@
 /*
 
-Desuade Motion Package (DMP) 1.0 Sequence Example
+Desuade Motion Package (DMP) 1.1 Sequence Example
+http://desuade.com/dmp
+
 This .fla goes over how basic sequencing works with the package.
 Working knowledge of the DMP tween classes is required.
 
@@ -31,6 +33,11 @@ Objects: passing regular objects {} into the sequence will create items from the
 Sequences: any sequences can be nested inside other sequences
 SequenceGroup: these can contain any of the above objects and will be ran together instead of sequental.
 Arrays: arrays get turned into SequenceGroups
+
+If BasicTween or Tween is used as the class, you can use the following in v1.1:
+-duration
+-startAtTime()
+-getPositionInTime()
 
 
 ////Syntax////
@@ -70,13 +77,24 @@ package {
 		{
 			super();
 			
+						
+			
 			/////////////////////////////////////////////////
+			//
 			//
 			//How to use: each block of code is a seperate example, with the start method commented out.
 			//Uncommenting this will show the resulting example in the compiled SWF.
+			//Go through each example and uncomment the lines, test the movie,
+			//then recomment the line and continue to the next demo.
+			//
 			//Note: Everything here you can easily copy and run in an FLA
+			//code was provided in this .as file for users without the Flash IDE.
+			//
 			//
 			/////////////////////////////////////////////////
+			
+			
+
 
 			//Fla setup
 			stop();
@@ -119,6 +137,7 @@ package {
 
 
 
+			////
 			//this is a basic example
 			var afms:ClassSequence = new ClassSequence(Tween,
 				{target:target1, property:'x', value:0},
@@ -133,6 +152,7 @@ package {
 
 
 
+			////
 			//this is a sequence that uses arrays (Sequence Groups) and Tweens
 			var fnms:Sequence = new Sequence(
 				[
@@ -145,6 +165,8 @@ package {
 
 
 
+
+			////
 			//this sequence uses the BasicColorTween class to change a mc's color.
 			//the basic class is used because there is no delay used or any advanced features needed
 			//use the standard ColorTween, MultiTween, and Tween classes if you're not sure, or require more standard properties
@@ -160,10 +182,10 @@ package {
 
 
 
+
 			/////////////////
 			//This is a complex example to show just how powerful the sequencer is
 			//This sequences Controllers, Tweens, Sequences, Arrays, SequenceGroups, and a ClassSequence
-
 			var dncs:ClassSequence = new ClassSequence(Tween,
 				{property:'y', value:300, duration:3, bezier:[-100, 500]},
 				{property:'x', value:'100', delay: 1, duration:1},
@@ -205,6 +227,24 @@ package {
 			);
 			//ns.manualAdvance = true; //if this is true, the sequence wont advance unless advance() is called
 			//ns.start();
+			
+			
+			
+			
+			////
+			//Shows new features in 1.1
+			var ndncs:ClassSequence = new ClassSequence(Tween,
+				{property:'y', value:300, duration:3, bezier:[-100, 500]},
+				{property:'x', value:'100', delay: 1, duration:1},
+				{property:'x', value:50, delay: 0, duration:1},
+				new SequenceGroup(
+				{property:'y', value:'-200', delay: .5, duration:2.5, ease:'easeOutBounce'},
+				{property:'alpha', value:.5, delay: 0, duration:2}
+				)
+			);
+			ndncs.overrides = {target:target1};
+			//trace(ndncs.duration);
+			//ndncs.startAtTime(3.2);
 			
 		}
 	

@@ -1,7 +1,7 @@
 /*
 
-Desuade Partigen 2 Introduction Examples
-http://desuade.com/
+Desuade Partigen 2.1 Introduction Examples
+http://desuade.com/partigen
 
 This .fla goes over the basics of how to use Emitters with Partigen and the Desuade Motion Package
 
@@ -123,13 +123,24 @@ package {
 		{
 			super();
 			
+						
+			
 			/////////////////////////////////////////////////
+			//
 			//
 			//How to use: each block of code is a seperate example, with the start method commented out.
 			//Uncommenting this will show the resulting example in the compiled SWF.
+			//Go through each example and uncomment the lines, test the movie,
+			//then recomment the line and continue to the next demo.
+			//
 			//Note: Everything here you can easily copy and run in an FLA
+			//code was provided in this .as file for users without the Flash IDE.
+			//
 			//
 			/////////////////////////////////////////////////
+			
+			
+
 
 			//you may want to disable debugging or set the level lower if the traces don't get overwhelming
 
@@ -150,7 +161,7 @@ package {
 			Debug.load(new DebugCodesPartigen()); //load partigen debug codes
 			Debug.load(new DebugCodesMotion()); //load motion codes
 			Debug.level = 50000;
-			Debug.enabled = true;
+			Debug.enabled = true; //comment this out or set it to false to disable debugging
 			//Debug.onlyCodes = true;
 
 			import com.desuade.partigen.emitters.*;
@@ -171,7 +182,10 @@ package {
 			addChild(t1);
 
 			var sr:Renderer = new StandardRenderer(t1, 'top'); //by default, emitters create nullpools and nullrenderes. let's make a StandardRenderer to share between all of them
+			
 
+
+			////
 			//basic example, using physics for motion
 			var em1:Emitter = new Emitter(); //create emitter
 			em1.x = em1.y = 100;
@@ -187,7 +201,10 @@ package {
 			em1.controllers.particle.x.velocity.keyframes.begin.value = 5;
 			em1.controllers.particle.x.acceleration.keyframes.flatten(0.1); //makes the acceleration controller flat, which sets a steady accel
 			//em1.start();
+			
 
+
+			////
 			//example using tweening for particle motion and common properties, with events
 			var em2:Emitter = new Emitter();
 			em2.x = em2.y = 100;
@@ -210,7 +227,10 @@ package {
 				trace(o.data.particle.name + " was born");
 			}
 			//em2.start();
+			
 
+
+			////
 			//the same example as above, but taking advantage of spread and burst, also using the SweepPool
 			var em3:Emitter = new Emitter();
 			em3.x = em3.y = 100;
@@ -226,7 +246,10 @@ package {
 			em3.controllers.particle.addTween('x').setSingleTween('0', '0', 300, '50', 'easeOutBounce');
 			em3.controllers.particle.addTween('y').setSingleTween('0', '0', '200', '0');
 			//em3.start();
+			
 
+
+			////
 			//color example with grouping
 			var em4:Emitter = new Emitter();
 			em4.x = em4.y = 100;
@@ -242,8 +265,10 @@ package {
 			em4.controllers.particle.addTween('x').setSingleTween('0', '0', 300, '0', 'easeOutBounce');
 			em4.controllers.particle.addTween('y').setSingleTween('0', '0', '200', '50');
 			//em4.start();
+			
 
 
+			////
 			//example taking full advantage of controller keyframes
 			var em5:Emitter = new Emitter();
 			em5.x = em5.y = 100;
@@ -275,7 +300,10 @@ package {
 			e5pc.addPhysics('rotation');
 			e5pc.rotation.velocity.keyframes.begin.value = 1;
 			//em5.start();
+			
 
+
+			////
 			//demos emitter controllers and physics angle
 			var em6:Emitter = new Emitter();
 			em6.x = 100;
@@ -297,7 +325,10 @@ package {
 			em6.controllers.emitter.addTween('y', 5).setSingleTween('0', '0', 200, '100', 'easeOutBounce');
 			em6.controllers.emitter.addTween('angle', 10).setSingleTween('0', 0, 360, '0');
 			//em6.start();
+			
 
+
+			////
 			//this example clones the 5th emitter with XML
 			var e5x:XML = em5.toXML();
 			//trace(e5x);
@@ -306,24 +337,22 @@ package {
 			em7.y = 50;
 			em7.renderer = sr;
 			//em7.start();
+			
 
-			//this example creates an emitter from XML and shows how to use the BitmapRenderer
-			var t2:MovieClip = new MovieClip(); //create an empty movieclip to hold duplicated bitmaps
-			addChild(t2); //add it to the display
-			t2.x = -250;
-			t2.y = 0;
 
-			var canvas:BitmapData = new BitmapData(stage.stageWidth+300, stage.stageHeight, true, 0); //create a new bitmapdata object
-			addChild(new Bitmap(canvas)); //show this on the stage
-
-			t2.addChild(new Bitmap(canvas)); //use the same bitmapdata for 2 other clips
-
-			var mbr = new BitmapRenderer(canvas, 'bottom'); //create new BitmapRenderer spawing particles from the bottom
+			////
+			//Updated for v2.1
+			//this example creates an emitter from XML and shows how to use the BitmapRenderer/BitmapCanvas
+			//Note: with v2.1 you can also include Renderers in XML, so this example can also be done that way
+			var mbr:BitmapRenderer = new BitmapRenderer(stage.stageWidth, stage.stageHeight, 'bottom'); //create new BitmapRenderer spawing particles from the bottom
 			mbr.fade = 0.8; //enable a 'trail' for the particles
 			mbr.fadeBlur = 8; // add a nice blur to the trails to soften them
+			
+			addChild(new BitmapCanvas(mbr)); //add a new BitmapCanvas to the stage, passing the BitmapRenderer
+			addChild(new BitmapCanvas(mbr, 300, 50)); //same, but passing the BitmapRenderer, x, y
 
 			var em8:Emitter = new Emitter();
-			em8.x = 250;
+			em8.x = 0;
 			em8.renderer = mbr;
 			var emmx:XML = 
 			<Emitter particle="CircleParticle" eps="20" burst="8" group="GroupParticle" groupAmount="3" groupProximity="50" life="1.2" lifeSpread="1.6" angle="120" angleSpread="*50">
@@ -380,8 +409,39 @@ package {
 			  </Controllers>
 			</Emitter>;
 			em8.fromXML(emmx); //load the XML
-			//em8.start(); //start the emitter
-			//mbr.start(); //we have to start the BitmapRenderer to output to the bitmapdata
+			//em8.start(); //start the emitter (and the BitmapRenderer)
+			//you may want to turn off debugging for this one!
+			
+			//NOTE:
+			//By calling start on the emitter, it will automatically start the renderer.
+			//If you're using multiple emitters on the same renderer, or manage it yourself, you can start the renderer manually.
+			//mbr.start(); //use this to manually start the BitmapRenderer to output to the bitmapdata
+
+
+
+
+			////
+			//this examples shows the new features introduced in Partigen 2.1
+			//these include prefetching, particleBlendMode, and groupBitmap
+			var em9:Emitter = new Emitter();
+			em9.particle = CircleParticle;
+			em9.renderer = sr;
+			em9.eps = 5;
+			em9.burst = 2;
+			em9.groupAmount = 100; //in 2.1, group classes are removed and are integrated into Particle classes
+			em9.groupProximity = 100;
+			//uncomment this below to see the performance increase when using large groupAmount of vector particles
+			//em9.groupBitmap = true; //this takes the particle and turns it into a Bitmap, using that instead
+			em9.particleBlendMode = 'subtract'; //this sets the blendmode for all the particles created
+			em9.x = 40;
+			em9.y = 150;
+			em9.life = 2;
+			em9.lifeSpread = 4;
+			em9.controllers.particle.addBeginValue('x', '0', '200');
+			em9.controllers.particle.x.keyframes.end.value = '200';
+			em9.controllers.particle.x.keyframes.end.ease = 'easeInOutBounce';
+			//em9.start(3); //this starts the emitter as if it's already been running for the given amount of time
+			//you may want to turn off debugging for this one!
 			
 		}
 	
