@@ -75,7 +75,7 @@ package com.desuade.partigen.emitters {
 		 */
 		public function Emitter() {
 			super();
-			_particleClass = Particle;
+			particleClass = Particle;
 			controllers.particle = new ParticleController();
 			controllers.emitter = new EmitterController(this);
 		}
@@ -163,7 +163,7 @@ package com.desuade.partigen.emitters {
 		 */
 		public override function reset():void {
 			super.reset();
-			angle = 0, angleSpread = '0', _particleClass = Particle;
+			angle = 0, angleSpread = '0', particleClass = Particle;
 			controllers = {};
 			controllers.particle = new ParticleController();
 			controllers.emitter = new EmitterController(this);

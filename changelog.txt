@@ -10,10 +10,12 @@ Motion Package 1.1 & Partigen 2.1 (2010/03/16)
 		-added: emitter.groupBitmap - lets particle groups be created as bitmaps
 		-added: emitters now automatically start their renderers on start()
 		-changed: emitter.particle can now be any class, and does not have to inherit from BasicParticle
+		-changed: emitter.particleClass (and groupAmount=0) is the same as old style emitter.particle
 		-changed: emitter.start() now accepts the 'prefetch' parameter first
 		-changed: re-factored internal emit/createParticle methods
 		-changed: BitmapRenderer no longer asks for BitmapData (not backwards-compatible)
 		-changed: BasicParticle and Particle classes inherently use groups
+		-changed: emitter.groupAmount now defaults to 1
 		-changed: Pools now reflect the new particle group system, and are simplified
 		-removed: IDEEmitter renderToParent - since new XML renderer feature does this automatically
 		-removed: BasicGroupParticle, GroupParticle

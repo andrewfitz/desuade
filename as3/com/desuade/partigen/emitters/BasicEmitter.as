@@ -70,10 +70,17 @@ package com.desuade.partigen.emitters {
 		public var burst:int = 1;
 		
 		/**
-		 *	<p>This is the partcle class to be used to create new particles from. This can be an AS3 class, or a library MC.</p>
-		 *	<p>As of v2.1, this can be any class, and does NOT have to inherit BasicParticle.</p>
+		 *	<p>This is the class used to create new particles from. This can be an AS3 class, or a library MC. This is the source (image, movieclip, text, etc) used to be added as a child onto the actual particleClass.</p>
+		 *	<p>As of v2.1, this can be any class, and does NOT have to inherit BasicParticle. If you have custom classes that do, use particleClass instead.</p>
 		 */
 		public var particle:Class;
+		
+		/**
+		 *	<p>This is the base class to used for all created particles.</p>
+		 *	<p>When the pools create particle objects, they use this. The 'particle' property, is the actual class used for particles you see.</p>
+		 *	<p>This should only be used by classes that inherit BasicParticle or Particle. Most of the time you should not need to change this.</p>
+		 */
+		public var particleClass:Class = BasicParticle;
 		
 		/**
 		 *	<p>This defines the blendmode for each particle created.</p>
@@ -133,11 +140,6 @@ package com.desuade.partigen.emitters {
 		 *	@private
 		 */
 		protected var _updatetimer:Timer;
-		
-		/**
-		 *	@private
-		 */
-		protected var _particleClass:Class = BasicParticle;
 		
 		/**
 		 *	@private
@@ -296,7 +298,7 @@ package com.desuade.partigen.emitters {
 		 *	@private
 		 */
 		protected function createParticle($life:Number = 0, $clife:Number = 0):BasicParticle {
-			var np:BasicParticle = pool.addParticle(_particleClass);
+			var np:BasicParticle = pool.addParticle(particleClass);
 			np.init(this);
 			np.blendMode = particleBlendMode;
 			if(groupBitmap) np.makeGroupBitmap(_particlebitmap, groupAmount, groupProximity);
@@ -405,7 +407,7 @@ package com.desuade.partigen.emitters {
 		 *	This resets the emitter to the defaults
 		 */
 		public function reset():void {
-			_particleClass = BasicParticle, eps = 1, burst = 1;
+			particleClass = BasicParticle, eps = 1, burst = 1;
 			groupAmount = 0, groupProximity = 0, life = 0, lifeSpread = "0";
 			_particlebitmap = null;
 		}
