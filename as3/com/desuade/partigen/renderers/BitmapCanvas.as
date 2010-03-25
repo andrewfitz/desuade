@@ -41,9 +41,9 @@ package com.desuade.partigen.renderers {
 	public class BitmapCanvas extends Sprite {
 		
 		/**
-		 *	The renderer used to get the bitmapdata from.
+		 *	@private
 		 */
-		public var renderer:Renderer;
+		protected var _renderer:Renderer;
 		
 		/**
 		 *	The internal bitmap.
@@ -70,8 +70,16 @@ package com.desuade.partigen.renderers {
 		 */
 		public function BitmapCanvas($renderer:Renderer = null, $x:Number = 0, $y:Number = 0) {
 			if($renderer != null) setRenderer($renderer);
-			x = $x, y = $y;
+			if($x != 0) x = $x
+			if($y != 0) y = $y;
 			_isLivePreview = (parent != null && getQualifiedClassName(parent) == "fl.livepreview::LivePreviewParent");
+		}
+		
+		/**
+		 *	The renderer used to get the bitmapdata from.
+		 */
+		public function get renderer():Renderer{
+			return _renderer;
 		}
 		
 		/**
@@ -80,14 +88,14 @@ package com.desuade.partigen.renderers {
 		 *	@param	renderer The BitmapRenderer to use.
 		 */
 		public function setRenderer($renderer:Renderer):void {
-			renderer = $renderer;
+			_renderer = $renderer;
 			setBitmap();
-			renderer.addEventListener(RenderEvent.RESIZED, setBitmap, false, 0, false);
+			_renderer.addEventListener(RenderEvent.RESIZED, setBitmap, false, 0, false);
 		}
 		
 		protected function setBitmap(o:Object = null):void {
 			if(bitmap != null) this.removeChild(bitmap);
-			bitmap = new Bitmap(renderer.bitmapdata);
+			bitmap = new Bitmap(_renderer.bitmapdata);
 			this.addChild(bitmap);
 		}
 		
@@ -96,7 +104,7 @@ package com.desuade.partigen.renderers {
 		 */
 		[Inspectable(name = "Show Indicator", defaultValue = true, variable = "showIndicator", type = "Boolean")]
 		public function set showIndicator($value:Boolean):void {
-			indicator.visible = $value;
+			if(!_isLivePreview) indicator.visible = $value;
 		}
 		
 		/**

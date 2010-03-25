@@ -1,6 +1,16 @@
 Desuade Library Change Log - http://desuade.com/
 ------------------------------------------------
 
+Partigen 2.1.1
+	-fixed: BitmapCanvas resetting coords
+	-fixed: IDEEmitter not using the renderer from XML
+	-fixed: IDEEmitter not including all renderers
+	-changed: IDEEmitters/BitmapCanvas will still show in IDE (livepreview) when show indicator is false
+	-changed: IDEEmitter removed rendertoparent param
+	-changed: BitmapCanvas.renderer now read only
+	-changed: Bitmap fadeblur is now an int (no sub pixel blurs needed)
+
+
 Motion Package 1.1 & Partigen 2.1 (2010/03/16)
 	Partigen:
 		-added: prefetching - allows you to start an emitter as if it's already been running

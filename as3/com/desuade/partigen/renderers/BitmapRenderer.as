@@ -150,14 +150,14 @@ package com.desuade.partigen.renderers {
 		/**
 		 *	The amount of blur to perform on the fade.
 		 */
-		public function get fadeBlur():Number{
+		public function get fadeBlur():int{
 			return _blur.blurX;
 		}
 		
 		/**
 		 *	@private
 		 */
-		public function set fadeBlur($value:Number):void {
+		public function set fadeBlur($value:int):void {
 			_blur.blurX = _blur.blurY = $value;
 		}
 		

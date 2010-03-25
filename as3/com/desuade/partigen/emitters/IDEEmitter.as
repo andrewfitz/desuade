@@ -56,11 +56,6 @@ package com.desuade.partigen.emitters {
 		/**
 		 *	@private
 		 */
-		protected var _renderToParent:Boolean = true;
-		
-		/**
-		 *	@private
-		 */
 		protected var _oldang:Array = ['n', 'n'];
 		
 		/**
@@ -72,6 +67,11 @@ package com.desuade.partigen.emitters {
 		 *	@private
 		 */
 		protected var _isLivePreview:Boolean;
+		
+		/**
+		 *	@private
+		 */
+		protected var renderers:Array = [NullRenderer, StandardRenderer, BitmapRenderer];
 		
 		/**
 		 *	Creates a new IDEEmitter (usually from a component)
@@ -87,7 +87,7 @@ package com.desuade.partigen.emitters {
 		 */
 		[Inspectable(name = "Config XML", defaultValue = "", variable = "config", type = "String")]
 		public function set config($value:String):void {
-			if($value != "") fromXML(new XML($value));
+			if($value != "") fromXML(new XML($value), true, true);
 		}
 		
 		/**
@@ -118,7 +118,7 @@ package com.desuade.partigen.emitters {
 		 */
 		[Inspectable(name = "Show Indicator", defaultValue = true, variable = "showIndicator", type = "Boolean")]
 		public function set showIndicator($value:Boolean):void {
-			indicator.visible = $value;
+			if(!_isLivePreview) indicator.visible = $value;
 		}
 		
 		/**
