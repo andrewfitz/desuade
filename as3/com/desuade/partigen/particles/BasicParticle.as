@@ -63,6 +63,16 @@ package com.desuade.partigen.particles {
 		/**
 		 *	@private
 		 */
+		protected var _renderer;
+		
+		/**
+		 *	@private
+		 */
+		protected var _pool;
+		
+		/**
+		 *	@private
+		 */
 		protected var _id:int;
 		
 		/**
@@ -89,8 +99,7 @@ package com.desuade.partigen.particles {
 		 *	@private
 		 */
 		public function init($emitter:BasicEmitter):void {
-			_emitter = $emitter;
-			_id = _count++;
+			_emitter = $emitter, _renderer = $emitter.renderer, _pool = $emitter.pool, _id = _count++;
 			Debug.output('partigen', 50001, [id]);
 		}
 		
@@ -158,8 +167,8 @@ package com.desuade.partigen.particles {
 			}
 			_emitter.dispatchDeath(this);
 			Debug.output('partigen', 50002, [id]);
-			_emitter.renderer.removeParticle(this);
-			_emitter.pool.removeParticle(this.id);
+			_renderer.removeParticle(this);
+			_pool.removeParticle(this.id);
 		}
 		
 		/**

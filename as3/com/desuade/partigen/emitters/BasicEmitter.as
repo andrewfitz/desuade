@@ -352,8 +352,6 @@ package com.desuade.partigen.emitters {
 				txml.children()[0].@order = renderer.order;
 			}
 			if(rt == "BitmapRenderer"){
-				txml.children()[0].@width = renderer.bitmapdata.width;
-				txml.children()[0].@height = renderer.bitmapdata.height;
 				txml.children()[0].@fade = renderer.fade;
 				txml.children()[0].@fadeBlur = renderer.fadeBlur;
 			}
@@ -365,7 +363,7 @@ package com.desuade.partigen.emitters {
 		 *	
 		 *	@param	xml	 The XML object to use to configure the emitter
 		 *	@param	reset	 Resets the emitter before applying XML
-		 *	@param	renderer	If true, this creates (and overwrites) the emitter's renderer with one from XML
+		 *	@param	renderer	If true, this creates (and overwrites) the emitter's renderer with one from XML. If this is a BitmapRenderer, be sure to call resize(width, height) on it after the XML.
 		 *	
 		 *	@return		The emitter object (for chaining)
 		 */
@@ -388,11 +386,11 @@ package com.desuade.partigen.emitters {
 						if(rt == "NullRenderer"){
 							renderer = new contclass();
 						} else if(rt == "StandardRenderer"){
-							renderer = new contclass(this.parent, $xml.Renderer.@order);
+							renderer = new contclass(this.parent, ($xml.Renderer.@order != undefined) ? String($xml.Renderer.@order) : null);
 						} else if(rt == "BitmapRenderer"){
-							renderer = new contclass($xml.Renderer.@width, $xml.Renderer.@height, $xml.Renderer.@order);
-							renderer.fade = $xml.Renderer.@fade;
-							renderer.fadeBlur = $xml.Renderer.@fadeBlur;
+							renderer = new contclass(1, 1, ($xml.Renderer.@order != undefined) ? String($xml.Renderer.@order) : null);
+							if($xml.Renderer.@fade != undefined) renderer.fade = Number($xml.Renderer.@fade);
+							if($xml.Renderer.@fadeBlur != undefined) renderer.fadeBlur = int($xml.Renderer.@fadeBlur);
 						}
 					}
 				}

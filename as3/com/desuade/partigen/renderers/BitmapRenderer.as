@@ -170,7 +170,7 @@ package com.desuade.partigen.renderers {
 			} else {
 				_offbitmap.fillRect(bitmapdata.rect, 0x00000000);
 			}
-			if(fadeBlur != 0) _offbitmap.applyFilter(_offbitmap, _offbitmap.rect, _zeroPoint, _blur);
+			if(fadeBlur != 0 && fade != 0) _offbitmap.applyFilter(_offbitmap, _offbitmap.rect, _zeroPoint, _blur);
 			_offbitmap.draw(target);
 			renderfunc(_offbitmap);
 			bitmapdata.copyPixels(_offbitmap, _offbitmap.rect, _zeroPoint);

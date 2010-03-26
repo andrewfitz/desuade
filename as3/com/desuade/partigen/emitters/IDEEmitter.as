@@ -64,6 +64,12 @@ package com.desuade.partigen.emitters {
 		public var indicator:MovieClip;
 		
 		/**
+		 *	This is the prefetch time used when automatically starting the emitter.
+		 */
+		[Inspectable(name = "Prefetch Time", defaultValue = 0, variable = "prefetchTime", type = "Number")]
+		public var prefetchTime:Number = 0;
+		
+		/**
 		 *	@private
 		 */
 		protected var _isLivePreview:Boolean;
@@ -103,7 +109,7 @@ package com.desuade.partigen.emitters {
 		[Inspectable(name = "Start Automatically", defaultValue = true, variable = "autoStart", type = "Boolean")]
 		public function set autoStart($value:Boolean):void {
 			_autoStart = $value;
-			if($value && !_isLivePreview) start();
+			if($value && !_isLivePreview) start(prefetchTime);
 		}
 		
 		/**

@@ -2,9 +2,15 @@ Desuade Library Change Log - http://desuade.com/
 ------------------------------------------------
 
 Partigen 2.1.1
+	-added: IDEEmitter.prefetchTime
+	-fixed: Emitter.fromXML renderers not having attributes
+	-fixed: Emitter.from/toXML not converting renderer values correctly
+	-fixed: Particle would not remove itself from renderer/pool if it was changed before death
+	-fixed: BitmapRenderer applying blur when fade = 0
 	-fixed: BitmapCanvas resetting coords
 	-fixed: IDEEmitter not using the renderer from XML
 	-fixed: IDEEmitter not including all renderers
+	-changed: BitmapRenderer doesn't need sizes, use resize() after XML load
 	-changed: IDEEmitters/BitmapCanvas will still show in IDE (livepreview) when show indicator is false
 	-changed: IDEEmitter removed rendertoparent param
 	-changed: BitmapCanvas.renderer now read only
