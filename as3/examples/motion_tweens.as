@@ -172,7 +172,7 @@ package {
 
 			//uncomment this block for the whole demo
 
-			/*
+			import flash.events.MouseEvent;
 			import com.desuade.motion.events.*;
 
 			//creates a new tween and adds listeners
@@ -182,13 +182,17 @@ package {
 			cth.start();
 
 			//sets the starting position when the tween starts
+			//since start event is a TweenEvent, we use the 'tween' value in the data object
 			function startset(i:Object){
-				i.data.tween.config.target.y = 50;
+				i.data.tween.target.y = 50;
 			}
 
-			//traces the current position on update
+			//traces the current position on update from the tween
+			//since Tweens inherit the BaseBasic class, we can use both 'basic' and 'primitive'
+			//values in the event's data object, instead of 'tween'
+			//basic refers to the actual Tween object, and we can get the position from that
 			function pfunc1(i:Object){
-				trace("Pos: " + i.data.tween.position);
+				trace("Pos: " + i.data.basic.position);
 			}
 
 			//clicking on the box will start/stop (play/pause) the tween
@@ -213,7 +217,7 @@ package {
 				}
 			}
 
-			*/
+			
 			
 		}
 	

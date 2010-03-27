@@ -2,6 +2,7 @@ Desuade Library Change Log - http://desuade.com/
 ------------------------------------------------
 
 Partigen 2.1.1
+	-added: BitmapRenderer.predraw (choose to draw the particle before or after filters)
 	-added: IDEEmitter.prefetchTime
 	-fixed: Emitter.fromXML renderers not having attributes
 	-fixed: Emitter.from/toXML not converting renderer values correctly
@@ -10,6 +11,8 @@ Partigen 2.1.1
 	-fixed: BitmapCanvas resetting coords
 	-fixed: IDEEmitter not using the renderer from XML
 	-fixed: IDEEmitter not including all renderers
+	-fixed: Examples: motion_tween event for last demo, and partigen em2 event demo
+	-changed: groupBitmap now uses the original positioning unless proximity is > 0
 	-changed: BitmapRenderer doesn't need sizes, use resize() after XML load
 	-changed: IDEEmitters/BitmapCanvas will still show in IDE (livepreview) when show indicator is false
 	-changed: IDEEmitter removed rendertoparent param

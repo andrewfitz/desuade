@@ -207,6 +207,7 @@ package {
 			////
 			//example using tweening for particle motion and common properties, with events
 			var em2:Emitter = new Emitter();
+			em2.enableEvents = true; //we must enable the events (saving performance when false)
 			em2.x = em2.y = 100;
 			em2.particle = CircleParticle;
 			em2.renderer = sr;

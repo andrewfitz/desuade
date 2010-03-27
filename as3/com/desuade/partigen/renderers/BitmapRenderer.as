@@ -61,6 +61,11 @@ package com.desuade.partigen.renderers {
 		public var renderfunc:Function = nullfunc;
 		
 		/**
+		 *	If true, this draws the particles first, then applies the fade/fadeblur, then the renderfunc. If false, it draws the particles after (default).
+		 */
+		public var predraw:Boolean = false;
+		
+		/**
 		 *	@private
 		 */
 		protected var _offbitmap:BitmapData;
@@ -170,9 +175,10 @@ package com.desuade.partigen.renderers {
 			} else {
 				_offbitmap.fillRect(bitmapdata.rect, 0x00000000);
 			}
+			if(predraw) _offbitmap.draw(target);
 			if(fadeBlur != 0 && fade != 0) _offbitmap.applyFilter(_offbitmap, _offbitmap.rect, _zeroPoint, _blur);
-			_offbitmap.draw(target);
 			renderfunc(_offbitmap);
+			if(!predraw) _offbitmap.draw(target);
 			bitmapdata.copyPixels(_offbitmap, _offbitmap.rect, _zeroPoint);
 		}
 	

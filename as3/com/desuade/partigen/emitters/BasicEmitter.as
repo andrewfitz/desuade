@@ -147,6 +147,11 @@ package com.desuade.partigen.emitters {
 		protected var _particlebitmap:BitmapData;
 		
 		/**
+		 *	@private
+		 */
+		protected var _particleOrigin:Point = new Point(0,0);
+		
+		/**
 		 *	<p>This creates a new BasicEmitter.</p>
 		 *	<p>This emitter does not have any controllers, and only offers basic emission and event functionality.</p>
 		 */
@@ -301,7 +306,7 @@ package com.desuade.partigen.emitters {
 			var np:BasicParticle = pool.addParticle(particleClass);
 			np.init(this);
 			np.blendMode = particleBlendMode;
-			if(groupBitmap) np.makeGroupBitmap(_particlebitmap, groupAmount, groupProximity);
+			if(groupBitmap) np.makeGroupBitmap(_particlebitmap, groupAmount, groupProximity, _particleOrigin);
 			else np.makeGroup(particle, groupAmount, groupProximity);
 			np.x = this.x;
 			np.y = this.y;
@@ -321,6 +326,7 @@ package com.desuade.partigen.emitters {
 			var psource:DisplayObject = new particle();
 			var smatx:Matrix = psource.transform.concatenatedMatrix;
 			var srect:Rectangle = psource.transform.pixelBounds;
+			_particleOrigin = new Point(srect.x/smatx.a, srect.y/smatx.a)
 			var smx:Matrix = new Matrix();
 			smx.translate(-((srect.x/smatx.a)-$padding), -((srect.y/smatx.a)-$padding));
 			_particlebitmap = new BitmapData(psource.width+($padding*2), psource.height+($padding*2), true, 0);
@@ -354,6 +360,7 @@ package com.desuade.partigen.emitters {
 			if(rt == "BitmapRenderer"){
 				txml.children()[0].@fade = renderer.fade;
 				txml.children()[0].@fadeBlur = renderer.fadeBlur;
+				txml.children()[0].@predraw = XMLHelper.xmlize(renderer.predraw);
 			}
 			return txml;
 		}
@@ -391,6 +398,7 @@ package com.desuade.partigen.emitters {
 							renderer = new contclass(1, 1, ($xml.Renderer.@order != undefined) ? String($xml.Renderer.@order) : null);
 							if($xml.Renderer.@fade != undefined) renderer.fade = Number($xml.Renderer.@fade);
 							if($xml.Renderer.@fadeBlur != undefined) renderer.fadeBlur = int($xml.Renderer.@fadeBlur);
+							if($xml.Renderer.@predraw != undefined) renderer.predraw = XMLHelper.dexmlize($xml.Renderer.@predraw);
 						}
 					}
 				}
