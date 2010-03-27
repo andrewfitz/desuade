@@ -82,6 +82,15 @@ package com.desuade.partigen.renderers {
 		}
 		
 		/**
+		 *	This removes all current particles from the renderer. Note: all the particle still exist and run in memory, unless you remove them in their pool.
+		 */
+		public function removeAllParticles():void {
+			while(target.numChildren > 0) {
+				target.removeChildAt(0);
+			}
+		}
+		
+		/**
 		 *	@inheritDoc
 		 */
 		public override function removeParticle($p:BasicParticle):void {

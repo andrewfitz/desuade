@@ -202,18 +202,16 @@ package com.desuade.partigen.emitters {
 		 *	Starts the emitter and optionally the renderer. If you only want to emit once, or at your own rate, use emit()
 		 *	
 		 *	@param	prefetch	 Starts the emitter as if it's already been running for this duration in seconds.
-		 *	@param	startRenderer	 This starts the renderer along with the emitter. Set this to false if you're managing renderers on your own.
 		 *	@param	runcontrollers	 This does nothing for BasicEmitters, and is only used for emitter classes with controllers.
 		 *	
 		 *	@see	#emit()
 		 */
-		public function start($prefetch:Number = 0, $startRenderer:Boolean = true, $runcontrollers:Boolean = true):void {
+		public function start($prefetch:Number = 0, $runcontrollers:Boolean = true):void {
 			if(!_active){
 				if(groupBitmap) createParticleBitmap();
 				_active = true;
 				if($prefetch > 0) prefetch($prefetch);
 				setTimer(true);
-				if($startRenderer) renderer.start();
 			}
 		}
 		

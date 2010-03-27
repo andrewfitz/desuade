@@ -66,20 +66,6 @@ package com.desuade.partigen.renderers {
 		public function removeParticle($p:BasicParticle):void {
 			Debug.output('partigen', 40004, [$p.id]);
 		}
-		
-		/**
-		 *	Starts the renderer (if needed).
-		 */
-		public function start():void {
-			//
-		}
-		
-		/**
-		 *	Stops the renderer (if needed).
-		 */
-		public function stop():void {
-			//
-		}
 	
 	}
 

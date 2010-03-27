@@ -73,7 +73,17 @@ package com.desuade.partigen.renderers {
 		/**
 		 *	@private
 		 */
-		protected var _zeroPoint:Point;
+		protected var _active:Boolean = false;
+		
+		/**
+		 *	@private
+		 */
+		protected var _automagic:Boolean = false;
+		
+		/**
+		 *	This is a Point for the offset of the bitmapdata.
+		 */
+		public var offset:Point = new Point(0, 0);
 		
 		/**
 		 *	@private
@@ -91,29 +101,50 @@ package com.desuade.partigen.renderers {
 		 *	@param	width	The width of the Bitmap.
 		 *	@param	height	The height of the Bitmap.
 		 *	@param	order	The visual stacking order for new particles to be created – 'top', 'bottom', or 'random'.
+		 *	@param	automagic	If the renderer should start in automagic mode (starts/stops renderer based on need).
 		 */
-		public function BitmapRenderer($width:int, $height:int, $order:String = 'top') {
+		public function BitmapRenderer($width:int, $height:int, $order:String = 'top', $automagic:Boolean = true) {
 			super(new Sprite(), $order);
 			bitmapdata = new BitmapData($width, $height, true, 0);
 			_offbitmap = new BitmapData(bitmapdata.width, bitmapdata.height, true, 0);
-			_zeroPoint = new Point(0, 0);
+			if($automagic) automagicModeStart();
+		}
+		
+		/**
+		 *	If the renderer is running.
+		 */
+		public function get active():Boolean{
+			return _active;
+		}
+		
+		/**
+		 *	If the renderer is currently running in automagic mode.
+		 */
+		public function get automagic():Boolean { 
+			return _automagic; 
 		}
 		
 		/**
 		 *	Starts the renderer writing to the BitmapData.
 		 */
-		public override function start():void {
-			_offbitmap = new BitmapData(bitmapdata.width, bitmapdata.height, true, 0);
-			_offbitmap.copyPixels(bitmapdata, bitmapdata.rect, _zeroPoint);
-			BaseTicker.addEventListener(MotionEvent.UPDATED, render);
+		public function start():void {
+			if(!active){
+				_active = true;
+				_offbitmap = new BitmapData(bitmapdata.width, bitmapdata.height, true, 0);
+				_offbitmap.copyPixels(bitmapdata, bitmapdata.rect, offset);
+				BaseTicker.addEventListener(MotionEvent.UPDATED, render);
+			}
 		}
 		
 		/**
 		 *	Stops the renderer from writing to the BitmapData.
 		 */
-		public override function stop():void {
-			_offbitmap.dispose();
-			BaseTicker.removeEventListener(MotionEvent.UPDATED, render);
+		public function stop():void {
+			if(active){
+				_active = false;
+				_offbitmap.dispose();
+				BaseTicker.removeEventListener(MotionEvent.UPDATED, render);
+			}
 		}
 		
 		/**
@@ -167,6 +198,14 @@ package com.desuade.partigen.renderers {
 		}
 		
 		/**
+		 *	This clears the BitmapData on the renderer.
+		 */
+		public function clear():void {
+			_offbitmap.fillRect(bitmapdata.rect, 0x00000000);
+			bitmapdata.copyPixels(_offbitmap, _offbitmap.rect, offset);
+		}
+		
+		/**
 		 *	@private
 		 */
 		protected function render($e:Object):void {
@@ -176,11 +215,50 @@ package com.desuade.partigen.renderers {
 				_offbitmap.fillRect(bitmapdata.rect, 0x00000000);
 			}
 			if(predraw) _offbitmap.draw(target);
-			if(fadeBlur != 0 && fade != 0) _offbitmap.applyFilter(_offbitmap, _offbitmap.rect, _zeroPoint, _blur);
+			if(fadeBlur != 0 && fade != 0) _offbitmap.applyFilter(_offbitmap, _offbitmap.rect, new Point(0,0), _blur);
 			renderfunc(_offbitmap);
 			if(!predraw) _offbitmap.draw(target);
-			bitmapdata.copyPixels(_offbitmap, _offbitmap.rect, _zeroPoint);
+			trace(_offbitmap);
+			bitmapdata.copyPixels(_offbitmap, _offbitmap.rect, offset);
 		}
+		
+		/**
+		 *	This starts the automagic mode that will automagically start/stop the renderer based on need. This starts automatically by default when the renderer is created.
+		 */
+		public function automagicModeStart():void {
+			if(!automagic){
+				_automagic = true;
+				BaseTicker.addEventListener(MotionEvent.UPDATED, level1Check);
+			}
+		}
+		
+		/**
+		 *	This stops the automagic mode that automagically starts/stops the renderer based on need.
+		 */
+		public function automagicModeStop():void {
+			if(automagic){
+				_automagic = false;
+				BaseTicker.removeEventListener(MotionEvent.UPDATED, level1Check);
+			}
+		}
+		
+		/**
+		 *	@private
+		 */
+		protected function level1Check($e:Event = null):void {
+			if(target.numChildren > 0){
+				if(!active) start();
+			} else {
+				if(active) stop();
+			}
+		}
+		
+	
+	//check everyframe if particles exist, if yes, start the renderer if it's not active
+	//if no, keep running and start the compare engine running at an interval of .3 seconds/whatever
+	//check to see all pixels are clear, if yes stop the renderer, stop compare engine
+	//if particles come onto the renderer, stop the compare engine and keep running
+	
 	
 	}
 
