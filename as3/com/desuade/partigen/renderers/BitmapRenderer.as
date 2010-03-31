@@ -204,7 +204,7 @@ package com.desuade.partigen.renderers {
 		 */
 		public function clear():void {
 			_offbitmap.fillRect(bitmapdata.rect, 0x00000000);
-			bitmapdata.copyPixels(_offbitmap, _offbitmap.rect, offset);
+			bitmapdata.fillRect(bitmapdata.rect, 0x00000000);
 		}
 		
 		/**
