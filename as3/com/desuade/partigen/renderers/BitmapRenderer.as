@@ -30,8 +30,6 @@ package com.desuade.partigen.renderers {
 	import flash.geom.Matrix;
 	import flash.geom.ColorTransform;
 	import flash.utils.ByteArray;
-	import flash.utils.Timer;
-    import flash.events.TimerEvent;
 	import flash.utils.getTimer;
 	
 	import com.desuade.partigen.particles.BasicParticle;
@@ -82,11 +80,6 @@ package com.desuade.partigen.renderers {
 		 *	@private
 		 */
 		protected var _automagic:Boolean = false;
-		
-		/**
-		 *	@private
-		 */
-		protected var _checkTimer:Timer = new Timer(300);
 		
 		/**
 		 *	This is a Point for the offset of the bitmapdata.
@@ -153,7 +146,6 @@ package com.desuade.partigen.renderers {
 				_active = false;
 				BaseTicker.removeEventListener(MotionEvent.UPDATED, render);
 				dispatchEvent(new RenderEvent(RenderEvent.STOPPED, {renderer:this}));
-				_offbitmap.dispose();
 			}
 		}
 		
@@ -238,7 +230,6 @@ package com.desuade.partigen.renderers {
 			if(!automagic){
 				_automagic = true;
 				BaseTicker.addEventListener(MotionEvent.UPDATED, level1Check);
-				_checkTimer.addEventListener(TimerEvent.TIMER, level2Check, false, 0, false);
 			}
 		}
 		
@@ -249,7 +240,6 @@ package com.desuade.partigen.renderers {
 			if(automagic){
 				_automagic = false;
 				BaseTicker.removeEventListener(MotionEvent.UPDATED, level1Check);
-				_checkTimer.removeEventListener(TimerEvent.TIMER, level2Check);
 			}
 		}
 		
@@ -258,30 +248,13 @@ package com.desuade.partigen.renderers {
 		 */
 		protected function level1Check($e:MotionEvent = null):void {
 			if(target.numChildren > 0){
-				if(!active) {
-					start(); //if there's any particles in it, start it
-				} else {
-					//if the renderer is running, but there were no particles, cancel the level2 check
-					if(_checkTimer.running) _checkTimer.stop();
-				}
+				if(!active) start(); //if there's any particles in it, start it
 			} else {
 				//no particles alive, so let's check the bitmap
 				if(active) {
 					//let's check to see if there's any drawing things on the stage
-					//lets start the level 2 check
-					if(!_checkTimer.running) _checkTimer.start();
+					if(!compareBitmaps()) stop();
 				}
-			}
-		}
-		
-		/**
-		 *	@private
-		 */
-		protected function level2Check($e:TimerEvent = null):void {
-			if(!compareBitmaps()){
-				//there is no more images on the bitmap, so let's stop everything
-				_checkTimer.stop();
-				stop();
 			}
 		}
 		
@@ -289,9 +262,7 @@ package com.desuade.partigen.renderers {
 		 *	@private
 		 */
 		protected function compareBitmaps():Boolean {
-			//var tt = getTimer();
 			var ncr:Rectangle = _offbitmap.getColorBoundsRect(0xff000000, 0x00000000, false);
-			//trace(getTimer()-tt);
 			return (ncr.width == 0 || ncr.height == 0) ? false : true;
 		}
 
