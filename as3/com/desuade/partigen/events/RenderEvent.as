@@ -43,6 +43,16 @@ package com.desuade.partigen.events {
 		public static const RESIZED:String = "resized";
 		
 		/**
+		 *	This gets fired when the renderer stops.
+		 */
+		public static const STARTED:String = "started";
+		
+		/**
+		 *	This gets fired when the renderer starts.
+		 */
+		public static const STOPPED:String = "stopped";
+		
+		/**
 		 *	This is the info object that's gets passed to the function.
 		 */
 		public var data:Object;
