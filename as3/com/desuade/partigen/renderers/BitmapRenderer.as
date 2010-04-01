@@ -156,6 +156,8 @@ package com.desuade.partigen.renderers {
 		 *	@param	height	 The new height
 		 */
 		public function resize($width:int, $height:int):void {
+			bitmapdata.dispose();
+			_offbitmap.dispose();
 			bitmapdata = new BitmapData($width, $height, true, 0);
 			_offbitmap = new BitmapData(bitmapdata.width, bitmapdata.height, true, 0);
 			dispatchEvent(new RenderEvent(RenderEvent.RESIZED, {renderer:this}));

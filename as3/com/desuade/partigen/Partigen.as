@@ -43,7 +43,7 @@ package com.desuade.partigen {
 		/**
 		 *	The "official" release version.
 		 */
-		public static const VERSIONLABEL:String = '2.5.0';
+		public static const VERSIONLABEL:String = '2.5 Beta 1';
 		
 		/**
 		 *	Company that owns the source code
