@@ -67,6 +67,11 @@ package com.desuade.partigen.emitters {
 		public var angleSpread:* = "0";
 		
 		/**
+		 *	@private
+		 */
+		protected var renderers:Array = [NullRenderer, StandardRenderer, BitmapRenderer];
+		
+		/**
 		 *	<p>This creates a new Emitter.</p>
 		 *	<p>This is the standard, full-featured emitter that's recommended to use. It offers an innovative and extremely powerful way to configure particle effects, based on MotionControllers from the Motion Package.</p>
 		 *	<p>An emitter is the object that controls the creation of new particles, rather than calling <code>new Particle()</code> directly, using emitters makes creating particle effects easy.</p>

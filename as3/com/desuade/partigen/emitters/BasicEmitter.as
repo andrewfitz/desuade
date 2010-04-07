@@ -368,7 +368,7 @@ package com.desuade.partigen.emitters {
 		 *	
 		 *	@param	xml	 The XML object to use to configure the emitter
 		 *	@param	reset	 Resets the emitter before applying XML
-		 *	@param	renderer	If true, this creates (and overwrites) the emitter's renderer with one from XML. If this is a BitmapRenderer, be sure to call resize(width, height) on it after the XML.
+		 *	@param	renderer	If true, this creates (and overwrites) the emitter's renderer with one from XML. If this is a BitmapRenderer, be sure to call resize(width, height) on it after the XML. Also, for BasicEmitters only (to save file size), you must create a reference to the Renderers you're going to use before using it through XML (for Flash to include the classes). This can be done easily as <code>var renderers:Array = [NullRenderer, StandardRenderer, BitmapRenderer];</code> (this is done already for the Emitter and IDEEmitter classes).
 		 *	
 		 *	@return		The emitter object (for chaining)
 		 */

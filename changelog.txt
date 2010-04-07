@@ -1,31 +1,36 @@
 Desuade Library Change Log - http://desuade.com/
 ------------------------------------------------
 
-Partigen 2.5 (BETA)
-	-added: BitmapRenderer automagicmode - starts/stops the renderer on demand, no need for manual control
-	-added: RenderEvent STARTED & STOPPED events for BitmapRenderer
-	-added: BitmapRenderer.predraw (choose to draw the particle before or after filters)
-	-added: BitmapRenderer.clear() to clear the bitmapdata
-	-added: BitmapRenderer.active - boolean if the renderer is running
-	-added: Standard/BitmapRenderer.removeAllParticles()
-	-added: IDEEmitter.prefetchTime
-	-fixed: BitmapRenderer.resize not disposing bitmaps
-	-fixed: Emitter.fromXML renderers not having attributes
-	-fixed: Emitter.from/toXML not converting renderer values correctly
-	-fixed: Particle would not remove itself from renderer/pool if it was changed before death
-	-fixed: BitmapRenderer applying blur when fade = 0
-	-fixed: BitmapCanvas resetting coords
-	-fixed: IDEEmitter not using the renderer from XML
-	-fixed: IDEEmitter not including all renderers
-	-fixed: Examples: motion_tween event for last demo, and partigen em2 event demo
-	-changed: Renderer start() and stop() methods are only on BitmapRenderer now
-	-changed: BitmapRenderer._zeroPoint is now a public variable: 'offset'
-	-changed: groupBitmap now uses the original positioning unless proximity is > 0
-	-changed: BitmapRenderer doesn't need sizes, use resize() after XML load
-	-changed: IDEEmitters/BitmapCanvas will still show in IDE (livepreview) when show indicator is false
-	-changed: IDEEmitter removed rendertoparent param
-	-changed: BitmapCanvas.renderer now read only
-	-changed: Bitmap fadeblur is now an int (no sub pixel blurs needed)
+Motion Package 1.1.1 & Partigen 2.5 (BETA)
+	Partigen:
+		-added: BitmapRenderer automagicmode - starts/stops the renderer on demand, no need for manual control
+		-added: RenderEvent STARTED & STOPPED events for BitmapRenderer
+		-added: BitmapRenderer.predraw (choose to draw the particle before or after filters)
+		-added: BitmapRenderer.clear() to clear the bitmapdata
+		-added: BitmapRenderer.active - boolean if the renderer is running
+		-added: Standard/BitmapRenderer.removeAllParticles()
+		-added: IDEEmitter.prefetchTime
+		-fixed: Emitter now has a renderers array so fromXML() has all renderers included in compile time
+		-fixed: BitmapRenderer.resize not disposing bitmaps
+		-fixed: Emitter.fromXML renderers not having attributes
+		-fixed: Emitter.from/toXML not converting renderer values correctly
+		-fixed: Particle would not remove itself from renderer/pool if it was changed before death
+		-fixed: BitmapRenderer applying blur when fade = 0
+		-fixed: BitmapCanvas resetting coords
+		-fixed: IDEEmitter not using the renderer from XML
+		-fixed: IDEEmitter not including all renderers
+		-fixed: Examples: motion_tween event for last demo, and partigen em2 event demo
+		-changed: Renderer start() and stop() methods are only on BitmapRenderer now
+		-changed: BitmapRenderer._zeroPoint is now a public variable: 'offset'
+		-changed: groupBitmap now uses the original positioning unless proximity is > 0
+		-changed: BitmapRenderer doesn't need sizes, use resize() after XML load
+		-changed: IDEEmitters/BitmapCanvas will still show in IDE (livepreview) when show indicator is false
+		-changed: IDEEmitter removed rendertoparent param
+		-changed: BitmapCanvas.renderer now read only
+		-changed: Bitmap fadeblur is now an int (no sub pixel blurs needed)
+		
+	Motion:
+		-fixed: Keyframe.fromXML() was modifying original XML, breaking XML reuse
 
 
 Motion Package 1.1 & Partigen 2.1 (2010/03/16)

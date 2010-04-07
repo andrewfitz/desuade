@@ -124,19 +124,20 @@ package com.desuade.motion.controllers {
 		 *	@return		The Keyframe object (for chaining)
 		 */
 		public function fromXML($xml:XML, $useposition:Boolean = true):Keyframe {
-			if($xml.@label != undefined) delete $xml.@label;
-			if($useposition) position = XMLHelper.dexmlize($xml.@position);
-			ease = ($xml.@ease == 'null') ? 'linear' : String($xml.@ease);
-			if($xml.@value != undefined) value = XMLHelper.dexmlize($xml.@value);
-			spread = XMLHelper.dexmlize($xml.@spread);
-			delete $xml.@ease;
-			delete $xml.@position;
-			delete $xml.@value;
-			delete $xml.@spread;
-			var ats:XMLList = $xml.attributes();
+			var txml:XML = new XML($xml.toXMLString());
+			if(txml.@label != undefined) delete txml.@label;
+			if($useposition) position = XMLHelper.dexmlize(txml.@position);
+			ease = (txml.@ease == 'null') ? 'linear' : String(txml.@ease);
+			if(txml.@value != undefined) value = XMLHelper.dexmlize(txml.@value);
+			spread = XMLHelper.dexmlize(txml.@spread);
+			delete txml.@ease;
+			delete txml.@position;
+			delete txml.@value;
+			delete txml.@spread;
+			var ats:XMLList = txml.attributes();
 			for (var p:String in ats) {
 				var an:String = ats[p].name();
-				extras[an] = XMLHelper.dexmlize($xml.@[an]);
+				extras[an] = XMLHelper.dexmlize(txml.@[an]);
 			}
 			return this;
 		}

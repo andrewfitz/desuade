@@ -75,11 +75,6 @@ package com.desuade.partigen.emitters {
 		protected var _isLivePreview:Boolean;
 		
 		/**
-		 *	@private
-		 */
-		protected var renderers:Array = [NullRenderer, StandardRenderer, BitmapRenderer];
-		
-		/**
 		 *	Creates a new IDEEmitter (usually from a component)
 		 */
 		public function IDEEmitter() {
