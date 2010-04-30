@@ -27,6 +27,7 @@ package com.desuade.partigen.controllers {
 	import com.desuade.motion.controllers.*;
 	import com.desuade.motion.tweens.*;
 	import com.desuade.partigen.emitters.*;
+	import com.desuade.partigen.interfaces.*;
 	import com.desuade.partigen.particles.*;
 	
 	import flash.utils.*;
@@ -155,7 +156,7 @@ package com.desuade.partigen.controllers {
 		/**
 		 *	@private
 		 */
-		protected function attachController($particle:Particle, $property:String, $emitter:Emitter, $angle:Number):void {
+		protected function attachController($particle:*, $property:String, $emitter:Emitter, $angle:Number):void {
 			if(this[$property] is ParticlePhysicsController){
 				$particle.controllers[$property] = new PhysicsMultiController($particle, $property, (this[$property].duration == 0) ? $particle.life : this[$property].duration);
 				$particle.controllers[$property].physics.config.angle = (this[$property].useAngle) ? $angle : null;
@@ -172,12 +173,12 @@ package com.desuade.partigen.controllers {
 		/**
 		 *	@private
 		 */
-		public function attachAll($particle:Particle, $emitter:Emitter):void {
+		public function attachAll($particle:*, $emitter:Emitter):void {
 			var newangle:Number = $emitter.randomAngle();
 			for (var p:String in this) {
 				attachController($particle, p, $emitter, newangle);
 			}
-			if($particle.controllers['color'] != undefined) {
+			if($particle.controllers['color'] != undefined && $emitter.particleBaseClass is BasicParticle) {
 				$particle.controllers['color'].property = null;
 			}
 		}

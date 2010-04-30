@@ -214,6 +214,7 @@ package com.desuade.partigen.renderers {
 		 *	@private
 		 */
 		protected function render($e:Object):void {
+			_offbitmap.lock();
 			if(_fadeCT.alphaMultiplier != 0){
 				_offbitmap.colorTransform(_offbitmap.rect, _fadeCT);
 			} else {
@@ -223,6 +224,7 @@ package com.desuade.partigen.renderers {
 			if(fadeBlur != 0 && fade != 0) _offbitmap.applyFilter(_offbitmap, _offbitmap.rect, new Point(0,0), _blur);
 			renderfunc(_offbitmap);
 			if(!predraw) drawMethod();
+			_offbitmap.unlock();
 			bitmapdata.copyPixels(_offbitmap, _offbitmap.rect, offset);
 		}
 		

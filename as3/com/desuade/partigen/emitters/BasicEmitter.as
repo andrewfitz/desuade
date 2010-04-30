@@ -348,7 +348,7 @@ package com.desuade.partigen.emitters {
 			var txml:XML = <emitter />;
 			txml.setLocalName(XMLHelper.getSimpleClassName(this));
 			txml.@particle = getQualifiedClassName(particle);
-			txml.@particleBaseClass = getQualifiedClassName(particleBaseClass);
+			txml.@particleBaseClass = XMLHelper.getSimpleClassName(particleBaseClass);
 			txml.@particleBlendMode = particleBlendMode;
 			txml.@eps = eps;
 			txml.@burst = burst;
@@ -384,7 +384,7 @@ package com.desuade.partigen.emitters {
 			if($reset) reset();
 			try {
 				if($xml.@particle != undefined) particle = getDefinitionByName($xml.@particle) as Class;
-				if($xml.@particleBaseClass != undefined) particleBaseClass = getDefinitionByName($xml.@particleBaseClass) as Class;
+				if($xml.@particleBaseClass != undefined) particleBaseClass = (getDefinitionByName("com.desuade.partigen.particles::" + $xml.@particleBaseClass) as Class) || BasicParticle;
 				if($xml.@particleBlendMode != undefined) particleBlendMode = String($xml.@particleBlendMode);
 				if($xml.@eps != undefined) eps = Number($xml.@eps);
 				if($xml.@burst != undefined) burst = int($xml.@burst);

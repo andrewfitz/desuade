@@ -12,6 +12,7 @@ Motion Package 1.1.1 & Partigen 2.5 (BETA)
 		-added: Standard/BitmapRenderer.removeAllParticles()
 		-added: IDEEmitter.prefetchTime
 		-added: particleBaseClass support in XML
+		-added: IBasicParticle and IParticle interfaces
 		-fixed: ParticleController/ParticleTweenController setSmartPrecision() for setBeginValue()
 		-fixed: Emitter now has a renderers array so fromXML() has all renderers included in compile time
 		-fixed: BitmapRenderer.resize not disposing bitmaps
@@ -23,6 +24,7 @@ Motion Package 1.1.1 & Partigen 2.5 (BETA)
 		-fixed: IDEEmitter not using the renderer from XML
 		-fixed: IDEEmitter not including all renderers
 		-fixed: Examples: motion_tween event for last demo, and partigen em2 event demo
+		-changed: internal datatypes for BasicParticle are now IBasicParticle
 		-changed: emitter.particleClass => particleBaseClass to avoid confusion
 		-changed: ParticleTweenController.setSingleTween() now returns the ParticleTweenController
 		-changed: Renderer start() and stop() methods are only on BitmapRenderer now

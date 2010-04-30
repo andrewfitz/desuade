@@ -70,7 +70,12 @@ package com.desuade.partigen.emitters {
 		/**
 		 *	@private
 		 */
-		protected var renderers:Array = [NullRenderer, StandardRenderer, BitmapRenderer];
+		protected var renderers:Array = [NullRenderer, StandardRenderer, BitmapRenderer, PixelRenderer];
+		
+		/**
+		 *	@private
+		 */
+		protected var baseparticles:Array = [BasicParticle, Particle, BasicPixelParticle, PixelParticle];
 		
 		/**
 		 *	<p>This creates a new Emitter.</p>

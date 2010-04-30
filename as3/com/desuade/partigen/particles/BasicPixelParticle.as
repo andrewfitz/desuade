@@ -24,37 +24,52 @@ THE SOFTWARE.
 
 package com.desuade.partigen.particles {
 	
-	import flash.display.*;
 	import flash.utils.Timer;
     import flash.events.TimerEvent;
 	import flash.geom.*;
+	import flash.display.*;
 	
 	import com.desuade.partigen.interfaces.*;
 	import com.desuade.debugging.Debug;
 	import com.desuade.partigen.emitters.BasicEmitter;
 	import com.desuade.partigen.events.ParticleEvent;
 	import com.desuade.utils.*;
-
+	
 	/**
-	 *  The most basic form of Particle, only the minimum necessary.
+	 *  A basic, high-performance BasicParticle for use with the PixelRenderer.
 	 *    
 	 *  @langversion ActionScript 3
 	 *  @playerversion Flash 9.0.0
 	 *
 	 *  @author Andrew Fitzgerald
-	 *  @since  08.05.2009
+	 *  @since  29.04.2010
 	 */
-	public dynamic class BasicParticle extends Sprite implements IBasicParticle {
+	public class BasicPixelParticle extends Object implements IBasicParticle {
 		
+		/**
+		 *	The x value of the pixel.
+		 */
+		public var x:int = 0;
+		
+		/**
+		 *	The y value of the pixel.
+		 */
+		public var y:int = 0;
+		
+		/**
+		 *	This is the alpha value of the pixel.
+		 */
+		public var alpha:Number = 1;
+		
+		/**
+		 *	This is the pixel color.
+		 */
+		public var color:uint = 0xffffffff;
+	
 		/**
 		 *	This holds the particles inside of the group.
 		 */
 		public var group:Array;
-		
-		/**
-		 *	@private
-		 */
-		internal static var _count:int = 0;
 		
 		/**
 		 *	@private
@@ -87,12 +102,11 @@ package com.desuade.partigen.particles {
 		protected var _lifeTimer:Timer;
 		
 		/**
-		 *	<p>Creates a new particle. This should normally not be called; use <code>emitter.emit()</code> instead of this.</p>
-		 *	<p>As of v2.1, Particles act as containers for the "actual particles" used from the library. This allows any class/symbol to be used without having to be extended from Particle. It also adopts grouping.</p>
+		 *	<p>Creates a new pixel particle for the PixelRenderer. This should normally not be called; use <code>emitter.emit()</code> instead of this.</p>
 		 *	
 		 *	@see	com.desuade.partigen.emitters.BasicEmitter#emit()
 		 */
-		public function BasicParticle() {
+		public function BasicPixelParticle() {
 			super();
 		}
 		
@@ -100,7 +114,7 @@ package com.desuade.partigen.particles {
 		 *	@private
 		 */
 		public function init($emitter:BasicEmitter):void {
-			_emitter = $emitter, _renderer = $emitter.renderer, _pool = $emitter.pool, _id = _count++;
+			_emitter = $emitter, _renderer = $emitter.renderer, _pool = $emitter.pool, _id = BasicParticle._count++;
 			Debug.output('partigen', 50001, [id]);
 		}
 		
@@ -108,6 +122,11 @@ package com.desuade.partigen.particles {
 		 *	@private
 		 */
 		public function makeGroup($particle:Class, $amount:int, $proximity:int):void {
+			
+			///chage this for pixel
+			
+			
+			/*
 			group = [];
 			for (var i:int = 0; i < $amount; i++) {
 				group[i] = new $particle();
@@ -115,35 +134,16 @@ package com.desuade.partigen.particles {
 					group[i].x = Random.fromRange(-$proximity, $proximity, 0);
 					group[i].y = Random.fromRange(-$proximity, $proximity, 0);
 				}
-				this.addChild(group[i]);
+				//add child
 			}
+			*/
 		}
 		
+		//irrelevant
 		/**
 		 *	@private
 		 */
 		public function makeGroupBitmap($particleData:BitmapData, $amount:int, $proximity:int, $origin:Point):void {
-			var cs:int = $proximity*2;
-			var canvas:BitmapData = new BitmapData(cs+$particleData.width, cs+$particleData.height, true, 0);
-			var cbitmap:Bitmap = new Bitmap(canvas);
-			cbitmap.x = $origin.x-$proximity;
-			cbitmap.y = $origin.y-$proximity;
-			for (var i:int = 0; i < $amount; i++) {
-				var np:Point = new Point(0,0);
-				if($proximity > 0){
-					np.x = Random.fromRange(-$proximity, $proximity, 0) + $proximity;
-					np.y = Random.fromRange(-$proximity, $proximity, 0) + $proximity;
-				}
-				canvas.copyPixels($particleData, $particleData.rect, np, null, null, true);
-			}
-			addChild(cbitmap);
-		}
-		
-		/**
-		 *	The amount of total particles created.
-		 */
-		public static function get count():int { 
-			return _count; 
 		}
 		
 		/**
@@ -190,6 +190,21 @@ package com.desuade.partigen.particles {
 			_lifeTimer.removeEventListener(TimerEvent.TIMER, kill);
 			_lifeTimer.stop();
 			_lifeTimer = null;
+		}
+		
+		//holder variables for things that don't affect the pixel
+		
+		public function get blendMode():String{
+			return 'normal';
+		}
+		public function set blendMode(value:String):void {
+			//nothing
+		}
+		public function get filters():Array{
+			return [];
+		}
+		public function set filters(value:Array):void {
+			//nothing
 		}
 	
 	}
