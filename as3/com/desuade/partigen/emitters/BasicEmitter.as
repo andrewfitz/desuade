@@ -31,6 +31,7 @@ package com.desuade.partigen.emitters {
 	import flash.utils.*;
 	import flash.geom.*;
 	
+	import com.desuade.partigen.interfaces.*;
 	import com.desuade.debugging.Debug;
 	import com.desuade.utils.*;
 	import com.desuade.partigen.renderers.*;
@@ -70,8 +71,8 @@ package com.desuade.partigen.emitters {
 		public var burst:int = 1;
 		
 		/**
-		 *	<p>This is the class used to create new particles from. This can be an AS3 class, or a library MC. This is the source (image, movieclip, text, etc) used to be added as a child onto the actual particleClass.</p>
-		 *	<p>As of v2.1, this can be any class, and does NOT have to inherit BasicParticle. If you have custom classes that do, use particleClass instead.</p>
+		 *	<p>This is the class used to create new particles from. This can be an AS3 class, or a library MC. This is the source (image, movieclip, text, etc) used to be added as a child onto the actual particleBaseClass.</p>
+		 *	<p>As of v2.1, this can be any class, and does NOT have to inherit BasicParticle. If you have custom classes that do, use particleBaseClass instead.</p>
 		 */
 		public var particle:Class;
 		
@@ -80,13 +81,18 @@ package com.desuade.partigen.emitters {
 		 *	<p>When the pools create particle objects, they use this. The 'particle' property, is the actual class used for particles you see.</p>
 		 *	<p>This should only be used by classes that inherit BasicParticle or Particle. Most of the time you should not need to change this.</p>
 		 */
-		public var particleClass:Class = BasicParticle;
+		public var particleBaseClass:Class = BasicParticle;
 		
 		/**
 		 *	<p>This defines the blendmode for each particle created.</p>
 		 *	<p>Choices: "add", "alpha", "darken", "difference", "erase", "hardlight", "invert", "layer", "lighten", "multiply", "normal", "overlay", "screen", "subtract"</p>
 		 */
 		public var particleBlendMode:String = "normal";
+		
+		/**
+		 *	This is an array of filters that gets applied to each particle as it's born.
+		 */
+		public var particleFilters:Array = [];
 				
 		/**
 		 *	<p>This controls how may particles are made in a "particle group". This allows you to have many particle act as a single particle.</p>
@@ -100,7 +106,7 @@ package com.desuade.partigen.emitters {
 		public var groupProximity:int = 0;
 		
 		/**
-		 *	This will use a Bitmap for the particle instead of the direct display object. Used to improve performance of static particles.
+		 *	This will use a Bitmap for the particle instead of the direct display object. Used to improve performance of static particles. Be sure to use in conjunction with createParticleBitmap() (handled automatically with start()).
 		 */
 		public var groupBitmap:Boolean = false;
 		
@@ -235,7 +241,7 @@ package com.desuade.partigen.emitters {
 		public function prefetch($time:Number):void {
 			var lives:Array = getPrefetchLifeArray($time);
 			for (var i:int = 0; i < lives.length; i++) {
-				var np:BasicParticle = createParticle(lives[i][1], lives[i][0]);
+				var np:IBasicParticle = createParticle(lives[i][1], lives[i][0]);
 			}
 		}
 		
@@ -300,10 +306,11 @@ package com.desuade.partigen.emitters {
 		/**
 		 *	@private
 		 */
-		protected function createParticle($life:Number = 0, $clife:Number = 0):BasicParticle {
-			var np:BasicParticle = pool.addParticle(particleClass);
+		protected function createParticle($life:Number = 0, $clife:Number = 0):IBasicParticle {
+			var np:* = pool.addParticle(particleBaseClass);
 			np.init(this);
 			np.blendMode = particleBlendMode;
+			if(particleFilters != []) np.filters = particleFilters;
 			if(groupBitmap) np.makeGroupBitmap(_particlebitmap, groupAmount, groupProximity, _particleOrigin);
 			else np.makeGroup(particle, groupAmount, groupProximity);
 			np.x = this.x;
@@ -341,6 +348,7 @@ package com.desuade.partigen.emitters {
 			var txml:XML = <emitter />;
 			txml.setLocalName(XMLHelper.getSimpleClassName(this));
 			txml.@particle = getQualifiedClassName(particle);
+			txml.@particleBaseClass = getQualifiedClassName(particleBaseClass);
 			txml.@particleBlendMode = particleBlendMode;
 			txml.@eps = eps;
 			txml.@burst = burst;
@@ -355,7 +363,7 @@ package com.desuade.partigen.emitters {
 			if(rt == "StandardRenderer" || rt == "BitmapRenderer"){
 				txml.children()[0].@order = renderer.order;
 			}
-			if(rt == "BitmapRenderer"){
+			if(rt == "BitmapRenderer" || rt == "PixelRenderer"){
 				txml.children()[0].@fade = renderer.fade;
 				txml.children()[0].@fadeBlur = renderer.fadeBlur;
 				txml.children()[0].@predraw = XMLHelper.xmlize(renderer.predraw);
@@ -376,6 +384,7 @@ package com.desuade.partigen.emitters {
 			if($reset) reset();
 			try {
 				if($xml.@particle != undefined) particle = getDefinitionByName($xml.@particle) as Class;
+				if($xml.@particleBaseClass != undefined) particleBaseClass = getDefinitionByName($xml.@particleBaseClass) as Class;
 				if($xml.@particleBlendMode != undefined) particleBlendMode = String($xml.@particleBlendMode);
 				if($xml.@eps != undefined) eps = Number($xml.@eps);
 				if($xml.@burst != undefined) burst = int($xml.@burst);
@@ -394,6 +403,10 @@ package com.desuade.partigen.emitters {
 							renderer = new contclass(this.parent, ($xml.Renderer.@order != undefined) ? String($xml.Renderer.@order) : null);
 						} else if(rt == "BitmapRenderer"){
 							renderer = new contclass(1, 1, ($xml.Renderer.@order != undefined) ? String($xml.Renderer.@order) : null);
+						} else if(rt == "PixelRenderer"){
+							renderer = new contclass(1, 1);
+						}
+						if(rt == "BitmapRenderer" || rt == "PixelRenderer"){
 							if($xml.Renderer.@fade != undefined) renderer.fade = Number($xml.Renderer.@fade);
 							if($xml.Renderer.@fadeBlur != undefined) renderer.fadeBlur = int($xml.Renderer.@fadeBlur);
 							if($xml.Renderer.@predraw != undefined) renderer.predraw = XMLHelper.dexmlize($xml.Renderer.@predraw);
@@ -411,7 +424,7 @@ package com.desuade.partigen.emitters {
 		 *	This resets the emitter to the defaults
 		 */
 		public function reset():void {
-			particleClass = BasicParticle, eps = 1, burst = 1;
+			particleBaseClass = BasicParticle, eps = 1, burst = 1;
 			groupAmount = 0, groupProximity = 0, life = 0, lifeSpread = "0";
 			_particlebitmap = null;
 		}
@@ -420,7 +433,7 @@ package com.desuade.partigen.emitters {
 		 *	This kills all currently existing particles in the pool created by this emitter
 		 */
 		public function killParticles():void {
-			for each (var particle:BasicParticle in pool.particles) {
+			for each (var particle:IBasicParticle in pool.particles) {
 				if(particle.emitter == this) particle.kill();
 			}
 		}
@@ -435,7 +448,7 @@ package com.desuade.partigen.emitters {
 		/**
 		 *	@private
 		 */
-		public function dispatchDeath(p:BasicParticle):void {
+		public function dispatchDeath(p:IBasicParticle):void {
 			if(enableEvents) dispatchEvent(new ParticleEvent(ParticleEvent.DIED, {particle:p}));
 		}
 		

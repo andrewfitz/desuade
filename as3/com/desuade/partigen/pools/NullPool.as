@@ -24,6 +24,7 @@ THE SOFTWARE.
 
 package com.desuade.partigen.pools {
 	
+	import com.desuade.partigen.interfaces.*;
 	import com.desuade.partigen.particles.*;
 	import com.desuade.partigen.emitters.BasicEmitter;
 	import com.desuade.debugging.*;
@@ -49,7 +50,7 @@ package com.desuade.partigen.pools {
 		/**
 		 *	@inheritDoc
 		 */
-		public override function addParticle($particleClass:Class):BasicParticle {
+		public override function addParticle($particleClass:Class):IBasicParticle {
 			super.addParticle($particleClass);
 			return _particles[BasicParticle.count] = new $particleClass();
 		}

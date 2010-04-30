@@ -24,6 +24,7 @@ THE SOFTWARE.
 
 package com.desuade.partigen.renderers {
 	
+	import com.desuade.partigen.interfaces.*;
 	import com.desuade.partigen.particles.BasicParticle;
 	import com.desuade.debugging.*;
 	
@@ -54,7 +55,7 @@ package com.desuade.partigen.renderers {
 		 *	
 		 *	@param	p	 The particle to add.
 		 */
-		public function addParticle($p:BasicParticle):void {
+		public function addParticle($p:IBasicParticle):void {
 			Debug.output('partigen', 40002, [$p.id]);
 		}
 		
@@ -63,7 +64,7 @@ package com.desuade.partigen.renderers {
 		 *	
 		 *	@param	p	 The particle to remove.
 		 */
-		public function removeParticle($p:BasicParticle):void {
+		public function removeParticle($p:IBasicParticle):void {
 			Debug.output('partigen', 40004, [$p.id]);
 		}
 	

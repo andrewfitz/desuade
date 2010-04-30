@@ -109,8 +109,7 @@ package com.desuade.motion.tweens {
 			if(_newvals.length == 0){
 				for (var p:String in cpo) {
 					var ntval:*;
-					if(cpo[p] is RandomColor) ntval = cpo[p].randomValue;
-					else ntval = cpo[p];
+					ntval = cpo[p];
 					_newvals.push(ntval);
 				}	
 			}

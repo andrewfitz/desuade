@@ -29,6 +29,7 @@ package com.desuade.partigen.particles {
     import flash.events.TimerEvent;
 	import flash.geom.*;
 	
+	import com.desuade.partigen.interfaces.*;
 	import com.desuade.debugging.Debug;
 	import com.desuade.partigen.emitters.BasicEmitter;
 	import com.desuade.partigen.events.ParticleEvent;
@@ -43,7 +44,7 @@ package com.desuade.partigen.particles {
 	 *  @author Andrew Fitzgerald
 	 *  @since  08.05.2009
 	 */
-	public dynamic class BasicParticle extends Sprite {
+	public dynamic class BasicParticle extends Sprite implements IBasicParticle {
 		
 		/**
 		 *	This holds the particles inside of the group.

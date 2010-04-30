@@ -23,7 +23,8 @@ THE SOFTWARE.
 */
 
 package com.desuade.partigen.renderers {
-
+	
+	import com.desuade.partigen.interfaces.*;
 	import com.desuade.partigen.particles.BasicParticle;
 	import com.desuade.debugging.*;
 
@@ -48,14 +49,14 @@ package com.desuade.partigen.renderers {
 		/**
 		 *	@inheritDoc
 		 */
-		public override function addParticle($p:BasicParticle):void {
+		public override function addParticle($p:IBasicParticle):void {
 			super.addParticle($p);
 		}
 		
 		/**
 		 *	@inheritDoc
 		 */
-		public override function removeParticle($p:BasicParticle):void {
+		public override function removeParticle($p:IBasicParticle):void {
 			super.removeParticle($p);
 		}
 	

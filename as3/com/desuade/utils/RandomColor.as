@@ -39,7 +39,7 @@ package com.desuade.utils {
 	public class RandomColor extends Random {
 	
 		/**
-		 *	This creates a RandomColor object than can be used over again for creating new random colors from the same range. Can be used with the ColorTween classes.
+		 *	This creates a RandomColor object than can be used over again for creating new random colors from the same range. Can be used with the ColorTween classes, as well as any other properties requiring a Color.
 		 *	
 		 *	@param	min	 The first color in the range
 		 *	@param	max	 The second color in the range

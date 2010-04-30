@@ -3,6 +3,7 @@ Desuade Library Change Log - http://desuade.com/
 
 Motion Package 1.1.1 & Partigen 2.5 (BETA)
 	Partigen:
+		-added: PixelRenderer & PixelParticle classes for high-performance pixel-based effects
 		-added: BitmapRenderer automagicmode - starts/stops the renderer on demand, no need for manual control
 		-added: RenderEvent STARTED & STOPPED events for BitmapRenderer
 		-added: BitmapRenderer.predraw (choose to draw the particle before or after filters)
@@ -10,6 +11,8 @@ Motion Package 1.1.1 & Partigen 2.5 (BETA)
 		-added: BitmapRenderer.active - boolean if the renderer is running
 		-added: Standard/BitmapRenderer.removeAllParticles()
 		-added: IDEEmitter.prefetchTime
+		-added: particleBaseClass support in XML
+		-fixed: ParticleController/ParticleTweenController setSmartPrecision() for setBeginValue()
 		-fixed: Emitter now has a renderers array so fromXML() has all renderers included in compile time
 		-fixed: BitmapRenderer.resize not disposing bitmaps
 		-fixed: Emitter.fromXML renderers not having attributes
@@ -20,6 +23,8 @@ Motion Package 1.1.1 & Partigen 2.5 (BETA)
 		-fixed: IDEEmitter not using the renderer from XML
 		-fixed: IDEEmitter not including all renderers
 		-fixed: Examples: motion_tween event for last demo, and partigen em2 event demo
+		-changed: emitter.particleClass => particleBaseClass to avoid confusion
+		-changed: ParticleTweenController.setSingleTween() now returns the ParticleTweenController
 		-changed: Renderer start() and stop() methods are only on BitmapRenderer now
 		-changed: BitmapRenderer._zeroPoint is now a public variable: 'offset'
 		-changed: groupBitmap now uses the original positioning unless proximity is > 0
@@ -28,9 +33,18 @@ Motion Package 1.1.1 & Partigen 2.5 (BETA)
 		-changed: IDEEmitter removed rendertoparent param
 		-changed: BitmapCanvas.renderer now read only
 		-changed: Bitmap fadeblur is now an int (no sub pixel blurs needed)
+		-changed: BitmapRenderer.render() uses drawMethod() now (for inherited renderers to override)
 		
 	Motion:
+		-fixed: KeyframeContainer.isFlat() for spread start values and color = none
 		-fixed: Keyframe.fromXML() was modifying original XML, breaking XML reuse
+		-changed: MultiTween/ColorTween/Tween updated for new Random class
+		-changed: MotionController.setSingleTween() returns the MotionController
+		-changed: MultiController.addController() returns the MotionController added
+		
+	Utils:
+		-added: Arpeggiator class 
+		-changed: Improved Random/color class with toString and getValue
 
 
 Motion Package 1.1 & Partigen 2.1 (2010/03/16)

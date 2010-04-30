@@ -29,6 +29,7 @@ package com.desuade.partigen.emitters {
     import flash.events.TimerEvent;
 	import flash.utils.getTimer;
 	
+	import com.desuade.partigen.interfaces.*;
 	import com.desuade.debugging.*;
 	import com.desuade.utils.*;
 	import com.desuade.partigen.renderers.*;
@@ -80,7 +81,7 @@ package com.desuade.partigen.emitters {
 		 */
 		public function Emitter() {
 			super();
-			particleClass = Particle;
+			particleBaseClass = Particle;
 			controllers.particle = new ParticleController();
 			controllers.emitter = new EmitterController(this);
 		}
@@ -114,8 +115,8 @@ package com.desuade.partigen.emitters {
 		/**
 		 *	@inheritDoc
 		 */
-		protected override function createParticle($life:Number = 0, $clife:Number = 0):BasicParticle {
-			var np:BasicParticle = super.createParticle($life, $clife);
+		protected override function createParticle($life:Number = 0, $clife:Number = 0):IBasicParticle {
+			var np:* = super.createParticle($life, $clife);
 			controllers.particle.attachAll(np, this);
 			if($clife > 0) np.startControllers($clife-$life);
 			else np.startControllers();
@@ -167,7 +168,7 @@ package com.desuade.partigen.emitters {
 		 */
 		public override function reset():void {
 			super.reset();
-			angle = 0, angleSpread = '0', particleClass = Particle;
+			angle = 0, angleSpread = '0', particleBaseClass = Particle;
 			controllers = {};
 			controllers.particle = new ParticleController();
 			controllers.emitter = new EmitterController(this);

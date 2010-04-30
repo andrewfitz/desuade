@@ -188,8 +188,7 @@ package com.desuade.motion.tweens {
 			var ftv:Object = target[$to.property];
 			var ntval:*;
 			if(isNaN(_newval)){
-				if($to.value is Random) ntval = $to.value.randomValue;
-				else ntval = $to.value;
+				ntval = $to.value;
 				if($to.relative === true) _newval = ftv + Number(ntval);
 				else if($to.relative === false) _newval = Number(ntval);
 				else _newval = (typeof ntval == 'string') ? ftv + Number(ntval) : ntval;

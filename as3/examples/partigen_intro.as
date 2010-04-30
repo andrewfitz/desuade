@@ -219,12 +219,12 @@ package {
 			em2.controllers.particle.addTween('x').setSingleTween('0', '0', 300, '0', 'easeOutBounce');
 			em2.controllers.particle.addTween('y').setSingleTween('0', '0', '200', '0');
 			em2.addEventListener(ParticleEvent.DIED, deathFunc);
-			function deathFunc(o){
+			function deathFunc(o:ParticleEvent):void{
 				trace(o.data.particle.name + " died");
 			}
 
 			em2.addEventListener(ParticleEvent.BORN, birthFunc);
-			function birthFunc(o){
+			function birthFunc(o:ParticleEvent):void{
 				trace(o.data.particle.name + " was born");
 			}
 			//em2.start();
@@ -262,7 +262,7 @@ package {
 			em4.life = 2;
 			em4.controllers.particle.addColorTween();
 			em4.controllers.particle.color.keyframes.begin.value = 'ff4444';
-			em4.controllers.particle.color.keyframes.begin.spread = 'dd4444'; //different color each time it's started
+			em4.controllers.particle.color.keyframes.begin.spread = '0d0dff'; //different color each time it's started
 			em4.controllers.particle.addTween('x').setSingleTween('0', '0', 300, '0', 'easeOutBounce');
 			em4.controllers.particle.addTween('y').setSingleTween('0', '0', '200', '50');
 			//em4.start();

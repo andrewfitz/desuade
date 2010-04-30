@@ -186,14 +186,17 @@ package com.desuade.motion.controllers {
 		 *	@param	endSpread	 The end spread value.
 		 *	@param	ease	 The ease to use for the tween on the end keyframe.
 		 *	@param	extras	 The extras object for the end keyframe.
+		 *	
+		 *	@return		The MotionController
 		 */
-		public function setSingleTween($begin:*, $beginSpread:*='0', $end:*='0', $endSpread:*='0', $ease:* = null, $extras:Object = null):void {
+		public function setSingleTween($begin:*, $beginSpread:*='0', $end:*='0', $endSpread:*='0', $ease:* = null, $extras:Object = null):MotionController {
 			keyframes.begin.value = $begin;
 			keyframes.begin.spread = $beginSpread;
 			keyframes.end.value = $end;
 			keyframes.end.spread = $endSpread;
 			keyframes.end.ease = $ease;
 			keyframes.end.extras = $extras || {};
+			return this;
 		}
 		
 		/**

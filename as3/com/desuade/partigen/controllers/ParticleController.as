@@ -75,6 +75,7 @@ package com.desuade.partigen.controllers {
 			this[$property].keyframes.begin.value = $value;
 			this[$property].keyframes.begin.spread = $spread;
 			this[$property].keyframes.precision = $precision;
+			if($precision === 0) this[$property].setSmartPrecision($property);
 			if($extras != null) this[$property].keyframes.begin.extras = $extras;
 			return this[$property];
 		}

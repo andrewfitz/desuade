@@ -26,6 +26,7 @@ package com.desuade.partigen.renderers {
 	
 	import flash.display.*;
 	
+	import com.desuade.partigen.interfaces.*;
 	import com.desuade.utils.Random;
 	import com.desuade.partigen.particles.BasicParticle;
 	import com.desuade.debugging.*;
@@ -66,16 +67,16 @@ package com.desuade.partigen.renderers {
 		/**
 		 *	@inheritDoc
 		 */
-		public override function addParticle($p:BasicParticle):void {
+		public override function addParticle($p:IBasicParticle):void {
 			switch (order) {
 				case 'top' :
-					target.addChild($p);
+					target.addChild($p as BasicParticle);
 				break;
 				case 'bottom' :
-					target.addChildAt($p, 0);
+					target.addChildAt($p as BasicParticle, 0);
 				break;
 				case 'random' :
-					target.addChildAt($p, Random.fromRange(0, target.numChildren, 0));
+					target.addChildAt($p as BasicParticle, Random.fromRange(0, target.numChildren, 0));
 				break;
 			}
 			super.addParticle($p);
@@ -93,9 +94,9 @@ package com.desuade.partigen.renderers {
 		/**
 		 *	@inheritDoc
 		 */
-		public override function removeParticle($p:BasicParticle):void {
+		public override function removeParticle($p:IBasicParticle):void {
 			super.removeParticle($p);
-			target.removeChild($p);
+			target.removeChild($p as BasicParticle);
 		}
 	
 	}

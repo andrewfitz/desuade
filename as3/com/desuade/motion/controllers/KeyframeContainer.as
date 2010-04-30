@@ -162,11 +162,13 @@ package com.desuade.motion.controllers {
 		public function isFlat():Boolean {
 			var pa:Array = this.toLabeledArray();
 			for (var i:int = 0; i < pa.length; i++) {
-				if(pa[i].spread === '0' && pa[i].value === '0'){
+				if(pa[i].spread === '0' && (pa[i].value === '0' || pa[i].value == 'none')){
 				} else {
-					if(pa[i].spread !== '0') return false;
+					if(pa[i].spread !== '0' && pa.length > 2) return false;
 					if(pa[i].value !== this['begin'].value && pa[i].value != null && pa[i].value !== '0') return false;
-					if(this['begin'].spread !== '0' && pa[i].value != null && pa[i].value !== '0') return false;
+					if(pa[i].label != 'begin') {
+						if(this['begin'].spread !== '0' && pa[i].value != null && pa[i].value !== '0') return false;
+					}
 				}
 			}
 			return true;

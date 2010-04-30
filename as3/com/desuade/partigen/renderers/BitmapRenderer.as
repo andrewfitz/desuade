@@ -32,6 +32,7 @@ package com.desuade.partigen.renderers {
 	import flash.utils.ByteArray;
 	import flash.utils.getTimer;
 	
+	import com.desuade.partigen.interfaces.*;
 	import com.desuade.partigen.particles.BasicParticle;
 	import com.desuade.partigen.events.RenderEvent;
 	import com.desuade.debugging.*;
@@ -218,11 +219,18 @@ package com.desuade.partigen.renderers {
 			} else {
 				_offbitmap.fillRect(bitmapdata.rect, 0x00000000);
 			}
-			if(predraw) _offbitmap.draw(target);
+			if(predraw) drawMethod();
 			if(fadeBlur != 0 && fade != 0) _offbitmap.applyFilter(_offbitmap, _offbitmap.rect, new Point(0,0), _blur);
 			renderfunc(_offbitmap);
-			if(!predraw) _offbitmap.draw(target);
+			if(!predraw) drawMethod();
 			bitmapdata.copyPixels(_offbitmap, _offbitmap.rect, offset);
+		}
+		
+		/**
+		 *	@private
+		 */
+		protected function drawMethod():void {
+			_offbitmap.draw(target);
 		}
 		
 		/**

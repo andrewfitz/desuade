@@ -24,6 +24,7 @@ THE SOFTWARE.
 
 package com.desuade.partigen.pools {
 	
+	import com.desuade.partigen.interfaces.*;
 	import com.desuade.partigen.particles.*;
 	import com.desuade.partigen.emitters.BasicEmitter;
 	import com.desuade.debugging.*;
@@ -66,7 +67,7 @@ package com.desuade.partigen.pools {
 		 *	
 		 *	@return		The particle created.
 		 */
-		public function addParticle($particleClass:Class):BasicParticle {
+		public function addParticle($particleClass:Class):IBasicParticle {
 			Debug.output('partigen', 40003);
 			return null;
 		}

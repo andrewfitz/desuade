@@ -77,14 +77,17 @@ package com.desuade.partigen.controllers {
 		 *	@param	endSpread	 The end spread value.
 		 *	@param	ease	 The ease to use for the tween on the end keyframe.
 		 *	@param	extras	 The extras object for the end keyframe.
+		 *	
+		 *	@return		The ParticleTweenController
 		 */
-		public function setSingleTween($begin:*, $beginSpread:*='0', $end:*='0', $endSpread:*='0', $ease:* = null, $extras:Object = null):void {
+		public function setSingleTween($begin:*, $beginSpread:*='0', $end:*='0', $endSpread:*='0', $ease:* = null, $extras:Object = null):ParticleTweenController {
 			keyframes.begin.value = $begin;
 			keyframes.begin.spread = $beginSpread;
 			keyframes.end.value = $end;
 			keyframes.end.spread = $endSpread;
 			keyframes.end.ease = $ease || 'linear';
 			keyframes.end.extras = $extras || {};
+			return this;
 		}
 		
 		/**
@@ -118,9 +121,8 @@ package com.desuade.partigen.controllers {
 		/**
 		 *	@private
 		 */
-		internal function setSmartPrecision($prop:String):int {
-			if($prop == 'alpha' || $prop == 'scale' || $prop == 'scaleX' || $prop == 'scaleY') return keyframes.precision = 2;
-			else return keyframes.precision = 0;
+		internal function setSmartPrecision($prop:String):void {
+			if($prop == 'alpha' || $prop == 'scale' || $prop == 'scaleX' || $prop == 'scaleY') keyframes.precision = 2;
 		}
 		
 	}

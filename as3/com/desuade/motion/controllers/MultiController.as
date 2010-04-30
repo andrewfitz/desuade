@@ -118,9 +118,12 @@ package com.desuade.motion.controllers {
 		 *	
 		 *	@param	proprty	 The property to have controlled
 		 *	@param	containerClass	 The KeyframeContainer class to use
+		 *	
+		 *	@return		The MotionController added.
 		 */
-		public function addController($property:String, $containerClass:Class = null):void {
+		public function addController($property:String, $containerClass:Class = null):MotionController {
 			this[$property] = new MotionController(_target, $property, _duration, $containerClass);
+			return this[$property];
 		}
 		
 		/**

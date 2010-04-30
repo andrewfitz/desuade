@@ -26,6 +26,7 @@ package com.desuade.partigen.particles {
 	
 	import flash.display.Sprite;
 	
+	import com.desuade.partigen.interfaces.*;
 	import com.desuade.debugging.*;
 	import com.desuade.partigen.emitters.*;
 	import com.desuade.partigen.events.*;
@@ -41,7 +42,7 @@ package com.desuade.partigen.particles {
 	 *  @author Andrew Fitzgerald
 	 *  @since  08.05.2009
 	 */
-	public dynamic class Particle extends BasicParticle {
+	public dynamic class Particle extends BasicParticle implements IParticle {
 		
 		/**
 		 *	This holds all of the MotionControllers that are currently being ran on the particle.
