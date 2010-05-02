@@ -13,6 +13,7 @@ Motion Package 1.1.1 & Partigen 2.5 (BETA)
 		-added: IDEEmitter.prefetchTime
 		-added: particleBaseClass support in XML
 		-added: IBasicParticle and IParticle interfaces
+		-added: Pool.length for total particles in the pool
 		-fixed: ParticleController/ParticleTweenController setSmartPrecision() for setBeginValue()
 		-fixed: Emitter now has a renderers array so fromXML() has all renderers included in compile time
 		-fixed: BitmapRenderer.resize not disposing bitmaps
@@ -43,9 +44,11 @@ Motion Package 1.1.1 & Partigen 2.5 (BETA)
 		-changed: MultiTween/ColorTween/Tween updated for new Random class
 		-changed: MotionController.setSingleTween() returns the MotionController
 		-changed: MultiController.addController() returns the MotionController added
+		-changed: Physics - added PI constant
 		
 	Utils:
 		-added: Arpeggiator class 
+		-changed: Random class with faster random method
 		-changed: Improved Random/color class with toString and getValue
 
 

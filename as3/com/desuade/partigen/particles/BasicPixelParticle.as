@@ -24,7 +24,7 @@ THE SOFTWARE.
 
 package com.desuade.partigen.particles {
 	
-	import flash.utils.Timer;
+	import flash.utils.*;
     import flash.events.TimerEvent;
 	import flash.geom.*;
 	import flash.display.*;
@@ -122,21 +122,17 @@ package com.desuade.partigen.particles {
 		 *	@private
 		 */
 		public function makeGroup($particle:Class, $amount:int, $proximity:int):void {
-			
-			///chage this for pixel
-			
-			
-			/*
 			group = [];
-			for (var i:int = 0; i < $amount; i++) {
-				group[i] = new $particle();
-				if($proximity > 0){
-					group[i].x = Random.fromRange(-$proximity, $proximity, 0);
-					group[i].y = Random.fromRange(-$proximity, $proximity, 0);
+			if($proximity <= 0) group[0] = [0,0];
+			else {
+				for (var i:int = 0; i < $amount; i++) {
+					group[i] = [0,0];
+					if($proximity > 0){
+						group[i][0] = Random.fromRange(-$proximity, $proximity, 0);
+						group[i][1] = Random.fromRange(-$proximity, $proximity, 0);
+					}
 				}
-				//add child
 			}
-			*/
 		}
 		
 		//irrelevant
@@ -144,6 +140,7 @@ package com.desuade.partigen.particles {
 		 *	@private
 		 */
 		public function makeGroupBitmap($particleData:BitmapData, $amount:int, $proximity:int, $origin:Point):void {
+			makeGroup(null, $amount, $proximity);
 		}
 		
 		/**

@@ -36,6 +36,21 @@ package com.desuade.utils {
 	public class Random {
 		
 		/**
+		 *	@private
+		 */
+		protected static const MAX_RATIO:Number = 1 / int.MAX_VALUE;
+		
+		/**
+		 *	@private
+		 */
+		protected static const NEG_MAX_RATIO:Number = -MAX_RATIO;
+		
+		/**
+		 *	@private
+		 */
+		protected static var _ran:int = Math.random() * int.MAX_VALUE;
+		
+		/**
 		 *	The Random object's minimum value for the random range.
 		 */
 		public var min:Number;
@@ -92,13 +107,28 @@ package com.desuade.utils {
 		 *	@see	#max
 		 *	@see	#precision
 		 */
-		public static function fromRange($min:Number, $max:Number, $precision:int = 0):Number {
+		public static function fromRange($min:Number, $max:Number, $precision:int = 0):* {
 			if($min == $max) return $min;
 			else {
-				var dp:int = Math.pow(10, $precision);
-				var rn:Number = ((int((($min + (Math.random() * ($max - $min))) * dp))) / dp);
-				return rn;
+				//var dp:int = Math.pow(10, $precision);
+				if($precision == 0) return int($min + (XORandom() * ($max - $min)));
+				else {
+					var dp:int = 10;
+					for (var i:int = 1; i < $precision; i++) dp*=10;
+					return ((int((($min + (XORandom() * ($max - $min))) * dp))) / dp);
+				}
 			}
+		}
+		
+		/**
+		 *	@private
+		 */
+		public static function XORandom():Number{
+			_ran ^= (_ran << 21);
+			_ran ^= (_ran >>> 35);
+			_ran ^= (_ran << 4);
+			if(_ran > 0) return _ran * MAX_RATIO;
+			return _ran * NEG_MAX_RATIO;
 		}
 	}
 }

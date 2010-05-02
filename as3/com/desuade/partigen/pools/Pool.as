@@ -80,7 +80,15 @@ package com.desuade.partigen.pools {
 		public function removeParticle($id:int):void {
 			Debug.output('partigen', 40005, [$id]);
 		}
-	
+		
+		/**
+		 *	Returns the total amount of particles in the pool.
+		 */
+		public function get length():int {
+			var l:int = 0;
+			for (var t:String in _particles) l++;
+			return l; 
+		}
 	}
 
 }

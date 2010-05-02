@@ -44,6 +44,11 @@ package com.desuade.motion.physics {
 	public class BasicPhysics extends BaseBasic {
 		
 		/**
+		 *	@private
+		 */
+		public static const PI:Number = Math.PI;
+		
+		/**
 		 *	<p>This creates a BasicPhysics object.</p>
 		 *	
 		 *	<p>Each BasicPhysics object controls a single property on a given target object, and applies basic physics equations to calculate a change in value.</p>
@@ -95,7 +100,7 @@ package com.desuade.motion.physics {
 		 *	@return		Number representing the new angle-velocity
 		 */
 		public static function getVelocityWithAngle($velocity:Number, $angle:Number, $flip:Boolean):Number {
-			var calcangle:Number = ($flip) ? Math.sin($angle * Math.PI / 180) : Math.cos($angle * Math.PI / 180);
+			var calcangle:Number = ($flip) ? Math.sin($angle * PI / 180) : Math.cos($angle * PI / 180);
 			return $velocity * calcangle;
 		}
 		

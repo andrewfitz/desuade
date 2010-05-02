@@ -123,7 +123,7 @@ package com.desuade.partigen.particles {
 		 *	@private
 		 */
 		public function makeGroupBitmap($particleData:BitmapData, $amount:int, $proximity:int, $origin:Point):void {
-			var cs:int = $proximity*2;
+			var cs:int = $proximity + $proximity;
 			var canvas:BitmapData = new BitmapData(cs+$particleData.width, cs+$particleData.height, true, 0);
 			var cbitmap:Bitmap = new Bitmap(canvas);
 			cbitmap.x = $origin.x-$proximity;

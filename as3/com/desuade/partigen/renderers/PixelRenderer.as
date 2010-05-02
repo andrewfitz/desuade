@@ -79,9 +79,12 @@ package com.desuade.partigen.renderers {
 		 */
 		protected override function drawMethod():void {
 			for (var p:String in _particles) {
-				var argb:uint = (255 * _particles[p].alpha)<<24;
-				argb += _particles[p].color;
-				_offbitmap.setPixel32(_particles[p].x, _particles[p].y, argb);
+				var tp:* = _particles[p];
+				var argb:uint = (255 * tp.alpha)<<24;
+				argb += tp.color;
+				for (var i:int = 0; i < tp.group.length; i++) {
+					_offbitmap.setPixel32((tp.x + tp.group[i][0]), (tp.y + tp.group[i][1]), argb);
+				}
 			}
 		}
 		
