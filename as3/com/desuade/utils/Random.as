@@ -38,17 +38,12 @@ package com.desuade.utils {
 		/**
 		 *	@private
 		 */
-		protected static const MAX_RATIO:Number = 1 / int.MAX_VALUE;
+		protected static const RATIO:Number = 1 / uint.MAX_VALUE;
 		
 		/**
 		 *	@private
 		 */
-		protected static const NEG_MAX_RATIO:Number = -MAX_RATIO;
-		
-		/**
-		 *	@private
-		 */
-		protected static var _ran:int = Math.random() * int.MAX_VALUE;
+		protected static var r:uint = Math.random() * uint.MAX_VALUE;
 		
 		/**
 		 *	The Random object's minimum value for the random range.
@@ -124,11 +119,10 @@ package com.desuade.utils {
 		 *	@private
 		 */
 		public static function XORandom():Number{
-			_ran ^= (_ran << 21);
-			_ran ^= (_ran >>> 35);
-			_ran ^= (_ran << 4);
-			if(_ran > 0) return _ran * MAX_RATIO;
-			return _ran * NEG_MAX_RATIO;
+			r ^= (r << 21);
+			r ^= (r >>> 35);
+			r ^= (r << 4);
+			return (r * RATIO);
 		}
 	}
 }
