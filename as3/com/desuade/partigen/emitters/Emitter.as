@@ -136,8 +136,8 @@ package com.desuade.partigen.emitters {
 			txml.@angle = angle;
 			txml.@angleSpread = XMLHelper.xmlize(angleSpread);
 			txml.appendChild(<Controllers />);
-			txml.children()[1].appendChild(controllers.emitter.toXML());
-			txml.children()[1].appendChild(controllers.particle.toXML());
+			txml.Controllers.appendChild(controllers.emitter.toXML());
+			txml.Controllers.appendChild(controllers.particle.toXML());
 			return txml;
 		}
 		

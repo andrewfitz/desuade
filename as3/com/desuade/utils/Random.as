@@ -105,7 +105,6 @@ package com.desuade.utils {
 		public static function fromRange($min:Number, $max:Number, $precision:int = 0):* {
 			if($min == $max) return $min;
 			else {
-				//var dp:int = Math.pow(10, $precision);
 				if($precision == 0) return int($min + (XORandom() * ($max - $min)));
 				else {
 					var dp:int = 10;

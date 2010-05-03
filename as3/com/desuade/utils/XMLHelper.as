@@ -95,6 +95,44 @@ package com.desuade.utils {
 		public static function getSimpleClassName($object:Object):String {
 			return getQualifiedClassName($object).split("::")[1];
 		}
+		
+		/**
+		 *	Converts any "flat" Object into XML.
+		 *	
+		 *	@param	object	 The Object to convert to XML.
+		 *	
+		 *	@return		XML object
+		 */
+		public static function objectToXML($object:Object):XML {
+			var ata:Array = [];
+			var dsx:XML = describeType($object);
+			var cd:XMLList = dsx.children();
+			for (var e:String in cd) if(cd[e].name() == "accessor") ata.push(cd[e].@name);
+			var txml:XML = <ob />;
+			txml.setLocalName(getSimpleClassName($object) || getQualifiedClassName($object));
+			txml.@xmlctype = getQualifiedClassName($object);
+			for (var p:String in $object) txml.@[p] = xmlize($object[p]);
+			for (var i:int = 0; i < ata.length; i++) txml.@[ata[i]] = xmlize($object[ata[i]]);
+			return txml;
+		}
+		
+		/**
+		 *	Converts XML into it's original Object.
+		 *	
+		 *	@param	xml	 The XML representation of the Object.
+		 *	
+		 *	@return		The new Object from the XML.
+		 */
+		public static function objectFromXML($xml:XML):* {
+			var noc:Class = getDefinitionByName($xml.@xmlctype) as Class;
+			var no:* = new noc();
+			var ats:XMLList = $xml.attributes();
+			for (var p:String in ats) {
+				var an:String = ats[p].name();
+				if(an != 'xmlctype') no[an] = dexmlize($xml.@[an]);
+			}
+			return no;
+		}
 	
 	}
 

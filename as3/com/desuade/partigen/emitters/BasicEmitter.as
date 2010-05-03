@@ -359,14 +359,18 @@ package com.desuade.partigen.emitters {
 			txml.@groupProximity = groupProximity;
 			txml.appendChild(<Renderer />);
 			var rt:String = XMLHelper.getSimpleClassName(renderer);
-			txml.children()[0].@type = rt;
+			txml.Renderer.@type = rt;
 			if(rt == "StandardRenderer" || rt == "BitmapRenderer"){
-				txml.children()[0].@order = renderer.order;
+				txml.Renderer.@order = renderer.order;
 			}
 			if(rt == "BitmapRenderer" || rt == "PixelRenderer"){
-				txml.children()[0].@fade = renderer.fade;
-				txml.children()[0].@fadeBlur = renderer.fadeBlur;
-				txml.children()[0].@predraw = XMLHelper.xmlize(renderer.predraw);
+				txml.Renderer.@fade = renderer.fade;
+				txml.Renderer.@fadeBlur = renderer.fadeBlur;
+				txml.Renderer.@predraw = XMLHelper.xmlize(renderer.predraw);
+			}
+			txml.appendChild(<Filters />);
+			for (var f:int = 0; f < particleFilters.length; f++) {
+				txml.Filters.children()[f] = XMLHelper.objectToXML(particleFilters[f]);
 			}
 			return txml;
 		}
@@ -413,6 +417,12 @@ package com.desuade.partigen.emitters {
 						}
 					}
 				}
+				if($xml.hasOwnProperty("Filters")){
+					var xl:XMLList = $xml.Filters.children();
+					for (var i:int = 0; i < xl.length(); i++) {
+						particleFilters.push(XMLHelper.objectFromXML(xl[i]));
+					}
+				}
 				return this;
 			} catch (e:Error){
 				Debug.output('partigen', 20009, [e]);
@@ -425,7 +435,7 @@ package com.desuade.partigen.emitters {
 		 */
 		public function reset():void {
 			particleBaseClass = BasicParticle, eps = 1, burst = 1;
-			groupAmount = 0, groupProximity = 0, life = 0, lifeSpread = "0";
+			groupAmount = 1, groupProximity = 0, life = 0, lifeSpread = "0", particleFilters = [], particleBlendMode = "normal";
 			_particlebitmap = null;
 		}
 		
