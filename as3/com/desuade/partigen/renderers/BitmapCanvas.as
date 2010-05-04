@@ -43,7 +43,7 @@ package com.desuade.partigen.renderers {
 		/**
 		 *	@private
 		 */
-		protected var _renderer:Renderer;
+		protected var _renderer:Renderer = null;
 		
 		/**
 		 *	The internal bitmap.
@@ -88,11 +88,15 @@ package com.desuade.partigen.renderers {
 		 *	@param	renderer The BitmapRenderer to use.
 		 */
 		public function setRenderer($renderer:Renderer):void {
+			if(_renderer != null) _renderer.removeEventListener(RenderEvent.RESIZED, setBitmap);
 			_renderer = $renderer;
 			setBitmap();
 			_renderer.addEventListener(RenderEvent.RESIZED, setBitmap, false, 0, false);
 		}
 		
+		/**
+		 *	@private
+		 */
 		protected function setBitmap(o:Object = null):void {
 			if(bitmap != null) this.removeChild(bitmap);
 			bitmap = new Bitmap(_renderer.bitmapdata);

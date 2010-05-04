@@ -15,8 +15,9 @@ Motion Package 1.1.1 & Partigen 2.5 (BETA)
 		-added: particleBaseClass support in XML
 		-added: IBasicParticle and IParticle interfaces
 		-added: Pool.length for total particles in the pool
+		-fixed: BitmapCanvas.setRenderer not removing original listener
 		-fixed: ParticleController/ParticleTweenController setSmartPrecision() for setBeginValue()
-		-fixed: Emitter now has a renderers array so fromXML() has all renderers included in compile time
+		-fixed: Emitter now has a renderers/particles array so fromXML() has the classes included on compile
 		-fixed: BitmapRenderer.resize not disposing bitmaps
 		-fixed: Emitter.fromXML renderers not having attributes
 		-fixed: Emitter.from/toXML not converting renderer values correctly
@@ -26,11 +27,12 @@ Motion Package 1.1.1 & Partigen 2.5 (BETA)
 		-fixed: IDEEmitter not using the renderer from XML
 		-fixed: IDEEmitter not including all renderers
 		-fixed: Emitter.fromXML would fail with controllers if the tag/array order wasn't [1]
-		-fixed: Examples: motion_tween event for last demo, and partigen em2 event demo
+		-fixed: Particle color controllers would tint entire particles including particleFilters
+		-changed: BasicParticles now place the source particles into a holder and apply color to that
 		-changed: internal datatypes for BasicParticle are now IBasicParticle
 		-changed: emitter.particleClass => particleBaseClass to avoid confusion
 		-changed: ParticleTweenController.setSingleTween() now returns the ParticleTweenController
-		-changed: Renderer start() and stop() methods are only on BitmapRenderer now
+		-changed: Renderer start() and stop() methods are only on BitmapRenderers now
 		-changed: BitmapRenderer._zeroPoint is now a public variable: 'offset'
 		-changed: groupBitmap now uses the original positioning unless proximity is > 0
 		-changed: BitmapRenderer doesn't need sizes, use resize() after XML load
@@ -51,6 +53,9 @@ Motion Package 1.1.1 & Partigen 2.5 (BETA)
 	Utils:
 		-changed: Random class with faster random method
 		-changed: Improved Random/color class with toString and getValue
+		
+	Examples:
+		-fixed: motion_tween event for last demo, and partigen em2 event demo
 
 
 Motion Package 1.1 & Partigen 2.1 (2010/03/16)

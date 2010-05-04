@@ -260,7 +260,6 @@ package com.desuade.motion.controllers {
 			dispatchEvent(new ControllerEvent(ControllerEvent.ADVANCED, {position:$o.data.sequence.position, controller:this}));
 		}
 		
-	
 	}
 
 }

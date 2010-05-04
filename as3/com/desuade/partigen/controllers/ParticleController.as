@@ -72,7 +72,10 @@ package com.desuade.partigen.controllers {
 		 *	@param	extras	 An 'extras' object to be passed to the tween engine for that keyframe.
 		 */
 		public function addBeginValue($property:String, $value:*, $spread:* = '0', $precision:int = 0, $extras:Object = null):ParticleTweenController {
-			if(this[$property] == undefined) this[$property] = new ParticleTweenController(0);
+			if(this[$property] == undefined) {
+				if($property == "color") this[$property] = new ParticleTweenController(0, ColorKeyframeContainer, colorTweenClass);
+				else this[$property] = new ParticleTweenController(0);
+			}
 			this[$property].keyframes.begin.value = $value;
 			this[$property].keyframes.begin.spread = $spread;
 			this[$property].keyframes.precision = $precision;
@@ -178,8 +181,9 @@ package com.desuade.partigen.controllers {
 			for (var p:String in this) {
 				attachController($particle, p, $emitter, newangle);
 			}
-			if($particle.controllers['color'] != undefined && $emitter.particleBaseClass is BasicParticle) {
+			if($particle.controllers['color'] != undefined && $particle is BasicParticle) {
 				$particle.controllers['color'].property = null;
+				$particle.controllers['color'].target = $particle._holder;
 			}
 		}
 			

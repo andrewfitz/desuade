@@ -87,6 +87,11 @@ package com.desuade.partigen.particles {
 		protected var _lifeTimer:Timer;
 		
 		/**
+		 *	@private
+		 */
+		public var _holder:Sprite = new Sprite();
+		
+		/**
 		 *	<p>Creates a new particle. This should normally not be called; use <code>emitter.emit()</code> instead of this.</p>
 		 *	<p>As of v2.1, Particles act as containers for the "actual particles" used from the library. This allows any class/symbol to be used without having to be extended from Particle. It also adopts grouping.</p>
 		 *	
@@ -94,6 +99,7 @@ package com.desuade.partigen.particles {
 		 */
 		public function BasicParticle() {
 			super();
+			addChild(_holder);
 		}
 		
 		/**
@@ -115,7 +121,7 @@ package com.desuade.partigen.particles {
 					group[i].x = Random.fromRange(-$proximity, $proximity, 0);
 					group[i].y = Random.fromRange(-$proximity, $proximity, 0);
 				}
-				this.addChild(group[i]);
+				_holder.addChild(group[i]);
 			}
 		}
 		
@@ -136,7 +142,7 @@ package com.desuade.partigen.particles {
 				}
 				canvas.copyPixels($particleData, $particleData.rect, np, null, null, true);
 			}
-			addChild(cbitmap);
+			_holder.addChild(cbitmap);
 		}
 		
 		/**
