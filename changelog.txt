@@ -4,11 +4,12 @@ Desuade Library Change Log - http://desuade.com/
 Publish new resource/pg2 demos & republish with 2.5
 Pixelrender/particle alpha on last frame/death
 UI XML apply not applying
-prefetch
+prefetch - startdif
 linked list
 pools
 bug cache particle list
 finish ui - predraw, glow filter
+check IDEEmitter and BaseTicker.physicsRate
 
 Motion Package 1.1.1 & Partigen 2.5 (BETA)
 	Partigen:
@@ -54,6 +55,8 @@ Motion Package 1.1.1 & Partigen 2.5 (BETA)
 		-changed: BitmapRenderer.render() uses drawMethod() now (for inherited renderers to override)
 		
 	Motion:
+		-added: BasicPhysics.startAtTime()
+		-added: BaseTicker.physicsRate
 		-fixed: MotionController.start() passing keyframes besides 'begin' and startTime
 		-fixed: DelayableFunc delay value turned into an int, preventing decimal delays
 		-fixed: KeyframeContainer.isFlat() for spread start values and color = none

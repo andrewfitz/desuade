@@ -208,7 +208,7 @@ package com.desuade.partigen.emitters {
 		/**
 		 *	Starts the emitter and optionally the renderer. If you only want to emit once, or at your own rate, use emit()
 		 *	
-		 *	@param	prefetch	 Starts the emitter as if it's already been running for this duration in seconds.
+		 *	@param	prefetch	 Starts the emitter as if it's already been running for this duration in seconds. If using physics controllers, be sure to set BaseTicker.physicsRate = stage.frameRate for accurate rendering.
 		 *	@param	runcontrollers	 This does nothing for BasicEmitters, and is only used for emitter classes with controllers.
 		 *	
 		 *	@see	#emit()
@@ -220,6 +220,10 @@ package com.desuade.partigen.emitters {
 				if($prefetch > 0) {
 					prefetch($prefetch);
 					var timerDif:Number = ((Math.ceil($prefetch/eps))-($prefetch/eps))*eps;
+					trace(timerDif);
+					
+					
+					
 					if(timerDif > 0.0001) new DelayableFunc({func:prefetchstart, delay:timerDif}).start();
 					else setTimer(true);
 				} else {

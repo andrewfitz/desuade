@@ -81,7 +81,7 @@ package com.desuade.partigen.particles {
 					controllers[p].setStartValue();
 				} else {
 					controllers[p].start('begin', $startTime);
-					if(controllers[p] is PhysicsMultiController) controllers[p].physics.start();
+					if(controllers[p] is PhysicsMultiController) controllers[p].physics.startAtTime($startTime);
 				}
 			}
 		}

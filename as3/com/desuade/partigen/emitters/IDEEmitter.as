@@ -81,6 +81,7 @@ package com.desuade.partigen.emitters {
 			super();
 			_isLivePreview = (parent != null && getQualifiedClassName(parent) == "fl.livepreview::LivePreviewParent");
 			addEventListener(Event.ENTER_FRAME, updateAngleSlice, false, 0, false);
+			if(stage != undefined) BaseTicker.physicsRate = stage.frameRate;
 		}
 		
 		/**

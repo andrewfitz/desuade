@@ -68,10 +68,16 @@ package com.desuade.motion.bases {
 		public static var _count:int = 0;
 		
 		/**
+		 *	<p>The default rate for physics. Use as a default for BasicPhysics.startAtTime().</p>
+		 *	<p>It is recomended to set this to your SWF's global stage.frameRate for more accurate rendering.</p>
+		 */
+		public static var physicsRate:Number = 30;
+		
+		/**
 		 *	True if the ticker has been initialized.
 		 */
 		public static function get inited():Boolean { 
-			return _inited; 
+			return _inited;
 		}
 		
 		/**

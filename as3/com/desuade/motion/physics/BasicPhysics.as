@@ -91,6 +91,27 @@ package com.desuade.motion.physics {
 		}
 		
 		/**
+		 *	This will start the physics as if it's already been running for the given amount of time.
+		 *	
+		 *	@param	time	 How long in seconds to emulate
+		 *	@param	rate	If the target isn't a DisplayObject, you need to set the fps manually here, or BaseTicker.physicsRate.
+		 *	
+		 *	@return		The BasicPhysics object.
+		 */
+		public function startAtTime($time:Number = 0, $rate:Number = 0):BasicPhysics {
+			start();
+			if($time > 0){
+				var iterations:int = 0;
+				if($rate > 0) iterations = $rate * $time;
+				else if(target.stage != undefined) iterations = target.stage.frameRate * $time;
+				else iterations = BaseTicker.physicsRate * $time;
+				var pt:PrimitivePhysics = BaseTicker.getItem(pid);
+				for (var i:int = 0; i < iterations; i++) pt.render(i);
+			}
+			return this;
+		}
+		
+		/**
 		 *	Gets the velocity that's calculated with a given angle.
 		 *	
 		 *	@param	velocity	 The velocity to use
