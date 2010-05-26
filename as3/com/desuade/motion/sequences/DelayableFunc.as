@@ -114,7 +114,7 @@ package com.desuade.motion.sequences {
 		/**
 		 *	@private
 		 */
-		protected function doDelay($delay:int):void {
+		protected function doDelay($delay:Number):void {
 			_delayTimer = new Timer($delay*1000);
 			_delayTimer.addEventListener(TimerEvent.TIMER, dtFunc, false, 0, false);
 			_delayTimer.start();

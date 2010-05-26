@@ -34,6 +34,7 @@ package com.desuade.partigen.emitters {
 	import com.desuade.partigen.interfaces.*;
 	import com.desuade.debugging.Debug;
 	import com.desuade.utils.*;
+	import com.desuade.motion.sequences.*;
 	import com.desuade.partigen.renderers.*;
 	import com.desuade.partigen.particles.*;
 	import com.desuade.partigen.events.*;
@@ -216,8 +217,15 @@ package com.desuade.partigen.emitters {
 			if(!_active){
 				if(groupBitmap) createParticleBitmap();
 				_active = true;
-				if($prefetch > 0) prefetch($prefetch);
-				setTimer(true);
+				if($prefetch > 0) {
+					prefetch($prefetch);
+					var timerDif:Number = ((Math.ceil($prefetch/eps))-($prefetch/eps))*eps;
+					if(timerDif > 0.0001) new DelayableFunc({func:prefetchstart, delay:timerDif}).start();
+					else setTimer(true);
+				} else {
+					setTimer(true);
+					emit(burst);
+				}
 			}
 		}
 		
@@ -241,7 +249,7 @@ package com.desuade.partigen.emitters {
 		public function prefetch($time:Number):void {
 			var lives:Array = getPrefetchLifeArray($time);
 			for (var i:int = 0; i < lives.length; i++) {
-				var np:IBasicParticle = createParticle(lives[i][1], lives[i][0]);
+				var np:IBasicParticle = createParticle(lives[i][0], lives[i][1]);
 			}
 		}
 		
@@ -253,14 +261,14 @@ package com.desuade.partigen.emitters {
 		 *	@return		An Array with Arrays that contain the original life and current life [[1, .8], [1, .5], [1, .2]]
 		 */
 		public function getPrefetchLifeArray($time:Number):Array {
-			//get the amount of particles in 1 second
-			var onesec:Number = eps * burst;
-			//total emissions
-			var totalems:int = int(eps * $time);
+			//total emissions plus the first emission on start
+			var totalFullEmissions:int = int(eps * $time) + 1;
 			//the total amount of particles made so far
-			var tpm:Number = $time * onesec;
+			var tpm:int = totalFullEmissions * burst;
 			//length of time between emissions
-			var ei:Number = 1/eps;
+			var ei:Number = 1/eps;	
+			//the amount of leftover time passed since an emission
+			var extraTimeOver:Number = $time - (ei * totalFullEmissions);
 			//array of lives that have started to die
 			var newlifes:Array = [];
 			//the final array of lifes to use
@@ -273,7 +281,7 @@ package com.desuade.partigen.emitters {
 				lifearray.push([nl, nl]);
 			}
 			//loop through lifearray
-			for (var r:int = 0; r < totalems; r++) {
+			for (var r:int = 0; r < totalFullEmissions; r++) {
 				//removes a burst of particles from each emission from the total array
 				//and then adds that array to the newlifes array
 				newlifes = newlifes.concat(lifearray.splice(0, burst));
@@ -281,6 +289,10 @@ package com.desuade.partigen.emitters {
 				for (var g:int = 0; g < newlifes.length; g++) {
 					newlifes[g][1] -= ei;
 				}
+			}
+			//lets apply the leftover time after all full emissions
+			for (var k:int = 0; k < newlifes.length; k++) {
+				newlifes[k][1] -= extraTimeOver;
 			}
 			//loop through newlifes and get the only living particles left
 			for (var e:int = 0; e < newlifes.length; e++) {
@@ -306,7 +318,7 @@ package com.desuade.partigen.emitters {
 		/**
 		 *	@private
 		 */
-		protected function createParticle($life:Number = 0, $clife:Number = 0):IBasicParticle {
+		protected function createParticle($totalLife:Number = 0, $remainingLife:Number = 0):IBasicParticle {
 			var np:* = pool.addParticle(particleBaseClass);
 			np.init(this);
 			np.blendMode = particleBlendMode;
@@ -315,8 +327,10 @@ package com.desuade.partigen.emitters {
 			else np.makeGroup(particle, groupAmount, groupProximity);
 			np.x = this.x;
 			np.y = this.y;
-			if($life > 0) np.addLife($life);
-			if($clife > 0) np.life = $clife;
+			if($remainingLife > 0){
+				np.addLife($remainingLife);
+				np.life = $totalLife;
+			} else if($totalLife > 0) np.addLife($totalLife);
 			if(enableEvents) dispatchEvent(new ParticleEvent(ParticleEvent.BORN, {particle:np}));
 			renderer.addParticle(np);
 			return np;
@@ -460,6 +474,14 @@ package com.desuade.partigen.emitters {
 		 */
 		public function dispatchDeath(p:IBasicParticle):void {
 			if(enableEvents) dispatchEvent(new ParticleEvent(ParticleEvent.DIED, {particle:p}));
+		}
+		
+		/**
+		 *	@private
+		 */
+		protected function prefetchstart($o:Object = null):void {
+			emit(burst);
+			setTimer(true);
 		}
 		
 		/**

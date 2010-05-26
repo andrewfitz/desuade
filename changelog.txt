@@ -1,6 +1,15 @@
 Desuade Library Change Log - http://desuade.com/
 ------------------------------------------------
 
+Publish new resource/pg2 demos & republish with 2.5
+Pixelrender/particle alpha on last frame/death
+UI XML apply not applying
+prefetch
+linked list
+pools
+bug cache particle list
+finish ui - predraw, glow filter
+
 Motion Package 1.1.1 & Partigen 2.5 (BETA)
 	Partigen:
 		-added: PixelRenderer & PixelParticle classes for high-performance pixel-based effects
@@ -15,6 +24,7 @@ Motion Package 1.1.1 & Partigen 2.5 (BETA)
 		-added: particleBaseClass support in XML
 		-added: IBasicParticle and IParticle interfaces
 		-added: Pool.length for total particles in the pool
+		-fixed: Emitter prefetching now much more accurate
 		-fixed: BitmapCanvas.setRenderer not removing original listener
 		-fixed: ParticleController/ParticleTweenController setSmartPrecision() for setBeginValue()
 		-fixed: Emitter now has a renderers/particles array so fromXML() has the classes included on compile
@@ -28,6 +38,7 @@ Motion Package 1.1.1 & Partigen 2.5 (BETA)
 		-fixed: IDEEmitter not including all renderers
 		-fixed: Emitter.fromXML would fail with controllers if the tag/array order wasn't [1]
 		-fixed: Particle color controllers would tint entire particles including particleFilters
+		-changed: Emitters will now emit() as soon as start() is called
 		-changed: BasicParticles now place the source particles into a holder and apply color to that
 		-changed: internal datatypes for BasicParticle are now IBasicParticle
 		-changed: emitter.particleClass => particleBaseClass to avoid confusion
@@ -43,6 +54,8 @@ Motion Package 1.1.1 & Partigen 2.5 (BETA)
 		-changed: BitmapRenderer.render() uses drawMethod() now (for inherited renderers to override)
 		
 	Motion:
+		-fixed: MotionController.start() passing keyframes besides 'begin' and startTime
+		-fixed: DelayableFunc delay value turned into an int, preventing decimal delays
 		-fixed: KeyframeContainer.isFlat() for spread start values and color = none
 		-fixed: Keyframe.fromXML() was modifying original XML, breaking XML reuse
 		-changed: MultiTween/ColorTween/Tween updated for new Random class

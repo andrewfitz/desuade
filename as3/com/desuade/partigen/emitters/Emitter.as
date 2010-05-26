@@ -120,10 +120,10 @@ package com.desuade.partigen.emitters {
 		/**
 		 *	@inheritDoc
 		 */
-		protected override function createParticle($life:Number = 0, $clife:Number = 0):IBasicParticle {
-			var np:* = super.createParticle($life, $clife);
+		protected override function createParticle($totalLife:Number = 0, $remainingLife:Number = 0):IBasicParticle {
+			var np:* = super.createParticle($totalLife, $remainingLife);
 			controllers.particle.attachAll(np, this);
-			if($clife > 0) np.startControllers($clife-$life);
+			if($remainingLife > 0) np.startControllers($totalLife-$remainingLife);
 			else np.startControllers();
 			return np;
 		}

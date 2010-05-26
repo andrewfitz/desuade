@@ -141,15 +141,22 @@ package com.desuade.motion.controllers {
 		 */
 		public function start($keyframe:String = 'begin', $startTime:Number = 0, $rebuild:Boolean = false):* {
 			$keyframe = ($keyframe == null) ? 'begin' : $keyframe;
-			setStartValue($keyframe);
-			_active = true;
-			if(_sequence == null || $rebuild) _sequence = buildSequence(target, property, duration);
-			_sequence.addEventListener(SequenceEvent.ENDED, tweenEnd, false, 0, false);
-			_sequence.addEventListener(SequenceEvent.ADVANCED, advance, false, 0, false);
-			if($keyframe != 'begin') _sequence.start(keyframes.getOrderedLabels().indexOf($keyframe));
-			else if($startTime > 0) _sequence.startAtTime($startTime);
-			else _sequence.start();
-			dispatchEvent(new ControllerEvent(ControllerEvent.STARTED, {controller:this}));
+			if($keyframe == 'end'){
+				_sequence = null;
+				dispatchEvent(new ControllerEvent(ControllerEvent.STARTED, {controller:this}));
+				setStartValue($keyframe);
+				dispatchEvent(new ControllerEvent(ControllerEvent.ENDED, {controller:this}));
+			} else {
+				_active = true;
+				if(_sequence == null || $rebuild) _sequence = buildSequence(target, property, duration);
+				_sequence.addEventListener(SequenceEvent.ENDED, tweenEnd, false, 0, false);
+				_sequence.addEventListener(SequenceEvent.ADVANCED, advance, false, 0, false);
+				setStartValue($keyframe);
+				if($keyframe != 'begin') _sequence.start(keyframes.getOrderedLabels().indexOf($keyframe));
+				else if($startTime > 0) _sequence.startAtTime($startTime);
+				else _sequence.start();
+				dispatchEvent(new ControllerEvent(ControllerEvent.STARTED, {controller:this}));
+			}
 			return this;
 		}
 		
