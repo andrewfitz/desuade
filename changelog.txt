@@ -1,16 +1,6 @@
 Desuade Library Change Log - http://desuade.com/
 ------------------------------------------------
 
-Publish new resource/pg2 demos & republish with 2.5
-Pixelrender/particle alpha on last frame/death
-UI XML apply not applying
-prefetch - startdif
-linked list
-pools
-bug cache particle list
-finish ui - predraw, glow filter
-check IDEEmitter and BaseTicker.physicsRate
-
 Motion Package 1.1.1 & Partigen 2.5 (BETA)
 	Partigen:
 		-added: PixelRenderer & PixelParticle classes for high-performance pixel-based effects

@@ -92,14 +92,14 @@ package com.desuade.partigen.emitters {
 		}
 		
 		/**
-		 *	<p>Starts the emitter and optionally the renderer. If you only want to emit once, or at your own rate, use emit()</p>
+		 *	<p>Starts the emitter. Passing a time will 'prefetch' particles as if the emitter had already been running for the given amount of time. If you only want to emit once, or at your own rate, use emit()</p>
 		 *	<p>It also, by default, starts all the controllers managed by the EmitterController.</p>
 		 *	
-		 *	@param	prefetch	 Starts the emitter as if it's already been running for this duration (in seconds).
+		 *	@param	time	 Starts the emitter as if it's already been running for this duration (in seconds).
 		 *	@param	startcontrollers	 This starts all MotionControllers managed by the EmitterController.
 		 */
-		public override function start($prefetch:Number = 0, $startcontrollers:Boolean = true):void {
-			super.start($prefetch);
+		public override function start($time:Number = 0, $startcontrollers:Boolean = true):void {
+			super.start($time);
 			if($startcontrollers){
 				controllers.emitter.start();
 			}

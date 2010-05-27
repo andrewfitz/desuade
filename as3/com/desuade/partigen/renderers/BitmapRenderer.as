@@ -98,6 +98,11 @@ package com.desuade.partigen.renderers {
 		public var _blur:BlurFilter = new BlurFilter(0,0,1);
 		
 		/**
+		 *	@private
+		 */
+		protected const ZP:Point = new Point(0,0);
+		
+		/**
 		 *	Creates a new BitmapRenderer. Use a BitmapCanvas object to display the particle bitmap.
 		 *	
 		 *	@param	width	The width of the Bitmap.
@@ -215,13 +220,10 @@ package com.desuade.partigen.renderers {
 		 */
 		protected function render($e:Object):void {
 			_offbitmap.lock();
-			if(_fadeCT.alphaMultiplier != 0){
-				_offbitmap.colorTransform(_offbitmap.rect, _fadeCT);
-			} else {
-				_offbitmap.fillRect(bitmapdata.rect, 0x00000000);
-			}
+			if(_fadeCT.alphaMultiplier != 0) _offbitmap.colorTransform(_offbitmap.rect, _fadeCT);
+			else _offbitmap.fillRect(bitmapdata.rect, 0x00000000);
 			if(predraw) drawMethod();
-			if(fadeBlur != 0 && fade != 0) _offbitmap.applyFilter(_offbitmap, _offbitmap.rect, new Point(0,0), _blur);
+			if(fadeBlur != 0 && fade != 0) _offbitmap.applyFilter(_offbitmap, _offbitmap.rect, ZP, _blur);
 			renderfunc(_offbitmap);
 			if(!predraw) drawMethod();
 			_offbitmap.unlock();

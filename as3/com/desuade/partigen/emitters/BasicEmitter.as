@@ -203,29 +203,27 @@ package com.desuade.partigen.emitters {
 			return _id;
 		}
 		
-		//runcontrollers does nothing here, but needed for override
-		
 		/**
-		 *	Starts the emitter and optionally the renderer. If you only want to emit once, or at your own rate, use emit()
+		 *	Starts the emitter. Passing a time will 'prefetch' particles as if the emitter had already been running for the given amount of time. If you only want to emit once, or at your own rate, use emit()
 		 *	
-		 *	@param	prefetch	 Starts the emitter as if it's already been running for this duration in seconds. If using physics controllers, be sure to set BaseTicker.physicsRate = stage.frameRate for accurate rendering.
+		 *	@param	time	 Starts the emitter as if it's already been running for this duration in seconds. If using physics controllers, be sure to set BaseTicker.physicsRate = stage.frameRate for accurate rendering.
 		 *	@param	runcontrollers	 This does nothing for BasicEmitters, and is only used for emitter classes with controllers.
 		 *	
 		 *	@see	#emit()
 		 */
-		public function start($prefetch:Number = 0, $runcontrollers:Boolean = true):void {
+		public function start($time:Number = 0, $runcontrollers:Boolean = true):void {
 			if(!_active){
 				if(groupBitmap) createParticleBitmap();
 				_active = true;
-				if($prefetch > 0) {
-					prefetch($prefetch);
-					var timerDif:Number = ((Math.ceil($prefetch/eps))-($prefetch/eps))*eps;
-					trace(timerDif);
-					
-					
-					
-					if(timerDif > 0.0001) new DelayableFunc({func:prefetchstart, delay:timerDif}).start();
-					else setTimer(true);
+				if($time > 0) {
+					prefetch($time);
+					var ei:Number = 1/eps;	
+					var timerDif:Number = ei-(Math.abs($time - (ei * (int(eps * $time) + 1))));
+					if(timerDif > 0.001) new DelayableFunc({func:prefetchstart, delay:timerDif}).start();
+					else {
+						setTimer(true);
+						emit(burst);
+					}
 				} else {
 					setTimer(true);
 					emit(burst);
@@ -246,7 +244,7 @@ package com.desuade.partigen.emitters {
 		}
 		
 		/**
-		 *	This prefetches the particles that would have existed if the emitter was running for the given time.
+		 *	This prefetches (and creates) the particles that would have existed if the emitter was running for the given time. This shouldn't be called directly, but through the start() method.
 		 *	
 		 *	@param	time	 The amount of time that should have passed since the emitter started.
 		 */
@@ -272,7 +270,9 @@ package com.desuade.partigen.emitters {
 			//length of time between emissions
 			var ei:Number = 1/eps;	
 			//the amount of leftover time passed since an emission
-			var extraTimeOver:Number = $time - (ei * totalFullEmissions);
+			var extraTimeOver:Number = Math.abs($time - (ei * totalFullEmissions));
+			//the amount of time left until the emitter would normally emit
+			//var timeUntilNextEmission:Number = ei-extraTimeOver;
 			//array of lives that have started to die
 			var newlifes:Array = [];
 			//the final array of lifes to use
@@ -295,8 +295,10 @@ package com.desuade.partigen.emitters {
 				}
 			}
 			//lets apply the leftover time after all full emissions
-			for (var k:int = 0; k < newlifes.length; k++) {
-				newlifes[k][1] -= extraTimeOver;
+			if(extraTimeOver > 0.001){
+				for (var k:int = 0; k < newlifes.length; k++) {
+					newlifes[k][1] -= extraTimeOver;
+				}
 			}
 			//loop through newlifes and get the only living particles left
 			for (var e:int = 0; e < newlifes.length; e++) {
@@ -484,8 +486,8 @@ package com.desuade.partigen.emitters {
 		 *	@private
 		 */
 		protected function prefetchstart($o:Object = null):void {
-			emit(burst);
 			setTimer(true);
+			emit(burst);
 		}
 		
 		/**
