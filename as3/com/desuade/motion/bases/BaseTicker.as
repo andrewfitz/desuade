@@ -145,10 +145,12 @@ package com.desuade.motion.bases {
 		 */
 		protected static function update($u:Object):void {
 			var times:int = getTimer();
+			//var ir:int = 0;
 			for each (var item:BasePrimitive in _holder) {
 				item.render(times);
+				//ir++;
 			}
-			//trace("Loop time: " + String(getTimer()-times));
+			//trace("Loop time: " + String(getTimer()-times) + " Items: " + ir);
 			dispatchEvent(new MotionEvent(MotionEvent.UPDATED));
 		}
 		

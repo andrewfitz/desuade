@@ -22,53 +22,45 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-package com.desuade.partigen {
+package com.desuade.utils {
 
-	/**
-	 *  This is a static class that's used to store constants for the Desuade Partigen Package.
-	 *    
-	 *  @langversion ActionScript 3
-	 *  @playerversion Flash 9.0.0
-	 *
-	 *  @author Andrew Fitzgerald
-	 *  @since  20.04.2009
-	 */
-	public class Partigen {
+	public class LinkedList {
 		
-		/**
-		 *	The numeric version of the package. Used for version comparisons.
-		 */
-		public static const VERSION:Number = 2.503;
+		protected var _head:LinkedListNode = null;
+		protected var _tail:LinkedListNode = null;
 		
-		/**
-		 *	The "official" release version.
-		 */
-		public static const VERSIONLABEL:String = '2.5 Beta 2';
+		public function get head():LinkedListNode{
+			return _head;
+		}
+	
+		public function LinkedList() {
+			//
+		}
 		
-		/**
-		 *	Company that owns the source code
-		 */
-		public static const COMPANY:String = 'Desuade';
+		public function add($node:LinkedListNode):void {
+			if(_head != null) {
+				_tail.next = $node;
+				$node.previous = _tail;
+			} else {
+				_head = $node;
+				$node.previous = null;
+			}
+			$node.next = null;
+			_tail = $node;
+		}
 		
-		/**
-		 *	Homepage for the package
-		 */
-		public static const URL:String = 'http://desuade.com/';
-		
-		/**
-		 *	An array of the authors that programmed the engine
-		 */
-		public static const AUTHORS:Array = ['Andrew Fitzgerald'];
-		
-		/**
-		 *	The language of the engine, both human language and ActionScript
-		 */
-		public static const LANGUAGE:String = 'en_as3';
-		
-		/**
-		 *	Official name of the package
-		 */
-		public static const NAME:String = 'Desuade Partigen';
+		public function remove($node:LinkedListNode):void {
+			if($node == _head){
+				_head = $node.next;
+			} else if($node == _tail){
+				_tail.previous.next = null;
+				_tail = _tail.previous;
+			} else {
+				$node.previous.next = $node.next;
+				$node.next.previous = $node.previous;
+			}
+			$node = null;
+		}
 	
 	}
 

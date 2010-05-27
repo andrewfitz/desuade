@@ -28,6 +28,7 @@ package com.desuade.partigen.emitters {
 	import flash.display.MovieClip;
 	import com.desuade.partigen.renderers.*;
 	import com.desuade.motion.events.*;
+	import com.desuade.motion.bases.*;
 	import com.desuade.utils.Drawing;
 	import flash.events.Event;
 	import flash.utils.*;
@@ -80,8 +81,8 @@ package com.desuade.partigen.emitters {
 		public function IDEEmitter() {
 			super();
 			_isLivePreview = (parent != null && getQualifiedClassName(parent) == "fl.livepreview::LivePreviewParent");
-			addEventListener(Event.ENTER_FRAME, updateAngleSlice, false, 0, false);
-			if(stage != undefined) BaseTicker.physicsRate = stage.frameRate;
+			if(indicator != null) addEventListener(Event.ENTER_FRAME, updateAngleSlice, false, 0, false);
+			if(stage != null) BaseTicker.physicsRate = stage.frameRate;
 		}
 		
 		/**

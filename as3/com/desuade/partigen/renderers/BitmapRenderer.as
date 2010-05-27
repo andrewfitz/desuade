@@ -108,7 +108,7 @@ package com.desuade.partigen.renderers {
 		 *	@param	width	The width of the Bitmap.
 		 *	@param	height	The height of the Bitmap.
 		 *	@param	order	The visual stacking order for new particles to be created – 'top', 'bottom', or 'random'.
-		 *	@param	automagic	If the renderer should start in automagic mode (starts/stops renderer based on need).
+		 *	@param	automagic	If the renderer should start in automagic mode (starts/stops renderer based on need, recommended).
 		 */
 		public function BitmapRenderer($width:int, $height:int, $order:String = 'top', $automagic:Boolean = true) {
 			super(new Sprite(), $order);

@@ -15,6 +15,7 @@ Motion Package 1.1.1 & Partigen 2.5 (BETA)
 		-added: particleBaseClass support in XML
 		-added: IBasicParticle and IParticle interfaces
 		-added: Pool.length for total particles in the pool
+		-fixed: IDEEmitter issues when not used as a component
 		-fixed: Emitter prefetching now much more accurate
 		-fixed: BitmapCanvas.setRenderer not removing original listener
 		-fixed: ParticleController/ParticleTweenController setSmartPrecision() for setBeginValue()
