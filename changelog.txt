@@ -1,7 +1,7 @@
 Desuade Library Change Log - http://desuade.com/
 ------------------------------------------------
 
-Motion Package 1.1.1 & Partigen 2.5 (BETA)
+Motion Package 1.1.1 & Partigen 2.5 (2010/06/02)
 	Partigen:
 		-added: PixelRenderer & PixelParticle classes for high-performance pixel-based effects
 		-added: Emitter.particleFilters and XML support for dynamic filters on particles
@@ -30,6 +30,7 @@ Motion Package 1.1.1 & Partigen 2.5 (BETA)
 		-fixed: IDEEmitter not including all renderers
 		-fixed: Emitter.fromXML would fail with controllers if the tag/array order wasn't [1]
 		-fixed: Particle color controllers would tint entire particles including particleFilters
+		-fixed: PELFile would still onLoad() if there was an error
 		-changed: Emitters will now emit() as soon as start() is called
 		-changed: BasicParticles now place the source particles into a holder and apply color to that
 		-changed: internal datatypes for BasicParticle are now IBasicParticle

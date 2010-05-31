@@ -78,8 +78,7 @@ package com.desuade.partigen.renderers {
 		 *	@inheritDoc
 		 */
 		protected override function drawMethod():void {
-			for (var p:String in _particles) {
-				var tp:* = _particles[p];
+			for each (var tp:* in _particles) {
 				var argb:uint = (255 * tp.alpha)<<24;
 				argb += tp.color;
 				for (var i:int = 0; i < tp.group.length; i++) {

@@ -135,6 +135,11 @@ package com.desuade.partigen.libraries {
 		 *	If the loaded SWC files should share their Classes or keep them in their own ApplicationDomain
 		 */
 		public var shared:Boolean = true;
+		
+		/**
+		 *	Did the PEL file have an error on load.
+		 */
+		public var hasError:Boolean = false;
 	
 		/**
 		 *	@private
@@ -221,6 +226,7 @@ package com.desuade.partigen.libraries {
 			if(libentry == null){
 				//report error here and exit and return
 				if(onError != null) onError(this, ERROR_LOAD_MISSINGXML);
+				hasError = true;
 				return;
 			} else {
 				//load lib file
@@ -229,6 +235,7 @@ package com.desuade.partigen.libraries {
 					var zl:XML = XML(libdata.readUTFBytes(libdata.length));
 				} catch(e:Error){
 					if(onError != null) onError(this, ERROR_PARSINGXML);
+					hasError = true;
 					return;
 				}
 				if(VERSION < zl.@version){
@@ -269,31 +276,34 @@ package com.desuade.partigen.libraries {
 				if(Partigen.VERSION < require){
 					//it doesn't meet partigen requirements, so don't load it
 					if(onError != null) onError(this, ERROR_LOAD_REQUIRED);
+					hasError = true;
 					return;
 				}
 			}
-			//continue on if everything is good and load the resources
-			for (var i:int = 0; i < _zipFile.entries.length; i++) {
-				var entry:ZipEntry = _zipFile.entries[i];
-				var data:ByteArray = _zipFile.getInput(entry);
-				var ename:String = entry.name;
-				var esplit:Array = ename.split('.');
-				var format:String = String(esplit[1]).toLowerCase();
-				var namey:String = String(esplit[0]);
-				//ignore osx files and "." files
-				if(ename.charAt(0) == '.' || ename.charAt(0) == "_"){
-					//ignore these files
-				} else if (ename == "library.xml") {
-					//ignore it we already loaded it
-				} else if (format == 'swc') {
-					_swcTotal++;
-					swcs[namey] = new SWCFile();
-					swcs[namey].onLoad = function(t:SWCFile):void {
-						checkSWCLoaded();
+			if(!hasError){
+				//continue on if everything is good and load the resources
+				for (var i:int = 0; i < _zipFile.entries.length; i++) {
+					var entry:ZipEntry = _zipFile.entries[i];
+					var data:ByteArray = _zipFile.getInput(entry);
+					var ename:String = entry.name;
+					var esplit:Array = ename.split('.');
+					var format:String = String(esplit[1]).toLowerCase();
+					var namey:String = String(esplit[0]);
+					//ignore osx files and "." files
+					if(ename.charAt(0) == '.' || ename.charAt(0) == "_"){
+						//ignore these files
+					} else if (ename == "library.xml") {
+						//ignore it we already loaded it
+					} else if (format == 'swc') {
+						_swcTotal++;
+						swcs[namey] = new SWCFile();
+						swcs[namey].onLoad = function(t:SWCFile):void {
+							checkSWCLoaded();
+						}
+						swcs[namey].loadData(data, shared);
+					} else {
+						//do when it's not a swc or xml
 					}
-					swcs[namey].loadData(data, shared);
-				} else {
-					//do when it's not a swc or xml
 				}
 			}
 		}
@@ -313,6 +323,7 @@ package com.desuade.partigen.libraries {
 		 */
 		private function loadErrorFunc(e:Event = null):void {
 			if(onError != null) onError(this, ERROR_LOAD_FILELOAD);
+			hasError = true;
 		}
 		
 	}
