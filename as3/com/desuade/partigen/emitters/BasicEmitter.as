@@ -182,7 +182,7 @@ package com.desuade.partigen.emitters {
 			super();
 			_id = ++Partigen._emitterCount;
 			renderer = new NullRenderer();
-			pool = new NullPool(particleBaseClass);
+			pool = new BasicPool(particleBaseClass);
 			Debug.output('partigen', 20001, [id]);
 		}
 		
