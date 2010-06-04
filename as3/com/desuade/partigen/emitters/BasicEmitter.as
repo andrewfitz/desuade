@@ -149,7 +149,8 @@ package com.desuade.partigen.emitters {
 		public var lifeSpread:* = "0";
 		
 		/**
-		 *	This forces pooled particles to rebuild their groups and controllers to eliminate any possible repetition at the cost of performance.
+		 *	<p>This forces pooled particles to rebuild their groups and controllers to eliminate any possible repetition or error at the cost of performance.</p>
+		 *	<p>Set this to true if you plan on making changes to the emitter while it's running. If you make changes via XML, the pool will automatically force a pool.purge() just to be safe.</p>
 		 */
 		public var forceVariety:Boolean = false;
 		
@@ -341,7 +342,7 @@ package com.desuade.partigen.emitters {
 		 *	@param	burst	 The amount of particles to create at once.
 		 */
 		public function emit($burst:int = 1):void {
-			var times:int = getTimer();
+			//var times:int = getTimer();
 			for (var i:int = 0; i < $burst; i++) {
 				createParticle((life > 0) ? randomLife() : 0);
 			}
@@ -352,7 +353,7 @@ package com.desuade.partigen.emitters {
 		 *	@private
 		 */
 		protected function createParticle($totalLife:Number = 0, $remainingLife:Number = 0):IBasicParticle {
-			var np:* = pool.addParticle(); //this is where we would pass the clean method?
+			var np:* = pool.addParticle();
 			np.init(this);
 			if(!np.isbuilt){
 				np.blendMode = particleBlendMode;

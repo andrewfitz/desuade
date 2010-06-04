@@ -128,6 +128,7 @@ package com.desuade.partigen.particles {
 		 *	@private
 		 */
 		public function makeGroup($particle:Class, $amount:int, $proximity:int):void {
+			while(_holder.numChildren > 0) _holder.removeChildAt(0);
 			group = [];
 			for (var i:int = 0; i < $amount; i++) {
 				group[i] = new $particle();
@@ -143,6 +144,7 @@ package com.desuade.partigen.particles {
 		 *	@private
 		 */
 		public function makeGroupBitmap($particleData:BitmapData, $amount:int, $proximity:int, $origin:Point):void {
+			while(_holder.numChildren > 0) _holder.removeChildAt(0);
 			var cs:int = $proximity + $proximity;
 			var canvas:BitmapData = new BitmapData(cs+$particleData.width, cs+$particleData.height, true, 0);
 			var cbitmap:Bitmap = new Bitmap(canvas);
