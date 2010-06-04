@@ -148,7 +148,7 @@ package com.desuade.motion.controllers {
 				dispatchEvent(new ControllerEvent(ControllerEvent.ENDED, {controller:this}));
 			} else {
 				_active = true;
-				if(_sequence == null || $rebuild) _sequence = buildSequence(target, property, duration);
+				if(_sequence == null || $rebuild) rebuild();
 				_sequence.addEventListener(SequenceEvent.ENDED, tweenEnd, false, 0, false);
 				_sequence.addEventListener(SequenceEvent.ADVANCED, advance, false, 0, false);
 				setStartValue($keyframe);
@@ -166,6 +166,13 @@ package com.desuade.motion.controllers {
 		public function stop():void {
 			if(_active) _sequence.stop();
 			else Debug.output('motion', 10003);
+		}
+		
+		/**
+		 *	This rebuilds the internal sequence.
+		 */
+		public function rebuild():void {
+			_sequence = buildSequence(target, property, duration);
 		}
 		
 		/**

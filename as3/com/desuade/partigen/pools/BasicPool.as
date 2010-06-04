@@ -54,7 +54,7 @@ package com.desuade.partigen.pools {
 		 *	This creates a basic particle pool using object pooling.
 		 *	
 		 *	@param	particleClass	 The baseParticleClass to use for the particles
-		 *	@param	expandSize	 The starting size of the object pool
+		 *	@param	expandSize	 The size of each expansion for the object pool
 		 */
 		public function BasicPool($particleClass:Class, $expandSize:int = 50) {
 			super($particleClass);
@@ -76,7 +76,7 @@ package com.desuade.partigen.pools {
 		public override function setClass($particleClass:Class):void {
 			super.setClass($particleClass);
 			purge();
-			_pool = new BasicObjectPool(_particleClass, _particleClass.clean, expandSize);
+			_pool = new BasicObjectPool(_particleClass, _particleClass.clean, expandSize, 0);
 		}
 		
 		/**

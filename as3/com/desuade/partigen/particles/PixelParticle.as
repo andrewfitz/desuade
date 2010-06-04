@@ -54,6 +54,16 @@ package com.desuade.partigen.particles {
 		 *	This holds all of the MotionControllers that are currently being ran on the particle.
 		 */
 		public var controllers:Object = {};
+		
+		/**
+		 *	@private
+		 */
+		protected var _eox:Number;
+		
+		/**
+		 *	@private
+		 */
+		protected var _eoy:Number;
 	
 		/**
 		 *	<p>Creates a new pixel particle for the PixelRenderer. This should normally not be called; use <code>emitter.emit()</code> instead of this.</p>
@@ -62,6 +72,16 @@ package com.desuade.partigen.particles {
 		 */
 		public function PixelParticle() {
 			super();
+		}
+		
+		/**
+		 *	@inheritDoc
+		 */
+		public override function init($emitter:BasicEmitter):void {
+			super.init($emitter);
+			if(isbuilt && controllers.x != undefined && $emitter.x != _eox && controllers.x is MotionController) controllers.x.rebuild();
+			if(isbuilt && controllers.y != undefined && $emitter.y != _eoy && controllers.y is MotionController) controllers.y.rebuild();
+			_eox = $emitter.x, _eoy = $emitter.y;
 		}
 		
 		/**

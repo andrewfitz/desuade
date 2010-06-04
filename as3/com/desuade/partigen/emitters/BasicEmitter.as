@@ -102,6 +102,13 @@ package com.desuade.partigen.emitters {
 		public var particleBlendMode:String = "normal";
 		
 		/**
+		 *	<p>This will set "cacheAsBitmap = true" on all created particles.</p>
+		 *	<p>Test using this vs groupBitmap - as performance will vary based on each effect.</p>
+		 *	<p>Also test this with BitmapRenderer, as it may vary the effect and performance.</p>
+		 */
+		public var cacheParticleAsBitmap:Boolean = false;
+		
+		/**
 		 *	This is an array of filters that gets applied to each particle as it's born.
 		 */
 		public var particleFilters:Array = [];
@@ -118,7 +125,9 @@ package com.desuade.partigen.emitters {
 		public var groupProximity:int = 0;
 		
 		/**
-		 *	This will use a Bitmap for the particle instead of the direct display object. Used to improve performance of static particles. Be sure to use in conjunction with createParticleBitmap() (handled automatically with start()).
+		 *	<p>This will create a new Bitmap object for the particle instead of the direct display object. Used to improve performance of static particles. Be sure to use in conjunction with createParticleBitmap() (handled automatically with start()).</p>
+		 *	<p>Test using this vs cacheParticleAsBitmap - as performance will vary based on each effect.</p>
+		 *	<p>Also test this with BitmapRenderer, as it may vary the effect and performance.</p>
 		 */
 		public var groupBitmap:Boolean = false;
 		
@@ -332,7 +341,7 @@ package com.desuade.partigen.emitters {
 		 *	@param	burst	 The amount of particles to create at once.
 		 */
 		public function emit($burst:int = 1):void {
-			//var times:int = getTimer();
+			var times:int = getTimer();
 			for (var i:int = 0; i < $burst; i++) {
 				createParticle((life > 0) ? randomLife() : 0);
 			}
@@ -345,10 +354,10 @@ package com.desuade.partigen.emitters {
 		protected function createParticle($totalLife:Number = 0, $remainingLife:Number = 0):IBasicParticle {
 			var np:* = pool.addParticle(); //this is where we would pass the clean method?
 			np.init(this);
-			//trace("ID: " + np.id);
 			if(!np.isbuilt){
 				np.blendMode = particleBlendMode;
 				if(particleFilters != []) np.filters = particleFilters;
+				np.cacheAsBitmap = cacheParticleAsBitmap;
 			}
 			if(!np.isbuilt || forceVariety){
 				if(groupBitmap) np.makeGroupBitmap(_particlebitmap, groupAmount, groupProximity, _particleOrigin);
@@ -391,6 +400,7 @@ package com.desuade.partigen.emitters {
 			txml.@particle = getQualifiedClassName(particle);
 			txml.@particleBaseClass = XMLHelper.getSimpleClassName(particleBaseClass);
 			txml.@particleBlendMode = particleBlendMode;
+			txml.@cacheParticleAsBitmap = XMLHelper.xmlize(cacheParticleAsBitmap);
 			txml.@eps = eps;
 			txml.@burst = burst;
 			txml.@life = life;
@@ -431,6 +441,7 @@ package com.desuade.partigen.emitters {
 				if($xml.@particle != undefined) particle = getDefinitionByName($xml.@particle) as Class;
 				if($xml.@particleBaseClass != undefined) particleBaseClass = (getDefinitionByName("com.desuade.partigen.particles::" + $xml.@particleBaseClass) as Class) || BasicParticle;
 				if($xml.@particleBlendMode != undefined) particleBlendMode = String($xml.@particleBlendMode);
+				if($xml.@cacheParticleAsBitmap != undefined) cacheParticleAsBitmap = XMLHelper.dexmlize($xml.@cacheParticleAsBitmap);
 				if($xml.@eps != undefined) eps = Number($xml.@eps);
 				if($xml.@burst != undefined) burst = int($xml.@burst);
 				if($xml.@groupBitmap != undefined) groupBitmap = XMLHelper.dexmlize($xml.@groupBitmap);

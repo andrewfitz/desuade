@@ -7,6 +7,7 @@ Motion Package 1.1.1 & Partigen 2.5 (2010/06/04)
 		-added: BasicPool class for partigen package using object pooling to greatly increase performance
 		-added: Emitter.particleFilters and XML support for dynamic filters on particles
 		-added: BitmapRenderer automagicmode - starts/stops the renderer on demand, no need for manual control
+		-added: Emitter.cacheParticleAsBitmap for particles
 		-added: RenderEvent STARTED & STOPPED events for BitmapRenderer
 		-added: BitmapRenderer.predraw (choose to draw the particle before or after filters)
 		-added: BitmapRenderer.clear() to clear the bitmapdata
@@ -19,6 +20,7 @@ Motion Package 1.1.1 & Partigen 2.5 (2010/06/04)
 		-added: Pool.purge()
 		-added: Emitter.forceVariety for use with BasicPools
 		-added: Particle.isclean and isbuilt for use with BasicPools
+		-added: MotionController.rebuild()
 		-fixed: IDEEmitter issues when not used as a component
 		-fixed: Emitter prefetching now much, much more accurate and stable
 		-fixed: BitmapCanvas.setRenderer not removing original listener

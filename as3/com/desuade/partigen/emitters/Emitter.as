@@ -100,9 +100,7 @@ package com.desuade.partigen.emitters {
 		 */
 		public override function start($time:Number = 0, $startcontrollers:Boolean = true):void {
 			super.start($time);
-			if($startcontrollers){
-				controllers.emitter.start();
-			}
+			if($startcontrollers) controllers.emitter.start();
 		}
 		
 		/**
@@ -112,9 +110,7 @@ package com.desuade.partigen.emitters {
 		 */
 		public override function stop($stopcontrollers:Boolean = true):void {
 			super.stop();
-			if($stopcontrollers){
-				controllers.emitter.stop();
-			}
+			if($stopcontrollers) controllers.emitter.stop();
 		}
 		
 		/**
@@ -123,8 +119,8 @@ package com.desuade.partigen.emitters {
 		protected override function createParticle($totalLife:Number = 0, $remainingLife:Number = 0):IBasicParticle {
 			var np:* = super.createParticle($totalLife, $remainingLife);
 			if(!np.isbuilt) controllers.particle.attachAll(np, this);
-			if($remainingLife > 0) np.startControllers($totalLife-$remainingLife, forceVariety); //do we rebuild the sequence here?
-			else np.startControllers(0, forceVariety); //do we rebuild controllers here too?
+			if($remainingLife > 0) np.startControllers($totalLife-$remainingLife, forceVariety);
+			else np.startControllers(0, forceVariety);
 			return np;
 		}
 		

@@ -41,7 +41,7 @@ package com.desuade.utils {
 		public var size:int = 0;
 		
 		/**
-		 *	The starting size and rate of expansion of the pool
+		 *	The size of each expansion for the object pool
 		 */
 		public var expandSize:int;
 		
@@ -70,13 +70,14 @@ package com.desuade.utils {
 		 *	
 		 *	@param	objectClass	 The class of objects used in and created by the pool
 		 *	@param	clean	The method used to clean objects on checkIn
-		 *	@param	expandSize	 The starting size of the pool
+		 *	@param	expandSize	 The size of each expansion for the object pool
+		 *	@param	startSize	 The starting size of the pool
 		 */
-		public function BasicObjectPool($objectClass:Class, $clean:Function = null, $expandSize:int = 50) {
+		public function BasicObjectPool($objectClass:Class, $clean:Function = null, $expandSize:int = 50, $startSize:int = 0) {
 			objectClass = $objectClass;
 			clean = $clean;
 			expandSize = $expandSize;
-			make(expandSize);
+			make($startSize);
 		}
 		
 		/**
