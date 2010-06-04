@@ -40,10 +40,25 @@ package com.desuade.partigen.pools {
 	 */
 	public class BasicPool extends Pool {
 		
+		/**
+		 *	@private
+		 */
 		protected var _pool:BasicObjectPool = null;
 		
-		public function BasicPool($particleClass:Class) {
+		/**
+		 *	The starting size of the object pool
+		 */
+		public var startSize:int = 0;
+		
+		/**
+		 *	This creates a basic particle pool using object pooling.
+		 *	
+		 *	@param	particleClass	 The baseParticleClass to use for the particles
+		 *	@param	startSize	 The starting size of the object pool
+		 */
+		public function BasicPool($particleClass:Class, $startSize:int = 50) {
 			super($particleClass);
+			startSize = $startSize;
 			setClass(_particleClass);
 		}
 		
@@ -51,9 +66,7 @@ package com.desuade.partigen.pools {
 		 *	This clears all particles in the object pool and will not check any currently living particles back into the object pool.
 		 */
 		public override function purge():void {
-			for each (var p:* in _particles) {
-				p.destroy = true;
-			}
+			for each (var p:* in _particles) p.destroy = true;
 			if(_pool != null) _pool.dispose();
 		}
 		
@@ -63,7 +76,7 @@ package com.desuade.partigen.pools {
 		public override function setClass($particleClass:Class):void {
 			super.setClass($particleClass);
 			purge();
-			_pool = new BasicObjectPool(_particleClass, _particleClass.clean, 50);
+			_pool = new BasicObjectPool(_particleClass, _particleClass.clean, startSize);
 		}
 		
 		/**
@@ -81,9 +94,8 @@ package com.desuade.partigen.pools {
 		 */
 		public override function removeParticle($particle:*):void {
 			super.removeParticle($particle);
-			if($particle.destroy != undefined && $particle.destroy){
-				_particles[$particle] = null;
-			} else {
+			if($particle.destroy != undefined && $particle.destroy) _particles[$particle] = null;
+			else {
 				$particle.isbuilt = true;
 				_pool.checkIn($particle);
 			}

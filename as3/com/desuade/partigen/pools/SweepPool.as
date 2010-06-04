@@ -32,7 +32,7 @@ package com.desuade.partigen.pools {
 	import flash.utils.getTimer;
 
 	/**
-	 *  This offers basic object storage and removes objects in intervals.
+	 *  This offers basic object storage (without real 'pooling') and removes objects in intervals.
 	 *    
 	 *  @langversion ActionScript 3
 	 *  @playerversion Flash 9.0.0
