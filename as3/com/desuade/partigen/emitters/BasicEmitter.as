@@ -342,11 +342,11 @@ package com.desuade.partigen.emitters {
 		 *	@param	burst	 The amount of particles to create at once.
 		 */
 		public function emit($burst:int = 1):void {
-			//var times:int = getTimer();
+			var times:int = getTimer();
 			for (var i:int = 0; i < $burst; i++) {
 				createParticle((life > 0) ? randomLife() : 0);
 			}
-			//trace("Loop time: " + String(getTimer()-times));
+			trace("Loop time: " + String(getTimer()-times));
 		}
 		
 		/**
@@ -355,12 +355,10 @@ package com.desuade.partigen.emitters {
 		protected function createParticle($totalLife:Number = 0, $remainingLife:Number = 0):IBasicParticle {
 			var np:* = pool.addParticle();
 			np.init(this);
-			if(!np.isbuilt){
+			if(!np.isbuilt || forceVariety){
 				np.blendMode = particleBlendMode;
 				if(particleFilters != []) np.filters = particleFilters;
 				np.cacheAsBitmap = cacheParticleAsBitmap;
-			}
-			if(!np.isbuilt || forceVariety){
 				if(groupBitmap) np.makeGroupBitmap(_particlebitmap, groupAmount, groupProximity, _particleOrigin);
 				else np.makeGroup(particle, groupAmount, groupProximity);
 			}

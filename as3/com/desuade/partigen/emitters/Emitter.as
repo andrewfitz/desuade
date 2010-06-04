@@ -118,9 +118,12 @@ package com.desuade.partigen.emitters {
 		 */
 		protected override function createParticle($totalLife:Number = 0, $remainingLife:Number = 0):IBasicParticle {
 			var np:* = super.createParticle($totalLife, $remainingLife);
-			if(!np.isbuilt) controllers.particle.attachAll(np, this);
-			if($remainingLife > 0) np.startControllers($totalLife-$remainingLife, forceVariety);
-			else np.startControllers(0, forceVariety);
+			if(!np.isbuilt || forceVariety) {
+				np.controllers = {};
+				controllers.particle.attachAll(np, this);
+			}
+			if($remainingLife > 0) np.startControllers($totalLife-$remainingLife);
+			else np.startControllers(0);
 			return np;
 		}
 		

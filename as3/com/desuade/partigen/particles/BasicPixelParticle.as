@@ -77,7 +77,7 @@ package com.desuade.partigen.particles {
 		/**
 		 *	This holds the particles inside of the group.
 		 */
-		public var group:Array;
+		public var group:Array = [];
 		
 		/**
 		 *	@private
@@ -141,15 +141,29 @@ package com.desuade.partigen.particles {
 		 *	@private
 		 */
 		public function makeGroup($particle:Class, $amount:int, $proximity:int):void {
-			group = [];
-			if($proximity <= 0) group[0] = [0,0];
-			else {
+			if($amount == group.length){
+				rearrangeGroup($proximity);
+			} else {
+				group = [];
 				for (var i:int = 0; i < $amount; i++) {
 					group[i] = [0,0];
-					if($proximity > 0){
-						group[i][0] = Random.fromRange(-$proximity, $proximity, 0);
-						group[i][1] = Random.fromRange(-$proximity, $proximity, 0);
-					}
+				}
+				rearrangeGroup($proximity);
+			}
+		}
+		
+		/**
+		 *	@private
+		 */
+		protected function rearrangeGroup($proximity:int):void {
+			if($proximity <= 0) {
+				for (var i:int = 0; i < group.length; i++) {
+					group[i][0] = group[i][1] = 0;
+				}
+			} else {
+				for (var i:int = 0; i < group.length; i++) {
+					group[i][0] = Random.fromRange(-$proximity, $proximity, 0);
+					group[i][1] = Random.fromRange(-$proximity, $proximity, 0);
 				}
 			}
 		}
