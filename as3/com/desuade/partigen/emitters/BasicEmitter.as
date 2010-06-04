@@ -31,6 +31,7 @@ package com.desuade.partigen.emitters {
 	import flash.utils.*;
 	import flash.geom.*;
 	
+	import com.desuade.partigen.Partigen;
 	import com.desuade.partigen.interfaces.*;
 	import com.desuade.debugging.Debug;
 	import com.desuade.utils.*;
@@ -50,11 +51,6 @@ package com.desuade.partigen.emitters {
 	 *  @since  08.05.2009
 	 */
 	public dynamic class BasicEmitter extends Sprite {
-		
-		/**
-		 *	@private
-		 */
-		protected static var _count:int = 0;
 		
 		/**
 		 *	The Renderer to use for created particles. A NullRenderer is created by default. This can be a new Renderer or just assigned to an external independent Renderer.
@@ -82,7 +78,22 @@ package com.desuade.partigen.emitters {
 		 *	<p>When the pools create particle objects, they use this. The 'particle' property, is the actual class used for particles you see.</p>
 		 *	<p>This should only be used by classes that inherit BasicParticle or Particle. Most of the time you should not need to change this.</p>
 		 */
-		public var particleBaseClass:Class = BasicParticle;
+		public function get particleBaseClass():Class{
+			return _particleBaseClass;
+		}
+		
+		/**
+		 *	@private
+		 */
+		public function set particleBaseClass($value:Class):void {
+			_particleBaseClass = $value;
+			pool.setClass(_particleBaseClass);
+		}
+		
+		/**
+		 *	@private
+		 */
+		protected var _particleBaseClass:Class = BasicParticle;
 		
 		/**
 		 *	<p>This defines the blendmode for each particle created.</p>
@@ -129,6 +140,11 @@ package com.desuade.partigen.emitters {
 		public var lifeSpread:* = "0";
 		
 		/**
+		 *	This forces pooled particles to rebuild their groups and controllers to eliminate any possible repetition at the cost of performance.
+		 */
+		public var forceVariety:Boolean = false;
+		
+		/**
 		 *	@private
 		 */
 		protected var _id:int;
@@ -164,9 +180,9 @@ package com.desuade.partigen.emitters {
 		 */
 		public function BasicEmitter() {
 			super();
-			_id = ++_count;
+			_id = ++Partigen._emitterCount;
 			renderer = new NullRenderer();
-			pool = new NullPool();
+			pool = new NullPool(particleBaseClass);
 			Debug.output('partigen', 20001, [id]);
 		}
 		
@@ -251,7 +267,7 @@ package com.desuade.partigen.emitters {
 		public function prefetch($time:Number):void {
 			var lives:Array = getPrefetchLifeArray($time);
 			for (var i:int = 0; i < lives.length; i++) {
-				var np:IBasicParticle = createParticle(lives[i][0], lives[i][1]);
+				createParticle(lives[i][0], lives[i][1]);
 			}
 		}
 		
@@ -316,26 +332,28 @@ package com.desuade.partigen.emitters {
 		 *	@param	burst	 The amount of particles to create at once.
 		 */
 		public function emit($burst:int = 1):void {
+			//var times:int = getTimer();
 			for (var i:int = 0; i < $burst; i++) {
 				createParticle((life > 0) ? randomLife() : 0);
 			}
+			//trace("Loop time: " + String(getTimer()-times));
 		}
 		
 		/**
 		 *	@private
 		 */
 		protected function createParticle($totalLife:Number = 0, $remainingLife:Number = 0):IBasicParticle {
-			var np:* = pool.addParticle(particleBaseClass);
+			var np:* = pool.addParticle(); //this is where we would pass the clean method?
 			np.init(this);
-			//checks to see if the particle is clean or dirty
-			//maybe have another check here to force clean anyways
-			if(np.clean){
+			//trace("ID: " + np.id);
+			if(!np.isbuilt){
 				np.blendMode = particleBlendMode;
 				if(particleFilters != []) np.filters = particleFilters;
+			}
+			if(!np.isbuilt || forceVariety){
 				if(groupBitmap) np.makeGroupBitmap(_particlebitmap, groupAmount, groupProximity, _particleOrigin);
 				else np.makeGroup(particle, groupAmount, groupProximity);
 			}
-			//do these regardless
 			if($remainingLife > 0){
 				np.addLife($remainingLife);
 				np.life = $totalLife;
@@ -402,7 +420,7 @@ package com.desuade.partigen.emitters {
 		 *	This configures the emitter based on the XML, and adds any controllers (if available)
 		 *	
 		 *	@param	xml	 The XML object to use to configure the emitter
-		 *	@param	reset	 Resets the emitter before applying XML
+		 *	@param	reset	 Resets the emitter before applying XML and also purges the pool
 		 *	@param	renderer	If true, this creates (and overwrites) the emitter's renderer with one from XML. If this is a BitmapRenderer, be sure to call resize(width, height) on it after the XML. Also, for BasicEmitters only (to save file size), you must create a reference to the Renderers you're going to use before using it through XML (for Flash to include the classes). This can be done easily as <code>var renderers:Array = [NullRenderer, StandardRenderer, BitmapRenderer];</code> (this is done already for the Emitter and IDEEmitter classes).
 		 *	
 		 *	@return		The emitter object (for chaining)
@@ -454,12 +472,13 @@ package com.desuade.partigen.emitters {
 		}
 		
 		/**
-		 *	This resets the emitter to the defaults
+		 *	This resets the emitter to the defaults and purges the pool
 		 */
 		public function reset():void {
 			particleBaseClass = BasicParticle, eps = 1, burst = 1;
 			groupAmount = 1, groupProximity = 0, life = 0, lifeSpread = "0", particleFilters = [], particleBlendMode = "normal";
 			_particlebitmap = null;
+			pool.purge();
 		}
 		
 		/**

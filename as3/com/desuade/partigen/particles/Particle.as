@@ -25,6 +25,7 @@ THE SOFTWARE.
 package com.desuade.partigen.particles {
 	
 	import flash.display.Sprite;
+	import flash.geom.*;
 	
 	import com.desuade.partigen.interfaces.*;
 	import com.desuade.debugging.*;
@@ -43,6 +44,14 @@ package com.desuade.partigen.particles {
 	 *  @since  08.05.2009
 	 */
 	public dynamic class Particle extends BasicParticle implements IParticle {
+		
+		/**
+		 *	@private
+		 */
+		public static function clean($particle:Particle):void {
+			//$particle.controllers = {}; //remove for built
+			$particle.life = null, $particle.alpha = 1, $particle.scale = 1, $particle.rotation = 0, $particle.transform.colorTransform = new ColorTransform();
+		}
 		
 		/**
 		 *	This holds all of the MotionControllers that are currently being ran on the particle.

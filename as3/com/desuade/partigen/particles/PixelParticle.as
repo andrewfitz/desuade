@@ -43,6 +43,14 @@ package com.desuade.partigen.particles {
 	public dynamic class PixelParticle extends BasicPixelParticle implements IParticle {
 		
 		/**
+		 *	@private
+		 */
+		public static function clean($particle:PixelParticle):void {
+			//$particle.controllers = {}; //remove for built
+			$particle.life = null, $particle.alpha = 1, $particle.color = 0xffffffff;
+		}
+		
+		/**
 		 *	This holds all of the MotionControllers that are currently being ran on the particle.
 		 */
 		public var controllers:Object = {};

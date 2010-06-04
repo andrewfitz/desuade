@@ -25,27 +25,45 @@ THE SOFTWARE.
 package com.desuade.partigen.pools {
 	
 	import com.desuade.partigen.Partigen;
+	import com.desuade.utils.*;
 	import com.desuade.partigen.interfaces.*;
 	import com.desuade.debugging.*;
-
+	
 	/**
-	 *  This offers basic object storage without any real 'pooling'.
+	 *  This is a basic particle pool that uses actual object pooling to reuse particles.
 	 *    
 	 *  @langversion ActionScript 3
 	 *  @playerversion Flash 9.0.0
 	 *
 	 *  @author Andrew Fitzgerald
-	 *  @since  07.05.2009
+	 *  @since  03.06.2010
 	 */
-	public class NullPool extends Pool {
-	
-		/**
-		 *	Creates a NullPool to store particle objects. This can be used with multiple emitters.
-		 *	
-		 *	@param	particleClass	 The class of particle the pool will create.
-		 */
-		public function NullPool($particleClass:Class) {
+	public class BasicPool extends Pool {
+		
+		protected var _pool:BasicObjectPool = null;
+		
+		public function BasicPool($particleClass:Class) {
 			super($particleClass);
+			setClass(_particleClass);
+		}
+		
+		/**
+		 *	This clears all particles in the object pool and will not check any currently living particles back into the object pool.
+		 */
+		public override function purge():void {
+			for each (var p:* in _particles) {
+				p.destroy = true;
+			}
+			if(_pool != null) _pool.dispose();
+		}
+		
+		/**
+		 *	@inheritDoc
+		 */
+		public override function setClass($particleClass:Class):void {
+			super.setClass($particleClass);
+			purge();
+			_pool = new BasicObjectPool(_particleClass, _particleClass.clean, 50);
 		}
 		
 		/**
@@ -53,7 +71,7 @@ package com.desuade.partigen.pools {
 		 */
 		public override function addParticle():IBasicParticle {
 			super.addParticle();
-			var tp:* = new _particleClass();
+			var tp:* = _pool.checkOut()
 			_particles[tp] = true;
 			return tp;
 		}
@@ -63,7 +81,12 @@ package com.desuade.partigen.pools {
 		 */
 		public override function removeParticle($particle:*):void {
 			super.removeParticle($particle);
-			_particles[$particle] = null;
+			if($particle.destroy != undefined && $particle.destroy){
+				_particles[$particle] = null;
+			} else {
+				$particle.isbuilt = true;
+				_pool.checkIn($particle);
+			}
 			delete _particles[$particle];
 		}
 	

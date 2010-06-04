@@ -24,9 +24,9 @@ THE SOFTWARE.
 
 package com.desuade.partigen.pools {
 	
+	import flash.utils.Dictionary;
+	
 	import com.desuade.partigen.interfaces.*;
-	import com.desuade.partigen.particles.*;
-	import com.desuade.partigen.emitters.BasicEmitter;
 	import com.desuade.debugging.*;
 
 	/**
@@ -43,14 +43,28 @@ package com.desuade.partigen.pools {
 		/**
 		 *	@private
 		 */
-		protected var _particles:Object = {};
+		protected var _particles:Dictionary = new Dictionary();
+		
+		/**
+		 *	@private
+		 */
+		protected var _particleClass:Class;
 	
 		/**
 		 *	Creates a Pool to store particle objects. This base class should not be created, as it offers no direct functionality.
+		 *	
+		 *	@param	particleClass	 The class of particle the pool will create.
 		 */
-		public function Pool() {
-			super();
+		public function Pool($particleClass:Class) {
+			_particleClass = $particleClass;
 			Debug.output('partigen', 20003);
+		}
+		
+		/**
+		 *	Gets the class of particle the pool creates.
+		 */
+		public function get particleClass():Class{
+			return _particleClass;
 		}
 		
 		/**
@@ -61,13 +75,18 @@ package com.desuade.partigen.pools {
 		}
 		
 		/**
+		 *	This sets the particleClass to the new class and deals with reseting the internal pool.
+		 */
+		public function setClass($particleClass:Class):void {
+			_particleClass = $particleClass;
+		}
+		
+		/**
 		 *	Adds a new particle to the Pool.
-		 *	
-		 *	@param	particleClass	The (Partigen) class of the particle being created.
 		 *	
 		 *	@return		The particle created.
 		 */
-		public function addParticle($particleClass:Class):IBasicParticle {
+		public function addParticle():IBasicParticle {
 			Debug.output('partigen', 40003);
 			return null;
 		}
@@ -75,10 +94,17 @@ package com.desuade.partigen.pools {
 		/**
 		 *	Removes a particle from the Pool.
 		 *	
-		 *	@param	id	 The id of the particle to remove.
+		 *	@param	particle	 The particle to remove.
 		 */
-		public function removeParticle($id:int):void {
-			Debug.output('partigen', 40005, [$id]);
+		public function removeParticle($particle:*):void {
+			Debug.output('partigen', 40005, [$particle.id]);
+		}
+		
+		/**
+		 *	This does nothing for Sweep and Null pools.
+		 */
+		public function purge():void {
+			//nothing
 		}
 		
 		/**

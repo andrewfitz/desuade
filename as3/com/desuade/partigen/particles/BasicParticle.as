@@ -29,6 +29,7 @@ package com.desuade.partigen.particles {
     import flash.events.TimerEvent;
 	import flash.geom.*;
 	
+	import com.desuade.partigen.Partigen;
 	import com.desuade.partigen.interfaces.*;
 	import com.desuade.debugging.Debug;
 	import com.desuade.partigen.emitters.BasicEmitter;
@@ -47,14 +48,16 @@ package com.desuade.partigen.particles {
 	public dynamic class BasicParticle extends Sprite implements IBasicParticle {
 		
 		/**
+		 *	@private
+		 */
+		public static function clean($particle:BasicParticle):void {
+			$particle.life = null, $particle.alpha = 1, $particle.scale = 1, $particle.rotation = 0, $particle.transform.colorTransform = new ColorTransform();
+		}
+		
+		/**
 		 *	This holds the particles inside of the group.
 		 */
 		public var group:Array;
-		
-		/**
-		 *	@private
-		 */
-		internal static var _count:int = 0;
 		
 		/**
 		 *	@private
@@ -74,7 +77,7 @@ package com.desuade.partigen.particles {
 		/**
 		 *	@private
 		 */
-		protected var _id:int;
+		internal var _id:int;
 		
 		/**
 		 *	The life of the particle: how long the particle will live for. This also effects the duration of controller tweens.
@@ -84,7 +87,12 @@ package com.desuade.partigen.particles {
 		/**
 		 *	This is used by the emitter and pools to determine if/how the particle has been used before in memory.
 		 */
-		public var clean:Boolean = true;
+		public var isclean:Boolean = true;
+		
+		/**
+		 *	This is used by the emitter and pools to determine if the controllers, groups, bitmaps, etc have already been built.
+		 */
+		public var isbuilt:Boolean = false;
 		
 		/**
 		 *	@private
@@ -104,6 +112,7 @@ package com.desuade.partigen.particles {
 		 */
 		public function BasicParticle() {
 			super();
+			_id = ++Partigen._particleCount;
 			addChild(_holder);
 		}
 		
@@ -111,7 +120,7 @@ package com.desuade.partigen.particles {
 		 *	@private
 		 */
 		public function init($emitter:BasicEmitter):void {
-			_emitter = $emitter, _renderer = $emitter.renderer, _pool = $emitter.pool, _id = _count++, x = $emitter.x, y = $emitter.y;
+			_emitter = $emitter, _renderer = $emitter.renderer, _pool = $emitter.pool, x = $emitter.x, y = $emitter.y;
 			Debug.output('partigen', 50001, [id]);
 		}
 		
@@ -151,13 +160,6 @@ package com.desuade.partigen.particles {
 		}
 		
 		/**
-		 *	The amount of total particles created.
-		 */
-		public static function get count():int { 
-			return _count; 
-		}
-		
-		/**
 		 *	The unique id of the particle.
 		 */
 		public function get id():int{
@@ -181,7 +183,7 @@ package com.desuade.partigen.particles {
 			_emitter.dispatchDeath(this);
 			Debug.output('partigen', 50002, [id]);
 			_renderer.removeParticle(this);
-			_pool.removeParticle(this.id);
+			_pool.removeParticle(this);
 		}
 		
 		/**

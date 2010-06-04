@@ -24,9 +24,8 @@ THE SOFTWARE.
 
 package com.desuade.partigen.pools {
 	
-	import com.desuade.partigen.particles.*;
-	import com.desuade.partigen.emitters.BasicEmitter;
 	import com.desuade.debugging.*;
+	import com.desuade.partigen.interfaces.*;
 	
 	import flash.utils.Timer;
     import flash.events.TimerEvent;
@@ -61,10 +60,11 @@ package com.desuade.partigen.pools {
 		/**
 		 *	Creates a SweepPool to store particle objects. This can be used with multiple emitters.
 		 *	
+		 *	@param	particleClass	 The class of particle the pool will create.
 		 *	@param	interval	  The interval in ms to run a sweep.
 		 */
-		public function SweepPool($interval:int=4000) {
-			super();
+		public function SweepPool($particleClass:Class, $interval:int=4000) {
+			super($particleClass);
 			startSweeper($interval);
 		}
 		
@@ -78,16 +78,16 @@ package com.desuade.partigen.pools {
 		/**
 		 *	@inheritDoc
 		 */
-		public override function removeParticle($id:int):void {
-			mark($id);
+		public override function removeParticle($particle:*):void {
+			mark($particle);
 		}
 		
 		/**
 		 *	@private
 		 */
-		protected function mark($id:int):void {
-			_marked.push($id);
-			Debug.output('partigen', 40006, [$id]);
+		protected function mark($particle:IBasicParticle):void {
+			_marked.push($particle);
+			Debug.output('partigen', 40006, [$particle.id]);
 		}
 		
 		/**
@@ -120,9 +120,9 @@ package com.desuade.partigen.pools {
 		public function sweep($o:Object):void {
 			Debug.output('partigen', 20006, [getTimer(), _marked.length]);
 			for (var i:int = 0; i < _marked.length; i++) {
+				super.removeParticle(_marked[i]);
 				_particles[_marked[i]] = null;
 				delete _particles[_marked[i]];
-				super.removeParticle(_marked[i]);
 			}
 			Debug.output('partigen', 20007, [getTimer()]);
 			_marked = [];

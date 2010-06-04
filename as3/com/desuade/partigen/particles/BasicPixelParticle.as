@@ -29,6 +29,7 @@ package com.desuade.partigen.particles {
 	import flash.geom.*;
 	import flash.display.*;
 	
+	import com.desuade.partigen.Partigen;
 	import com.desuade.partigen.interfaces.*;
 	import com.desuade.debugging.Debug;
 	import com.desuade.partigen.emitters.BasicEmitter;
@@ -44,7 +45,14 @@ package com.desuade.partigen.particles {
 	 *  @author Andrew Fitzgerald
 	 *  @since  29.04.2010
 	 */
-	public class BasicPixelParticle extends Object implements IBasicParticle {
+	public dynamic class BasicPixelParticle extends Object implements IBasicParticle {
+		
+		/**
+		 *	@private
+		 */
+		public static function clean($particle:BasicPixelParticle):void {
+			$particle.life = null, $particle.alpha = 1, $particle.color = 0xffffffff;
+		}
 		
 		/**
 		 *	The x value of the pixel.
@@ -89,7 +97,7 @@ package com.desuade.partigen.particles {
 		/**
 		 *	@private
 		 */
-		protected var _id:int;
+		internal var _id:int;
 		
 		/**
 		 *	The life of the particle: how long the particle will live for. This also effects the duration of controller tweens.
@@ -99,7 +107,12 @@ package com.desuade.partigen.particles {
 		/**
 		 *	This is used by the emitter and pools to determine if/how the particle has been used before in memory.
 		 */
-		public var clean:Boolean = true;
+		public var isclean:Boolean = true;
+		
+		/**
+		 *	This is used by the emitter and pools to determine if the controllers, groups, bitmaps, etc have already been built.
+		 */
+		public var isbuilt:Boolean = false;
 		
 		/**
 		 *	@private
@@ -113,13 +126,14 @@ package com.desuade.partigen.particles {
 		 */
 		public function BasicPixelParticle() {
 			super();
+			_id = ++Partigen._particleCount;
 		}
 		
 		/**
 		 *	@private
 		 */
 		public function init($emitter:BasicEmitter):void {
-			_emitter = $emitter, _renderer = $emitter.renderer, _pool = $emitter.pool, _id = BasicParticle._count++, x = $emitter.x, y = $emitter.y;
+			_emitter = $emitter, _renderer = $emitter.renderer, _pool = $emitter.pool, x = $emitter.x, y = $emitter.y;
 			Debug.output('partigen', 50001, [id]);
 		}
 		
@@ -172,7 +186,7 @@ package com.desuade.partigen.particles {
 			_emitter.dispatchDeath(this);
 			Debug.output('partigen', 50002, [id]);
 			_renderer.removeParticle(this);
-			_pool.removeParticle(this.id);
+			_pool.removeParticle(this);
 		}
 		
 		/**

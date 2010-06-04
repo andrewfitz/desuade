@@ -4,6 +4,7 @@ Desuade Library Change Log - http://desuade.com/
 Motion Package 1.1.1 & Partigen 2.5 (2010/06/04)
 	Partigen:
 		-added: PixelRenderer & PixelParticle classes for high-performance pixel-based effects
+		-added: BasicPool class for partigen package using object pooling to greatly increase performance
 		-added: Emitter.particleFilters and XML support for dynamic filters on particles
 		-added: BitmapRenderer automagicmode - starts/stops the renderer on demand, no need for manual control
 		-added: RenderEvent STARTED & STOPPED events for BitmapRenderer
@@ -15,6 +16,9 @@ Motion Package 1.1.1 & Partigen 2.5 (2010/06/04)
 		-added: particleBaseClass support in XML
 		-added: IBasicParticle and IParticle interfaces
 		-added: Pool.length for total particles in the pool
+		-added: Pool.purge()
+		-added: Emitter.forceVariety for use with BasicPools
+		-added: Particle.isclean and isbuilt for use with BasicPools
 		-fixed: IDEEmitter issues when not used as a component
 		-fixed: Emitter prefetching now much, much more accurate and stable
 		-fixed: BitmapCanvas.setRenderer not removing original listener
@@ -31,6 +35,11 @@ Motion Package 1.1.1 & Partigen 2.5 (2010/06/04)
 		-fixed: Emitter.fromXML would fail with controllers if the tag/array order wasn't [1]
 		-fixed: Particle color controllers would tint entire particles including particleFilters
 		-fixed: PELFile would still onLoad() if there was an error
+		-changed: Pools now require the particleBaseClass in the constructor [not backwards compatible]
+		-changed: Pools now use a Dictionary to store particles
+		-changed: BasicParticle.count -> Partigen.particleCount
+		-changed: BasicEmitter.count -> Partigen.emitterCount
+		-changed: handling of adding/removing particles from the pool no longer rely on id
 		-changed: Emitters will now emit() as soon as start() is called
 		-changed: BasicParticles now place the source particles into a holder and apply color to that
 		-changed: internal datatypes for BasicParticle are now IBasicParticle
@@ -46,6 +55,7 @@ Motion Package 1.1.1 & Partigen 2.5 (2010/06/04)
 		-changed: Bitmap fadeblur is now an int (no sub pixel blurs needed)
 		-changed: BitmapRenderer.render() uses drawMethod() now (for inherited renderers to override)
 		-changed: MultiControllers now have a rebuild parameter like MotionControllers
+		-changed: Emitter.reset now calls pool.purge()
 		
 	Motion:
 		-added: BasicPhysics.startAtTime()
@@ -60,6 +70,7 @@ Motion Package 1.1.1 & Partigen 2.5 (2010/06/04)
 		-changed: Physics - added PI constant
 		
 	Utils:
+		-added: BasicObjectPool class
 		-changed: Random class with faster random method
 		-changed: Improved Random/color class with toString and getValue
 		

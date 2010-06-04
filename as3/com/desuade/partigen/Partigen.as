@@ -69,6 +69,30 @@ package com.desuade.partigen {
 		 *	Official name of the package
 		 */
 		public static const NAME:String = 'Desuade Partigen';
+		
+		/**
+		 *	The amount of total particles created so far in the engine.
+		 */
+		public static function get particleCount():int { 
+			return _particleCount; 
+		}
+		
+		/**
+		 *	The amount of total emitters created so far in the engine.
+		 */
+		public static function get emitterCount():int { 
+			return _emitterCount; 
+		}
+		
+		/**
+		 *	@private
+		 */
+		public static var _particleCount:int = 0;
+		
+		/**
+		 *	@private
+		 */
+		public static var _emitterCount:int = 0;
 	
 	}
 
