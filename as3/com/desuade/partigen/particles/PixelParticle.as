@@ -47,7 +47,7 @@ package com.desuade.partigen.particles {
 		 */
 		public static function clean($particle:PixelParticle):void {
 			//$particle.controllers = {}; //remove for built
-			$particle.life = null, $particle.alpha = 1, $particle.color = 0xffffffff;
+			$particle.alpha = 1, $particle.color = 0xffffffff;
 		}
 		
 		/**

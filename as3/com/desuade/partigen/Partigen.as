@@ -38,12 +38,12 @@ package com.desuade.partigen {
 		/**
 		 *	The numeric version of the package. Used for version comparisons.
 		 */
-		public static const VERSION:Number = 2.503;
+		public static const VERSION:Number = 2.504;
 		
 		/**
 		 *	The "official" release version.
 		 */
-		public static const VERSIONLABEL:String = '2.5 Beta 2';
+		public static const VERSIONLABEL:String = '2.5 Beta 3';
 		
 		/**
 		 *	Company that owns the source code

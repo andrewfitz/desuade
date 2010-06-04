@@ -51,7 +51,7 @@ package com.desuade.partigen.particles {
 		 *	@private
 		 */
 		public static function clean($particle:BasicPixelParticle):void {
-			$particle.life = null, $particle.alpha = 1, $particle.color = 0xffffffff;
+			$particle.alpha = 1, $particle.color = 0xffffffff;
 		}
 		
 		/**

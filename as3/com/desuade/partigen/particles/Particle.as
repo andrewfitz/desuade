@@ -50,7 +50,7 @@ package com.desuade.partigen.particles {
 		 */
 		public static function clean($particle:Particle):void {
 			//$particle.controllers = {}; //remove for built
-			$particle.life = null, $particle.alpha = 1, $particle.scale = 1, $particle.rotation = 0, $particle.transform.colorTransform = new ColorTransform();
+			$particle.alpha = 1, $particle.scale = 1, $particle.rotation = 0, $particle.transform.colorTransform = new ColorTransform();
 		}
 		
 		/**
