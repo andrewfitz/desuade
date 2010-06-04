@@ -332,11 +332,11 @@ package com.desuade.partigen.emitters {
 		 *	@param	burst	 The amount of particles to create at once.
 		 */
 		public function emit($burst:int = 1):void {
-			//var times:int = getTimer();
+			var times:int = getTimer();
 			for (var i:int = 0; i < $burst; i++) {
 				createParticle((life > 0) ? randomLife() : 0);
 			}
-			//trace("Loop time: " + String(getTimer()-times));
+			trace("Loop time: " + String(getTimer()-times));
 		}
 		
 		/**

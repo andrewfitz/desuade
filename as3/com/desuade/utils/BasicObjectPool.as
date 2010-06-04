@@ -41,9 +41,9 @@ package com.desuade.utils {
 		public var size:int = 0;
 		
 		/**
-		 *	The starting size of the pool
+		 *	The starting size and rate of expansion of the pool
 		 */
-		public var startSize:int = 1;
+		public var expandSize:int;
 		
 		/**
 		 *	The current length of the pool
@@ -70,32 +70,37 @@ package com.desuade.utils {
 		 *	
 		 *	@param	objectClass	 The class of objects used in and created by the pool
 		 *	@param	clean	The method used to clean objects on checkIn
-		 *	@param	startSize	 The starting size of the pool
+		 *	@param	expandSize	 The starting size of the pool
 		 */
-		public function BasicObjectPool($objectClass:Class, $clean:Function = null, $startSize:int = 1) {
+		public function BasicObjectPool($objectClass:Class, $clean:Function = null, $expandSize:int = 50) {
 			objectClass = $objectClass;
 			clean = $clean;
-			startSize = $startSize;
-			for(var i:int = 0; i < startSize; i++) make();
+			expandSize = $expandSize;
+			make(expandSize);
 		}
 		
 		/**
 		 *	Makes an object in the pool.
 		 *	
+		 *	@param	amount	 The amount of new objects to create
+		 *	
 		 *	@return		The object made
 		 */
-		public function make():* {
-			size++;
-			return _list[length++] = new objectClass();
+		public function make($amount:int = 1):void {
+			for(var i:int = 0; i < $amount; i++) {
+				size++;
+				_list[length++] = new objectClass();
+			}
 		}
 		
 		/**
-		 *	This checks an object out of the pool.
+		 *	This checks an object out of the pool. If there are no more available objects, the pool increases the amount by the expand size.
 		 *	
 		 *	@return		An instance of the objectClass
 		 */
 		public function checkOut():* {
-			return (length == 0) ? make() : _list[--length];
+			if(length == 0) make(expandSize);
+			return _list[--length];
 		}
 		
 		/**

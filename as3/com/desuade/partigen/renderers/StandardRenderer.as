@@ -96,6 +96,7 @@ package com.desuade.partigen.renderers {
 		 */
 		public override function removeParticle($p:IBasicParticle):void {
 			super.removeParticle($p);
+			//trace($p.id);
 			target.removeChild($p as BasicParticle);
 		}
 	

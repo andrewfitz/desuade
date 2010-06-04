@@ -70,7 +70,7 @@ package com.desuade.partigen.pools {
 		/**
 		 *	An object of all the current "living" particles, based on their unique id.
 		 */
-		public function get particles():Object{
+		public function get particles():Dictionary{
 			return _particles;
 		}
 		
@@ -112,7 +112,7 @@ package com.desuade.partigen.pools {
 		 */
 		public function get length():int {
 			var l:int = 0;
-			for (var t:String in _particles) l++;
+			for (var t:* in particles) l++;
 			return l; 
 		}
 	}
