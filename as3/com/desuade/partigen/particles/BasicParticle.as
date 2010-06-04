@@ -82,6 +82,11 @@ package com.desuade.partigen.particles {
 		public var life:Number;
 		
 		/**
+		 *	This is used by the emitter and pools to determine if/how the particle has been used before in memory.
+		 */
+		public var clean:Boolean = true;
+		
+		/**
 		 *	@private
 		 */
 		protected var _lifeTimer:Timer;
@@ -106,7 +111,7 @@ package com.desuade.partigen.particles {
 		 *	@private
 		 */
 		public function init($emitter:BasicEmitter):void {
-			_emitter = $emitter, _renderer = $emitter.renderer, _pool = $emitter.pool, _id = _count++;
+			_emitter = $emitter, _renderer = $emitter.renderer, _pool = $emitter.pool, _id = _count++, x = $emitter.x, y = $emitter.y;
 			Debug.output('partigen', 50001, [id]);
 		}
 		

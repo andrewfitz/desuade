@@ -1,7 +1,7 @@
 Desuade Library Change Log - http://desuade.com/
 ------------------------------------------------
 
-Motion Package 1.1.1 & Partigen 2.5 (2010/06/02)
+Motion Package 1.1.1 & Partigen 2.5 (2010/06/04)
 	Partigen:
 		-added: PixelRenderer & PixelParticle classes for high-performance pixel-based effects
 		-added: Emitter.particleFilters and XML support for dynamic filters on particles
@@ -16,7 +16,7 @@ Motion Package 1.1.1 & Partigen 2.5 (2010/06/02)
 		-added: IBasicParticle and IParticle interfaces
 		-added: Pool.length for total particles in the pool
 		-fixed: IDEEmitter issues when not used as a component
-		-fixed: Emitter prefetching now much more accurate
+		-fixed: Emitter prefetching now much, much more accurate and stable
 		-fixed: BitmapCanvas.setRenderer not removing original listener
 		-fixed: ParticleController/ParticleTweenController setSmartPrecision() for setBeginValue()
 		-fixed: Emitter now has a renderers/particles array so fromXML() has the classes included on compile
@@ -45,6 +45,7 @@ Motion Package 1.1.1 & Partigen 2.5 (2010/06/02)
 		-changed: BitmapCanvas.renderer now read only
 		-changed: Bitmap fadeblur is now an int (no sub pixel blurs needed)
 		-changed: BitmapRenderer.render() uses drawMethod() now (for inherited renderers to override)
+		-changed: MultiControllers now have a rebuild parameter like MotionControllers
 		
 	Motion:
 		-added: BasicPhysics.startAtTime()

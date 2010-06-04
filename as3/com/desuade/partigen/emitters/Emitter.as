@@ -122,9 +122,11 @@ package com.desuade.partigen.emitters {
 		 */
 		protected override function createParticle($totalLife:Number = 0, $remainingLife:Number = 0):IBasicParticle {
 			var np:* = super.createParticle($totalLife, $remainingLife);
-			controllers.particle.attachAll(np, this);
-			if($remainingLife > 0) np.startControllers($totalLife-$remainingLife);
-			else np.startControllers();
+			
+			//if it's clean, let's add the controllers. if not, they're already on there
+			//maybe we should also rebuild the sequences?
+			if(np.clean) controllers.particle.attachAll(np, this);
+			np.startControllers($totalLife-$remainingLife); //do we rebuild the sequence here?
 			return np;
 		}
 		

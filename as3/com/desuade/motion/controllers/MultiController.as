@@ -168,12 +168,13 @@ package com.desuade.motion.controllers {
 		 *	
 		 *	@param	keyframe	 The label of the keyframe to start the controllers at.
 		 *	@param	startTime	This is like keyframe, but instead uses actual time to start at, as if it's already been running. This overrides the keyframe param.
+		 *	@param	rebuild		 Forces a rebuild of each MotionControllers internal sequence on start.
 		 *	
 		 *	@return		The MultiController (for chaining)
 		 */
-		public function start($keyframe:String = 'begin', $startTime:Number = 0):* {
+		public function start($keyframe:String = 'begin', $startTime:Number = 0, $rebuild:Boolean = false):* {
 			for (var p:String in this){
-				this[p].start($keyframe, $startTime);
+				this[p].start($keyframe, $startTime, $rebuild);
 			}
 			return this;
 		}

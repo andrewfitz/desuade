@@ -36,7 +36,7 @@ package com.desuade.partigen.interfaces {
 	 *  @since  29.04.2010
 	 */
 	public interface IParticle extends IBasicParticle {
-		function startControllers($startTime:Number = 0):void;
+		function startControllers($startTime:Number = 0, $rebuild:Boolean = false):void;
 		function stopControllers():void;
 	}
 

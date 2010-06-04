@@ -327,12 +327,15 @@ package com.desuade.partigen.emitters {
 		protected function createParticle($totalLife:Number = 0, $remainingLife:Number = 0):IBasicParticle {
 			var np:* = pool.addParticle(particleBaseClass);
 			np.init(this);
-			np.blendMode = particleBlendMode;
-			if(particleFilters != []) np.filters = particleFilters;
-			if(groupBitmap) np.makeGroupBitmap(_particlebitmap, groupAmount, groupProximity, _particleOrigin);
-			else np.makeGroup(particle, groupAmount, groupProximity);
-			np.x = this.x;
-			np.y = this.y;
+			//checks to see if the particle is clean or dirty
+			//maybe have another check here to force clean anyways
+			if(np.clean){
+				np.blendMode = particleBlendMode;
+				if(particleFilters != []) np.filters = particleFilters;
+				if(groupBitmap) np.makeGroupBitmap(_particlebitmap, groupAmount, groupProximity, _particleOrigin);
+				else np.makeGroup(particle, groupAmount, groupProximity);
+			}
+			//do these regardless
 			if($remainingLife > 0){
 				np.addLife($remainingLife);
 				np.life = $totalLife;
