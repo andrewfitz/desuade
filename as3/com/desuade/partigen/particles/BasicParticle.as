@@ -105,6 +105,16 @@ package com.desuade.partigen.particles {
 		public var _holder:Sprite = new Sprite();
 		
 		/**
+		 *	@private
+		 */
+		protected var _gb:Bitmap = null;
+		
+		/**
+		 *	@private
+		 */
+		protected var _gbd:BitmapData = null;
+		
+		/**
 		 *	<p>Creates a new particle. This should normally not be called; use <code>emitter.emit()</code> instead of this.</p>
 		 *	<p>As of v2.1, Particles act as containers for the "actual particles" used from the library. This allows any class/symbol to be used without having to be extended from Particle. It also adopts grouping.</p>
 		 *	
@@ -128,6 +138,11 @@ package com.desuade.partigen.particles {
 		 *	@private
 		 */
 		public function makeGroup($particle:Class, $amount:int, $proximity:int):void {
+			if(_gb != null){
+				_holder.removeChild(_gb);
+				_gb = null;
+				_gbd = null;
+			}
 			if($amount == group.length){
 				rearrangeGroup($proximity);
 			} else {
@@ -162,20 +177,23 @@ package com.desuade.partigen.particles {
 		 */
 		public function makeGroupBitmap($particleData:BitmapData, $amount:int, $proximity:int, $origin:Point):void {
 			while(_holder.numChildren > 0) _holder.removeChildAt(0);
+			group = [];
 			var cs:int = $proximity + $proximity;
-			var canvas:BitmapData = new BitmapData(cs+$particleData.width, cs+$particleData.height, true, 0);
-			var cbitmap:Bitmap = new Bitmap(canvas);
-			cbitmap.x = $origin.x-$proximity;
-			cbitmap.y = $origin.y-$proximity;
+			_gbd = new BitmapData(cs+$particleData.width, cs+$particleData.height, true, 0);
+			_gb = new Bitmap(_gbd);
+			_gbd.lock();
+			_gb.x = $origin.x-$proximity;
+			_gb.y = $origin.y-$proximity;
+			var np:Point = new Point(0,0);
 			for (var i:int = 0; i < $amount; i++) {
-				var np:Point = new Point(0,0);
 				if($proximity > 0){
 					np.x = Random.fromRange(-$proximity, $proximity, 0) + $proximity;
 					np.y = Random.fromRange(-$proximity, $proximity, 0) + $proximity;
 				}
-				canvas.copyPixels($particleData, $particleData.rect, np, null, null, true);
+				_gbd.copyPixels($particleData, $particleData.rect, np, null, null, true);
 			}
-			_holder.addChild(cbitmap);
+			_gbd.unlock();
+			_holder.addChild(_gb);
 		}
 		
 		/**
