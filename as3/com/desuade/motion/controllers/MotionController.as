@@ -219,7 +219,7 @@ package com.desuade.motion.controllers {
 		 *	@param	keyframe	 This is the label of the keyframe to generate a starting value from.
 		 */
 		public function setStartValue($keyframe:String = 'begin'):void {
-			keyframes.setStartValue(target, property, $keyframe);
+			keyframes.setStartValue(target, property, $keyframe, _sequence);
 		}
 		
 		/**

@@ -161,8 +161,8 @@ package com.desuade.partigen.particles {
 		 */
 		protected function rearrangeGroup($proximity:int):void {
 			if($proximity <= 0) {
-				for (var i:int = 0; i < group.length; i++) {
-					group[i].x = group[i].y = 0;
+				for (var j:int = 0; j < group.length; j++) {
+					group[j].x = group[j].y = 0;
 				}
 			} else {
 				for (var i:int = 0; i < group.length; i++) {

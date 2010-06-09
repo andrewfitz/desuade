@@ -256,8 +256,8 @@ package com.desuade.motion.controllers {
 		/**
 		 *	@private
 		 */
-		internal function setStartValue($target:Object, $property:String, $keyframe:String):void {
-			$target[$property] = generateStartValue($target, $property, $keyframe);
+		internal function setStartValue($target:Object, $property:String, $keyframe:String, $sequence:Array):void {
+			$target[$property] = ($sequence != null) ? $sequence[0].value : generateStartValue($target, $property, $keyframe);
 		}
 		
 		/**
@@ -289,7 +289,7 @@ package com.desuade.motion.controllers {
 			var pa:Array = getOrderedLabels();
 			var ta:Array = [];
 			//skip begin keyframe (i=1), it gets set and doesn't need to be tweened to initial value
-			for (var i:int = 1; i < pa.length; i++) {
+			for (var i:int = 0; i < pa.length; i++) {
 				//if null, sets it to starting value
 				var np:Object = this[pa[i]];
 				var nuv:Number;
@@ -298,17 +298,19 @@ package com.desuade.motion.controllers {
 				} else {
 					var nnnv:* = np.value;
 					if(typeof nnnv == 'string'){
-						var nfpv:Number = (ta.length == 0) ? $target[$property] : ta[ta.length-1].value;
+						var nfpv:Number = (i == 0) ? $target[$property] : ta[ta.length-1].value;
 						nuv = nfpv + Number(nnnv);
 					} else nuv = nnnv;
 				}
 				var nv:Number = (np.spread !== '0') ? Random.fromRange(nuv, ((typeof np.spread == 'string') ? nuv + Number(np.spread) : np.spread), precision) : nuv;
-				var tmo:Object = {property:$property, value:nv, ease:np.ease, duration:calculateDuration($duration, this[pa[i-1]].position, np.position), delay:0};
+				trace($property + ": " + nv);
+				var tmo:Object = {property:$property, value:nv, ease:np.ease, duration:(i == 0) ? 0 : calculateDuration($duration, this[pa[i-1]].position, np.position), delay:0};
 				for (var h:String in np.extras) {
 					tmo[h] = np.extras[h];
 				}
 				ta.push(tmo);
 			}
+			//ta.shift();
 			return ta;
 		}
 		

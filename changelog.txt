@@ -1,10 +1,13 @@
 Desuade Library Change Log - http://desuade.com/
 ------------------------------------------------
 
+pool.dispose not freeing memory?
+
+
 Motion Package 1.1.1 & Partigen 2.5 (2010/06/04)
 	Partigen:
 		-added: PixelRenderer & PixelParticle classes for high-performance pixel-based effects
-		-added: BasicPool class for partigen package using object pooling to greatly increase performance
+		-added: BasicPool class for Partigen package using object pooling to greatly increase performance
 		-added: Emitter.particleFilters and XML support for dynamic filters on particles
 		-added: BitmapRenderer automagicmode - starts/stops the renderer on demand, no need for manual control
 		-added: Emitter.cacheParticleAsBitmap for particles
