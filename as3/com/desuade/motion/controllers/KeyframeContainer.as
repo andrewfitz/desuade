@@ -256,8 +256,8 @@ package com.desuade.motion.controllers {
 		/**
 		 *	@private
 		 */
-		internal function setStartValue($target:Object, $property:String, $keyframe:String, $sequence:Array):void {
-			$target[$property] = ($sequence != null) ? $sequence[0].value : generateStartValue($target, $property, $keyframe);
+		internal function setStartValue($target:Object, $property:String, $keyframe:String, $sequence:Array = null):void {
+			$target[$property] = ($sequence != null && $keyframe == 'begin') ? $sequence[0].value : generateStartValue($target, $property, $keyframe);
 		}
 		
 		/**
@@ -303,14 +303,12 @@ package com.desuade.motion.controllers {
 					} else nuv = nnnv;
 				}
 				var nv:Number = (np.spread !== '0') ? Random.fromRange(nuv, ((typeof np.spread == 'string') ? nuv + Number(np.spread) : np.spread), precision) : nuv;
-				trace($property + ": " + nv);
 				var tmo:Object = {property:$property, value:nv, ease:np.ease, duration:(i == 0) ? 0 : calculateDuration($duration, this[pa[i-1]].position, np.position), delay:0};
 				for (var h:String in np.extras) {
 					tmo[h] = np.extras[h];
 				}
 				ta.push(tmo);
 			}
-			//ta.shift();
 			return ta;
 		}
 		

@@ -40,6 +40,7 @@ Motion Package 1.1.1 & Partigen 2.5 (2010/06/04)
 		-fixed: Emitter.fromXML would fail with controllers if the tag/array order wasn't [1]
 		-fixed: Particle color controllers would tint entire particles including particleFilters
 		-fixed: PELFile would still onLoad() if there was an error
+		-fixed: setStartValue() would generate a different value even if the MotionController was already built
 		-changed: Particle groups now use a rearrange method, used to refresh a particle to look different
 		-changed: BasicPool is now the default (previously NullPool)
 		-changed: Pools now require the particleBaseClass in the constructor [not backwards compatible]

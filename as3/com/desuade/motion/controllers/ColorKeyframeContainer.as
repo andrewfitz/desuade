@@ -75,7 +75,7 @@ package com.desuade.motion.controllers {
 		/**
 		 *	@private
 		 */
-		internal override function setStartValue($target:Object, $property:String, $keyframe:String, $sequence:Array):void {
+		internal override function setStartValue($target:Object, $property:String, $keyframe:String, $sequence:Array = null):void {
 			var nvo:Object = generateStartValue($target, $property, $keyframe);
 			if($property == null){
 				$target.transform.colorTransform = new ColorTransform(nvo.redMultiplier, nvo.greenMultiplier, nvo.blueMultiplier, $target.alpha, nvo.redOffset, nvo.greenOffset, nvo.blueOffset);
