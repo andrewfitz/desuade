@@ -1,0 +1,140 @@
+Desuade Motion Package Benchmark
+Using GoASAP Benchmarker on MacBook Air FP10 OSX 10.6 2GB Ram
+-------------------------------------------------------------
+
+*Higher FPS = better, Lower Lag = better
+
+==================
+DMP 1.5 VS DMP 1.0
+==================
+
+Benchmark results: DMPTweenBenchmark (1.5)
+------------------
+125 Sprites	::	Start Lag: 0.01 seconds	::	FPS: 60	::	End lag: 0
+250 Sprites	::	Start Lag: 0 seconds	::	FPS: 60	::	End lag: 0.02
+500 Sprites	::	Start Lag: 0.01 seconds	::	FPS: 60	::	End lag: 0.01
+1000 Sprites	::	Start Lag: 0.02 seconds	::	FPS: 60	::	End lag: 0.03
+2000 Sprites	::	Start Lag: 0.03 seconds	::	FPS: 60	::	End lag: 0.04
+4000 Sprites	::	Start Lag: 0.06 seconds	::	FPS: 40	::	End lag: 0.07
+8000 Sprites	::	Start Lag: 0.18 seconds	::	FPS: 19	::	End lag: 0.21
+16000 Sprites	::	Start Lag: 0.24 seconds	::	FPS: 9	::	End lag: 0.28
+
+
+Benchmark results: DMPTweenBenchmark (1.0)
+------------------
+125 Sprites	::	Start Lag: 0.01 seconds	::	FPS: 60	::	End lag: 0.01
+250 Sprites	::	Start Lag: 0.02 seconds	::	FPS: 60	::	End lag: 0.02
+500 Sprites	::	Start Lag: 0.02 seconds	::	FPS: 60	::	End lag: 0.04
+1000 Sprites	::	Start Lag: 0.05 seconds	::	FPS: 60	::	End lag: 0.04
+2000 Sprites	::	Start Lag: 0.07 seconds	::	FPS: 58	::	End lag: 0.09
+4000 Sprites	::	Start Lag: 0.19 seconds	::	FPS: 27	::	End lag: 0.21
+8000 Sprites	::	Start Lag: 0.29 seconds	::	FPS: 13	::	End lag: 0.3
+16000 Sprites	::	Start Lag: 0.68 seconds	::	FPS: 5	::	End lag: 0.68
+
+
+================
+DMP 1.5 vs GS 11
+================
+
+Benchmark results: DMPTweenBenchmark (BasicTween)
+------------------
+125 Sprites	::	Start Lag: 0.01 seconds	::	FPS: 60	::	End lag: 0
+250 Sprites	::	Start Lag: 0 seconds	::	FPS: 60	::	End lag: 0.02
+500 Sprites	::	Start Lag: 0.01 seconds	::	FPS: 60	::	End lag: 0.01
+1000 Sprites	::	Start Lag: 0.02 seconds	::	FPS: 60	::	End lag: 0.03
+2000 Sprites	::	Start Lag: 0.03 seconds	::	FPS: 60	::	End lag: 0.04
+4000 Sprites	::	Start Lag: 0.06 seconds	::	FPS: 40	::	End lag: 0.07
+8000 Sprites	::	Start Lag: 0.18 seconds	::	FPS: 19	::	End lag: 0.21
+16000 Sprites	::	Start Lag: 0.24 seconds	::	FPS: 9	::	End lag: 0.28
+
+
+Benchmark results: TweenLite
+------------------
+125 Sprites	::	Start Lag: 0 seconds	::	FPS: 60	::	End lag: 0
+250 Sprites	::	Start Lag: 0 seconds	::	FPS: 60	::	End lag: 0
+500 Sprites	::	Start Lag: 0.01 seconds	::	FPS: 60	::	End lag: 0
+1000 Sprites	::	Start Lag: 0.01 seconds	::	FPS: 60	::	End lag: 0
+2000 Sprites	::	Start Lag: 0.02 seconds	::	FPS: 59	::	End lag: 0.01
+4000 Sprites	::	Start Lag: 0.03 seconds	::	FPS: 37	::	End lag: 0.02
+8000 Sprites	::	Start Lag: 0.07 seconds	::	FPS: 18	::	End lag: 0.04
+16000 Sprites	::	Start Lag: 0.23 seconds	::	FPS: 9	::	End lag: 0.07
+
+
+
+======================
+DMP 1.0 Final vs GS 11
+======================
+
+Benchmark results: DMPTweenBenchmark (BasicTween)
+------------------
+125 Sprites	::	Start Lag: 0.01 seconds	::	FPS: 60	::	End lag: 0.01
+250 Sprites	::	Start Lag: 0.02 seconds	::	FPS: 60	::	End lag: 0.02
+500 Sprites	::	Start Lag: 0.02 seconds	::	FPS: 60	::	End lag: 0.04
+1000 Sprites	::	Start Lag: 0.05 seconds	::	FPS: 60	::	End lag: 0.04
+2000 Sprites	::	Start Lag: 0.07 seconds	::	FPS: 58	::	End lag: 0.09
+4000 Sprites	::	Start Lag: 0.19 seconds	::	FPS: 27	::	End lag: 0.21
+8000 Sprites	::	Start Lag: 0.29 seconds	::	FPS: 13	::	End lag: 0.3
+16000 Sprites	::	Start Lag: 0.68 seconds	::	FPS: 5	::	End lag: 0.68
+
+
+Benchmark results: DMPTweenBenchmark (Tween)
+------------------
+125 Sprites	::	Start Lag: 0.01 seconds	::	FPS: 60	::	End lag: 0.02
+250 Sprites	::	Start Lag: 0.01 seconds	::	FPS: 60	::	End lag: 0.01
+500 Sprites	::	Start Lag: 0.03 seconds	::	FPS: 60	::	End lag: 0.04
+1000 Sprites	::	Start Lag: 0.04 seconds	::	FPS: 59	::	End lag: 0.06
+2000 Sprites	::	Start Lag: 0.13 seconds	::	FPS: 53	::	End lag: 0.15
+4000 Sprites	::	Start Lag: 0.17 seconds	::	FPS: 24	::	End lag: 0.23
+8000 Sprites	::	Start Lag: 0.35 seconds	::	FPS: 12	::	End lag: 0.38
+16000 Sprites	::	Start Lag: 1.14 seconds	::	FPS: 4	::	End lag: 1.21
+
+
+Benchmark results: TweenLite
+------------------
+125 Sprites	::	Start Lag: 0 seconds	::	FPS: 60	::	End lag: 0
+250 Sprites	::	Start Lag: 0 seconds	::	FPS: 60	::	End lag: 0
+500 Sprites	::	Start Lag: 0 seconds	::	FPS: 60	::	End lag: 0
+1000 Sprites	::	Start Lag: 0.01 seconds	::	FPS: 60	::	End lag: 0
+2000 Sprites	::	Start Lag: 0.02 seconds	::	FPS: 58	::	End lag: 0.01
+4000 Sprites	::	Start Lag: 0.03 seconds	::	FPS: 28	::	End lag: 0.02
+8000 Sprites	::	Start Lag: 0.11 seconds	::	FPS: 13	::	End lag: 0.03
+16000 Sprites	::	Start Lag: 0.17 seconds	::	FPS: 6	::	End lag: 0.07
+
+
+
+===================
+3 Comparisons
+===================
+
+Benchmark results: TweenLite
+------------------
+125 Sprites	::	Start Lag: 0.01 seconds	::	FPS: 60	::	End lag: 0
+250 Sprites	::	Start Lag: 0 seconds	::	FPS: 60	::	End lag: 0
+500 Sprites	::	Start Lag: 0 seconds	::	FPS: 60	::	End lag: 0
+1000 Sprites	::	Start Lag: 0.01 seconds	::	FPS: 60	::	End lag: 0.01
+2000 Sprites	::	Start Lag: 0.03 seconds	::	FPS: 55	::	End lag: 0.01
+4000 Sprites	::	Start Lag: 0.03 seconds	::	FPS: 26	::	End lag: 0.02
+8000 Sprites	::	Start Lag: 0.11 seconds	::	FPS: 13	::	End lag: 0.05
+16000 Sprites	::	Start Lag: 0.27 seconds	::	FPS: 6	::	End lag: 0.09
+
+Benchmark results: DMPTweenBenchmark
+------------------
+125 Sprites	::	Start Lag: 0.01 seconds	::	FPS: 60	::	End lag: 0.01
+250 Sprites	::	Start Lag: 0.01 seconds	::	FPS: 60	::	End lag: 0.02
+500 Sprites	::	Start Lag: 0.02 seconds	::	FPS: 60	::	End lag: 0.02
+1000 Sprites	::	Start Lag: 0.04 seconds	::	FPS: 60	::	End lag: 0.04
+2000 Sprites	::	Start Lag: 0.12 seconds	::	FPS: 58	::	End lag: 0.14
+4000 Sprites	::	Start Lag: 0.14 seconds	::	FPS: 33	::	End lag: 0.14
+8000 Sprites	::	Start Lag: 0.4 seconds	::	FPS: 16	::	End lag: 0.45
+16000 Sprites	::	Start Lag: 2.32 seconds	::	FPS: 8	::	End lag: 2.34
+
+Benchmark results: fl.transitions.Tween
+------------------
+125 Sprites	::	Start Lag: 0.01 seconds	::	FPS: 60	::	End lag: 0.01
+250 Sprites	::	Start Lag: 0.01 seconds	::	FPS: 60	::	End lag: 0.01
+500 Sprites	::	Start Lag: 0.02 seconds	::	FPS: 51	::	End lag: 0.03
+1000 Sprites	::	Start Lag: 0.05 seconds	::	FPS: 26	::	End lag: 0.06
+2000 Sprites	::	Start Lag: 0.1 seconds	::	FPS: 13	::	End lag: 0.14
+4000 Sprites	::	Start Lag: 0.22 seconds	::	FPS: 6	::	End lag: 0.46
+8000 Sprites	::	Start Lag: 0.6 seconds	::	FPS: 3	::	End lag: 1.04
+16000 Sprites	::	Start Lag: 1.03 seconds	::	FPS: 1	::	End lag: 3.18
