@@ -144,7 +144,7 @@ package com.desuade.partigen.particles {
 			if($amount == group.length){
 				rearrangeGroup($proximity);
 			} else {
-				group = [];
+				removeGroup();
 				for (var i:int = 0; i < $amount; i++) {
 					group[i] = [0,0];
 				}
@@ -174,6 +174,13 @@ package com.desuade.partigen.particles {
 		 */
 		public function makeGroupBitmap($particleData:BitmapData, $amount:int, $proximity:int, $origin:Point):void {
 			makeGroup(null, $amount, $proximity);
+		}
+		
+		/**
+		 *	@private
+		 */
+		public function removeGroup():void {
+			group = [];
 		}
 		
 		/**

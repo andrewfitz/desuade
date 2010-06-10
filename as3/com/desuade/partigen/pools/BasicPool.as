@@ -67,7 +67,13 @@ package com.desuade.partigen.pools {
 		 */
 		public override function purge():void {
 			for (var p:* in _particles) p.destroy = true;
-			if(_pool != null) _pool.dispose();
+			if(_pool != null) {
+				for (var i:int = 0; i < _pool.list.length; i++) {
+					_pool.list[i].removeGroup();
+				}
+				_pool.dispose();
+			}
+			_pool = new BasicObjectPool(_particleClass, _particleClass.clean, expandSize, 0);
 		}
 		
 		/**
@@ -76,7 +82,6 @@ package com.desuade.partigen.pools {
 		public override function setClass($particleClass:Class):void {
 			super.setClass($particleClass);
 			purge();
-			_pool = new BasicObjectPool(_particleClass, _particleClass.clean, expandSize, 0);
 		}
 		
 		/**
@@ -94,8 +99,10 @@ package com.desuade.partigen.pools {
 		 */
 		public override function removeParticle($particle:*):void {
 			super.removeParticle($particle);
-			if($particle.destroy != undefined && $particle.destroy) _particles[$particle] = null;
-			else {
+			if($particle.destroy != undefined && $particle.destroy) {
+				$particle.removeGroup();
+				_particles[$particle] = null;
+			} else {
 				$particle.isbuilt = true;
 				_pool.checkIn($particle);
 			}

@@ -69,9 +69,25 @@ package com.desuade.partigen.emitters {
 		
 		/**
 		 *	<p>This is the class used to create new particles from. This can be an AS3 class, or a library MC. This is the source (image, movieclip, text, etc) used to be added as a child onto the actual particleBaseClass.</p>
-		 *	<p>As of v2.1, this can be any class, and does NOT have to inherit BasicParticle. If you have custom classes that do, use particleBaseClass instead.</p>
+		 *	<p>As of v2.1, this can be any class, and does NOT have to inherit BasicParticle. If you have custom classes that do inherit it, use particleBaseClass instead.</p>
 		 */
-		public var particle:Class;
+		public function get particle():Class{
+			return _particle;
+		}
+		
+		/**
+		 *	@private
+		 */
+		public function set particle($value:Class):void {
+			_particle = $value;
+			createParticleBitmap();
+			if(pool.length > 0) pool.purge();
+		}
+		
+		/**
+		 *	@private
+		 */
+		protected var _particle:Class;
 		
 		/**
 		 *	<p>This is the base class to used for all created particles.</p>
@@ -239,7 +255,6 @@ package com.desuade.partigen.emitters {
 		 */
 		public function start($time:Number = 0, $runcontrollers:Boolean = true):void {
 			if(!_active){
-				if(groupBitmap) createParticleBitmap();
 				_active = true;
 				if($time > 0) {
 					prefetch($time);

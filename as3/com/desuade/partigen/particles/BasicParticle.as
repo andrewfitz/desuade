@@ -25,11 +25,12 @@ THE SOFTWARE.
 package com.desuade.partigen.particles {
 	
 	import flash.display.*;
-	import flash.utils.Timer;
+	import flash.utils.*;
     import flash.events.TimerEvent;
 	import flash.geom.*;
 	
 	import com.desuade.partigen.Partigen;
+	import com.desuade.partigen.pools.Pool;
 	import com.desuade.partigen.interfaces.*;
 	import com.desuade.debugging.Debug;
 	import com.desuade.partigen.emitters.BasicEmitter;
@@ -48,9 +49,14 @@ package com.desuade.partigen.particles {
 	public dynamic class BasicParticle extends Sprite implements IBasicParticle {
 		
 		/**
+		 *	This is the MultiPool that stores all the object pools for particle classes.
+		 */
+		public static var classPool:MultiPool = new MultiPool(clean);
+		
+		/**
 		 *	@private
 		 */
-		public static function clean($particle:BasicParticle):void {
+		public static function clean($particle:*):void {
 			$particle.alpha = 1, $particle.scale = 1, $particle.rotation = 0, $particle.transform.colorTransform = new ColorTransform();
 		}
 		
@@ -115,6 +121,11 @@ package com.desuade.partigen.particles {
 		protected var _gbd:BitmapData = null;
 		
 		/**
+		 *	@private
+		 */
+		protected var _groupClass:Class = null;
+		
+		/**
 		 *	<p>Creates a new particle. This should normally not be called; use <code>emitter.emit()</code> instead of this.</p>
 		 *	<p>As of v2.1, Particles act as containers for the "actual particles" used from the library. This allows any class/symbol to be used without having to be extended from Particle. It also adopts grouping.</p>
 		 *	
@@ -146,10 +157,10 @@ package com.desuade.partigen.particles {
 			if($amount == group.length){
 				rearrangeGroup($proximity);
 			} else {
-				while(_holder.numChildren > 0) _holder.removeChildAt(0);
-				group = [];
+				_groupClass = $particle;
+				removeGroup();
 				for (var i:int = 0; i < $amount; i++) {
-					group[i] = new $particle();
+					group[i] = classPool.checkOutClass($particle);
 					_holder.addChild(group[i]);
 				}
 				rearrangeGroup($proximity);
@@ -176,8 +187,7 @@ package com.desuade.partigen.particles {
 		 *	@private
 		 */
 		public function makeGroupBitmap($particleData:BitmapData, $amount:int, $proximity:int, $origin:Point):void {
-			while(_holder.numChildren > 0) _holder.removeChildAt(0);
-			group = [];
+			removeGroup();
 			var cs:int = $proximity + $proximity;
 			_gbd = new BitmapData(cs+$particleData.width, cs+$particleData.height, true, 0);
 			_gb = new Bitmap(_gbd);
@@ -194,6 +204,17 @@ package com.desuade.partigen.particles {
 			}
 			_gbd.unlock();
 			_holder.addChild(_gb);
+		}
+		
+		/**
+		 *	@private
+		 */
+		public function removeGroup():void {
+			while(_holder.numChildren > 0) _holder.removeChildAt(0);
+			for (var i:int = 0; i < group.length; i++) {
+				classPool.checkInClass(_groupClass, group[i]);
+			}
+			group = [];
 		}
 		
 		/**

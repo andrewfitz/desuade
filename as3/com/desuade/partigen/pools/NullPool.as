@@ -63,6 +63,7 @@ package com.desuade.partigen.pools {
 		 */
 		public override function removeParticle($particle:*):void {
 			super.removeParticle($particle);
+			$particle.removeGroup();
 			_particles[$particle] = null;
 			delete _particles[$particle];
 		}

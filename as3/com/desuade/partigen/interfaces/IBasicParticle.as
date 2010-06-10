@@ -47,6 +47,7 @@ package com.desuade.partigen.interfaces {
 		function init($emitter:BasicEmitter):void;
 		function makeGroup($particle:Class, $amount:int, $proximity:int):void;
 		function makeGroupBitmap($particleData:BitmapData, $amount:int, $proximity:int, $origin:Point):void;
+		function removeGroup():void;
 		function kill(... args):void;
 		function addLife($life:Number):void;
 		function removeLife():void;

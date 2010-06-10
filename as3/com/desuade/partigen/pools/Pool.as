@@ -39,11 +39,11 @@ package com.desuade.partigen.pools {
 	 *  @since  07.05.2009
 	 */
 	public class Pool {
-		
+				
 		/**
 		 *	@private
 		 */
-		protected var _particles:Dictionary = new Dictionary();
+		protected var _particles:Dictionary = new Dictionary(true);
 		
 		/**
 		 *	@private

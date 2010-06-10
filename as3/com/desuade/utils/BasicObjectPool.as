@@ -66,6 +66,13 @@ package com.desuade.utils {
 		protected var _list:Array = [];
 		
 		/**
+		 *	This is an array of all the actual objects currently available in the pool. Use with caution.
+		 */
+		public function get list():Array{
+			return _list;
+		}
+		
+		/**
 		 *	This creates a new BasicObjectPool.
 		 *	
 		 *	@param	objectClass	 The class of objects used in and created by the pool
@@ -125,6 +132,10 @@ package com.desuade.utils {
 		public function dispose():void {
 			objectClass = null;
 			clean = null;
+			for (var i:int = 0; i < _list.length; i++) {
+				_list[i] = null;
+				delete _list[i];
+			}
 			_list = null;
 		}
 	}
