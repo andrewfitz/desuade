@@ -1,10 +1,7 @@
 Desuade Library Change Log - http://desuade.com/
 ------------------------------------------------
 
-
-add pools to tweens and physics
-
-Motion Package 1.1.1 & Partigen 2.5 (2010/06/04)
+Motion Package 1.5 & Partigen 2.5 (2010/06/14)
 	Partigen:
 		-added: PixelRenderer & PixelParticle classes for high-performance pixel-based effects
 		-added: BasicPool class for Partigen package using object pooling to greatly increase performance
@@ -67,12 +64,14 @@ Motion Package 1.1.1 & Partigen 2.5 (2010/06/04)
 		-changed: particle and particleBaseClass are now getter/setters updated for pools
 		
 	Motion:
+		-added: Pooling support for all Primitive classes
 		-added: BasicPhysics.startAtTime()
 		-added: BaseTicker.physicsRate
 		-fixed: MotionController.start() passing keyframes besides 'begin' and startTime
 		-fixed: DelayableFunc delay value turned into an int, preventing decimal delays
 		-fixed: KeyframeContainer.isFlat() for spread start values and color = none
 		-fixed: Keyframe.fromXML() was modifying original XML, breaking XML reuse
+		-changed: Updated Primitives to use init to set properties instead of constructor
 		-changed: MultiTween/ColorTween/Tween updated for new Random class
 		-changed: MotionController.setSingleTween() returns the MotionController
 		-changed: MultiController.addController() returns the MotionController added
