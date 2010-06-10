@@ -42,6 +42,8 @@ package com.desuade.motion.bases {
 	 */
 	public class BaseTicker {
 		
+		public static var st:Array = [0, 0];
+		
 		/**
 		 *	@private
 		 */
@@ -145,12 +147,12 @@ package com.desuade.motion.bases {
 		 */
 		protected static function update($u:Object):void {
 			var times:int = getTimer();
-			//var ir:int = 0;
+			var ir:int = 0;
 			for each (var item:BasePrimitive in _holder) {
 				item.render(times);
-				//ir++;
+				ir++;
 			}
-			//trace("Loop time: " + String(getTimer()-times) + " Items: " + ir);
+			trace("Loop time: " + String(getTimer()-times) + " Items: " + ir + " - " + st);
 			dispatchEvent(new MotionEvent(MotionEvent.UPDATED));
 		}
 		

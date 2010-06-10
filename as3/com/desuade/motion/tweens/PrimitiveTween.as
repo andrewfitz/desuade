@@ -66,6 +66,14 @@ package com.desuade.motion.tweens {
 		/**
 		 *	This creates a new, raw PrimitiveTween. Users should use the Basic tweens instead of creating this directly.
 		 *	
+		 */
+		public function PrimitiveTween() {
+			super();
+		}
+		
+		/**
+		 *	This inits the PrimitiveTween.
+		 *	
 		 *	@param	target	 The target object to perform the tween on.
 		 *	@param	property	 The property to tween on the target.
 		 *	@param	value	 The new (end) value the property will be tweened to.
@@ -79,13 +87,14 @@ package com.desuade.motion.tweens {
 		 *	@see	#ease
 		 *	
 		 */
-		public function PrimitiveTween($target:Object, $property:String, $value:Number, $duration:int, $ease:Function) {
-			super($target, $property);
-			duration = $duration, ease = $ease;
-			if($property != null) {
-				property = $property, value = $value, startvalue = $target[$property];
+		public override function init(... args):void {
+			super.init(args[0], args[1]);
+			duration = args[3], ease = args[4];
+			if(args[1] != null) {
+				property = args[1], value = args[2], startvalue = args[0][args[1]];
 				difvalue = (startvalue > value) ? (value-startvalue) : -(startvalue-value);
 			}
+			
 		}
 		
 		/**

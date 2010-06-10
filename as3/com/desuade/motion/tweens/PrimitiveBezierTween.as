@@ -53,6 +53,13 @@ package com.desuade.motion.tweens {
 		
 		/**
 		 *	This creates a new, raw PrimitiveTween. Users should use the Tween class, instead of creating this directly.
+		 */
+		public function PrimitiveBezierTween() {
+			super();
+		}
+		
+		/**
+		 *	This inits the PrimitiveBezierTween.
 		 *	
 		 *	@param	target	 The target object to perform the tween on.
 		 *	@param	property	 The property to tween on the target.
@@ -68,9 +75,9 @@ package com.desuade.motion.tweens {
 		 *	@see	PrimitiveTween#bezier
 		 *	@see	PrimitiveTween#ease
 		 */
-		public function PrimitiveBezierTween($target:Object, $property:String, $value:Number, $duration:int, $bezier:Array, $ease:Function) {
-			bezier = $bezier;
-			super($target, $property, $value, $duration, $ease);
+		public override function init(... args):void {
+			super.init(args[0], args[1], args[2], args[3], args[5]);
+			bezier = args[4];
 		}
 		
 		/**

@@ -66,7 +66,14 @@ package com.desuade.motion.tweens {
 		}
 		
 		/**
-		 *	This creates a new, raw PrimitiveTween. Users should use the Tween class instead of creating this directly.
+		 *	This creates a new, raw PrimitiveTween. Users should use the Tween class instead of creating this directly.	
+		 */
+		public function PrimitiveMultiTween() {
+			super();
+		}
+		
+		/**
+		 *	This inits the PrimitiveMultiTween.
 		 *	
 		 *	@param	target	 The target object to perform the tween on.
 		 *	@param	properties	 An object of properties and values to tween on the target.
@@ -79,9 +86,9 @@ package com.desuade.motion.tweens {
 		 *	@see	PrimitiveTween#ease
 		 *	
 		 */
-		public function PrimitiveMultiTween($target:Object, $properties:Object, $duration:int, $ease:Function) {
-			super($target, null, 0, $duration, $ease);
-			arrayObject = PrimitiveMultiTween.makeMultiArrays($target, $properties);
+		public override function init(... args):void {
+			super.init(args[0], null, 0, args[2], args[3]);
+			arrayObject = PrimitiveMultiTween.makeMultiArrays(args[0], args[1]);
 		}
 		
 		/**

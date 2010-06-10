@@ -65,9 +65,16 @@ package com.desuade.motion.physics {
 		/**
 		 *	The PrimitivePhysics object.
 		 */
-		public function PrimitivePhysics($target:Object, $property:String, $velocity:Number, $acceleration:Number, $friction:Number, $flip:Boolean) {
-			super($target, $property);
-			velocity = $velocity, acceleration = $acceleration, friction = $friction, flip = $flip;
+		public function PrimitivePhysics() {
+			super();
+		}
+		
+		/**
+		 *	This inits the PrimitivePhysics.
+		 */
+		public override function init(... args):void {
+			super.init(args[0], args[1]);
+			velocity = args[2], acceleration = args[3], friction = args[4], flip = args[5];
 		}
 		
 		/**

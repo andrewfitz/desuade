@@ -78,13 +78,21 @@ package com.desuade.motion.bases {
 		/**
 		 *	Creates a new BasePrimitive. This is a base class and should be extended, not used directly.
 		 *	
+		 */
+		public function BasePrimitive() {
+			super();
+			id = BaseTicker.aquireID();
+			Debug.output('motion', 50001, [id]);
+		}
+		
+		/**
+		 *	Inits a new BasePrimitive.
+		 *	
 		 *	@param	target	 The target object
 		 *	@param	property	 The property to use
 		 */
-		public function BasePrimitive($target:Object, $property:String) {
-			super();
-			id = BaseTicker.aquireID(), target = $target, property = $property, starttime = getTimer();
-			Debug.output('motion', 50001, [id]);
+		public function init(... args):void {
+			target = args[0], property = args[1], starttime = getTimer();
 		}
 		
 		/**

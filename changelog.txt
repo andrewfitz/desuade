@@ -1,6 +1,9 @@
 Desuade Library Change Log - http://desuade.com/
 ------------------------------------------------
 
+
+add pools to tweens and physics
+
 Motion Package 1.1.1 & Partigen 2.5 (2010/06/04)
 	Partigen:
 		-added: PixelRenderer & PixelParticle classes for high-performance pixel-based effects
