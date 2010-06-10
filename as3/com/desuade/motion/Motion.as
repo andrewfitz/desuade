@@ -43,7 +43,7 @@ package com.desuade.motion {
 		/**
 		 *	The "official" release version.
 		 */
-		public static const VERSIONLABEL:String = '1.5.0 Beta';
+		public static const VERSIONLABEL:String = '1.5 Beta';
 		
 		/**
 		 *	Company that owns the source code
