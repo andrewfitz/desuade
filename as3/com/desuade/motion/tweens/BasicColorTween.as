@@ -83,10 +83,8 @@ package com.desuade.motion.tweens {
 		protected override function createPrimitive($to:Object):int {
 			_colorholder = ($to.property != undefined && $to.property != null) ? ColorHelper.getColorObject('tint', 1, target[$to.property]) : target.transform.colorTransform;
 			var cpo:Object = ColorHelper.getColorObject($to.type || 'tint', $to.amount || 1, $to.value, _colorholder);
-			var pt:PrimitiveMultiTween = BaseTicker.addItem(new PrimitiveMultiTween());
+			var pt:PrimitiveMultiTween = BaseTicker.addItem(PrimitiveMultiTween);
 			pt.init(_colorholder, cpo, $to.duration*1000, makeEase($to.ease));
-			
-			
 			pt.endFunc = endFunc;
 			pt.updateFunc = ($to.property != undefined && $to.property != null) ? hexcolorupdater : docolorupdater;
 			return pt.id;

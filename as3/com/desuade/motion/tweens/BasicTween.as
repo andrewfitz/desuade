@@ -92,10 +92,8 @@ package com.desuade.motion.tweens {
 		 */
 		public static function run($target:Object, $property:String, $value:*, $duration:Number, $ease:* = 'linear', $position:Number = 0, $endfunc:Function = null):int {
 			var newval:Number = (typeof $value == 'string') ? $target[$property] + Number($value) : $value;
-			var pt:PrimitiveTween = BaseTicker.addItem(new PrimitiveTween());
+			var pt:PrimitiveTween = BaseTicker.addItem(PrimitiveTween);
 			pt.init($target, $property, newval, $duration*1000, makeEase($ease));
-			
-			
 			pt.endFunc = function():void {
 				$endfunc();
 				BaseTicker.removeItem(pt.id);
@@ -113,21 +111,15 @@ package com.desuade.motion.tweens {
 		 *	@private
 		 */
 		protected override function createPrimitive($to:Object):int {
-			var times:int = getTimer();
 			var newval:Number = (typeof $to.value == 'string') ? target[$to.property] + Number($to.value) : $to.value;
-			var pt:PrimitiveTween = BaseTicker.addItem(new PrimitiveTween());
+			var pt:PrimitiveTween = BaseTicker.addItem(PrimitiveTween);
 			pt.init(target, $to.property, newval, $to.duration*1000, makeEase($to.ease));
-			
-			
-			
 			pt.endFunc = endFunc;
 			pt.updateFunc = updateListener;
 			if($to.position > 0) {
 				pt.starttime -= ($to.position*$to.duration)*1000;
 				Debug.output('motion', 40007, [$to.position]);
 			}
-			BaseTicker.st[0] += getTimer()-times;
-			BaseTicker.st[1] += 1;
 			return pt.id;
 		}
 		

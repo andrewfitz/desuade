@@ -30,6 +30,7 @@ package com.desuade.motion.bases {
 	import flash.events.EventDispatcher;
 	import flash.utils.getTimer;
 	import com.desuade.debugging.*;
+	import com.desuade.utils.*;
 	
 	/**
 	 *  Handles primitive update cycles for render()
@@ -42,7 +43,10 @@ package com.desuade.motion.bases {
 	 */
 	public class BaseTicker {
 		
-		public static var st:Array = [0, 0];
+		/**
+		 *	This is the MultiPool that stores all the object pools for the Primitive classes.
+		 */
+		public static var classPool:MultiPool = new MultiPool(null);
 		
 		/**
 		 *	@private
@@ -125,11 +129,12 @@ package com.desuade.motion.bases {
 		/**
 		 *	Adds an item to the ticker.
 		 *	
-		 *	@param	item	 The item to add (Primitives)
+		 *	@param	class	The class of the item to add (Primitives)
 		 *	@return		The item in the ticker
 		 */
-		public static function addItem($item:*):* {
-			return _holder[$item.id] = $item;
+		public static function addItem($class:Class):* {
+			var item:* = BaseTicker.classPool.checkOutClass($class);
+			return _holder[item.id] = item;
 		}
 		
 		/**
@@ -138,7 +143,7 @@ package com.desuade.motion.bases {
 		 *	@param	id	 The id of the item
 		 */
 		public static function removeItem($id:int):void {
-			_holder[$id] = null;
+			BaseTicker.classPool.checkInClass(Object(_holder[$id]).constructor, _holder[$id]);
 			delete _holder[$id];
 		}
 		
@@ -147,12 +152,12 @@ package com.desuade.motion.bases {
 		 */
 		protected static function update($u:Object):void {
 			var times:int = getTimer();
-			var ir:int = 0;
+			//var ir:int = 0;
 			for each (var item:BasePrimitive in _holder) {
 				item.render(times);
-				ir++;
+				//ir++;
 			}
-			trace("Loop time: " + String(getTimer()-times) + " Items: " + ir + " - " + st);
+			//trace("Loop time: " + String(getTimer()-times) + " Items: " + ir);
 			dispatchEvent(new MotionEvent(MotionEvent.UPDATED));
 		}
 		

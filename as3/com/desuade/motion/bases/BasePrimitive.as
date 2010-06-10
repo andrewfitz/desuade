@@ -76,6 +76,11 @@ package com.desuade.motion.bases {
 		public var starttime:int;
 		
 		/**
+		 *	This is used by the pool to determine if/how the Primitive has been used before in memory.
+		 */
+		public var isclean:Boolean = true;
+		
+		/**
 		 *	Creates a new BasePrimitive. This is a base class and should be extended, not used directly.
 		 *	
 		 */
@@ -93,6 +98,7 @@ package com.desuade.motion.bases {
 		 */
 		public function init(... args):void {
 			target = args[0], property = args[1], starttime = getTimer();
+			ended = false;
 		}
 		
 		/**

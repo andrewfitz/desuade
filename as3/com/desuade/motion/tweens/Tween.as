@@ -194,20 +194,15 @@ package com.desuade.motion.tweens {
 				else _newval = (typeof ntval == 'string') ? ftv + Number(ntval) : ntval;
 			}
 			if($to.bezier == undefined || $to.bezier == null){
-				pt = BaseTicker.addItem(new PrimitiveTween());
+				pt = BaseTicker.addItem(PrimitiveTween);
 				pt.init(target, $to.property, _newval, $to.duration*1000, makeEase($to.ease));
-				
-				
 			} else {
 				var newbez:Array = [];
 				for (var i:int = 0; i < $to.bezier.length; i++) {
 					newbez.push((typeof $to.bezier[i] == 'string') ? ftv + Number($to.bezier[i]) : $to.bezier[i]);
 				}
-				pt = BaseTicker.addItem(new PrimitiveBezierTween());
+				pt = BaseTicker.addItem(PrimitiveBezierTween);
 				pt.init(target, $to.property, _newval, $to.duration*1000, newbez, makeEase($to.ease));
-				
-				
-				
 			}
 			pt.endFunc = endFunc;
 			if($to.position > 0) {

@@ -113,11 +113,8 @@ package com.desuade.motion.tweens {
 					_newvals.push(ntval);
 				}	
 			}
-			pt = BaseTicker.addItem(new PrimitiveMultiTween());
+			pt = BaseTicker.addItem(PrimitiveMultiTween);
 			pt.init(_colorholder, cpo, $to.duration*1000, makeEase($to.ease));
-			
-			
-			
 			pt.endFunc = endFunc;
 			colorFunc = ($to.property != undefined && $to.property != null) ? hexcolorupdater : docolorupdater;
 			if($to.position > 0) {
