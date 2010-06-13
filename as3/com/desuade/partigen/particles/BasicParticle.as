@@ -30,6 +30,7 @@ package com.desuade.partigen.particles {
 	import flash.geom.*;
 	
 	import com.desuade.partigen.Partigen;
+	import com.desuade.partigen.renderers.Renderer;
 	import com.desuade.partigen.pools.Pool;
 	import com.desuade.partigen.interfaces.*;
 	import com.desuade.debugging.Debug;
@@ -73,12 +74,12 @@ package com.desuade.partigen.particles {
 		/**
 		 *	@private
 		 */
-		protected var _renderer;
+		protected var _renderer:Renderer;
 		
 		/**
 		 *	@private
 		 */
-		protected var _pool;
+		protected var _pool:Pool;
 		
 		/**
 		 *	@private
