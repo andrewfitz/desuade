@@ -101,7 +101,7 @@ package com.desuade.motion.bases {
 		}
 		
 		/**
-		 *	This stops and demove.
+		 *	This stops and removes the primitive.
 		 *	
 		 *	@return		True if the primitive could be stopped.
 		 */

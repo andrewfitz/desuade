@@ -53,7 +53,7 @@ package com.desuade.motion.physics {
 		 *	
 		 *	<p>Each BasicPhysics object controls a single property on a given target object, and applies basic physics equations to calculate a change in value.</p>
 		 *	
-		 *	<p>Unlike tweens, there is no end value, and the BasicPhysics' update will continue to run until it is stopped.</p>
+		 *	<p>Unlike tweens, there is no end value, and the BasicPhysics' update will continue to run until it is stopped, or it reaches the specified duration.</p>
 		 *	<p>Paramaters for the configObject:</p>
 		 *	<ul>
 		 *	<li>property:String – The property to apply the physics to.</li>
@@ -62,6 +62,7 @@ package com.desuade.motion.physics {
 		 *	<li>friction:Number – The friction of the property. Defaults 0.</li>
 		 *	<li>angle:* – The angle at which to start at. Defaults disabled. 0 = right, 90 = up, 180 = left, 270 = down, 360 = right</li>
 		 *	<li>flip:Boolean – To flip the cartesian coordinates or not. Defaults false.</li>
+		 *	<li>duration:Number – How long to apply the physics for. 0 (the default) will apply the physics until stop() is called</li>
 		 *	<li>update:Boolean – enable broadcasting of UPDATED event (can lower performance)</li>
 		 *	</ul>
 		 *	
@@ -75,6 +76,7 @@ package com.desuade.motion.physics {
 		 *	@see PrimitivePhysics#friction
 		 *	@see #angle
 		 *	@see PrimitivePhysics#flip
+		 *	@see PrimitivePhysics#duration
 		 *	@see #config
 		 */
 		public function BasicPhysics($target:Object, $configObject:Object = null) {
@@ -84,6 +86,7 @@ package com.desuade.motion.physics {
 				$configObject.friction = ($configObject.friction != undefined) ? $configObject.friction : 0;
 				$configObject.angle = ($configObject.angle != undefined) ? $configObject.angle : null;
 				$configObject.flip = ($configObject.flip != undefined) ? $configObject.flip : false;
+				$configObject.duration = ($configObject.duration != undefined) ? $configObject.duration : 0;
 			}
 			super($target, $configObject);
 			_eventClass = PhysicsEvent;
@@ -176,7 +179,7 @@ package com.desuade.motion.physics {
 		protected override function createPrimitive($to:Object):int {
 			var nv:Number = ($to.angle != null) ? getVelocityWithAngle($to.velocity, $to.angle, $to.flip) : $to.velocity;
 			var pt:PrimitivePhysics = BaseTicker.addItem(PrimitivePhysics);
-			pt.init(target, $to.property, nv, $to.acceleration, $to.friction, $to.flip);
+			pt.init(target, $to.property, nv, $to.acceleration, $to.friction, $to.flip, $to.duration*1000);
 			pt.endFunc = endFunc;
 			pt.updateFunc = updateListener;
 			return pt.id;

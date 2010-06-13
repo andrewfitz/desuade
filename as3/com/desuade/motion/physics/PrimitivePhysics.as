@@ -53,6 +53,11 @@ package com.desuade.motion.physics {
 		public var flip:Boolean;
 		
 		/**
+		 *	How long the physics calculations should be applied for.
+		 */
+		public var duration:int = 0;
+		
+		/**
 		 *	@private
 		 */
 		protected var _friction:Number;
@@ -74,7 +79,7 @@ package com.desuade.motion.physics {
 		 */
 		public override function init(... args):void {
 			super.init(args[0], args[1]);
-			velocity = args[2], acceleration = args[3], friction = args[4], flip = args[5];
+			velocity = args[2], acceleration = args[3], friction = args[4], flip = args[5], duration = args[6];
 		}
 		
 		/**
@@ -95,12 +100,16 @@ package com.desuade.motion.physics {
 		/**
 		 *	@private
 		 */
-		public override function render($time:int):void {
+		public override function render($time:int):void {			
 			velocity += acceleration;
 			velocity *= _calcfriction;
 			if(flip) target[property] -= velocity;
 			else target[property] += velocity;
 			updateFunc(this);
+			if(duration > 0) {
+				$time -= starttime;
+				if($time >= duration) end();
+			}
 		}
 	
 	}

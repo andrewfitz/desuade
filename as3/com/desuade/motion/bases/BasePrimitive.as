@@ -56,17 +56,17 @@ package com.desuade.motion.bases {
 		public var property:String;
 		
 		/**
-		 *	Has the Primitive ended or not
+		 *	Has the Primitive ended or not.
 		 */
 		public var ended:Boolean = false;
 		
 		/**
-		 *	The function to run on update
+		 *	The function to run on update.
 		 */
 		public var updateFunc:Function = uf;
 		
 		/**
-		 *	The function to run on end
+		 *	The function to run on end.
 		 */
 		public var endFunc:Function = ef;
 		
@@ -97,8 +97,7 @@ package com.desuade.motion.bases {
 		 *	@param	property	 The property to use
 		 */
 		public function init(... args):void {
-			target = args[0], property = args[1], starttime = getTimer();
-			ended = false;
+			target = args[0], property = args[1], starttime = getTimer(), ended = false;
 		}
 		
 		/**

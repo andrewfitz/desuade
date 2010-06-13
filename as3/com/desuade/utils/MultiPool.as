@@ -38,6 +38,11 @@ package com.desuade.utils {
 	public class MultiPool {
 		
 		/**
+		 *	The starting size and rate of expansion of the object pool
+		 */
+		public var expandSize:int;
+		
+		/**
 		 *	@private
 		 */
 		protected var _classPools:Dictionary = new Dictionary(true);
@@ -51,10 +56,12 @@ package com.desuade.utils {
 		 *	This creates a new MultiPool.
 		 *	
 		 *	@param	clean	 This is the function to clean all the objects with.
+		 *	@param	expandSize	 The size of each expansion for the object pool
 		 */
-		public function MultiPool($clean:Function) {
+		public function MultiPool($clean:Function, $expandSize:int = 50) {
 			super();
 			_clean = $clean;
+			expandSize = $expandSize;
 		}
 		
 		/**
@@ -65,7 +72,7 @@ package com.desuade.utils {
 		 *	@return		The new object.
 		 */
 		public function checkOutClass($class:Class):* {
-			if(_classPools[$class] == undefined) _classPools[$class] = new BasicObjectPool($class, _clean);
+			if(_classPools[$class] == undefined) _classPools[$class] = new BasicObjectPool($class, _clean, expandSize);
 			return _classPools[$class].checkOut();
 		}
 		

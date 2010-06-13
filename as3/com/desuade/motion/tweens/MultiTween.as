@@ -192,7 +192,8 @@ package com.desuade.motion.tweens {
 		 *	@private
 		 */
 		protected override function roundTweenValue($i:Object):void {
-			for (var p:String in $i.arrayObject.props) {
+			for (var i:int = 0; i < $i.arrayObject.props.length; i++) {
+				var p:String = $i.arrayObject.props[i];
 				$i.target[p] = int($i.target[p]);
 			}
 		}

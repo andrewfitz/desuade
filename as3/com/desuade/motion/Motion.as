@@ -38,12 +38,12 @@ package com.desuade.motion {
 		/**
 		 *	The numeric version of the package. Used for version comparisons.
 		 */
-		public static const VERSION:Number = 1.501;
+		public static const VERSION:Number = 1.502;
 		
 		/**
 		 *	The "official" release version.
 		 */
-		public static const VERSIONLABEL:String = '1.5 Beta';
+		public static const VERSIONLABEL:String = '1.5';
 		
 		/**
 		 *	Company that owns the source code

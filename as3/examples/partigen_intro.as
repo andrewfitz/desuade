@@ -1,451 +1,1 @@
-/*
-
-Desuade Partigen 2.1 Introduction Examples
-http://desuade.com/partigen
-
-This .fla goes over the basics of how to use Emitters with Partigen and the Desuade Motion Package
-
-IMPORTANT!
-Understanding of the Motion Package's MotionControllers is necessary. Working knowledge of the tween, sequencing, and physics classes is also highly recommended.
-While it is possible to jump right in without it and be fine, this .fla assumes you are familiar with these before getting started.
-
-////Overview////
-
-This is an introduction to the Desuade Partigen API. It's recommended to have access to 
-the official API docs as you're working along.
-
-Partigen uses concepts (as well as the library itself) from the Motion Package such as 
-MotionControllers heavily, as the DMP was designed with Partigen in mind.
-
-In Partigen 1, there was a defined set of properties that could be changed for particles, 
-with only a beginning and end value, and only a few offered random ranges. While this made 
-it straightforward for novices, expert developers were looking for more freedom.
-
-Thus the concept of MotionControllers was born, even before Partigen 1 was finished. This 
-core architecture design allows for unlimited amount of tweens on each property during a 
-particle's life - for any of the particle's tweenable properties.
-
-While this comes with a bit more required code, much of it is duplicatable 
-across emitters and provides incredible value. Also, since everything is dynamic, file 
-size has decreased considerably, from the original default standard size of 40k, to an 
-average of 20k (for all the libraries) - that includes and entire tween and physics engine, as 
-well as the entire Partigen engine. The minimum is around 5k (this excludes controllers, etc).
-
-If you're migrating from 1.x/AS2, there is very little in common with the old API besides 
-some general concepts. Partigen 2 is a revolutionary new framework that's here to stay, 
-with an architecture and syntax that is open to the future and community contributions.
-
-
-////Usage////
-
-Components of Partigen 2:
-
-Renderers: these control how the particles are displayed
-Pools: this manages the actual particle objects in memory
-Events: particle events
-Particles: these are dynamic objects that get created by emitters
-Emitters: creates, manages, and configures particles
-
-
-On average, the majority of your time with Partigen will be spent with emitters and their controllers.
-Each emitter creates two "master controllers" by default:
-
-emitter.controllers.emitter //this controls the properties of the emitter itself when start() is called
-emitter.controllers.particle //this controls the properties of new particles
-
-
-Any property under those will be the actual property being controlled.
-
-For example:
-
-emitter.controllers.particle.x //controls each particle's x value
-emitter.controllers.particle.alpha //controls each particle's alpha value
-emitter.controllers.emitter.x //controls the emitter's x value
-
------
-
->To create emitter controllers, use one of the following methods on emitter.controllers.emitter:
-
-addTween(property:String, duration:Number)
-addPhysics(property:String, duration:Number, flip:Boolean = false)
-addBeginValue(property:String, value:*, spread:* = 0, precision:* = 0, extras:* = null)
-
-These methods will either create an EmitterTweenController or an EmitterePhysicsController
-Each inherits a real MotionController or a PhysicsMultiController respectivly.
-
-
->To create particle controllers, use one of the following methods on emitter.controllers.particle:
-
-addTween(property:String, duration:Number = 0)
-addColorTween(property:String = "color", duration:Number = 0)
-addPhysics(property:String, duration:Number = 0, flip:Boolean = false)
-addBeginValue(property:String, value:*, spread:* = 0, precision:* = 0, extras:* = null)
-
-These methods will either create a ParticleTweenController or a ParticlePhysicsController
-Each resembles a MotionController or a PhysicsMultiController respectivly.
-
-
-These controllers work the same way as MotionControllers from the Motion Package, so each 
-one has a keyframes property than can be used to create more intricate effects:
-
-emitter.controllers.particle.x.keyframes;
-
------
-
-The emitter has an angle and angleSpread property that is only used for ParticlePhysicsControllers
-and will effect all Physics-based properties unless explicitly set not to via the 'useangle' property
-on the given ParticlePhysicsController.
-
-
-Emitters are controlled by start() and stop() methods, and do just what they say.
-These methods also start and stop any controllers in my_emitter.controllers.emitter
-
------
-
-To make a custom Particle, simply create your class/Sprite/MovieClip and extend the partigen Particle class.
-Then asign that class to the emitter:
-
-my_em.particle = CustomParticle;
-
-
-Consult the official API docs for more details http://api.desuade.com/. The examples in this .fla should provide a majority of common approaches.
-
-*/
-
-package {
-
-	import flash.display.*;
-	import CircleParticle;
-	
-	public class partigen_intro extends MovieClip {
-	
-		public function partigen_intro()
-		{
-			super();
-			
-						
-			
-			/////////////////////////////////////////////////
-			//
-			//
-			//How to use: each block of code is a seperate example, with the start method commented out.
-			//Uncommenting this will show the resulting example in the compiled SWF.
-			//Go through each example and uncomment the lines, test the movie,
-			//then recomment the line and continue to the next demo.
-			//
-			//Note: Everything here you can easily copy and run in an FLA
-			//code was provided in this .as file for users without the Flash IDE.
-			//
-			//
-			/////////////////////////////////////////////////
-			
-			
-
-
-			//you may want to disable debugging or set the level lower if the traces don't get overwhelming
-
-			//fla setup
-			stop();
-			import flash.display.MovieClip;
-			import flash.display.StageAlign;
-			import flash.display.StageScaleMode;
-			import flash.display.BitmapData;
-			stage.align = StageAlign.TOP_LEFT;
-			stage.scaleMode = StageScaleMode.NO_SCALE;
-
-			//This is for all the debugging classes
-			import com.desuade.debugging.*;
-			import com.desuade.partigen.*;
-			import com.desuade.motion.*;
-
-			Debug.load(new DebugCodesPartigen()); //load partigen debug codes
-			Debug.load(new DebugCodesMotion()); //load motion codes
-			Debug.level = 50000;
-			Debug.enabled = true; //comment this out or set it to false to disable debugging
-			//Debug.onlyCodes = true;
-
-			import com.desuade.partigen.emitters.*;
-			import com.desuade.partigen.particles.*;
-			import com.desuade.partigen.controllers.*;
-			import com.desuade.partigen.renderers.*;
-			import com.desuade.partigen.pools.*;
-			import com.desuade.partigen.events.*;
-
-			import com.desuade.motion.eases.*;
-			import com.desuade.motion.controllers.*
-			import com.desuade.motion.events.*
-			import com.desuade.utils.*
-			
-			import CircleParticle;
-
-			var t1:MovieClip = new MovieClip(); //make a container for particles for the renderer
-			addChild(t1);
-
-			var sr:Renderer = new StandardRenderer(t1, 'top'); //by default, emitters create nullpools and nullrenderes. let's make a StandardRenderer to share between all of them
-			
-
-
-			////
-			//basic example, using physics for motion
-			var em1:Emitter = new Emitter(); //create emitter
-			em1.x = em1.y = 100;
-			em1.particle = CircleParticle; //assign the particle class to use for new particles
-			em1.renderer = sr; //sets the renderer we made
-			em1.eps = 10; //how many times to emit per second
-			em1.life = 2; //set the life
-			em1.lifeSpread = '0'; //we want the same life for all, so we set the spread to '0'
-			em1.controllers.particle.addPhysics('y', 0, true); //creates a new ParticlePhysicsController
-			em1.controllers.particle.y.velocity.keyframes.begin.value = -3; //sets the velocity
-			em1.controllers.particle.y.acceleration.keyframes.begin.value = -0.1; //sets the acceleration
-			em1.controllers.particle.addPhysics('x', 0);
-			em1.controllers.particle.x.velocity.keyframes.begin.value = 5;
-			em1.controllers.particle.x.acceleration.keyframes.flatten(0.1); //makes the acceleration controller flat, which sets a steady accel
-			//em1.start();
-			
-
-
-			////
-			//example using tweening for particle motion and common properties, with events
-			var em2:Emitter = new Emitter();
-			em2.enableEvents = true; //we must enable the events (saving performance when false)
-			em2.x = em2.y = 100;
-			em2.particle = CircleParticle;
-			em2.renderer = sr;
-			em2.eps = 10;
-			em2.life = 2.5;
-			em2.lifeSpread = '0';
-			em2.controllers.particle.addTween('alpha').setSingleTween(1, '0', 0, '0'); //adds a ParticleTweenController and since it returns the controller, we can call a method on the same line
-			em2.controllers.particle.addTween('scale').setSingleTween(.2, '0', 1, '0');
-			em2.controllers.particle.addTween('x').setSingleTween('0', '0', 300, '0', 'easeOutBounce');
-			em2.controllers.particle.addTween('y').setSingleTween('0', '0', '200', '0');
-			em2.addEventListener(ParticleEvent.DIED, deathFunc);
-			function deathFunc(o:ParticleEvent):void{
-				trace(o.data.particle.name + " died");
-			}
-
-			em2.addEventListener(ParticleEvent.BORN, birthFunc);
-			function birthFunc(o:ParticleEvent):void{
-				trace(o.data.particle.name + " was born");
-			}
-			//em2.start();
-			
-
-
-			////
-			//the same example as above, but taking advantage of spread and burst, also using the SweepPool
-			var em3:Emitter = new Emitter();
-			em3.x = em3.y = 100;
-			em3.particle = CircleParticle;
-			em3.renderer = sr;
-			em3.pool = new SweepPool(5000);
-			em3.burst = 2;
-			em3.eps = 10;
-			em3.life = 2.5;
-			em3.lifeSpread = '1';
-			em3.controllers.particle.addTween('alpha').setSingleTween(1, '0', 0, '0');
-			em3.controllers.particle.addTween('scale').setSingleTween(.2, '0', 1, '0');
-			em3.controllers.particle.addTween('x').setSingleTween('0', '0', 300, '50', 'easeOutBounce');
-			em3.controllers.particle.addTween('y').setSingleTween('0', '0', '200', '0');
-			//em3.start();
-			
-
-
-			////
-			//color example with grouping
-			var em4:Emitter = new Emitter();
-			em4.x = em4.y = 100;
-			em4.particle = CircleParticle;
-			em4.groupAmount = 4;
-			em4.groupProximity = 50;
-			em4.renderer = sr;
-			em4.eps = 10;
-			em4.life = 2;
-			em4.controllers.particle.addColorTween();
-			em4.controllers.particle.color.keyframes.begin.value = 'ff4444';
-			em4.controllers.particle.color.keyframes.begin.spread = '0d0dff'; //different color each time it's started
-			em4.controllers.particle.addTween('x').setSingleTween('0', '0', 300, '0', 'easeOutBounce');
-			em4.controllers.particle.addTween('y').setSingleTween('0', '0', '200', '50');
-			//em4.start();
-			
-
-
-			////
-			//example taking full advantage of controller keyframes
-			var em5:Emitter = new Emitter();
-			em5.x = em5.y = 100;
-			em5.particle = CircleParticle;
-			em5.renderer = sr;
-			em5.eps = 10;
-			em5.life = 3;
-			em5.lifeSpread = '0';
-			var e5pc:ParticleController = em5.controllers.particle;
-			e5pc.addTween('scale').setSingleTween(1, '0', .5, '.5');
-			e5pc.scale.keyframes.precision = 2;
-			e5pc.scale.keyframes.add(new Keyframe(.4, .3));
-			e5pc.scale.keyframes.add(new Keyframe(.7, .5, 'easeInSine', 1));
-			e5pc.addTween('alpha');
-			e5pc.alpha.keyframes.precision = 2;
-			e5pc.alpha.keyframes.begin.value = 0;
-			e5pc.alpha.keyframes.begin.spread = '0';
-			e5pc.alpha.keyframes.end.value = 0;
-			e5pc.alpha.keyframes.add(new Keyframe(.1, 1));
-			e5pc.alpha.keyframes.add(new Keyframe(.8, 1));
-			e5pc.addTween('x', 2).setSingleTween('0', '0', 200, '0', 'easeOutBounce');
-			e5pc.x.keyframes.add(new Keyframe(.5, 400, null, '50'));
-			e5pc.x.keyframes.keyframe_3.ease = 'easeOutElastic';
-			e5pc.addTween('y').setSingleTween('0', '0', '200', '100');
-			e5pc.addColorTween();
-			e5pc.color.keyframes.begin.value = 'ff4444';
-			e5pc.color.keyframes.begin.spread = 'dd4444';
-			e5pc.color.keyframes.add(new Keyframe(.4, 0x00ce00, 'easeInQuint', '0', {amount:1, type:'tint'}));
-			e5pc.addPhysics('rotation');
-			e5pc.rotation.velocity.keyframes.begin.value = 1;
-			//em5.start();
-			
-
-
-			////
-			//demos emitter controllers and physics angle
-			var em6:Emitter = new Emitter();
-			em6.x = 100;
-			em6.y = 50;
-			em6.particle = CircleParticle;
-			em6.renderer = sr;
-			em6.eps = 10;
-			em6.angle = 0;
-			//em6.angleSpread = '40'; this makes an angle between whatever the angle is and angle+40
-			em6.life = 1;
-			em6.lifeSpread = '1';
-			em6.controllers.particle.addPhysics('y', 0, true);
-			em6.controllers.particle.y.velocity.keyframes.begin.value = 3;
-			em6.controllers.particle.y.acceleration.keyframes.begin.value = -0.1;
-			em6.controllers.particle.addPhysics('x');
-			em6.controllers.particle.x.velocity.keyframes.begin.value = 5;
-			em6.controllers.particle.x.acceleration.keyframes.flatten(0.1);
-			em6.controllers.particle.addBeginValue('scale', .75, '0', 2);
-			em6.controllers.emitter.addTween('y', 5).setSingleTween('0', '0', 200, '100', 'easeOutBounce');
-			em6.controllers.emitter.addTween('angle', 10).setSingleTween('0', 0, 360, '0');
-			//em6.start();
-			
-
-
-			////
-			//this example clones the 5th emitter with XML
-			var e5x:XML = em5.toXML();
-			//trace(e5x);
-			var em7:Emitter = new Emitter().fromXML(e5x);
-			em7.x = 100;
-			em7.y = 50;
-			em7.renderer = sr;
-			//em7.start();
-			
-
-
-			////
-			//Updated for v2.1
-			//this example creates an emitter from XML and shows how to use the BitmapRenderer/BitmapCanvas
-			//Note: with v2.1 you can also include Renderers in XML, so this example can also be done that way
-			var mbr:BitmapRenderer = new BitmapRenderer(stage.stageWidth, stage.stageHeight, 'bottom'); //create new BitmapRenderer spawing particles from the bottom
-			mbr.fade = 0.8; //enable a 'trail' for the particles
-			mbr.fadeBlur = 8; // add a nice blur to the trails to soften them
-			
-			addChild(new BitmapCanvas(mbr)); //add a new BitmapCanvas to the stage, passing the BitmapRenderer
-			addChild(new BitmapCanvas(mbr, 300, 50)); //same, but passing the BitmapRenderer, x, y
-
-			var em8:Emitter = new Emitter();
-			em8.x = 0;
-			em8.renderer = mbr;
-			var emmx:XML = 
-			<Emitter particle="CircleParticle" eps="20" burst="8" group="GroupParticle" groupAmount="3" groupProximity="50" life="1.2" lifeSpread="1.6" angle="120" angleSpread="*50">
-			  <Controllers>
-			    <EmitterController>
-			      <EmitterTweenController duration="5" property="y">
-			        <KeyframeContainer tweenClass="BasicTween" precision="0">
-			          <Keyframe position="0" ease="linear" value="*0" spread="*0" label="begin"/>
-			          <Keyframe position="0.5" ease="linear" value="*200" spread="*0" label="mid"/>
-			          <Keyframe position="1" ease="linear" spread="*0" label="end"/>
-			        </KeyframeContainer>
-			      </EmitterTweenController>
-			    </EmitterController>
-			    <ParticleController>
-			      <ParticleTweenController duration="0" property="x">
-			        <KeyframeContainer tweenClass="BasicTween" precision="0">
-			          <Keyframe position="0" ease="linear" value="*0" spread="*200" label="begin"/>
-			          <Keyframe position="1" ease="easeOutElastic" value="*50" spread="*0" label="end"/>
-			        </KeyframeContainer>
-			      </ParticleTweenController>
-			      <ParticleTweenController duration="0" property="color">
-			        <ColorKeyframeContainer tweenClass="BasicColorTween" precision="0">
-			          <Keyframe position="0" ease="linear" value="ffaaaa" spread="*0" label="begin"/>
-			          <Keyframe position="1" ease="linear" value="d9f5d3" spread="*0" label="end"/>
-			        </ColorKeyframeContainer>
-			      </ParticleTweenController>
-			      <ParticlePhysicsController duration="0" flip="true" useAngle="true" property="y">
-			        <ParticleTweenController duration="0" property="velocity">
-			          <KeyframeContainer tweenClass="BasicTween" precision="3">
-			            <Keyframe position="0" ease="linear" spread="*0" label="begin"/>
-			            <Keyframe position="1" ease="linear" spread="*0" label="end"/>
-			          </KeyframeContainer>
-			        </ParticleTweenController>
-			        <ParticleTweenController duration="0" property="acceleration">
-			          <KeyframeContainer tweenClass="BasicTween" precision="3">
-			            <Keyframe position="0" ease="linear" value="-0.7" spread="*0" label="begin"/>
-			            <Keyframe position="1" ease="linear" spread="*0" label="end"/>
-			          </KeyframeContainer>
-			        </ParticleTweenController>
-			        <ParticleTweenController duration="0" property="friction">
-			          <KeyframeContainer tweenClass="BasicTween" precision="3">
-			            <Keyframe position="0" ease="linear" spread="*0" label="begin"/>
-			            <Keyframe position="1" ease="linear" spread="*0" label="end"/>
-			          </KeyframeContainer>
-			        </ParticleTweenController>
-			      </ParticlePhysicsController>
-			      <ParticleTweenController duration="0" property="scale">
-			        <KeyframeContainer tweenClass="BasicTween" precision="0">
-			          <Keyframe position="0" ease="linear" value="1" spread="3" label="begin"/>
-			          <Keyframe position="1" ease="linear" spread="*0" label="end"/>
-			        </KeyframeContainer>
-			      </ParticleTweenController>
-			    </ParticleController>
-			  </Controllers>
-			</Emitter>;
-			em8.fromXML(emmx); //load the XML
-			//em8.start(); //start the emitter (and the BitmapRenderer)
-			//you may want to turn off debugging for this one!
-			
-			//NOTE:
-			//By calling start on the emitter, it will automatically start the renderer.
-			//If you're using multiple emitters on the same renderer, or manage it yourself, you can start the renderer manually.
-			//mbr.start(); //use this to manually start the BitmapRenderer to output to the bitmapdata
-
-
-
-
-			////
-			//this examples shows the new features introduced in Partigen 2.1
-			//these include prefetching, particleBlendMode, and groupBitmap
-			var em9:Emitter = new Emitter();
-			em9.particle = CircleParticle;
-			em9.renderer = sr;
-			em9.eps = 5;
-			em9.burst = 2;
-			em9.groupAmount = 100; //in 2.1, group classes are removed and are integrated into Particle classes
-			em9.groupProximity = 100;
-			//uncomment this below to see the performance increase when using large groupAmount of vector particles
-			//em9.groupBitmap = true; //this takes the particle and turns it into a Bitmap, using that instead
-			em9.particleBlendMode = 'subtract'; //this sets the blendmode for all the particles created
-			em9.x = 40;
-			em9.y = 150;
-			em9.life = 2;
-			em9.lifeSpread = 4;
-			em9.controllers.particle.addBeginValue('x', '0', '200');
-			em9.controllers.particle.x.keyframes.end.value = '200';
-			em9.controllers.particle.x.keyframes.end.ease = 'easeInOutBounce';
-			//em9.start(3); //this starts the emitter as if it's already been running for the given amount of time
-			//you may want to turn off debugging for this one!
-			
-		}
-	
-	}
-
-}
+﻿/*Desuade Partigen 2.5 Introduction Exampleshttp://desuade.com/partigenThis .fla goes over the basics of how to use Emitters with Partigen and the Desuade Motion PackageIMPORTANT!Understanding of the Motion Package's MotionControllers is necessary. Working knowledge of the tween, sequencing, and physics classes is also highly recommended.While it is possible to jump right in without it and be fine, this .fla assumes you are familiar with these before getting started.////Overview////This is an introduction to the Desuade Partigen API. It's recommended to have access to the official API docs as you're working along.Partigen uses concepts (as well as the library itself) from the Motion Package such as MotionControllers heavily, as the DMP was designed with Partigen in mind.In Partigen 1, there was a defined set of properties that could be changed for particles, with only a beginning and end value, and only a few offered random ranges. While this made it straightforward for novices, expert developers were looking for more freedom.Thus the concept of MotionControllers was born, even before Partigen 1 was finished. This core architecture design allows for unlimited amount of tweens on each property during a particle's life - for any of the particle's tweenable properties.While this comes with a bit more required code, much of it is duplicatable across emitters and provides incredible value. Also, since everything is dynamic, file size has decreased considerably, from the original default standard size of 40k, to an average of 20k (for all the libraries) - that includes and entire tween and physics engine, as well as the entire Partigen engine. The minimum is around 5k (this excludes controllers, etc).(Note sizes may increse with future releases)If you're migrating from 1.x/AS2, there is very little in common with the old API besides some general concepts. Partigen 2 is a revolutionary new framework that's here to stay, with an architecture and syntax that is open to the future and community contributions.////Usage////Components of Partigen 2:Renderers: these control how the particles are displayedPools: this manages the actual particle objects in memoryEvents: particle eventsParticles: these are dynamic objects that get created by emittersEmitters: creates, manages, and configures particlesOn average, the majority of your time with Partigen will be spent with emitters and their controllers.Each emitter creates two "master controllers" by default:emitter.controllers.emitter //this controls the properties of the emitter itself when start() is calledemitter.controllers.particle //this controls the properties of new particlesAny property under those will be the actual property being controlled.For example:emitter.controllers.particle.x //controls each particle's x valueemitter.controllers.particle.alpha //controls each particle's alpha valueemitter.controllers.emitter.x //controls the emitter's x value----->To create emitter controllers, use one of the following methods on emitter.controllers.emitter:addTween(property:String, duration:Number)addPhysics(property:String, duration:Number, flip:Boolean = false)addBeginValue(property:String, value:*, spread:* = 0, precision:* = 0, extras:* = null)These methods will either create an EmitterTweenController or an EmitterePhysicsControllerEach inherits a real MotionController or a PhysicsMultiController respectivly.>To create particle controllers, use one of the following methods on emitter.controllers.particle:addTween(property:String, duration:Number = 0)addColorTween(property:String = "color", duration:Number = 0)addPhysics(property:String, duration:Number = 0, flip:Boolean = false)addBeginValue(property:String, value:*, spread:* = 0, precision:* = 0, extras:* = null)These methods will either create a ParticleTweenController or a ParticlePhysicsControllerEach resembles a MotionController or a PhysicsMultiController respectivly.These controllers work the same way as MotionControllers from the Motion Package, so each one has a keyframes property than can be used to create more intricate effects:emitter.controllers.particle.x.keyframes;-----The emitter has an angle and angleSpread property that is only used for ParticlePhysicsControllersand will effect all Physics-based properties unless explicitly set not to via the 'useangle' propertyon the given ParticlePhysicsController.Emitters are controlled by start() and stop() methods, and do just what they say.These methods also start and stop any controllers in my_emitter.controllers.emitter-----Assign your particle class to the emitter like so:my_em.particle = CustomParticle;v2.5 Migration:	-any class can be used as a particle without having to extend the ParticleClass (it also shouldn't)	-pools now need the baseparticle class passed in the constructor	-BitmapRenderers now automatically start/stop based on need, so it is recommended to remove and stop/start calls on your renderers and use automagic mode (on be default)Consult the official API docs for more details http://api.desuade.com/. The examples in this .fla should provide a majority of common approaches.*/package {	import flash.display.*;	import CircleParticle;		public class partigen_intro extends MovieClip {			public function partigen_intro()		{			super();															/////////////////////////////////////////////////			//			//			//How to use: each block of code is a seperate example, with the start method commented out.			//Uncommenting this will show the resulting example in the compiled SWF.			//Go through each example and uncomment the lines, test the movie,			//then recomment the line and continue to the next demo.			//			//Note: Everything here you can easily copy and run in an FLA			//code was provided in this .as file for users without the Flash IDE.			//			//			/////////////////////////////////////////////////									//you may want to disable debugging or set the level lower if the traces don't get overwhelming			//fla setup			stop();			import flash.display.MovieClip;			import flash.display.StageAlign;			import flash.display.StageScaleMode;			import flash.display.BitmapData;			stage.align = StageAlign.TOP_LEFT;			stage.scaleMode = StageScaleMode.NO_SCALE;			//This is for all the debugging classes			import com.desuade.debugging.*;			import com.desuade.partigen.*;			import com.desuade.motion.*;			Debug.load(new DebugCodesPartigen()); //load partigen debug codes			Debug.load(new DebugCodesMotion()); //load motion codes			Debug.level = 50000;			//Debug.enabled = true; //comment this out or set it to false to disable debugging			//Debug.onlyCodes = true;			import com.desuade.partigen.emitters.*;			import com.desuade.partigen.particles.*;			import com.desuade.partigen.controllers.*;			import com.desuade.partigen.renderers.*;			import com.desuade.partigen.pools.*;			import com.desuade.partigen.events.*;			import com.desuade.motion.eases.*;			import com.desuade.motion.controllers.*			import com.desuade.motion.events.*			import com.desuade.utils.*						import CircleParticle;			var t1:MovieClip = new MovieClip(); //make a container for particles for the renderer			addChild(t1);			var sr:Renderer = new StandardRenderer(t1, 'top'); //by default, emitters create nullpools and nullrenderes. let's make a StandardRenderer to share between all of them						////			//basic example, using physics for motion			var em1:Emitter = new Emitter(); //create emitter			em1.x = em1.y = 100;			em1.particle = CircleParticle; //assign the particle class to use for new particles			em1.renderer = sr; //sets the renderer we made			em1.eps = 10; //how many times to emit per second			em1.life = 2; //set the life			em1.lifeSpread = '0'; //we want the same life for all, so we set the spread to '0'			em1.controllers.particle.addPhysics('y', 0, true); //creates a new ParticlePhysicsController			em1.controllers.particle.y.velocity.keyframes.begin.value = -3; //sets the velocity			em1.controllers.particle.y.acceleration.keyframes.begin.value = -0.1; //sets the acceleration			em1.controllers.particle.addPhysics('x', 0);			em1.controllers.particle.x.velocity.keyframes.begin.value = 5;			em1.controllers.particle.x.acceleration.keyframes.flatten(0.1); //makes the acceleration controller flat, which sets a steady accel			//em1.start();						////			//example using tweening for particle motion and common properties, with events			var em2:Emitter = new Emitter();			em2.enableEvents = true; //we must enable the events (saving performance when false)			em2.x = em2.y = 100;			em2.particle = CircleParticle;			em2.renderer = sr;			em2.eps = 10;			em2.life = 2.5;			em2.lifeSpread = '0';			em2.controllers.particle.addTween('alpha').setSingleTween(1, '0', 0, '0'); //adds a ParticleTweenController and since it returns the controller, we can call a method on the same line			em2.controllers.particle.addTween('scale').setSingleTween(.2, '0', 1, '0');			em2.controllers.particle.addTween('x').setSingleTween('0', '0', 300, '0', 'easeOutBounce');			em2.controllers.particle.addTween('y').setSingleTween('0', '0', '200', '0');			em2.addEventListener(ParticleEvent.DIED, deathFunc);			function deathFunc(o:ParticleEvent):void{				trace(o.data.particle.name + " died");			}			em2.addEventListener(ParticleEvent.BORN, birthFunc);			function birthFunc(o:ParticleEvent):void{				trace(o.data.particle.name + " was born");			}			//em2.start();						////			//the same example as above, but taking advantage of spread and burst, also using the SweepPool			var em3:Emitter = new Emitter();			em3.x = em3.y = 100;			em3.particle = CircleParticle;			em3.renderer = sr;			em3.pool = new SweepPool(Particle, 5000);			em3.burst = 2;			em3.eps = 10;			em3.life = 2.5;			em3.lifeSpread = '1';			em3.controllers.particle.addTween('alpha').setSingleTween(1, '0', 0, '0');			em3.controllers.particle.addTween('scale').setSingleTween(.2, '0', 1, '0');			em3.controllers.particle.addTween('x').setSingleTween('0', '0', 300, '50', 'easeOutBounce');			em3.controllers.particle.addTween('y').setSingleTween('0', '0', '200', '0');			//em3.start();						////			//color example with grouping			var em4:Emitter = new Emitter();			em4.x = em4.y = 100;			em4.particle = CircleParticle;			em4.groupAmount = 4;			em4.groupProximity = 50;			em4.renderer = sr;			em4.eps = 10;			em4.life = 2;			em4.controllers.particle.addColorTween();			em4.controllers.particle.color.keyframes.begin.value = 'ff4444';			em4.controllers.particle.color.keyframes.begin.spread = '0d0dff'; //different color each time it's started			em4.controllers.particle.addTween('x').setSingleTween('0', '0', 300, '0', 'easeOutBounce');			em4.controllers.particle.addTween('y').setSingleTween('0', '0', '200', '50');			//em4.start();						////			//example taking full advantage of controller keyframes			var em5:Emitter = new Emitter();			em5.x = em5.y = 100;			em5.particle = CircleParticle;			em5.renderer = sr;			em5.eps = 10;			em5.life = 3;			em5.lifeSpread = '0';			var e5pc:ParticleController = em5.controllers.particle;			e5pc.addTween('scale').setSingleTween(1, '0', .5, '.5');			e5pc.scale.keyframes.precision = 2;			e5pc.scale.keyframes.add(new Keyframe(.4, .3));			e5pc.scale.keyframes.add(new Keyframe(.7, .5, 'easeInSine', 1));			e5pc.addTween('alpha');			e5pc.alpha.keyframes.precision = 2;			e5pc.alpha.keyframes.begin.value = 0;			e5pc.alpha.keyframes.begin.spread = '0';			e5pc.alpha.keyframes.end.value = 0;			e5pc.alpha.keyframes.add(new Keyframe(.1, 1));			e5pc.alpha.keyframes.add(new Keyframe(.8, 1));			e5pc.addTween('x', 2).setSingleTween('0', '0', 200, '0', 'easeOutBounce');			e5pc.x.keyframes.add(new Keyframe(.5, 400, null, '50'));			e5pc.x.keyframes.keyframe_3.ease = 'easeOutElastic';			e5pc.addTween('y').setSingleTween('0', '0', '200', '100');			e5pc.addColorTween();			e5pc.color.keyframes.begin.value = 'ff4444';			e5pc.color.keyframes.begin.spread = 'dd4444';			e5pc.color.keyframes.add(new Keyframe(.4, 0x00ce00, 'easeInQuint', '0', {amount:1, type:'tint'}));			e5pc.addPhysics('rotation');			e5pc.rotation.velocity.keyframes.begin.value = 1;			//em5.start();						////			//demos emitter controllers and physics angle			var em6:Emitter = new Emitter();			em6.x = 100;			em6.y = 50;			em6.particle = CircleParticle;			em6.renderer = sr;			em6.eps = 10;			em6.angle = 0;			//em6.angleSpread = '40'; this makes an angle between whatever the angle is and angle+40			em6.life = 1;			em6.lifeSpread = '1';			em6.controllers.particle.addPhysics('y', 0, true);			em6.controllers.particle.y.velocity.keyframes.begin.value = 3;			em6.controllers.particle.y.acceleration.keyframes.begin.value = -0.1;			em6.controllers.particle.addPhysics('x');			em6.controllers.particle.x.velocity.keyframes.begin.value = 5;			em6.controllers.particle.x.acceleration.keyframes.flatten(0.1);			em6.controllers.particle.addBeginValue('scale', .75, '0', 2);			em6.controllers.emitter.addTween('y', 5).setSingleTween('0', '0', 200, '100', 'easeOutBounce');			em6.controllers.emitter.addTween('angle', 10).setSingleTween('0', 0, 360, '0');			//em6.start();						////			//this example clones the 5th emitter with XML			var e5x:XML = em5.toXML();			//trace(e5x);			var em7:Emitter = new Emitter().fromXML(e5x);			em7.x = 100;			em7.y = 50;			em7.renderer = sr;			//em7.start();						////			//Updated for v2.1			//this example creates an emitter from XML and shows how to use the BitmapRenderer/BitmapCanvas			//Note: with v2.1 you can also include Renderers in XML, so this example can also be done that way			var mbr:BitmapRenderer = new BitmapRenderer(stage.stageWidth, stage.stageHeight, 'bottom'); //create new BitmapRenderer spawing particles from the bottom			mbr.fade = 0.8; //enable a 'trail' for the particles			mbr.fadeBlur = 8; // add a nice blur to the trails to soften them						addChild(new BitmapCanvas(mbr)); //add a new BitmapCanvas to the stage, passing the BitmapRenderer			addChild(new BitmapCanvas(mbr, 300, 50)); //same, but passing the BitmapRenderer, x, y			var em8:Emitter = new Emitter();			em8.x = 0;			em8.renderer = mbr;			var emmx:XML = 			<Emitter particle="CircleParticle" eps="20" burst="8" group="GroupParticle" groupAmount="3" groupProximity="50" life="1.2" lifeSpread="1.6" angle="120" angleSpread="*50">			  <Controllers>			    <EmitterController>			      <EmitterTweenController duration="5" property="y">			        <KeyframeContainer tweenClass="BasicTween" precision="0">			          <Keyframe position="0" ease="linear" value="*0" spread="*0" label="begin"/>			          <Keyframe position="0.5" ease="linear" value="*200" spread="*0" label="mid"/>			          <Keyframe position="1" ease="linear" spread="*0" label="end"/>			        </KeyframeContainer>			      </EmitterTweenController>			    </EmitterController>			    <ParticleController>			      <ParticleTweenController duration="0" property="x">			        <KeyframeContainer tweenClass="BasicTween" precision="0">			          <Keyframe position="0" ease="linear" value="*0" spread="*200" label="begin"/>			          <Keyframe position="1" ease="easeOutElastic" value="*50" spread="*0" label="end"/>			        </KeyframeContainer>			      </ParticleTweenController>			      <ParticleTweenController duration="0" property="color">			        <ColorKeyframeContainer tweenClass="BasicColorTween" precision="0">			          <Keyframe position="0" ease="linear" value="ffaaaa" spread="*0" label="begin"/>			          <Keyframe position="1" ease="linear" value="d9f5d3" spread="*0" label="end"/>			        </ColorKeyframeContainer>			      </ParticleTweenController>			      <ParticlePhysicsController duration="0" flip="true" useAngle="true" property="y">			        <ParticleTweenController duration="0" property="velocity">			          <KeyframeContainer tweenClass="BasicTween" precision="3">			            <Keyframe position="0" ease="linear" spread="*0" label="begin"/>			            <Keyframe position="1" ease="linear" spread="*0" label="end"/>			          </KeyframeContainer>			        </ParticleTweenController>			        <ParticleTweenController duration="0" property="acceleration">			          <KeyframeContainer tweenClass="BasicTween" precision="3">			            <Keyframe position="0" ease="linear" value="-0.7" spread="*0" label="begin"/>			            <Keyframe position="1" ease="linear" spread="*0" label="end"/>			          </KeyframeContainer>			        </ParticleTweenController>			        <ParticleTweenController duration="0" property="friction">			          <KeyframeContainer tweenClass="BasicTween" precision="3">			            <Keyframe position="0" ease="linear" spread="*0" label="begin"/>			            <Keyframe position="1" ease="linear" spread="*0" label="end"/>			          </KeyframeContainer>			        </ParticleTweenController>			      </ParticlePhysicsController>			      <ParticleTweenController duration="0" property="scale">			        <KeyframeContainer tweenClass="BasicTween" precision="0">			          <Keyframe position="0" ease="linear" value="1" spread="3" label="begin"/>			          <Keyframe position="1" ease="linear" spread="*0" label="end"/>			        </KeyframeContainer>			      </ParticleTweenController>			    </ParticleController>			  </Controllers>			</Emitter>;			em8.fromXML(emmx); //load the XML			//em8.start(); //start the emitter			//you may want to turn off debugging for this one!						//NOTE:			//As of Partigen 2.5, Renderers default to use automagic mode which manages starting/stopping			//renderers automatically knowing the best performance. It is recomended to use this now.			//You should remove and start/stop calls any renderers you have.			////			//this examples shows the new features introduced in Partigen 2.1			//these include prefetching, particleBlendMode, and groupBitmap			//v2.5 has increased the accuracy of prefetching			var em9:Emitter = new Emitter();			em9.particle = CircleParticle;			em9.renderer = sr;			em9.eps = 5;			em9.burst = 2;			em9.groupAmount = 100; //in 2.1, group classes are removed and are integrated into Particle classes			em9.groupProximity = 100;			//uncomment this below to see the performance increase when using large groupAmount of vector particles			//em9.groupBitmap = true; //this takes the particle and turns it into a Bitmap, using that instead			em9.particleBlendMode = 'subtract'; //this sets the blendmode for all the particles created			em9.x = 40;			em9.y = 150;			em9.life = 2;			em9.lifeSpread = 4;			em9.controllers.particle.addBeginValue('x', '0', '200');			em9.controllers.particle.x.keyframes.end.value = '200';			em9.controllers.particle.x.keyframes.end.ease = 'easeInOutBounce';			//em9.start(3); //this starts the emitter as if it's already been running for the given amount of time			//you may want to turn off debugging for this one!												/////////////			////New Features in Partigen 2.5			////////						////			//Predrawing with the pixel renderer			//			var mpr:BitmapRenderer = new PixelRenderer(stage.stageWidth, stage.stageHeight); //create new PixelRenderer			mpr.fade = 0.95; //enable a 'trail' for the particles			mpr.fadeBlur = 8; // add a nice blur to the trails to soften them			mpr.predraw = true; //disable this to see the actual pixel-particles						addChild(new BitmapCanvas(mpr)); //add a new BitmapCanvas to the stage, passing the PixelRenderer			var em10:Emitter = new Emitter();			em10.renderer = mpr;			em10.particleBaseClass = PixelParticle; //we need to set the baseclass to PixelParticle			em10.groupAmount = 400; //with PixelParticles, we can have high group amounts			em10.groupProximity = 200;			em10.eps = 15;			em10.life = 1;			em10.lifeSpread = 1.5; //set absolute live range			em10.controllers.particle.addColorTween();			em10.controllers.particle.color.keyframes.begin.value = 'ff4444';			em10.controllers.particle.color.keyframes.begin.spread = '0d0dff'; //different color each time it's started			em10.controllers.particle.addTween('y').setSingleTween('0', '0', '200', '50');			//em10.start();												////			//This is an advanced demo featuring new filter support, forceVariety for pools, events, and the updated Random class			//			import flash.filters.BitmapFilter;			import flash.filters.BitmapFilterQuality;			import flash.filters.*;						var em11:Emitter = new Emitter();			em11.enableEvents = true; //we need to enable events for birth event			em11.particle = CircleParticle;			em11.renderer = new StandardRenderer(this, 'random'); //set a random depth ordering			em11.forceVariety = true; //this forces all particles that come from a pool to reset all their properties and rearange the grouping, at the expense of performance			em11.eps = 7;			em11.burst = 1;			em11.groupBitmap = false; //may or may not effect performance			em11.particleBlendMode = 'subtract'; //you can change this for different effects			em11.particleFilters.push(new BlurFilter(16, 16, 3)); //add filters for particles			em11.particleFilters.push(new GlowFilter(0xffff00, 1, 4, 4, 2, 3));			em11.x = -40;			em11.y = 200;			em11.life = 2;			em11.lifeSpread = 6;			em11.controllers.particle.addBeginValue('x', '0', '200');			em11.controllers.particle.addBeginValue('alpha', .3, .8);			em11.controllers.particle.addBeginValue('scale', .5, 5);			em11.controllers.particle.x.keyframes.end.value = 600;						//this creates random settings on each particle birth			em11.addEventListener(ParticleEvent.BORN, birthFunc2);			function birthFunc2(o){				o.data.particle.emitter.groupProximity = new Random(20, 100);				o.data.particle.emitter.groupAmount = new Random(1, 5);				o.data.particle.emitter.particleFilters[0].blurX = o.data.particle.emitter.particleFilters[0].blurY = Number(new Random(2, 33));			}			//em11.start();									////			//Using a MultiTween to tween a blurfilter and apply that to the renderer			//			import com.desuade.motion.tweens.*;			import flash.geom.Point;			import flash.filters.BlurFilter;						//create point for applyFilter			var pt:Point = new Point(0, 0);			//create the blurfilter			var bfilter:BlurFilter = new BlurFilter();			bfilter.blurX = 0;			bfilter.blurY = 0;			//create the tween using a MultiTween from the DMP			var bt:MultiTween = new MultiTween(bfilter, {properties:{blurX:64, blurY:64}, duration:10, ease:'easeOutBounce', round:true});			//make a function for the renderer to call on each render()			function bdf(bd){				bd.applyFilter(bd, bd.rect, pt, bfilter);			}						//create a BitmapRenderer			var mfr = new BitmapRenderer(stage.stageWidth, stage.stageHeight);			mfr.renderfunc = bdf; //set the renderfunc to the filter applier			mfr.predraw = true; //have to set predraw to true for filters to overwrite it						addChild(new BitmapCanvas(mfr)); //add a new BitmapCanvas to the stage, passing the BitmapRenderer						//we'll just clone a previous emitter here			var em12:Emitter = new Emitter().fromXML(em4.toXML());			em12.renderer = mfr; //set the renderer			//em12.start(); //start the emitter			//bt.start(); //start the blur tween								}		}}
