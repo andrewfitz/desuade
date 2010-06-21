@@ -79,6 +79,11 @@ package com.desuade.motion.tweens {
 			var pt:PrimitiveMultiTween = BaseTicker.addItem(PrimitiveMultiTween);
 			pt.init(target, npo, $to.duration*1000, makeEase($to.ease));
 			pt.endFunc = endFunc;
+			pt.updateFunc = updateListener;
+			if($to.position > 0) {
+				pt.starttime -= ($to.position*$to.duration)*1000;
+				Debug.output('motion', 40007, [$to.position]);
+			}
 			return pt.id;
 		}
 		

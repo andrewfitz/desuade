@@ -180,13 +180,13 @@ package com.desuade.motion.sequences {
 							for (var t:String in _overrides) {
 								ni[h][t] = _overrides[t];
 							}
-							ni[h].target[ni[h].property] = ni[h].value;
+							if(ni[h].property != undefined && ni[h].property != null) ni[h].target[ni[h].property] = ni[h].value;
 						}
 					} else {
 						for (var g:String in _overrides) {
 							this[r][g] = _overrides[g];
 						}
-						this[r].target[this[r].property] = this[r].value;
+						if(this[r].property != undefined && this[r].property != null) this[r].target[this[r].property] = this[r].value;
 					}
 				}
 				fti += durarr[r];

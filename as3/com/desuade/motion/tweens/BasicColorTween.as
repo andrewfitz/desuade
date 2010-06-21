@@ -87,6 +87,10 @@ package com.desuade.motion.tweens {
 			pt.init(_colorholder, cpo, $to.duration*1000, makeEase($to.ease));
 			pt.endFunc = endFunc;
 			pt.updateFunc = ($to.property != undefined && $to.property != null) ? hexcolorupdater : docolorupdater;
+			if($to.position > 0) {
+				pt.starttime -= ($to.position*$to.duration)*1000;
+				Debug.output('motion', 40007, [$to.position]);
+			}
 			return pt.id;
 		}
 		
