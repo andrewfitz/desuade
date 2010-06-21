@@ -510,7 +510,7 @@ package com.desuade.partigen.emitters {
 		 *	This kills all currently existing particles in the pool created by this emitter
 		 */
 		public function killParticles():void {
-			for each (var particle:IBasicParticle in pool.particles) {
+			for (var particle:Object in pool.particles) {
 				if(particle.emitter == this) particle.kill();
 			}
 		}

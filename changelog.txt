@@ -1,6 +1,9 @@
 Desuade Library Change Log - http://desuade.com/
 ------------------------------------------------
 
+Partigen 2.5.1
+	-fixed: emitter.killParticles not working since change to Dictionary
+
 Motion Package 1.5 & Partigen 2.5 (2010/06/12)
 	Partigen:
 		-added: PixelRenderer for high-performance pixel-based effects
