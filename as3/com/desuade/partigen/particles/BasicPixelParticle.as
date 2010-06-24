@@ -75,6 +75,11 @@ package com.desuade.partigen.particles {
 		 *	This is the pixel color.
 		 */
 		public var color:uint = 0xffffffff;
+		
+		/**
+		 *	The blendmode of the pixel. Note: the PixelRenderer will only apply the same blendmode to all pixels/particles.
+		 */
+		public var blendMode:String = 'normal';
 	
 		/**
 		 *	This holds the particles inside of the group.
@@ -232,13 +237,6 @@ package com.desuade.partigen.particles {
 		}
 		
 		//holder variables for things that don't affect the pixel
-		
-		public function get blendMode():String{
-			return 'normal';
-		}
-		public function set blendMode(value:String):void {
-			//nothing
-		}
 		public function get filters():Array{
 			return [];
 		}

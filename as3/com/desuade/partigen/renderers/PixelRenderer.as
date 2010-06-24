@@ -56,6 +56,11 @@ package com.desuade.partigen.renderers {
 		protected var _particles:Object = {};
 		
 		/**
+		 *	@private
+		 */
+		protected var _pixelBuffer:BitmapData;
+		
+		/**
 		 *	<p>This creates a new PixelRenderer to render PixelParticles.</p>
 		 *	<p>Note: If regular Particles are used, it will convert them into a single pixel. For best performance, set your emitter.particleBaseClass to PixelParticle or BasicPixelParticle.</p>
 		 *	
@@ -64,7 +69,8 @@ package com.desuade.partigen.renderers {
 		 *	@param	automagic	If the renderer should start in automagic mode (starts/stops renderer based on need).
 		 */
 		public function PixelRenderer($width:int, $height:int, $automagic:Boolean = true) {
-			super($width, $height, 'top', $automagic)
+			super($width, $height, 'top', $automagic);
+			_pixelBuffer = new BitmapData($width, $height, true, 0);
 		}
 		
 		/**
@@ -77,14 +83,27 @@ package com.desuade.partigen.renderers {
 		/**
 		 *	@inheritDoc
 		 */
+		public override function resize($width:int, $height:int):void {
+			_pixelBuffer.dispose();
+			_pixelBuffer = new BitmapData($width, $height, true, 0);
+			super.resize($width, $height);
+		}
+		
+		/**
+		 *	@inheritDoc
+		 */
 		protected override function drawMethod():void {
+			_pixelBuffer.fillRect(bitmapdata.rect, 0x00000000);
+			var bm:String = null;
 			for each (var tp:* in _particles) {
 				var argb:uint = (255 * tp.alpha)<<24;
 				argb += tp.color;
 				for (var i:int = 0; i < tp.group.length; i++) {
-					_offbitmap.setPixel32((tp.x + tp.group[i][0]), (tp.y + tp.group[i][1]), argb);
+					_pixelBuffer.setPixel32((tp.x + tp.group[i][0]), (tp.y + tp.group[i][1]), argb);
 				}
+				if(bm == null) bm = tp.blendMode;
 			}
+			_offbitmap.draw(_pixelBuffer, null, null, bm);
 		}
 		
 		/**

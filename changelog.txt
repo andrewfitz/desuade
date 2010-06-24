@@ -3,6 +3,8 @@ Desuade Library Change Log - http://desuade.com/
 
 Motion Package 1.5.1 & Partigen 2.5.1 (2010/07/??)
 	Partigen:
+		-added: PixelRenderer now supports particleBlendMode (assumes all particles have same blendmode)
+		-changed: BasicPixelParticle now takes real blendMode property
 		-fixed: prefetching effects with color controllers
 		-fixed: emitter.killParticles not working since change to Dictionary
 		

@@ -114,6 +114,7 @@ package com.desuade.partigen.emitters {
 		/**
 		 *	<p>This defines the blendmode for each particle created.</p>
 		 *	<p>Choices: "add", "alpha", "darken", "difference", "erase", "hardlight", "invert", "layer", "lighten", "multiply", "normal", "overlay", "screen", "subtract"</p>
+		 *	<p>Note: PixelRenderer will assume the blendmode of all particles/pixels is the same.</p>
 		 */
 		public var particleBlendMode:String = "normal";
 		
