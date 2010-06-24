@@ -157,7 +157,7 @@ package com.desuade.partigen.emitters {
 		 *	<p>This is the duration in seconds a particle will exist for.</p>
 		 *	<p>If the value is 0, the particle will live forever.</p>
 		 */
-		public var life:Number = 0;
+		public var life:Number = 1;
 		
 		/**
 		 *	<p>This is the spread for particle lives. This will create a random range for the life of new particles.</p>
@@ -502,7 +502,7 @@ package com.desuade.partigen.emitters {
 		 */
 		public function reset():void {
 			particleBaseClass = BasicParticle, eps = 1, burst = 1;
-			groupAmount = 1, groupProximity = 0, life = 0, lifeSpread = "0", particleFilters = [], particleBlendMode = "normal";
+			groupAmount = 1, groupProximity = 0, life = 1, lifeSpread = "0", particleFilters = [], particleBlendMode = "normal";
 			_particlebitmap = null;
 			pool.purge();
 		}
