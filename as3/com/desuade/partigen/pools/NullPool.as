@@ -54,7 +54,7 @@ package com.desuade.partigen.pools {
 		public override function addParticle():IBasicParticle {
 			super.addParticle();
 			var tp:* = new _particleClass();
-			_particles[tp] = true;
+			_particles[tp] = tp.id;
 			return tp;
 		}
 		

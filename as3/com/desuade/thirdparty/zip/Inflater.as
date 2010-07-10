@@ -1,6 +1,6 @@
 /*
 This zip compression class is provided in the Desuade Library for convenience purposes only.
-Desuade clains no ownership and is distributed under the MIT License.
+Desuade claims no ownership and is distributed under the MIT License.
 You can find the original files here: http://nochump.com/blog/?p=15
 */
 /*

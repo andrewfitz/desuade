@@ -38,7 +38,7 @@ package com.desuade.partigen {
 		/**
 		 *	The numeric version of the package. Used for version comparisons.
 		 */
-		public static const VERSION:Number = 2.510;
+		public static const VERSION:Number = 2.511;
 		
 		/**
 		 *	The "official" release version.

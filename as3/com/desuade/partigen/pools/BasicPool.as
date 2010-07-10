@@ -90,7 +90,7 @@ package com.desuade.partigen.pools {
 		public override function addParticle():IBasicParticle {
 			super.addParticle();
 			var tp:* = _pool.checkOut();
-			_particles[tp] = true;
+			_particles[tp] = tp.id;
 			return tp;
 		}
 		

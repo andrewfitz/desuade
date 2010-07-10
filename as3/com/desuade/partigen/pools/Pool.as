@@ -68,7 +68,7 @@ package com.desuade.partigen.pools {
 		}
 		
 		/**
-		 *	An object of all the current "living" particles, based on their unique id.
+		 *	A Dictionary object of all the current "living" particles. The key|value pair is particle|particle.id.
 		 */
 		public function get particles():Dictionary{
 			return _particles;
@@ -92,7 +92,8 @@ package com.desuade.partigen.pools {
 		}
 		
 		/**
-		 *	Removes a particle from the Pool.
+		 *	<p>Removes the specified particle from the Pool.</p>
+		 *	<p>If you're trying to remove a particle through custom code, it is recommended to simply call particle.kill() than to work directly with the pool.</p>
 		 *	
 		 *	@param	particle	 The particle to remove.
 		 */

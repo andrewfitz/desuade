@@ -180,7 +180,7 @@ package com.desuade.partigen.libraries {
 		public function load($file:String, $shared:Boolean = true):void {
 			path = $file;
 			shared = $shared;
-			var request:URLRequest= new URLRequest($file);
+			var request:URLRequest = new URLRequest($file);
 			_urlLoader.load(request);
 		}
 		
@@ -305,6 +305,7 @@ package com.desuade.partigen.libraries {
 						//do when it's not a swc or xml
 					}
 				}
+				if(_swcTotal == 0) if(onLoad != null) onLoad(this); //run onload if there's no SWCs
 			}
 		}
 		
