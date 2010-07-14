@@ -412,6 +412,7 @@ package com.desuade.partigen.emitters {
 		public function toXML():XML {
 			var txml:XML = <emitter />;
 			txml.setLocalName(XMLHelper.getSimpleClassName(this));
+			txml.@partigen = Partigen.VERSION;
 			txml.@particle = getQualifiedClassName(particle);
 			txml.@particleBaseClass = XMLHelper.getSimpleClassName(particleBaseClass);
 			txml.@particleBlendMode = particleBlendMode;
@@ -460,7 +461,10 @@ package com.desuade.partigen.emitters {
 				if($xml.@eps != undefined) eps = Number($xml.@eps);
 				if($xml.@burst != undefined) burst = int($xml.@burst);
 				if($xml.@groupBitmap != undefined) groupBitmap = XMLHelper.dexmlize($xml.@groupBitmap);
-				if($xml.@groupAmount != undefined) groupAmount = int($xml.@groupAmount);
+				if($xml.@groupAmount != undefined) {
+					groupAmount = int($xml.@groupAmount);
+					if(groupAmount < 1) groupAmount = 1;
+				}
 				if($xml.@groupProximity != undefined) groupProximity = int($xml.@groupProximity);
 				if($xml.@life != undefined) life = Number($xml.@life);
 				if($xml.@lifeSpread != undefined) lifeSpread = XMLHelper.dexmlize($xml.@lifeSpread);

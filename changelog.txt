@@ -4,8 +4,10 @@ Desuade Library Change Log - http://desuade.com/
 Motion Package 1.5.1 & Partigen 2.5.1 (2010/07/12)
 	Partigen:
 		-added: PixelRenderer now supports particleBlendMode (assumes all particles have same blendmode)
+		-added: Emitter.toXML() now includes partigen attribute for version number
 		-changed: Pool.particles Dictionary object key pair changed: particle|true -> particle|particle.id
 		-changed: BasicPixelParticle now takes real blendMode property
+		-changed: emitter.fromXML() now makes sure groupAmount is at least 1
 		-changed: Emitter.life default changed: 0 -> 1 to match UI
 		-fixed: PELFile not calling onLoad if no SWCs were present
 		-fixed: prefetching effects with color controllers

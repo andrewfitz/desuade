@@ -57,7 +57,7 @@ package com.desuade.partigen.libraries {
 		/**
 		 *	Namespace for version 2.0 of the PEL spec.
 		 */
-		public static const PEL2:Namespace = new Namespace("http://api.desuade.com/pel/spec/2");
+		public static const PEL2:Namespace = new Namespace("pel", "http://api.desuade.com/pel/spec/2");
 		
 		/**
 		 *	This error is sent to the onError method when there's an error loading the actual pel file
