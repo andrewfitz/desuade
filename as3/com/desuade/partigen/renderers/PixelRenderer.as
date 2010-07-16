@@ -98,6 +98,7 @@ package com.desuade.partigen.renderers {
 			for each (var tp:* in _particles) {
 				var argb:uint = (255 * tp.alpha)<<24;
 				argb += tp.color;
+				if(tp.alpha <= 0.01) argb = 0;
 				for (var i:int = 0; i < tp.group.length; i++) {
 					_pixelBuffer.setPixel32((tp.x + tp.group[i][0]), (tp.y + tp.group[i][1]), argb);
 				}
