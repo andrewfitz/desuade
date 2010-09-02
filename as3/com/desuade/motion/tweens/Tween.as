@@ -264,7 +264,7 @@ package com.desuade.motion.tweens {
 		/**
 		 *	@private
 		 */
-		protected function delayedTween($delay:int):void {
+		protected function delayedTween($delay:Number):void {
 			Debug.output('motion', 40002, [$delay]);
 			_delayTimer = new Timer($delay*1000);
 			_delayTimer.addEventListener(TimerEvent.TIMER, dtFunc, false, 0, false);
