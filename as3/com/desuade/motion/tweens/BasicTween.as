@@ -95,7 +95,7 @@ package com.desuade.motion.tweens {
 			var pt:PrimitiveTween = BaseTicker.addItem(PrimitiveTween);
 			pt.init($target, $property, newval, $duration*1000, makeEase($ease));
 			pt.endFunc = function():void {
-				$endfunc();
+				if($endfunc != null) $endfunc();
 				BaseTicker.removeItem(pt.id);
 			}
 			if($position > 0) {

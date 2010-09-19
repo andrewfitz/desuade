@@ -69,8 +69,8 @@ package com.desuade.motion {
 				40012: "[Sequence] new SequenceGroup created",
 				
 				//primitive low level codes
-				50001: "[Primitive] started id: %",
-				50002: "[Primitive] ended id: %",
+				50001: "[Primitive] created id: %",
+				50002: "[Primitive] removed id: %",
 				50003: "[Tween] rounding tween %: % -> %",
 				50004: "Depreciated: eases should be String, not the Function - ie: Bounce.easeOut -> 'easeOutBounce'"
 				

@@ -1,8 +1,11 @@
 Desuade Library Change Log - http://desuade.com/
 ------------------------------------------------
 
-Motion Package 1.5.1
+Motion Package 1.5.2
+	-fixed: Tween.run error without end function callback
 	-fixed: Tween.delayedTween delay as int not number (via John Hattan)
+	-changed: updated DebugCodes for primitives
+	
 
 Motion Package 1.5.1 & Partigen 2.5.1 (2010/07/15)
 	Partigen:
