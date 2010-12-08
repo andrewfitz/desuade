@@ -282,6 +282,7 @@ package com.desuade.partigen.emitters {
 			if(_active){
 				_active = false;
 				setTimer(false);
+				pool.purge();
 			}
 		}
 		

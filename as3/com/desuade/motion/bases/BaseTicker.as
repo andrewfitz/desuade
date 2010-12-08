@@ -29,6 +29,8 @@ package com.desuade.motion.bases {
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	import flash.utils.getTimer;
+	import flash.utils.Timer;
+    import flash.events.TimerEvent;
 	import com.desuade.debugging.*;
 	import com.desuade.utils.*;
 	
@@ -71,6 +73,16 @@ package com.desuade.motion.bases {
 		/**
 		 *	@private
 		 */
+		protected static var _emptyTimer:Timer;
+		
+		/**
+		 *	@private
+		 */
+		protected static var _emptied:Boolean = false;
+		
+		/**
+		 *	@private
+		 */
 		public static var _count:int = 0;
 		
 		/**
@@ -94,6 +106,9 @@ package com.desuade.motion.bases {
 				_sprite.addEventListener(Event.ENTER_FRAME, update, false, 0, false);
 				_inited = true;
 				dispatchEvent(new MotionEvent(MotionEvent.STARTED));
+				_emptyTimer = new Timer(2000);
+				_emptyTimer.addEventListener(TimerEvent.TIMER, emptyCheck, false, 0, false);
+				_emptyTimer.start();
 			}
 		}
 		
@@ -105,6 +120,9 @@ package com.desuade.motion.bases {
 				_sprite.removeEventListener(Event.ENTER_FRAME, update);
 				_inited = false;
 				dispatchEvent(new MotionEvent(MotionEvent.ENDED));
+				_emptyTimer.removeEventListener(TimerEvent.TIMER, emptyCheck);
+				_emptyTimer.stop();
+				_emptyTimer = null;
 			}
 		}
 		
@@ -164,8 +182,23 @@ package com.desuade.motion.bases {
 		/**
 		 *	@private
 		 */
+		protected static function emptyCheck($o:Object):void {
+			var ir:int = 0;
+			for each (var item:BasePrimitive in _holder) ir++;
+			if(ir == 0){
+				if(!_emptied){
+					classPool.purgeAllClasses();
+					_emptied = true;	
+				}
+			} else _emptied = false;
+		}
+		
+		/**
+		 *	@private
+		 */
 		public static function addEventListener(type:String, listener:Function, useCapture:Boolean = false, priority:int = 0, useWeakReference:Boolean = false):void{
 			_dispatcher.addEventListener(type, listener, useCapture, priority, useWeakReference);
+			start();
 		}
 
 		/**

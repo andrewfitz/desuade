@@ -1,11 +1,22 @@
 Desuade Library Change Log - http://desuade.com/
 ------------------------------------------------
 
-Motion Package 1.5.2
-	-fixed: Tween.run error without end function callback
-	-fixed: Tween.delayedTween delay as int not number (via John Hattan)
-	-changed: updated DebugCodes for primitives
-	
+Motion Package 1.5.2 & Partigen 2.5.2
+	Partigen:
+		-changed: pool.purge() is called automatically on emitter.stop()
+
+	Motion:
+		-added: Timer check to clear pooled primitives when engine is idle, freeing up memory
+		-fixed: Tween.run error without end function callback
+		-fixed: Tween.delayedTween delay as int not number (via John Hattan)
+		-fixed: anytime BaseTicker.addEventListener is called, it will automatically call start() (no-tween Renderers)
+		-changed: updated DebugCodes for primitives
+
+	Utils:
+		-added: BasicObjectPool.remove()
+		-changed: Pools will now shrink automatically by the expandSize when there's excess, freeing memory
+
+
 
 Motion Package 1.5.1 & Partigen 2.5.1 (2010/07/15)
 	Partigen:

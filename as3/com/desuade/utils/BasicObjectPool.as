@@ -91,13 +91,25 @@ package com.desuade.utils {
 		 *	Makes an object in the pool.
 		 *	
 		 *	@param	amount	 The amount of new objects to create
-		 *	
-		 *	@return		The object made
 		 */
 		public function make($amount:int = 1):void {
 			for(var i:int = 0; i < $amount; i++) {
 				size++;
 				_list[length++] = new objectClass();
+			}
+		}
+		
+		/**
+		 *	Removes an object in the pool.
+		 *	
+		 *	@param	amount	 The amount of old objects to remove
+		 */
+		public function remove($amount:int = 1):void {
+			for(var i:int = 0; i < $amount; i++) {
+				size--;
+				length--;
+				_list[0] = null;
+				_list.shift();
 			}
 		}
 		
@@ -124,6 +136,9 @@ package com.desuade.utils {
 				if($item.isclean != undefined) $item.isclean = false;
 			}
 			_list[length++] = $item;
+			if((length/expandSize) >= 1.9){
+				remove(expandSize);
+			}
 		}
 		
 		/**
