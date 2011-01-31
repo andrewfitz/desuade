@@ -1,7 +1,7 @@
 /*
 This software is distributed under the MIT License.
 
-Copyright (c) 2009-2010 Desuade (http://desuade.com/)
+Copyright (c) 2009-2011 Desuade (http://desuade.com/)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

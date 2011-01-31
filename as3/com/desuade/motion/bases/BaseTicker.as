@@ -1,7 +1,7 @@
 /*
 This software is distributed under the MIT License.
 
-Copyright (c) 2009-2010 Desuade (http://desuade.com/)
+Copyright (c) 2009-2011 Desuade (http://desuade.com/)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -169,10 +169,10 @@ package com.desuade.motion.bases {
 		 *	@private
 		 */
 		protected static function update($u:Object):void {
-			var times:int = getTimer();
+			//var times:int = getTimer();
 			//var ir:int = 0;
 			for each (var item:BasePrimitive in _holder) {
-				item.render(times);
+				item.render(getTimer());
 				//ir++;
 			}
 			//trace("Loop time: " + String(getTimer()-times) + " Items: " + ir);
