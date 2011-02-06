@@ -66,6 +66,7 @@ package com.desuade.partigen.pools {
 			$particle.removeGroup();
 			_particles[$particle] = null;
 			delete _particles[$particle];
+			if(length == 0) onLastParticle();
 		}
 	
 	}

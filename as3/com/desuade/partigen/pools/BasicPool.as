@@ -68,12 +68,24 @@ package com.desuade.partigen.pools {
 		public override function purge():void {
 			for (var p:* in _particles) p.destroy = true;
 			if(_pool != null) {
-				for (var i:int = 0; i < _pool.list.length; i++) {
-					_pool.list[i].removeGroup();
-				}
+				for (var i:int = 0; i < _pool.list.length; i++) _pool.list[i].removeGroup();
 				_pool.dispose();
 			}
 			_pool = new BasicObjectPool(_particleClass, _particleClass.clean, expandSize, 0);
+		}
+		
+		/**
+		 *	@inheritDoc
+		 */
+		public override function set onLastParticle($func:Function):void {
+			_pool.onLastCheckIn = $func;
+		}
+		
+		/**
+		 *	@inheritDoc
+		 */
+		public override function get onLastParticle():Function{
+			return _pool.onLastCheckIn;
 		}
 		
 		/**

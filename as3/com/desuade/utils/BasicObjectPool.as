@@ -61,6 +61,11 @@ package com.desuade.utils {
 		public var clean:Function;
 		
 		/**
+		 *	The method called when the last object is checkedIn 
+		 */
+		public var onLastCheckIn:Function;
+		
+		/**
 		 *	@private
 		 */
 		protected var _list:Array = [];
@@ -136,9 +141,8 @@ package com.desuade.utils {
 				if($item.isclean != undefined) $item.isclean = false;
 			}
 			_list[length++] = $item;
-			if((length/expandSize) >= 1.9){
-				remove(expandSize);
-			}
+			if((length/expandSize) >= 1.9) remove(expandSize);
+			if(size == length && onLastCheckIn != null) onLastCheckIn(this);
 		}
 		
 		/**

@@ -49,6 +49,11 @@ package com.desuade.partigen.pools {
 		 *	@private
 		 */
 		protected var _particleClass:Class;
+		
+		/**
+		 *	@private
+		 */
+		protected var _onLastParticle:Function;
 	
 		/**
 		 *	Creates a Pool to store particle objects. This base class should not be created, as it offers no direct functionality.
@@ -58,6 +63,20 @@ package com.desuade.partigen.pools {
 		public function Pool($particleClass:Class) {
 			_particleClass = $particleClass;
 			Debug.output('partigen', 20003);
+		}
+		
+		/**
+		 *	The method to call each time the last living particle returns to the pool.
+		 */
+		public function get onLastParticle():Function{
+			return _onLastParticle;
+		}
+		
+		/**
+		 *	@private
+		 */
+		public function set onLastParticle($value:Function):void {
+			_onLastParticle = $value;
 		}
 		
 		/**

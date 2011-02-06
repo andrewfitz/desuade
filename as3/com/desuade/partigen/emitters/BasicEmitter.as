@@ -277,12 +277,16 @@ package com.desuade.partigen.emitters {
 		 *	This stops the emitter from emitting particles.
 		 *	
 		 *	@param	runcontrollers	 This does nothing for BasicEmitters, and is only used for emitter classes with controllers.
+		 *	@param	purge	This purges the pool when all particles have finished safely.
 		 */
-		public function stop($runcontrollers:Boolean = true):void {
+		public function stop($runcontrollers:Boolean = true, $purge:Boolean = true):void {
 			if(_active){
 				_active = false;
 				setTimer(false);
-				pool.purge();
+				pool.onLastParticle = function():void {
+					dispatchEvent(new ParticleEvent(ParticleEvent.FINISHED, {pool:pool}));
+					if($purge) pool.purge();
+				};
 			}
 		}
 		

@@ -80,6 +80,7 @@ package com.desuade.partigen.pools {
 		 */
 		public override function removeParticle($particle:*):void {
 			mark($particle);
+			if(length == 0) onLastParticle();
 		}
 		
 		/**

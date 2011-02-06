@@ -48,7 +48,12 @@ package com.desuade.partigen.events {
 		public static const DIED:String = "died";
 		
 		/**
-		 *	This is the info object that's gets passed to the function. It contains the <code>particle</code> property, that is the particle that the event is associated with.
+		 *	This gets fired when an emitter stops and the last particle dies.
+		 */
+		public static const FINISHED:String = "finished";
+		
+		/**
+		 *	This is the info object that's gets passed to the function. It contains the <code>particle</code> property, that is the particle that the event is associated with. For the FINISHED event, it's the <code>pool</code> property.
 		 */
 		public var data:Object;
 

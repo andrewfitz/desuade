@@ -1,8 +1,10 @@
 Desuade Library Change Log - http://desuade.com/
 ------------------------------------------------
 
-Motion Package 1.5.2 & Partigen 2.5.2
+Motion Package 1.5.2 & Partigen 2.5.2 (2011/02/05)
 	Partigen:
+		-added: ParticleEvent.FINISHED called when the last particle dies after calling em.stop()
+		-added: emitter.stop(runcontrollers, purge:Boolean=true) if the pool gets purged on finish
 		-changed: pool.purge() is called automatically on emitter.stop()
 
 	Motion:
@@ -13,9 +15,9 @@ Motion Package 1.5.2 & Partigen 2.5.2
 		-changed: updated DebugCodes for primitives
 
 	Utils:
-		-added: BasicObjectPool.remove()
+		-added: BasicObjectPool.remove() method to remove an object from the pool
+		-added: BasicObjectPool.onLastCheckIn property method to be called when the last object gets checked in
 		-changed: Pools will now shrink automatically by the expandSize when there's excess, freeing memory
-
 
 
 Motion Package 1.5.1 & Partigen 2.5.1 (2010/07/15)

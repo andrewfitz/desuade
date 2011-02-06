@@ -107,9 +107,10 @@ package com.desuade.partigen.emitters {
 		 *	This stops the emitter. It also, by default, stops all the controllers managed by the EmitterController.
 		 *	
 		 *	@param	stopcontrollers	 This stops all MotionControllers managed by the EmitterController.
+		 *	@param	purge	This purges the pool when all particles have finished safely.
 		 */
-		public override function stop($stopcontrollers:Boolean = true):void {
-			super.stop();
+		public override function stop($stopcontrollers:Boolean = true, $purge:Boolean = true):void {
+			super.stop(true, $purge);
 			if($stopcontrollers) controllers.emitter.stop();
 		}
 		
